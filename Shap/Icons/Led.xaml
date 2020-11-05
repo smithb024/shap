@@ -1,0 +1,22 @@
+﻿<UserControl
+  Name="LedUserControl"
+  x:Class="Shap.Icons.Led"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Shap.Icons"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300">
+    <Ellipse>
+    <Ellipse.Fill>
+      <RadialGradientBrush GradientOrigin="0.75, 0.25" Center="0.5, 0.5" RadiusX="0.5" RadiusY="0.5">
+        <RadialGradientBrush.GradientStops>
+          <GradientStop Color="Wheat" Offset="0"/>
+          <GradientStop Color="{Binding LedColour, ElementName=LedUserControl}" Offset="0.8"/>
+        </RadialGradientBrush.GradientStops>
+      </RadialGradientBrush>
+    </Ellipse.Fill>
+            
+    </Ellipse>
+</UserControl>

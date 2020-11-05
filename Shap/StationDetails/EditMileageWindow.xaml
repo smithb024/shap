@@ -1,0 +1,353 @@
+﻿<Window x:Class="Shap.StationDetails.EditMileageWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:nynaeveConverters="clr-namespace:NynaeveLib.Enumerations.Converters;assembly=NynaeveLib"
+        xmlns:shapConverter="clr-namespace:Shap.Common.Converters"
+        Title="EditMileageWindow"
+        Background="{StaticResource StdBackground}"
+        Height="400"
+        Width="300">
+
+  <Window.Resources>
+    <nynaeveConverters:BoolToVisCollapsedVisibilityConverter x:Key="editModeConverter"/>
+    <nynaeveConverters:BoolToVisCollapsedVisibilityConverter x:Key="notEditModeConverter" Inverted="True"/>
+    <shapConverter:CollectionToBoolConverter x:Key="collectionToBoolConverter"/>
+    <shapConverter:CollectionToBoolConverter x:Key="collectionToBoolConverterOne" MinValue="1"/>
+  </Window.Resources>
+  <Grid>
+    <TabControl SelectedIndex="{Binding TabIndex}"
+                Background="{StaticResource StdBackground}">
+      <TabItem Header="Add">
+        <Grid>
+          <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+          </Grid.RowDefinitions>
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+          </Grid.ColumnDefinitions>
+          <Label Grid.Column="0"
+                 Grid.Row="0"
+                 Style="{StaticResource StdLabel}"
+                 Content="Outward"/>
+          <Label Grid.Column="0"
+                 Grid.Row="1"
+                 Style="{StaticResource StdLabel}"
+                 Content="From"/>
+          <TextBox Grid.Column="1"
+                   Grid.Row="1"
+                   Style="{StaticResource StdTextBoxStyle}"
+                   Text="{Binding NewFromStn, UpdateSourceTrigger=PropertyChanged}"/>
+          <Label Grid.Column="0"
+                 Grid.Row="2"
+                 Style="{StaticResource StdLabel}"
+                 Content="To"/>
+          <TextBox Grid.Column="1"
+                   Grid.Row="2"
+                   Style="{StaticResource StdTextBoxStyle}"
+                   Text="{Binding NewToStn, UpdateSourceTrigger=PropertyChanged}"/>
+          <Label Grid.Column="0"
+                 Grid.Row="3"
+                 Style="{StaticResource StdLabel}"
+                 Content="Via"/>
+          <TextBox Grid.Column="1"
+                   Grid.Row="3"
+                   Style="{StaticResource StdTextBoxStyle}"
+                   Text="{Binding NewViaRoute, UpdateSourceTrigger=PropertyChanged}"/>
+          <Label Grid.Column="0"
+                 Grid.Row="4"
+                 Style="{StaticResource StdLabel}"
+                 Content="Miles"/>
+
+          <!-- TODO, this really should be separate -->
+          <Grid Grid.Column="1" Grid.Row="4">
+            <Grid.ColumnDefinitions>
+              <ColumnDefinition Width="*"/>
+              <ColumnDefinition Width="auto"/>
+              <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <TextBox Grid.Column="0"
+                     Style="{StaticResource StdTextBoxStyle}"
+                     HorizontalContentAlignment="Right"
+                     Text="{Binding NewOutMiles, UpdateSourceTrigger=PropertyChanged}"/>
+            <Label Grid.Column="1"
+                   Style="{StaticResource StdLabel}"
+                   Content="-"/>
+            <TextBox Grid.Column="2"
+                     Style="{StaticResource StdTextBoxStyle}"
+                     Text="{Binding NewOutChains, UpdateSourceTrigger=PropertyChanged}"/>
+          </Grid>
+
+          <Label Grid.Column="0"
+                 Grid.Row="5"
+                 Style="{StaticResource StdLabel}"
+                 Content="Return"/>
+          <Label Grid.Column="0"
+                 Grid.Row="6"
+                 Style="{StaticResource StdLabel}"
+                 Content="From"/>
+          <TextBlock Grid.Column="1"
+                     Grid.Row="6"
+                     Style="{StaticResource StdTextBlockStyle}"
+                     Text="{Binding NewToStn, UpdateSourceTrigger=PropertyChanged}"/>
+          <Label Grid.Column="0"
+                 Grid.Row="7"
+                 Style="{StaticResource StdLabel}"
+                 Content="To"/>
+          <TextBlock Grid.Column="1"
+                     Grid.Row="7"
+                     Style="{StaticResource StdTextBlockStyle}"
+                     Text="{Binding NewFromStn}"/>
+          <Label Grid.Column="0"
+                 Grid.Row="8"
+                 Style="{StaticResource StdLabel}"
+                 Content="Via"/>
+          <TextBox Grid.Column="1"
+                   Grid.Row="8"
+                   Style="{StaticResource StdTextBoxStyle}"
+                   Text="{Binding NewViaReturnRoute, UpdateSourceTrigger=PropertyChanged}"/>
+          <Label Grid.Column="0"
+                 Grid.Row="9"
+                 Style="{StaticResource StdLabel}"
+                 Content="Miles"/>
+
+          <Grid Grid.Column="1" Grid.Row="9">
+            <Grid.ColumnDefinitions>
+              <ColumnDefinition Width="*"/>
+              <ColumnDefinition Width="auto"/>
+              <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <TextBox Grid.Column="0"
+                     Style="{StaticResource StdTextBoxStyle}"
+                     Text="{Binding NewBackMiles, UpdateSourceTrigger=PropertyChanged}"/>
+            <Label Grid.Column="1"
+                   Style="{StaticResource StdLabel}"
+                   Content="-"/>
+            <TextBox Grid.Column="2"
+                     Style="{StaticResource StdTextBoxStyle}"
+                     Text="{Binding NewBackChains, UpdateSourceTrigger=PropertyChanged}"/>
+          </Grid>
+
+          <Grid Grid.Column="0" Grid.Row="10" Grid.ColumnSpan="2">
+            <Grid.ColumnDefinitions>
+              <ColumnDefinition Width="*"/>
+              <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Button Grid.Column="0"
+                    Content="Add"
+                    Style="{StaticResource StdButtonStyle}"
+                    Height="20"
+                    Command="{Binding AddNewCmd}"/>
+            <Button Grid.Column="1"
+                    Content="Close"
+                    Style="{StaticResource StdButtonStyle}"
+                    Height="20"
+                    Command="{Binding CloseWindowCmd}"/>
+          </Grid>
+        </Grid>
+      </TabItem>
+
+      <TabItem Header="Edit ">
+        <Grid>
+          <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+          </Grid.RowDefinitions>
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+          </Grid.ColumnDefinitions>
+          <Label Grid.Column="0"
+                 Grid.Row="0"
+                 Style="{StaticResource StdLabel}"
+                 Content="Outward"/>
+          <Label Grid.Column="0"
+                 Grid.Row="1"
+                 Style="{StaticResource StdLabel}"
+                 Content="From"/>
+          <TextBox Grid.Column="1"
+                   Grid.Row="1"
+                   Style="{StaticResource StdTextBoxStyle}"
+                   Text="{Binding NewFromStn, UpdateSourceTrigger=PropertyChanged}"
+                   Visibility="{Binding EditMode, Converter={StaticResource editModeConverter}}"/>
+          <ComboBox Grid.Column="1"
+                    Grid.Row="1"
+                    Style="{StaticResource ComboBoxStyle}"
+                    ItemsSource="{Binding Path=JnyFromList}"
+                    SelectedIndex="{Binding JnyFromIndex}"
+                    Visibility="{Binding EditMode, Converter={StaticResource notEditModeConverter}}"/>
+          <Label Grid.Column="0"
+                 Grid.Row="2"
+                 Style="{StaticResource StdLabel}"
+                 Content="To"/>
+          <TextBox Grid.Column="1"
+                   Grid.Row="2"
+                   Style="{StaticResource StdTextBoxStyle}"
+                   Text="{Binding NewToStn, UpdateSourceTrigger=PropertyChanged}"
+                   Visibility="{Binding EditMode, Converter={StaticResource editModeConverter}}"/>
+          <ComboBox Grid.Column="1"
+                    Grid.Row="2"
+                    Style="{StaticResource ComboBoxStyle}"
+                    IsEnabled="{Binding Path=JnyToList, Converter={StaticResource collectionToBoolConverter}}"
+                    ItemsSource="{Binding Path=JnyToList}"
+                    SelectedIndex="{Binding JnyToIndex}"
+                    Visibility="{Binding EditMode, Converter={StaticResource notEditModeConverter}}"/>
+          <Label Grid.Column="0"
+                 Grid.Row="3"
+                 Style="{StaticResource StdLabel}"
+                 Content="Via"/>
+          <TextBox Grid.Column="1"
+                   Grid.Row="3"
+                   Style="{StaticResource StdTextBoxStyle}"
+                   Text="{Binding NewViaRoute, UpdateSourceTrigger=PropertyChanged}"
+                   Visibility="{Binding EditMode, Converter={StaticResource editModeConverter}}"/>
+          <ComboBox Grid.Column="1"
+                    Grid.Row="3"
+                    Style="{StaticResource ComboBoxStyle}"
+                    IsEnabled="{Binding Path=JnyViaList, Converter={StaticResource collectionToBoolConverterOne}}"
+                    ItemsSource="{Binding Path=JnyViaList}"
+                    SelectedIndex="{Binding JnyViaIndex}"
+                    Visibility="{Binding EditMode, Converter={StaticResource notEditModeConverter}}"/>
+          <Label Grid.Column="0"
+                 Grid.Row="4"
+                 Content="Miles"
+                 Style="{StaticResource StdLabel}"
+                 Visibility="{Binding EditMode, Converter={StaticResource editModeConverter}}"/>
+
+          <Grid Grid.Column="1"
+                Grid.Row="4"
+                Visibility="{Binding EditMode, Converter={StaticResource editModeConverter}}">
+            <Grid.ColumnDefinitions>
+              <ColumnDefinition Width="*"/>
+              <ColumnDefinition Width="auto"/>
+              <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <TextBox Grid.Column="0"
+                     Style="{StaticResource StdTextBoxStyle}"
+                     HorizontalContentAlignment="Right"
+                     Text="{Binding NewOutMiles, UpdateSourceTrigger=PropertyChanged}"/>
+            <Label Grid.Column="1"
+                   Style="{StaticResource StdLabel}"
+                   Content="-"/>
+            <TextBox Grid.Column="2"
+                     Style="{StaticResource StdTextBoxStyle}"
+                     Text="{Binding NewOutChains, UpdateSourceTrigger=PropertyChanged}"/>
+          </Grid>
+          <Button Grid.Column="1"
+                  Grid.Row="4"
+                  Content="Select"
+                  Style="{StaticResource StdButtonStyle}"
+                  Height="20"
+                  Command="{Binding SelectForEditCmd}"
+                  Visibility="{Binding EditMode, Converter={StaticResource notEditModeConverter}}"/>
+
+          <Label Grid.Column="0"
+                 Grid.Row="5"
+                 Style="{StaticResource StdLabel}"
+                 Content="Return"
+                 Visibility="{Binding EditMode, Converter={StaticResource editModeConverter}}"/>
+          <Label Grid.Column="0"
+                 Grid.Row="6"
+                 Style="{StaticResource StdLabel}"
+                 Content="From"
+                 Visibility="{Binding EditMode, Converter={StaticResource editModeConverter}}"/>
+          <TextBlock Grid.Column="1"
+                     Grid.Row="6"
+                     Style="{StaticResource StdTextBlockStyle}"
+                     Text="{Binding NewToStn}"
+                     Visibility="{Binding EditMode, Converter={StaticResource editModeConverter}}"/>
+          <Label Grid.Column="0"
+                 Grid.Row="7"
+                 Style="{StaticResource StdLabel}"
+                 Content="To"
+                 Visibility="{Binding EditMode, Converter={StaticResource editModeConverter}}"/>
+          <TextBlock Grid.Column="1"
+                     Grid.Row="7"
+                     Style="{StaticResource StdTextBlockStyle}"
+                     Text="{Binding NewFromStn}"
+                     Visibility="{Binding EditMode, Converter={StaticResource editModeConverter}}"/>
+          <Label Grid.Column="0"
+                 Grid.Row="8" 
+                 Style="{StaticResource StdLabel}"
+                 Content="Via"
+                 Visibility="{Binding EditMode, Converter={StaticResource editModeConverter}}"/>
+          <TextBox Grid.Column="1"
+                   Grid.Row="8"
+                   Style="{StaticResource StdTextBoxStyle}"
+                   Text="{Binding NewViaReturnRoute}"
+                   Visibility="{Binding EditMode, Converter={StaticResource editModeConverter}}"/>
+          <Label Grid.Column="0"
+                 Grid.Row="9"
+                 Style="{StaticResource StdLabel}"
+                 Content="Miles"
+                 Visibility="{Binding EditMode, Converter={StaticResource editModeConverter}}"/>
+
+          <Grid Grid.Column="1"
+                Grid.Row="9"
+                Visibility="{Binding EditMode, Converter={StaticResource editModeConverter}}">
+            <Grid.ColumnDefinitions>
+              <ColumnDefinition Width="*"/>
+              <ColumnDefinition Width="auto"/>
+              <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <TextBox Grid.Column="0"
+                     Style="{StaticResource StdTextBoxStyle}"
+                     HorizontalContentAlignment="Right"
+                     Text="{Binding NewBackMiles}"/>
+            <Label Grid.Column="1"
+                   Style="{StaticResource StdLabel}"
+                   Content="-"/>
+            <TextBox Grid.Column="2"
+                     Style="{StaticResource StdTextBoxStyle}"
+                     Text="{Binding NewBackChains}"/>
+          </Grid>
+
+          <Grid Grid.Column="0"
+                Grid.Row="10"
+                Grid.ColumnSpan="2">
+            <Grid.ColumnDefinitions>
+              <ColumnDefinition Width="*"/>
+              <ColumnDefinition Width="*"/>
+              <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Button Grid.Column="0"
+                    Style="{StaticResource StdButtonStyle}"
+                    Height="20"
+                    Content="Refresh"
+                    Command="{Binding RefreshCmd}"/>
+            <Button Grid.Column="1"
+                    Style="{StaticResource StdButtonStyle}"
+                    Height="20"
+                    Content="Complete"
+                    Command="{Binding CompleteEditCmd}"/>
+            <Button Grid.Column="2"
+                    Style="{StaticResource StdButtonStyle}"
+                    Height="20"
+                    Content="Close"
+                    Command="{Binding CloseWindowCmd}"/>
+          </Grid>
+        </Grid>
+
+      </TabItem>
+    </TabControl>
+  </Grid>
+</Window>

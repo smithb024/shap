@@ -1,0 +1,29 @@
+﻿<Window x:Class="Shap.Units.VehicleDataWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:converter="clr-namespace:NynaeveLib.Enumerations.Converters;assembly=NynaeveLib"
+        xmlns:commonConverter="clr-namespace:NynaeveLib.Converters;assembly=NynaeveLib"
+        xmlns:shapConverter="clr-namespace:Shap.Common.Converters"
+        xmlns:vdw="clr-namespace:Shap.Units.VDW"
+        Title="VehicleDataWindow"
+        Height="800" Width="600">
+
+  <!-- Believe the view model is UnitViewModel -->
+
+  <Window.Resources>
+    <commonConverter:IntThresholdToVisibiltyConverter x:Key="summaryVisibilityConverter" AboveIsVisible="True" Threshold="10"/>
+    <commonConverter:IntThresholdToVisibiltyConverter x:Key="fullVisibilityConverter" AboveIsVisible="False" Threshold="10"/>
+    <shapConverter:ServiceTypeBrushConverter x:Key="serviceTypeBrushConverter"/>
+  </Window.Resources>
+
+  <Grid Background="{Binding Status, Converter={StaticResource serviceTypeBrushConverter}}">
+    <Grid.RowDefinitions>
+      <RowDefinition Height="150"/>
+      <RowDefinition Height="*"/>
+    </Grid.RowDefinitions>
+
+    <vdw:UnitDetails Grid.Row="0"/>
+    <vdw:FullJourneysList Grid.Row="1" Visibility="{Binding NumberOfJnys, Converter={StaticResource fullVisibilityConverter}}"/>
+    <vdw:SummaryJourneysPane Grid.Row="1" Visibility="{Binding NumberOfJnys, Converter={StaticResource summaryVisibilityConverter}}"/>
+  </Grid>
+</Window>

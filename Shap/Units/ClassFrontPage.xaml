@@ -1,0 +1,41 @@
+﻿<Window x:Class="Shap.Units.ClassFrontPage"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:controls="clr-namespace:Shap.Units.Controls"
+        SnapsToDevicePixels="True"
+        Title="ClassFrontPage" Height="300" Width="300">
+
+  <Grid Background="{StaticResource StdBackground}">
+    <Grid.RowDefinitions>
+      <RowDefinition Height="20"/>
+      <RowDefinition Height="*"/>
+    </Grid.RowDefinitions>
+
+    <StackPanel Orientation="Horizontal"
+                Grid.Row="0">
+      <TextBlock Text="Sub Classes"
+                 Style="{StaticResource StdTextBlockStyle}"/>
+      <ComboBox ItemsSource="{Binding Path=SubClasses}"
+                SelectedIndex="{Binding SubClassIndex}"
+                Style="{StaticResource ComboBoxStyle}"/>
+    </StackPanel>
+
+    <ListView ItemsSource="{Binding CurrentIndex.Units}"
+              Grid.Row="1"
+              VerticalContentAlignment="Stretch"
+              HorizontalContentAlignment="Stretch"
+              Background="Transparent">
+      <ItemsControl.ItemTemplate>
+        <DataTemplate>
+          <Grid>
+            <Grid.InputBindings>
+              <MouseBinding Gesture="LeftDoubleClick"
+                            Command="{Binding OpenWindowCmd}"/>
+            </Grid.InputBindings>
+            <controls:UnitIndex/>
+          </Grid>
+        </DataTemplate>
+      </ItemsControl.ItemTemplate>
+    </ListView>
+  </Grid>
+</Window>

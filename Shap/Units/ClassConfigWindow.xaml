@@ -1,0 +1,185 @@
+﻿<Window x:Class="Shap.Units.ClassConfigWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:shapConverter="clr-namespace:Shap.Common.Converters"
+        Title="ClassConfigWindow"
+        Height="250"
+        Width="500" >
+
+  <Window.Resources>
+    <shapConverter:PathToImageConverter x:Key="pathToImageConverter"/>
+  </Window.Resources>
+
+  <Grid Background="{StaticResource StdBackground}">
+    <Grid.ColumnDefinitions>
+      <ColumnDefinition Width="*"/>
+      <ColumnDefinition Width="2*"/>
+      <ColumnDefinition Width="250"/>
+    </Grid.ColumnDefinitions>
+
+    <DockPanel LastChildFill="True"
+                   Grid.Column="0" DataContext="{Binding ClassData}">
+      <ComboBox DockPanel.Dock="Top"
+                      ItemsSource="{Binding Path=SubClassNumbers}"
+                      SelectedIndex="{Binding SubClassListIndex}"
+                      Style="{StaticResource ComboBoxStyle}">
+      </ComboBox>
+      <Grid DataContext="{Binding SelectedSubClass}">
+        <ListView ItemsSource="{Binding Path=NumbersList}"
+                  Style="{StaticResource StdListViewStyle}"/>
+      </Grid>
+    </DockPanel>
+
+    <StackPanel Grid.Column="1">
+      <StackPanel  DataContext="{Binding ClassData}">
+      <Grid DataContext="{Binding SelectedSubClass}">
+        <Grid.ColumnDefinitions>
+          <ColumnDefinition Width="*"/>
+          <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <TextBlock Text="Image"
+                           Grid.Column="0"
+                           Style="{StaticResource StdTextBlockStyle}"/>
+        <ComboBox Grid.Column="1"
+                          ItemsSource="{Binding Path=SubClassImageList}"
+                          SelectedIndex="{Binding SubClassImageListIndex}"
+                          Style="{StaticResource ComboBoxStyle}"/>
+      </Grid>
+
+      <StackPanel>
+        <Grid>
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+          </Grid.ColumnDefinitions>
+          <TextBlock Text="Version"
+                               Grid.Column="0"
+                               Style="{StaticResource StdTextBlockStyle}"/>
+          <TextBox Text="{Binding Version}"
+                             Grid.Column="1"
+                             Style="{StaticResource StdTextBoxStyle}"/>
+        </Grid>
+        <Grid>
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+          </Grid.ColumnDefinitions>
+          <TextBlock Text="Formation"
+                               Grid.Column="0"
+                               Style="{StaticResource StdTextBlockStyle}"/>
+          <TextBox Text="{Binding Formation}"
+                             Grid.Column="1"
+                             Style="{StaticResource StdTextBoxStyle}"/>
+        </Grid>
+        <Grid>
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+          </Grid.ColumnDefinitions>
+          <TextBlock Text="Year"
+                               Grid.Column="0"
+                               Style="{StaticResource StdTextBlockStyle}"/>
+          <TextBox Text="{Binding Year}"
+                             Grid.Column="1"
+                             Style="{StaticResource StdTextBoxStyle}"/>
+        </Grid>
+        <Grid>
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+          </Grid.ColumnDefinitions>
+          <TextBlock Text="Alpha Id"
+                               Grid.Column="0"
+                               Style="{StaticResource StdTextBlockStyle}"/>
+          <TextBox Text="{Binding AlphaIdentifier}"
+                             Grid.Column="1"
+                             Style="{StaticResource StdTextBoxStyle}"/>
+        </Grid>
+      </StackPanel>
+      </StackPanel>
+      <StackPanel>
+        <Grid>
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+          </Grid.ColumnDefinitions>
+          <Button Content="New Sub Class"
+                  Grid.Column="0"
+                  Grid.ColumnSpan="2"
+                    Style="{StaticResource StdButtonStyle}"
+                    Height="20"
+                    Margin="2"
+                    Command="{Binding AddNewSubClassCmd}"/>
+        </Grid>
+        <Grid>
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+          </Grid.ColumnDefinitions>
+          <Button Content="New Number"
+                  Grid.Column="0"
+                  Grid.ColumnSpan="2"
+                    Style="{StaticResource StdButtonStyle}"
+                    Height="20"
+                    Margin="2"
+                    Command="{Binding AddNewNumberCmd}"/>
+        </Grid>
+        <Grid>
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+          </Grid.ColumnDefinitions>
+          <Button Content="New Number Series"
+                  Grid.Column="0"
+                  Grid.ColumnSpan="2"
+                    Style="{StaticResource StdButtonStyle}"
+                    Height="20"
+                    Margin="2"
+                    Command="{Binding AddNewNumberSeriesCmd}"/>
+        </Grid>
+        <Grid>
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+          </Grid.ColumnDefinitions>
+          <Button Content="Renumber"
+                  Grid.Column="0"
+                  Grid.ColumnSpan="2"
+                    Style="{StaticResource StdButtonStyle}"
+                    Height="20"
+                    Margin="2"
+                    Command="{Binding RenumberCmd}"/>
+        </Grid>
+      </StackPanel>
+    </StackPanel>
+
+
+    <Grid Grid.Column="2">
+      <Grid.RowDefinitions>
+        <RowDefinition Height="150"/>
+        <RowDefinition Height="*"/>
+        <RowDefinition Height="25"/>
+      </Grid.RowDefinitions>
+    <Image Grid.Row="0"
+           Height="150"
+           Width="250" 
+           Source="{Binding ClassData.SelectedSubClass.SubClassImagePath}"/>
+    <!--<Image Grid.Column="3"
+               Source="{Binding ClassData.SelectedSubClass.SubClassImagePath, Converter={StaticResource pathToImageConverter}}"/>-->
+      <StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right">
+        <Button Content="Save"
+                    Style="{StaticResource StdButtonStyle}"
+                    Height="20"
+                Width="100"
+                    Margin="2"
+                    Command="{Binding SaveCmd}"/>
+        <Button Content="Close"
+                    Style="{StaticResource StdButtonStyle}"
+                    Height="20"
+                Width="100"
+                    Margin="2"
+                    Command="{Binding CloseCmd}"/>
+      </StackPanel>
+    </Grid>
+  </Grid>
+</Window>

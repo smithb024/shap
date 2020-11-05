@@ -1,0 +1,196 @@
+﻿<Window x:Class="Shap.Input.InputForm"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:converter="clr-namespace:NynaeveLib.Enumerations.Converters;assembly=NynaeveLib"
+        xmlns:shapConverter="clr-namespace:Shap.Common.Converters"
+        xmlns:input="clr-namespace:Shap.Input"
+        xmlns:icons="clr-namespace:Shap.Icons"
+        xmlns:sys="clr-namespace:System;assembly=mscorlib"
+        Title="InputForm" Height="450" Width="792"
+        FocusManager.FocusedElement="{Binding ElementName=FirstVehicleTextBox}"
+        SnapsToDevicePixels="True">
+
+  <Window.Resources>
+    <converter:StringToVisCollapsedVisibilityConverter x:Key="visibilityConverter"/>
+    <shapConverter:CollectionToBoolConverter x:Key="collectionToBoolConverter"/>
+    <shapConverter:CollectionToBoolConverter x:Key="collectionToBoolConverterOne" MinValue="1"/>
+    <shapConverter:RouteEnabledConverter x:Key="routeEnabledConverter"/>
+  </Window.Resources>
+
+  <Grid Background="{StaticResource StdBackground}">
+    <Grid.RowDefinitions>
+      <RowDefinition Height="Auto"/>
+      <RowDefinition Height="Auto"/>
+      <RowDefinition Height="*"/>
+      <RowDefinition Height="25"/>
+    </Grid.RowDefinitions>
+
+    <icons:MonthBar Grid.Row="0" DataContext="{Binding}" IsTabStop="False"/>
+
+    <Grid Grid.Row="1">
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="100"/>
+        <ColumnDefinition Width="*"/>
+        <ColumnDefinition Width="80"/>
+      </Grid.ColumnDefinitions>
+
+      <StackPanel Grid.Column="0">
+        <DatePicker SelectedDate="{Binding Date}"
+                    TabIndex="10"/>
+        <Grid>
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+          </Grid.ColumnDefinitions>
+          <Button Content="˂-"
+                  Grid.Column="0"
+                  TabIndex="11"
+                Command="{Binding PreviousDayCmd}"
+                Style="{StaticResource StdButtonStyle}"
+                Height="20"
+                Margin="2"/>
+          <Button Content="-˃"
+                  Grid.Column="1"
+                  TabIndex="12"
+                Command="{Binding NextDayCmd}"
+                Style="{StaticResource StdButtonStyle}"
+                Height="20"
+                Margin="2"/>
+
+        </Grid>
+        <Label Content="{Binding DayDistanceString}"
+               Style="{StaticResource StdLabel}"
+               Foreground="{StaticResource StdForeground}"/>
+      </StackPanel>
+
+      <Grid Grid.Column="1">
+        <Grid.RowDefinitions>
+          <RowDefinition Height="*"/>
+          <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="0">
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+          </Grid.ColumnDefinitions>
+
+          <TextBox Grid.Column="0"
+                 Margin="2"
+                 Text="{Binding FirstVehicle}"
+                 Style="{StaticResource StdTextBoxStyle}"
+                   TabIndex="0"
+                   Name="FirstVehicleTextBox"/>
+          <TextBox Grid.Column="1" 
+                   TabIndex="1"
+                 Margin="2"
+                 Text="{Binding SecondVehicle}"
+                 Style="{StaticResource StdTextBoxStyle}"/>
+          <TextBox Grid.Column="2" 
+                   TabIndex="2"
+                 Margin="2"
+                 Text="{Binding ThirdVehicle}"
+                 Style="{StaticResource StdTextBoxStyle}"/>
+          <TextBox Grid.Column="3"
+                   TabIndex="3"
+                 Margin="2"
+                 Text="{Binding FourthVehicle}"
+                 Style="{StaticResource StdTextBoxStyle}"/>
+        </Grid>
+
+        <Grid Grid.Row="1">
+          <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+          </Grid.RowDefinitions>
+          <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+          </Grid.ColumnDefinitions>
+
+          <ComboBox Grid.Row="0"
+                    Grid.Column="0"
+                    Grid.ColumnSpan="2"
+                    TabIndex="4"
+                    Margin="2"
+                    IsEnabled="{Binding Path=JnyFromList, Converter={StaticResource collectionToBoolConverter}}"
+                    ItemsSource="{Binding Path=JnyFromList}"
+                    SelectedIndex="{Binding JnyFromIndex}"
+                    Style="{StaticResource ComboBoxStyle}"/>
+          <ComboBox Grid.Row="0"
+                    Grid.Column="2"
+                    Grid.ColumnSpan="2"
+                    TabIndex="5"
+                    Margin="2"
+                    IsEnabled="{Binding Path=JnyToList, Converter={StaticResource collectionToBoolConverterOne}}"
+                    ItemsSource="{Binding Path=JnyToList}"
+                    SelectedIndex="{Binding JnyToIndex}"
+                    Style="{StaticResource ComboBoxStyle}"/>
+          <ComboBox Grid.Row="1"
+                    Grid.Column="0"
+                    Grid.ColumnSpan="3"
+                    TabIndex="6"
+                  Margin="2"
+                  IsEnabled="{Binding Path=JnyViaList, Converter={StaticResource routeEnabledConverter}}"
+                  ItemsSource="{Binding Path=JnyViaList}"
+                  SelectedIndex="{Binding JnyViaIndex}"
+                  Style="{StaticResource ComboBoxStyle}"/>
+          <Label Grid.Row="1"
+                 Grid.Column="3 "
+                 Margin="2"
+                 Style="{StaticResource StdLabel}"
+                 Foreground="{StaticResource StdForeground}"
+                 Content="{Binding JnyDistanceString}"/>
+        </Grid>
+      </Grid>
+
+      <StackPanel Grid.Column="2">
+        <!--FocusManager.FocusedElement="{Binding ElementName=FirstVehicleTextBox}"-->
+        <Button Content="Add"
+                Command="{Binding AddJnyCmd}"
+                TabIndex="7"
+                Style="{StaticResource StdButtonStyle}"
+                Height="20"
+                Margin="2"
+                />
+        <Button Content="Save"
+                Command="{Binding SaveCmd}"
+                TabIndex="8"
+                Style="{StaticResource StdButtonStyle}"
+                Height="20"
+                Margin="2"/>
+        <Button Content="Close"
+                Command="{Binding CloseCmd}"
+                TabIndex="9"
+                Style="{StaticResource StdButtonStyle}"
+                Height="20"
+                Margin="2"/>
+      </StackPanel>
+    </Grid>
+
+    <ListBox ItemsSource="{Binding JnyList}"
+             HorizontalContentAlignment="Stretch"
+             Margin="0"
+             IsTabStop="False"
+             Grid.Row="2"
+             VerticalAlignment="Top"
+             BorderThickness="0"
+             Background="{StaticResource StdBackground}">
+      <ListBox.ItemTemplate>
+        <DataTemplate>
+          <input:InputJnyRow/>
+        </DataTemplate>
+      </ListBox.ItemTemplate>
+    </ListBox>
+
+    <Label Grid.Row="3"
+           Margin="2"
+           Style="{StaticResource StdLabel}"
+           Foreground="{StaticResource StdForeground}"
+           Content="{Binding Status}"/>
+  </Grid>
+</Window>

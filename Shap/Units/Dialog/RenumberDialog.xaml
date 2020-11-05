@@ -1,0 +1,67 @@
+﻿<Window x:Class="Shap.Units.Dialog.RenumberDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Shap.Units.Dialog"
+        mc:Ignorable="d"
+        Background="{StaticResource StdBackground}"
+        Name="Renumber"
+        Title="RenumberDialog" Height="300" Width="350">
+  <Grid>
+    <Grid.RowDefinitions>
+      <RowDefinition Height="20"/>
+      <RowDefinition Height="*"/>
+    </Grid.RowDefinitions>
+
+    <StackPanel Orientation="Horizontal"
+                Grid.Row="0">
+      <TextBlock Text="Sub Classes"
+                 Style="{StaticResource StdTextBlockStyle}"/>
+      <ComboBox ItemsSource="{Binding Path=SubClasses}"
+                SelectedIndex="{Binding SubClassIndex}"
+                Style="{StaticResource ComboBoxStyle}"/>
+    </StackPanel>
+
+    <Grid Grid.Row="1">
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="*"/>
+        <ColumnDefinition Width="*"/>
+        <ColumnDefinition Width="2*"/>
+      </Grid.ColumnDefinitions>
+
+      <ListView Grid.Column="0"
+                Style="{StaticResource StdListViewStyle}"
+                ItemsSource="{Binding Path=CurrentSubClassNumbersList}"
+                SelectedIndex="{Binding CurrentSubClassNumbersIndex}"/>
+
+      <StackPanel Grid.Column="1">
+        <TextBox Text="{Binding NewNumber}"
+                 Style="{StaticResource StdTextBoxStyle}"/>
+        <TextBox Text="{Binding TotalNumberToChange}"
+                 Style="{StaticResource StdTextBoxStyle}"/>
+        <ListView ItemsSource="{Binding Path=SubClasses}"
+                  Style="{StaticResource StdListViewStyle}"
+                  SelectedIndex="{Binding NewSubClassListIndex}"/>
+        <Button Content="Ok"
+                Style="{StaticResource StdButtonStyle}"
+                Height="20"
+                Width="75"
+                Margin="2"
+                Command="{Binding OkCmd}"
+                CommandParameter="{Binding ElementName=Renumber}"/>
+        <Button Content="Cancel"
+                Style="{StaticResource StdButtonStyle}"
+                Height="20"
+                Width="75"
+                Margin="2"
+                IsCancel="True"/>
+      </StackPanel>
+
+      <ListView Grid.Column="2"
+                Style="{StaticResource StdListViewStyle}"
+                ItemsSource="{Binding Path=NewNumbersDescriptionsList}"/>
+
+    </Grid>
+  </Grid>
+</Window>

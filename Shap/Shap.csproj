@@ -1,0 +1,589 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{4E9F2974-E35E-4B3A-AD99-A6DCBE44BB47}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Shap</RootNamespace>
+    <AssemblyName>Shap</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>shap.ico</ApplicationIcon>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject>
+    </StartupObject>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="GalaSoft.MvvmLight, Version=5.3.0.19026, Culture=neutral, PublicKeyToken=e7570ab207bcb616, processorArchitecture=MSIL">
+      <HintPath>..\packages\MvvmLightLibs.5.3.0.0\lib\net45\GalaSoft.MvvmLight.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="GalaSoft.MvvmLight.Extras, Version=5.3.0.19032, Culture=neutral, PublicKeyToken=669f0b5e8f868abf, processorArchitecture=MSIL">
+      <HintPath>..\packages\MvvmLightLibs.5.3.0.0\lib\net45\GalaSoft.MvvmLight.Extras.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="GalaSoft.MvvmLight.Platform, Version=5.3.0.19032, Culture=neutral, PublicKeyToken=5f873c45e98af8a1, processorArchitecture=MSIL">
+      <HintPath>..\packages\MvvmLightLibs.5.3.0.0\lib\net45\GalaSoft.MvvmLight.Platform.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Practices.ServiceLocation, Version=1.3.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\CommonServiceLocator.1.3\lib\portable-net4+sl5+netcore45+wpa81+wp8\Microsoft.Practices.ServiceLocation.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="NynaeveLib">
+      <HintPath>..\NynaeveLib.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\MvvmLightLibs.5.3.0.0\lib\net45\System.Windows.Interactivity.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Xml" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Xaml">
+      <RequiredTargetFramework>4.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="WindowsBase" />
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
+  </ItemGroup>
+  <ItemGroup>
+    <ApplicationDefinition Include="App.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </ApplicationDefinition>
+    <Compile Include="Analysis\Converters\YearTotalsBrushConverter.cs" />
+    <Compile Include="Analysis\Converters\MonthTotalsBrushConverter.cs" />
+    <Compile Include="Analysis\Converters\TotalsBrushConverter.cs" />
+    <Compile Include="Analysis\Converters\LocationBrushConverter.cs" />
+    <Compile Include="Analysis\ViewModels\AnalysisViewModel.cs" />
+    <Compile Include="Analysis\ViewModels\ClassAnalysisViewModel.cs" />
+    <Compile Include="Analysis\ClassReportFactory.cs" />
+    <Compile Include="Analysis\ClassCounter.cs" />
+    <Compile Include="Analysis\Interfaces\ICsvOut.cs" />
+    <Compile Include="Analysis\ViewModels\Data\FullYearViewModel.cs" />
+    <Compile Include="Analysis\ViewModels\Data\TotalsViewModel.cs" />
+    <Compile Include="Analysis\ViewModels\LocationAnalysisViewModel.cs" />
+    <Compile Include="Analysis\LocationCounter.cs" />
+    <Compile Include="Analysis\ViewModels\ClassAnalysisDashboardViewModel.cs" />
+    <Compile Include="Analysis\ViewModels\Data\LocationViewModel.cs" />
+    <Compile Include="Analysis\ViewModels\LocationAnalysisDashboardViewModel.cs" />
+    <Compile Include="Analysis\ReportCounterManager.cs" />
+    <Compile Include="Analysis\ReportFactoryCommon.cs" />
+    <Compile Include="Analysis\LocationReportFactory.cs" />
+    <Compile Include="Analysis\ViewComponents\ClassControl.xaml.cs">
+      <DependentUpon>ClassControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Analysis\ViewComponents\LocationControl.xaml.cs">
+      <DependentUpon>LocationControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Analysis\ViewModels\ResultsPresentation\FullYearCounterResultsViewModel.cs" />
+    <Compile Include="Analysis\ViewModels\ResultsPresentation\TotalsCounterResultsViewModel.cs" />
+    <Compile Include="Analysis\ViewModels\ResultsPresentation\LocationCounterResultsViewModel.cs" />
+    <Compile Include="Analysis\Windows\AnalysisWindow.xaml.cs">
+      <DependentUpon>AnalysisWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Analysis\Windows\ClassAnalysisWindow.xaml.cs">
+      <DependentUpon>ClassAnalysisWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Analysis\Windows\Data\FullYearItem.xaml.cs">
+      <DependentUpon>FullYearItem.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Analysis\Windows\Data\LocationItem.xaml.cs">
+      <DependentUpon>LocationItem.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Analysis\Windows\Data\TotalItem.xaml.cs">
+      <DependentUpon>TotalItem.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Analysis\Windows\LocationAnalysisWindow.xaml.cs">
+      <DependentUpon>LocationAnalysisWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Analysis\Windows\ResultsPresentation\FullYearCounterResults.xaml.cs">
+      <DependentUpon>FullYearCounterResults.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Analysis\Windows\ResultsPresentation\LocationCounterResults.xaml.cs">
+      <DependentUpon>LocationCounterResults.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Analysis\Windows\ResultsPresentation\TotalsCounterResults.xaml.cs">
+      <DependentUpon>TotalsCounterResults.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Analysis\YearCounter.cs" />
+    <Compile Include="ColourResourcesClass.cs" />
+    <Compile Include="Common\BasePathReader.cs" />
+    <Compile Include="Common\Commands\CommonCommand.cs" />
+    <Compile Include="Common\Converters\ComponentStateBrushConverter.cs" />
+    <Compile Include="Common\Converters\RouteEnabledConverter.cs" />
+    <Compile Include="Common\Converters\IntToVisibilityConverter.cs" />
+    <Compile Include="Common\Converters\TrafficLightColourIntConverter.cs" />
+    <Compile Include="Common\Converters\ServiceTypeBrushConverter.cs" />
+    <Compile Include="Common\Converters\ServiceTypeColourConverter.cs" />
+    <Compile Include="Common\Converters\DayIconHighlightBrushConverter.cs" />
+    <Compile Include="Common\Converters\DayIconBackgroundColourConverter.cs" />
+    <Compile Include="Common\Converters\PathToImageConverter.cs" />
+    <Compile Include="Common\Converters\CollectionToBoolConverter.cs" />
+    <Compile Include="Common\Converters\HighlightBackgroundColourConverter.cs" />
+    <Compile Include="Common\Converters\ServiceTypeToBrushHelper.cs" />
+    <Compile Include="Common\ViewModel\LocationCounterManagerViewModel.cs" />
+    <Compile Include="Common\ViewModel\LocationCounterViewModel.cs" />
+    <Compile Include="Config\ConfigJobType.cs" />
+    <Compile Include="Config\ConfigViewModel.cs" />
+    <Compile Include="Config\ConfigWindow.xaml.cs">
+      <DependentUpon>ConfigWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Config\GroupsAndClassesDialog.xaml.cs">
+      <DependentUpon>GroupsAndClassesDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Config\GroupsAndClassesIOController.cs" />
+    <Compile Include="Config\ConfigFormCmd.cs" />
+    <Compile Include="Config\GroupsAndClassesViewModel.cs" />
+    <Compile Include="Config\PopularStnConfigDialog.xaml.cs">
+      <DependentUpon>PopularStnConfigDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Config\PopularStnConfigViewModel.cs" />
+    <Compile Include="Config\PopularStnIOController.cs" />
+    <Compile Include="DisplayWindowCmd.cs" />
+    <Compile Include="Icons\DayIcon.xaml.cs">
+      <DependentUpon>DayIcon.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Icons\Led.xaml.cs">
+      <DependentUpon>Led.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Icons\MonthBar.xaml.cs">
+      <DependentUpon>MonthBar.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Input\DayViewModel.cs" />
+    <Compile Include="Input\Factories\DailyInputFactory.cs" />
+    <Compile Include="Input\InputFormCmd.cs" />
+    <Compile Include="Input\InputForm.xaml.cs">
+      <DependentUpon>InputForm.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Input\InputFormViewModel.cs" />
+    <Compile Include="Input\InputJnyRow.xaml.cs">
+      <DependentUpon>InputJnyRow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Interfaces\Config\IGroupsAndClassesIOController.cs" />
+    <Compile Include="Interfaces\Types\ISubClassDataType.cs" />
+    <Compile Include="Interfaces\Types\IVehicleDetailsType.cs" />
+    <Compile Include="Interfaces\Types\IJouneyDetailsType.cs" />
+    <Compile Include="Interfaces\Types\IJnyId.cs" />
+    <Compile Include="Interfaces\Types\IVehicleNumberType.cs" />
+    <Compile Include="Interfaces\Units\ISubClassViewModel.cs" />
+    <Compile Include="Interfaces\Units\IUnitViewModel.cs" />
+    <Compile Include="Interfaces\ViewModels\IJourneyViewModel.cs" />
+    <Compile Include="MainWindowViewModel.cs" />
+    <Compile Include="StaticResources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>StaticResources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="StationDetails\EditMileageViewModel.cs" />
+    <Compile Include="StationDetails\EditMileageWindow.xaml.cs">
+      <DependentUpon>EditMileageWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="StationDetails\JourneyIOController.cs" />
+    <Compile Include="StationDetails\MileageDetailsRow.xaml.cs">
+      <DependentUpon>MileageDetailsRow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="StationDetails\MileageDetailsViewModel.cs" />
+    <Compile Include="StationDetails\MileageDetailsWindow.xaml.cs">
+      <DependentUpon>MileageDetailsWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="StationDetails\EditViewModelCmd.cs" />
+    <Compile Include="StationDetails\StnDetailsCmd.cs" />
+    <Compile Include="Stats\FirstExampleIOController.cs" />
+    <Compile Include="Stats\FirstExampleManager.cs" />
+    <Compile Include="Stats\LocalListType.cs" />
+    <Compile Include="Types\ClassDataType.cs" />
+    <Compile Include="Types\Enum\ComponentState.cs" />
+    <Compile Include="Types\Enum\MainCommands.cs" />
+    <Compile Include="Types\Factories\JourneyFactory.cs" />
+    <Compile Include="Types\FirstExampleType.cs" />
+    <Compile Include="Types\GroupBoundsType.cs" />
+    <Compile Include="Types\GroupTypes.cs" />
+    <Compile Include="Types\JnyId.cs" />
+    <Compile Include="Types\JouneyDetailsType.cs" />
+    <Compile Include="Types\RouteDetailsType.cs" />
+    <Compile Include="Types\SubClassDataType.cs" />
+    <Compile Include="Types\VehicleDetailsViewModel.cs" />
+    <Compile Include="Types\VehicleNumberType.cs" />
+    <Compile Include="Types\VehicleServiceType.cs" />
+    <Compile Include="Types\ViewModels\JourneyViewModel.cs" />
+    <Compile Include="Units\ClassConfigViewModel.cs" />
+    <Compile Include="Units\ClassConfigWindow.xaml.cs">
+      <DependentUpon>ClassConfigWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Units\ClassFrontPage.xaml.cs">
+      <DependentUpon>ClassFrontPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Units\Factories\SearcherResults.cs" />
+    <Compile Include="Units\Factories\SubClassFactory.cs" />
+    <Compile Include="Units\IO\IndividualUnitFileContents.cs" />
+    <Compile Include="Units\Factories\Searcher.cs" />
+    <Compile Include="Units\SubClassViewModel.cs" />
+    <Compile Include="Units\ClassFunctionalViewModel.cs" />
+    <Compile Include="Units\ClassIndexGroup.xaml.cs">
+      <DependentUpon>ClassIndexGroup.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Units\ClassIndexGroupViewModel.cs" />
+    <Compile Include="Units\Controls\UnitIndex.xaml.cs">
+      <DependentUpon>UnitIndex.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Units\Dialog\NewNumberDialog.xaml.cs">
+      <DependentUpon>NewNumberDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Units\Dialog\NewNumberSeriesDialog.xaml.cs">
+      <DependentUpon>NewNumberSeriesDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Units\Base\SubClassSelectorViewModel.cs" />
+    <Compile Include="Units\Dialog\NewNumberViewModel.cs" />
+    <Compile Include="Units\Dialog\NewSubClassDialog.xaml.cs">
+      <DependentUpon>NewSubClassDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Units\Dialog\NewSubClassViewModel.cs" />
+    <Compile Include="Units\Dialog\RenumberDialog.xaml.cs">
+      <DependentUpon>RenumberDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Units\Dialog\RenumberViewModel.cs" />
+    <Compile Include="Units\IndexItem.xaml.cs">
+      <DependentUpon>IndexItem.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Units\IndexItemViewModel.cs" />
+    <Compile Include="Units\ClassIndexCmd.cs" />
+    <Compile Include="Units\ClassIndexViewModel.cs" />
+    <Compile Include="Units\ClassIndexWindow.xaml.cs">
+      <DependentUpon>ClassIndexWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Units\IO\IndividualUnitIOController.cs" />
+    <Compile Include="Units\IO\UnitsIOController.cs" />
+    <Compile Include="Units\IO\UnitsXmlIOController.cs" />
+    <Compile Include="Units\UnitViewModel.cs" />
+    <Compile Include="Units\VDW\CutdownJourneyList.xaml.cs">
+      <DependentUpon>CutdownJourneyList.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Units\VDW\FullJourneysList.xaml.cs">
+      <DependentUpon>FullJourneysList.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Units\VDW\JourneyRow.xaml.cs">
+      <DependentUpon>JourneyRow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Units\VDW\JourneySummary.xaml.cs">
+      <DependentUpon>JourneySummary.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Units\VDW\LocationSummary.xaml.cs">
+      <DependentUpon>LocationSummary.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Units\VDW\LocationSummaryItem.xaml.cs">
+      <DependentUpon>LocationSummaryItem.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Units\VDW\SummaryJourneysPane.xaml.cs">
+      <DependentUpon>SummaryJourneysPane.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Units\VDW\UnitDetails.xaml.cs">
+      <DependentUpon>UnitDetails.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Units\VehicleDataWindow.xaml.cs">
+      <DependentUpon>VehicleDataWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="ViewModel\MainViewModel.cs" />
+    <Compile Include="ViewModel\ViewModelLocator.cs" />
+    <Page Include="Analysis\ViewComponents\ClassControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Analysis\ViewComponents\LocationControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Analysis\Windows\AnalysisWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Analysis\Windows\ClassAnalysisWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Analysis\Windows\Data\FullYearItem.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Analysis\Windows\Data\LocationItem.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Analysis\Windows\Data\TotalItem.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Analysis\Windows\LocationAnalysisWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Analysis\Windows\ResultsPresentation\FullYearCounterResults.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Analysis\Windows\ResultsPresentation\LocationCounterResults.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Analysis\Windows\ResultsPresentation\TotalsCounterResults.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Config\ConfigWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Config\GroupsAndClassesDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Config\PopularStnConfigDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Icons\DayIcon.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Icons\Led.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Icons\MonthBar.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Input\InputForm.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Input\InputJnyRow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="MainWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Compile Include="App.xaml.cs">
+      <DependentUpon>App.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="MainWindow.xaml.cs">
+      <DependentUpon>MainWindow.xaml</DependentUpon>
+      <SubType>Code</SubType>
+    </Compile>
+    <Page Include="StationDetails\EditMileageWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="StationDetails\MileageDetailsRow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="StationDetails\MileageDetailsWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Styles\BrushDictionary.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Styles\ButtonStyles.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Styles\CheckboxStyles.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Styles\ComboBoxStyles.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Styles\DataEntryStyles.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Styles\LabelStyles.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Styles\GlobalStyles.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Styles\ListViewStyles.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Styles\ListBoxStyles.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Styles\TextBlockStyles.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Units\ClassConfigWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Units\ClassFrontPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Units\ClassIndexGroup.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Units\ClassIndexWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Units\Controls\UnitIndex.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Units\Dialog\NewNumberDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Units\Dialog\NewNumberSeriesDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Units\Dialog\NewSubClassDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Units\Dialog\RenumberDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Units\IndexItem.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Units\VDW\CutdownJourneyList.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Units\VDW\FullJourneysList.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Units\VDW\JourneyRow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Units\VDW\JourneySummary.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Units\VDW\LocationSummary.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Units\VDW\LocationSummaryItem.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Units\VDW\SummaryJourneysPane.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Units\VDW\UnitDetails.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Units\VehicleDataWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Properties\AssemblyInfo.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="StaticResources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>StaticResources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <None Include="packages.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <AppDesigner Include="Properties\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Common\Controls\" />
+    <Folder Include="Units\Interfaces\" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="shap.ico" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

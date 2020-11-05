@@ -1,0 +1,14 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:Shap.Styles">
+
+  <Style x:Key="StdListViewStyle" TargetType="{x:Type ListView}">
+    <Setter Property="FontSize" Value="10" />
+    <Setter Property="FontFamily" Value="Segoe UI"/>
+    <Setter Property="FontWeight" Value="Regular"/>
+    <Setter Property="SnapsToDevicePixels" Value="True"/>
+    <Setter Property="Background" Value="{StaticResource StdBackground}"/>
+    <Setter Property="Foreground" Value="{StaticResource StdForeground}"/>
+  </Style>
+
+</ResourceDictionary>

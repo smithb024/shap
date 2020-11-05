@@ -1,0 +1,39 @@
+﻿<UserControl x:Class="Shap.StationDetails.MileageDetailsRow"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             mc:Ignorable="d" 
+             Background="{StaticResource StdBackground}"
+             d:DesignHeight="300" d:DesignWidth="300">
+
+  <Border Background="{StaticResource StdBackground}"
+          BorderBrush="{StaticResource ListBorderColour}"
+          BorderThickness="0,0,0,1">
+    <Grid>
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="50"/>
+        <ColumnDefinition Width="150"/>
+        <ColumnDefinition Width="150"/>
+        <ColumnDefinition Width="50"/>
+        <ColumnDefinition Width="*"/>
+      </Grid.ColumnDefinitions>
+
+      <TextBlock Grid.Column="0"
+                 Style="{StaticResource StdTextBlockStyle}"
+                 Text="{Binding Key}"/>
+      <TextBlock Grid.Column="1"
+                 Style="{StaticResource StdTextBlockStyle}"
+                 Text="{Binding From}"/>
+      <TextBlock Grid.Column="2"
+                 Style="{StaticResource StdTextBlockStyle}"
+                 Text="{Binding To}"/>
+      <TextBlock Grid.Column="3"
+                 Style="{StaticResource StdTextBlockStyle}"
+                 Text="{Binding Distance}"/>
+      <TextBlock Grid.Column="4"
+                 Style="{StaticResource StdTextBlockStyle}"
+                 Text="{Binding Via}"/>
+    </Grid>
+  </Border>
+</UserControl>

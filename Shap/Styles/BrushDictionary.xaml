@@ -1,0 +1,36 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:local="clr-namespace:Shap.Styles">
+  
+  <SolidColorBrush x:Key="StdBackground" Color="#FF003200"/>
+  <SolidColorBrush x:Key="StdForeground" Color="White"/>
+  <SolidColorBrush x:Key="LowLightForeground" Color="DarkSeaGreen"/>
+
+  <SolidColorBrush x:Key="StdControlBorder" Color="Honeydew"/>
+
+  <!--Button Colours-->
+  <Color x:Key="DisabledButtonBackgroundColour">DarkSeaGreen</Color>
+
+  <SolidColorBrush x:Key="ButtonBackground" Color="Black"/>
+  <SolidColorBrush x:Key="DisabledButtonBackgroundBrush" Color="{StaticResource DisabledButtonBackgroundColour}"/>
+  <SolidColorBrush x:Key="ButtonBackgroundHighlighted" Color="Olive"/>
+
+  <SolidColorBrush x:Key="ButtonControlBorder" Color="Honeydew"/>
+  <Color x:Key="ButtonPressedBackground">Gold</Color>
+  <Color x:Key="ButtonHoverBackground">Khaki</Color>
+  <Color x:Key="ButtonFocusBackground">DarkSlateGray</Color>
+  <Color x:Key="HeaderEventSelected">Red</Color>
+
+  <!--Data Entry Colours-->
+  <SolidColorBrush x:Key="DataEntryBackground" Color="DarkGreen"/>
+  <SolidColorBrush x:Key="DisabledDataEntryForeground" Color="Green"/>
+  <SolidColorBrush x:Key="DisabledDataEntryBackground" Color="DarkSeaGreen"/>
+  <SolidColorBrush x:Key="DataEntryForeground" Color="White"/>
+
+  <!--List Highlight Colours -->
+  <SolidColorBrush x:Key="ComboBoxHighlightedBackground" Color="Navy"/>
+  <SolidColorBrush x:Key="ComboBoxListBackground" Color="MediumSeaGreen"/>
+
+  <SolidColorBrush x:Key="ListBorderColour" Color="BurlyWood"/>
+
+</ResourceDictionary>

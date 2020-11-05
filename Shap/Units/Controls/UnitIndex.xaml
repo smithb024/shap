@@ -1,0 +1,52 @@
+﻿<UserControl x:Class="Shap.Units.Controls.UnitIndex"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Shap.Units.Controls"
+             xmlns:nynaeveConverters="clr-namespace:NynaeveLib.Converters;assembly=NynaeveLib"
+             xmlns:shapConverter="clr-namespace:Shap.Common.Converters"
+             xmlns:icons="clr-namespace:Shap.Icons"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300">
+
+  <UserControl.Resources>
+    <nynaeveConverters:IntToVisibilityConverter x:Key="IntVisConverter"/>
+    <shapConverter:ServiceTypeColourConverter x:Key="serviceTypeColourConverter"/>
+  </UserControl.Resources>
+
+  <Border Background="Transparent">
+    <Grid>
+      <Grid.ColumnDefinitions>
+        <ColumnDefinition Width="3*"/>
+        <ColumnDefinition Width="*"/>
+        <ColumnDefinition Width="3*"/>
+        <ColumnDefinition Width="*"/>
+        <ColumnDefinition Width="3*"/>
+      </Grid.ColumnDefinitions>
+
+      <TextBlock Grid.Column="0"
+                 Text="{Binding DisplayUnitNumber}"
+                 Style="{StaticResource StdTextBlockStyle}"/>
+      <icons:Led Grid.Column="1" 
+                 Height="15"
+                 Width="15"
+                 HorizontalAlignment="Center"
+                 LedColour="{Binding Status, Converter={StaticResource serviceTypeColourConverter}}"/>
+      <TextBlock Grid.Column="2"
+                 HorizontalAlignment="Center"
+                 Text="{Binding UnitDistanceString}"
+                 Style="{StaticResource StdTextBlockStyle}"
+                 Visibility="{Binding NumberOfJnys, Converter={StaticResource IntVisConverter}}"/>
+      <TextBlock Grid.Column="3"
+                 HorizontalAlignment="Center"
+                 Text="{Binding NumberOfJnys}"
+                 Style="{StaticResource StdTextBlockStyle}"
+                 Visibility="{Binding NumberOfJnys, Converter={StaticResource IntVisConverter}}"/>
+      <TextBlock Grid.Column="4"
+                 Text="{Binding UnitLastDateString}"
+                 Style="{StaticResource StdTextBlockStyle}"
+                 Visibility="{Binding NumberOfJnys, Converter={StaticResource IntVisConverter}}"/>
+    </Grid>
+  </Border>
+</UserControl>
