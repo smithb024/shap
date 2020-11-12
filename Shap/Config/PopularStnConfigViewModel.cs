@@ -6,8 +6,6 @@
     using System.Windows;
     using System.Windows.Input;
 
-    using GalaSoft.MvvmLight;
-
     using NynaeveLib.Commands;
     using NynaeveLib.DialogService.Interfaces;
     using NynaeveLib.ViewModel;

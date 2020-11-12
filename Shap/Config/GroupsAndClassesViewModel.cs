@@ -1,11 +1,8 @@
 ﻿namespace Shap.Config
 {
-  using System;
   using System.Collections.Generic;
   using System.Collections.ObjectModel;
   using System.Linq;
-  using System.Text;
-  using System.Threading.Tasks;
   using System.Windows;
   using System.Windows.Input;
 
@@ -13,7 +10,6 @@
   using NynaeveLib.DialogService.Interfaces;
   using NynaeveLib.ViewModel;
 
-  using Shap.Common.Commands;
   using Shap.Interfaces.Config;
   using Shap.Types;
 
