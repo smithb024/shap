@@ -2,10 +2,12 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
     using System.Windows.Input;
 
-    using NynaeveLib.Commands;
+    using NynaeveLib.ViewModel;
 
+    using Shap.Common.Commands;
     using Factories;
     using Shap.Interfaces.Types;
     using Shap.Interfaces.Units;
@@ -14,6 +16,7 @@
     using Shap.Types.Factories;
     using Shap.Units.IO;
     using Stats;
+    using Types.ViewModels;
 
     /// <summary>
     /// View model for a single unit. 
