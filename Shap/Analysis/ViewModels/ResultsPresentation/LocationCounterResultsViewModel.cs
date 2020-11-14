@@ -4,8 +4,8 @@
     using System.Linq;
     using System.Windows.Input;
 
-    using Common.Commands;
     using Data;
+    using NynaeveLib.Commands;
     using NynaeveLib.ViewModel;
 
     public class LocationCounterResultsViewModel : ViewModelBase

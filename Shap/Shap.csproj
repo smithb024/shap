@@ -142,7 +142,6 @@
     <Compile Include="Analysis\YearCounter.cs" />
     <Compile Include="ColourResourcesClass.cs" />
     <Compile Include="Common\BasePathReader.cs" />
-    <Compile Include="Common\Commands\CommonCommand.cs" />
     <Compile Include="Common\Converters\ComponentStateBrushConverter.cs" />
     <Compile Include="Common\Converters\RouteEnabledConverter.cs" />
     <Compile Include="Common\Converters\IntToVisibilityConverter.cs" />
@@ -569,7 +568,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Common\Controls\" />
     <Folder Include="Units\Interfaces\" />
   </ItemGroup>
   <ItemGroup>
