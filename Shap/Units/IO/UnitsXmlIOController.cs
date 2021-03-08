@@ -5,12 +5,14 @@
   using System.Xml.Linq; // XML
   using Common;
   using NynaeveLib.Logger;
-  using Shap.Types;
+    using Shap.Common.Factories;
+    using Shap.Common.SerialiseModel.ClassDetails;
+    using Shap.Types;
 
   /// <summary>
   /// Used to read and write to the uts config file.
   /// </summary>
-  public class UnitsXmlIOController
+    public class UnitsXmlIOController
   {
     // Labels in the XML files
     private const string ClassVersionLabel = "ClassVersion";
@@ -40,6 +42,21 @@
     public UnitsXmlIOController(UnitsIOController unitsIoController)
     {
     }
+
+        /// <summary>
+        /// Deserialise the <see cref="ClassDetails"/> from the <paramref name="filename"/>.
+        /// </summary>
+        /// <param name="filename">name of the file to read</param>
+        /// <returns>deserialised file</returns>
+        public ClassDetails Read(string filename)
+        {
+            string myPath = BasePathReader.GetBasePath() + StaticResources.classDetailsPath + filename + XmlExtensionLabel;
+            ClassDetails results =
+                XmlFileIo.ReadXml<ClassDetails>(
+                    myPath);
+
+            return results;
+        }
 
     /// ---------- ---------- ---------- ---------- ---------- ----------
     /// <name>readClassDetailsXML</name>

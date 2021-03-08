@@ -156,6 +156,11 @@
     <Compile Include="Common\Converters\HighlightBackgroundColourConverter.cs" />
     <Compile Include="Common\Converters\ServiceTypeToBrushHelper.cs" />
     <Compile Include="Common\Factories\XmlFileIo.cs" />
+    <Compile Include="Common\SerialiseModel\ClassDetails\ClassDetails.cs" />
+    <Compile Include="Common\SerialiseModel\ClassDetails\Image.cs" />
+    <Compile Include="Common\SerialiseModel\ClassDetails\Number.cs" />
+    <Compile Include="Common\SerialiseModel\ClassDetails\OldNumber.cs" />
+    <Compile Include="Common\SerialiseModel\ClassDetails\Subclass.cs" />
     <Compile Include="Common\ViewModel\LocationCounterManagerViewModel.cs" />
     <Compile Include="Common\ViewModel\LocationCounterViewModel.cs" />
     <Compile Include="Config\ConfigJobType.cs" />
@@ -571,7 +576,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Common\Controls\" />
-    <Folder Include="Common\SerialiseModel\" />
     <Folder Include="Units\Interfaces\" />
   </ItemGroup>
   <ItemGroup>
