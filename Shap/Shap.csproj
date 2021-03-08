@@ -155,6 +155,7 @@
     <Compile Include="Common\Converters\CollectionToBoolConverter.cs" />
     <Compile Include="Common\Converters\HighlightBackgroundColourConverter.cs" />
     <Compile Include="Common\Converters\ServiceTypeToBrushHelper.cs" />
+    <Compile Include="Common\Factories\XmlFileIo.cs" />
     <Compile Include="Common\ViewModel\LocationCounterManagerViewModel.cs" />
     <Compile Include="Common\ViewModel\LocationCounterViewModel.cs" />
     <Compile Include="Config\ConfigJobType.cs" />
@@ -570,6 +571,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Common\Controls\" />
+    <Folder Include="Common\SerialiseModel\" />
     <Folder Include="Units\Interfaces\" />
   </ItemGroup>
   <ItemGroup>
