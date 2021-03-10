@@ -246,6 +246,9 @@
     <Compile Include="Types\VehicleNumberType.cs" />
     <Compile Include="Types\VehicleServiceType.cs" />
     <Compile Include="Types\ViewModels\JourneyViewModel.cs" />
+    <Compile Include="Units\ClassConfigImageSelector.xaml.cs">
+      <DependentUpon>ClassConfigImageSelector.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Units\ClassConfigViewModel.cs" />
     <Compile Include="Units\ClassConfigWindow.xaml.cs">
       <DependentUpon>ClassConfigWindow.xaml</DependentUpon>
@@ -461,6 +464,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Styles\TextBlockStyles.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Units\ClassConfigImageSelector.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
