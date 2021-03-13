@@ -205,6 +205,8 @@
     <Compile Include="Interfaces\Types\IJouneyDetailsType.cs" />
     <Compile Include="Interfaces\Types\IJnyId.cs" />
     <Compile Include="Interfaces\Types\IVehicleNumberType.cs" />
+    <Compile Include="Interfaces\Units\IClassConfigImageSelectorViewModel.cs" />
+    <Compile Include="Interfaces\Units\IClassConfigViewModel.cs" />
     <Compile Include="Interfaces\Units\ISubClassViewModel.cs" />
     <Compile Include="Interfaces\Units\IUnitViewModel.cs" />
     <Compile Include="Interfaces\ViewModels\IJourneyViewModel.cs" />
@@ -249,6 +251,7 @@
     <Compile Include="Units\ClassConfigImageSelector.xaml.cs">
       <DependentUpon>ClassConfigImageSelector.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Units\ClassConfigImageSelectorViewModel.cs" />
     <Compile Include="Units\ClassConfigViewModel.cs" />
     <Compile Include="Units\ClassConfigWindow.xaml.cs">
       <DependentUpon>ClassConfigWindow.xaml</DependentUpon>
@@ -583,7 +586,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Common\Controls\" />
-    <Folder Include="Units\Interfaces\" />
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />

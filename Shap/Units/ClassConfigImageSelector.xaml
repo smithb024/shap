@@ -18,12 +18,12 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
             <TextBlock Text="Image"
-                           Grid.Column="0"
-                           Style="{StaticResource StdTextBlockStyle}"/>
+                       Grid.Column="0"
+                       Style="{StaticResource StdTextBlockStyle}"/>
             <ComboBox Grid.Column="1"
-                          ItemsSource="{Binding Path=SubClassImageList}"
-                          SelectedIndex="{Binding SubClassImageListIndex}"
-                          Style="{StaticResource ComboBoxStyle}"/>
+                      ItemsSource="{Binding Path=SubClassImageList}"
+                      SelectedIndex="{Binding SubClassImageListIndex}"
+                      Style="{StaticResource ComboBoxStyle}"/>
         </Grid>
 
         <Image Grid.Row="1"

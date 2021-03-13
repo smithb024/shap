@@ -14,11 +14,12 @@ namespace Shap.Units
     using Shap.Common.Commands;
     using Shap.Common.Factories;
     using Shap.Common.SerialiseModel.ClassDetails;
+    using Shap.Interfaces.Units;
     using Shap.Types;
     using Shap.Units.IO;
     using Shap.Units.Dialog;
 
-    public class ClassConfigViewModel : ViewModelBase
+    public class ClassConfigViewModel : ViewModelBase, IClassConfigViewModel
     {
         // Constants
         private const string c_noSubClassSelectedWarning = "No sub class has been selected";
