@@ -8,9 +8,9 @@ namespace Shap.Units
     using System.Windows;
     using System.Windows.Input;
 
-    using GalaSoft.MvvmLight;
     using NynaeveLib.DialogService;
     using NynaeveLib.Logger;
+    using NynaeveLib.ViewModel;
     using Shap.Common;
     using Shap.Common.Commands;
     using Shap.Common.Factories;
@@ -385,7 +385,7 @@ namespace Shap.Units
                 }
 
                 this.version = value;
-                this.RaisePropertyChanged(nameof(this.Version));
+                this.RaisePropertyChangedEvent(nameof(this.Version));
                 this.classFileConfiguration.Version = value;
             }
         }
@@ -408,7 +408,7 @@ namespace Shap.Units
                 }
 
                 this.formation = value;
-                this.RaisePropertyChanged(nameof(this.Formation));
+                this.RaisePropertyChangedEvent(nameof(this.Formation));
                 this.classFileConfiguration.Formation = value;
             }
         }
@@ -431,7 +431,7 @@ namespace Shap.Units
                 }
 
                 this.alphaIdentifier = value;
-                this.RaisePropertyChanged(nameof(this.AlphaIdentifier));
+                this.RaisePropertyChangedEvent(nameof(this.AlphaIdentifier));
                 this.classFileConfiguration.AlphaId = value;
             }
         }
@@ -454,7 +454,7 @@ namespace Shap.Units
                 }
 
                 this.year = value;
-                this.RaisePropertyChanged(nameof(this.Year));
+                this.RaisePropertyChangedEvent(nameof(this.Year));
                 this.classFileConfiguration.Year = value;
             }
         }
@@ -482,7 +482,7 @@ namespace Shap.Units
                 }
 
                 this.subClassListIndex = value;
-                this.RaisePropertyChanged(nameof(this.SubClassListIndex));
+                this.RaisePropertyChangedEvent(nameof(this.SubClassListIndex));
                 this.SelectNewSubClass();
             }
         }
@@ -1661,7 +1661,7 @@ namespace Shap.Units
         /// </summary>
         private void CloseWindow()
         {
-            //this.OnClosingRequest();
+            this.OnClosingRequest();
         }
 
         /// <summary>
@@ -1815,8 +1815,8 @@ namespace Shap.Units
             }
 
             this.Images.Clear();
-            this.RaisePropertyChanged(nameof(this.NumbersList));
-            this.RaisePropertyChanged(nameof(this.Images));
+            this.RaisePropertyChangedEvent(nameof(this.NumbersList));
+            this.RaisePropertyChangedEvent(nameof(this.Images));
 
             // Refresh
             foreach (Number number in this.classFileConfiguration.Subclasses[this.SubClassListIndex].Numbers)
@@ -1839,8 +1839,8 @@ namespace Shap.Units
                 this.Images.Add(selector);
             }
 
-            this.RaisePropertyChanged(nameof(this.NumbersList));
-            this.RaisePropertyChanged(nameof(this.Images));
+            this.RaisePropertyChangedEvent(nameof(this.NumbersList));
+            this.RaisePropertyChangedEvent(nameof(this.Images));
         }
     }
 }
