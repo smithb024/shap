@@ -63,7 +63,9 @@
         /// <summary>
         /// Gets or sets the index for the list of sub class image lists.
         /// </summary>
-        public int SubClassImageListIndex { get
+        public int SubClassImageListIndex
+        {
+            get
             {
                 return this.imageIndex;
             }
@@ -77,6 +79,8 @@
 
                 this.imageIndex = value;
                 this.RaisePropertyChanged(nameof(this.SubClassImageListIndex));
+                this.RaisePropertyChanged(nameof(this.SelectedImage));
+                this.RaisePropertyChanged(nameof(this.Path));
                 this.SelectionMadeEvent?.Invoke();
             }
         }

@@ -46,6 +46,11 @@
         ObservableCollection<string> NumbersList { get; }
 
         /// <summary>
+        /// Get the collection of image selector view models.
+        /// </summary>
+        ObservableCollection<IClassConfigImageSelectorViewModel> Images { get; }
+
+        /// <summary>
         /// Indicates whether the save command can be run.
         /// </summary>
         bool CanSave { get; set; }

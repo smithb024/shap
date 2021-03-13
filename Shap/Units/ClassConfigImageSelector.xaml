@@ -29,6 +29,6 @@
         <Image Grid.Row="1"
            Height="150"
            Width="250" 
-           Source="{Binding ClassData.SelectedSubClass.SubClassImagePath}"/>
+           Source="{Binding Path=Path}"/>
     </Grid>
 </UserControl>

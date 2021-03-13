@@ -26,6 +26,11 @@ namespace Shap.Units
         private const string c_noSubClassSelectedWarning = "No sub class has been selected";
 
         /// <summary>
+        /// Indicates the number of images which can be assigned to a specific subclass.
+        /// </summary>
+        private const int MaxImages = 10;
+
+        /// <summary>
         /// The model. This data has been serialised from a configuration file.
         /// </summary>
         private ClassDetails classFileConfiguration;
@@ -106,8 +111,7 @@ namespace Shap.Units
 
             this.SubClassNumbers = new ObservableCollection<string>();
             this.NumbersList = new ObservableCollection<string>();
-
-
+            this.Images = new ObservableCollection<IClassConfigImageSelectorViewModel>();
 
             //this.individualUnitIoController = individualUnitIoController;
             //int formerNumberRowPosition = c_formerNumberPositionY;
@@ -205,79 +209,102 @@ namespace Shap.Units
                 this.alphaIdentifier = this.classFileConfiguration.AlphaId;
                 this.year = this.classFileConfiguration.Year;
 
-                foreach(Subclass subclass in this.classFileConfiguration.Subclasses)
+                foreach (Subclass subclass in this.classFileConfiguration.Subclasses)
                 {
                     this.SubClassNumbers.Add(subclass.Type);
                 }
 
-                if(this.SubClassNumbers.Count > 0)
+                if (this.SubClassNumbers.Count > 0)
                 {
                     this.subClassListIndex = 0;
 
-                    foreach(Number number in this.classFileConfiguration.Subclasses[this.SubClassListIndex].Numbers)
+                    foreach (Number number in this.classFileConfiguration.Subclasses[this.SubClassListIndex].Numbers)
                     {
                         this.NumbersList.Add(number.CurrentNumber);
+                    }
+
+                    for (int imageIndex = 0; imageIndex < MaxImages; ++imageIndex)
+                    {
+                        string imageName =
+                            imageIndex < this.classFileConfiguration.Subclasses[this.SubClassListIndex].Images.Count
+                            ? this.classFileConfiguration.Subclasses[this.SubClassListIndex].Images[imageIndex].Name
+                            : string.Empty;
+
+                        IClassConfigImageSelectorViewModel selector =
+                                new ClassConfigImageSelectorViewModel(
+                                    this.unitsIoController,
+                                    imageName);
+                        this.Images.Add(selector);
                     }
                 }
                 else
                 {
                     this.subClassListIndex = -1;
+
+                    for (int imageIndex = 0; imageIndex < MaxImages; ++imageIndex)
+                    {
+                        IClassConfigImageSelectorViewModel selector =
+                                new ClassConfigImageSelectorViewModel(
+                                    this.unitsIoController,
+                                    string.Empty);
+                        this.Images.Add(selector);
+                    }
+
+                    //this.ClassData =
+                    //  this.unitsXmlIoController.ReadClassDetailsXML(
+                    //    this.unitsIoController,
+                    //    classId);
+
+                    ////if (this.unitsXmlIoController.ReadClassDetailsXML(classId))
+                    ////{
+                    ////this.ClassData = this.unitsXmlIoController.GetClassData();
+                    //this.ClassData?.InitaliseSubClassIndex();
+
+                    //if (this.ClassData != null)
+                    //{
+                    //    this.ClassData.PropertyChanged += ModelChanged;
+                    //}
+
+                    //List<string> imageFileNames = unitsController.GetImageFileList();
+                    //foreach (string str in imageFileNames)
+                    //{
+                    //  this.subClassImageList.Add(str);
+                    //}
+
+                    ////          RepopulateClassConfigForm();
+                    //this.subClassList = new List<string>();
+                    ////      comboBoxSubClass.Items.Clear();
+                    //for (int i = 0; i < m_classData.GetSubClassCount(); ++i)
+                    //{
+                    //  this.subClassList.Add(m_classData.GetSubClass(i));
+                    //}
+                    //this.subClassListIndex = 0;
+
+                    //this.formation = m_classData.GetFormation();
+                    //this.originYear = m_classData.GetYear().ToString();
+                    //this.version = m_classData.GetClassVersion().ToString();
+                    //this.alphaId = m_classData.GetAlphaIdentifier();
+                    //this.subClassImageListIndex = 0;
+
+                    //this.subClassList = new ObservableCollection<SubClassDataType>();
+                    //this.currentNumbersList = new ObservableCollection<VehicleNumberType>();
+                    //foreach (SubClassDataType subClass in this.ClassData.SubClassList)
+                    //{
+                    //  this.subClassList.Add(subClass);
+                    //}
+
+                    //if (this.subClassList.Count > 0)
+                    //{
+                    //  this.subClassListIndex = 0;
+
+                    //  foreach (VehicleNumberType number in this.subClassList[subClassListIndex].GetNumberList())
+                    //  {
+                    //    this.currentNumbersList.Add(number);
+                    //  }
+                    //}
+
+                    //}
                 }
-
-                //this.ClassData =
-                //  this.unitsXmlIoController.ReadClassDetailsXML(
-                //    this.unitsIoController,
-                //    classId);
-
-                ////if (this.unitsXmlIoController.ReadClassDetailsXML(classId))
-                ////{
-                ////this.ClassData = this.unitsXmlIoController.GetClassData();
-                //this.ClassData?.InitaliseSubClassIndex();
-
-                //if (this.ClassData != null)
-                //{
-                //    this.ClassData.PropertyChanged += ModelChanged;
-                //}
-
-                //List<string> imageFileNames = unitsController.GetImageFileList();
-                //foreach (string str in imageFileNames)
-                //{
-                //  this.subClassImageList.Add(str);
-                //}
-
-                ////          RepopulateClassConfigForm();
-                //this.subClassList = new List<string>();
-                ////      comboBoxSubClass.Items.Clear();
-                //for (int i = 0; i < m_classData.GetSubClassCount(); ++i)
-                //{
-                //  this.subClassList.Add(m_classData.GetSubClass(i));
-                //}
-                //this.subClassListIndex = 0;
-
-                //this.formation = m_classData.GetFormation();
-                //this.originYear = m_classData.GetYear().ToString();
-                //this.version = m_classData.GetClassVersion().ToString();
-                //this.alphaId = m_classData.GetAlphaIdentifier();
-                //this.subClassImageListIndex = 0;
-
-                //this.subClassList = new ObservableCollection<SubClassDataType>();
-                //this.currentNumbersList = new ObservableCollection<VehicleNumberType>();
-                //foreach (SubClassDataType subClass in this.ClassData.SubClassList)
-                //{
-                //  this.subClassList.Add(subClass);
-                //}
-
-                //if (this.subClassList.Count > 0)
-                //{
-                //  this.subClassListIndex = 0;
-
-                //  foreach (VehicleNumberType number in this.subClassList[subClassListIndex].GetNumberList())
-                //  {
-                //    this.currentNumbersList.Add(number);
-                //  }
-                //}
-
-                //}
             }
             else
             {
@@ -461,6 +488,11 @@ namespace Shap.Units
         /// Get the collection of unit numbers in the current subclass.
         /// </summary>
         public ObservableCollection<string> NumbersList { get; }
+
+        /// <summary>
+        /// Get the collection of image selector view models.
+        /// </summary>
+        public ObservableCollection<IClassConfigImageSelectorViewModel> Images { get; }
 
         /// <summary>
         /// Indicates whether the save command can be run.
