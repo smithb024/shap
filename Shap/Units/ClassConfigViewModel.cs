@@ -234,6 +234,7 @@ namespace Shap.Units
                                 new ClassConfigImageSelectorViewModel(
                                     this.unitsIoController,
                                     imageName);
+                        selector.SelectionMadeEvent += this.UpdateImagesInModel;
                         this.Images.Add(selector);
                     }
                 }
@@ -247,6 +248,7 @@ namespace Shap.Units
                                 new ClassConfigImageSelectorViewModel(
                                     this.unitsIoController,
                                     string.Empty);
+                        selector.SelectionMadeEvent += this.UpdateImagesInModel;
                         this.Images.Add(selector);
                     }
 
@@ -474,13 +476,14 @@ namespace Shap.Units
 
             set
             {
-                if (this.subClassListIndex != value)
+                if (this.subClassListIndex == value)
                 {
                     return;
                 }
 
                 this.subClassListIndex = value;
                 this.RaisePropertyChanged(nameof(this.SubClassListIndex));
+                this.SelectNewSubClass();
             }
         }
 
@@ -1766,6 +1769,78 @@ namespace Shap.Units
             //          dialogViewModel.NewNumber + index);
             //    }
             //}
+        }
+
+        /// <summary>
+        /// One of the image selectors has changed. Reflect the change in the model.
+        /// </summary>
+        private void UpdateImagesInModel()
+        {
+            this.classFileConfiguration.Subclasses[this.SubClassListIndex].Images.Clear();
+
+            foreach(IClassConfigImageSelectorViewModel selectedImage in Images)
+            {
+                if (string.IsNullOrEmpty(selectedImage.SelectedImage))
+                {
+                    continue;
+                }
+
+                Image newImage =
+                    new Image()
+                    {
+                        Name = selectedImage.SelectedImage
+                    };
+
+                this.classFileConfiguration.Subclasses[this.SubClassListIndex].Images.Add(newImage);
+            }
+        }
+
+        /// <summary>
+        /// A new subclass has been selected. Update the relevant fields from the model.
+        /// </summary>
+        private void SelectNewSubClass()
+        {
+            if (this.SubClassListIndex < 0 ||
+                this.SubClassListIndex >= this.SubClassNumbers.Count)
+            {
+                return;
+            }
+
+            // Clear down
+            this.NumbersList.Clear();
+
+            foreach(IClassConfigImageSelectorViewModel image in this.Images)
+            {
+                image.SelectionMadeEvent -= this.UpdateImagesInModel;
+            }
+
+            this.Images.Clear();
+            this.RaisePropertyChanged(nameof(this.NumbersList));
+            this.RaisePropertyChanged(nameof(this.Images));
+
+            // Refresh
+            foreach (Number number in this.classFileConfiguration.Subclasses[this.SubClassListIndex].Numbers)
+            {
+                this.NumbersList.Add(number.CurrentNumber);
+            }
+
+            for (int imageIndex = 0; imageIndex < MaxImages; ++imageIndex)
+            {
+                string imageName =
+                    imageIndex < this.classFileConfiguration.Subclasses[this.SubClassListIndex].Images.Count
+                    ? this.classFileConfiguration.Subclasses[this.SubClassListIndex].Images[imageIndex].Name
+                    : string.Empty;
+
+                IClassConfigImageSelectorViewModel selector =
+                        new ClassConfigImageSelectorViewModel(
+                            this.unitsIoController,
+                            imageName);
+                selector.SelectionMadeEvent += this.UpdateImagesInModel;
+                this.Images.Add(selector);
+            }
+
+            this.RaisePropertyChanged(nameof(this.NumbersList));
+            this.RaisePropertyChanged(nameof(this.Images));
         }
     }
 }
