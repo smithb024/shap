@@ -4,6 +4,7 @@
   using System.Windows.Input;
   using NynaeveLib.ViewModel;
   using Shap.Common.Commands;
+    using Shap.Interfaces.Units;
   using Shap.Units.IO;
   using Common;
   using Stats;
@@ -143,12 +144,20 @@
             this.unitsXmlIoController,
             this.indexName);
 
-        SetupWindow(
-          this.classConfigWindow = new ClassConfigWindow(),
-          classConfig,
-          this.CloseClassConfigWindow,
-          this.EditClassConfigWindowClosed);
-      }
+                this.classConfigWindow = new ClassConfigWindow();
+                //SetupWindow(
+                //  this.classConfigWindow = new ClassConfigWindow(),
+                //  classConfig,
+                //  this.CloseClassConfigWindow,
+                //  this.EditClassConfigWindowClosed);
+                this.classConfigWindow.DataContext = classConfig;
+
+                //viewModel.ClosingRequest += closeViewMethod;
+                this.classConfigWindow.Closed += this.EditClassConfigWindowClosed;
+
+                this.classConfigWindow.Show();
+                this.classConfigWindow.Activate();
+            }
 
       this.classConfigWindow.Focus();
     }
@@ -234,13 +243,13 @@
     /// <param name="closedMethod">method to run when the window closes</param>
     public void SetupWindow(
       System.Windows.Window window,
-      NynaeveLib.ViewModel.ViewModelBase viewModel,
+      ViewModelBase viewModel,
       EventHandler closeViewMethod,
       EventHandler closedMethod)
     {
       window.DataContext = viewModel;
 
-      viewModel.ClosingRequest += closeViewMethod;
+      //viewModel.ClosingRequest += closeViewMethod;
       window.Closed += closedMethod;
 
       window.Show();

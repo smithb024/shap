@@ -3,13 +3,14 @@ namespace Shap.Units
 {
     using System;
     using System.Collections.Generic;
+    using System.Collections.ObjectModel;
     using System.ComponentModel;
     using System.Windows;
     using System.Windows.Input;
 
+    using GalaSoft.MvvmLight;
     using NynaeveLib.DialogService;
     using NynaeveLib.Logger;
-    using NynaeveLib.ViewModel;
     using Shap.Common;
     using Shap.Common.Commands;
     using Shap.Common.Factories;
@@ -23,6 +24,36 @@ namespace Shap.Units
     {
         // Constants
         private const string c_noSubClassSelectedWarning = "No sub class has been selected";
+
+        /// <summary>
+        /// The model. This data has been serialised from a configuration file.
+        /// </summary>
+        private ClassDetails classFileConfiguration;
+
+        /// <summary>
+        /// The version of this file.
+        /// </summary>
+        private int version;
+
+        /// <summary>
+        /// The formation of the unit.
+        /// </summary>
+        private string formation;
+
+        /// <summary>
+        /// The alpha prefix.
+        /// </summary>
+        private string alphaIdentifier;
+
+        /// <summary>
+        /// The year of introduction.
+        /// </summary>
+        private string year;
+
+        /// <summary>
+        /// The index of the selected subclass.
+        /// </summary>
+        private int subClassListIndex;
 
         //private const int c_formerNumberPositionX = 175;
         //private const int c_formerNumberPositionY = 47;
@@ -59,11 +90,6 @@ namespace Shap.Units
         //private string alphaId;
 
         /// <summary>
-        /// Contents of the class details file.
-        /// </summary>
-        private ClassDetails classDetailsModel;
-
-        /// <summary>
         ///   creates a new instance of the class config form
         /// </summary>
         /// <param name="unitsIoController">units IO controller</param>
@@ -77,6 +103,12 @@ namespace Shap.Units
         {
             this.unitsIoController = unitsIoController;
             this.unitsXmlIoController = unitsXmlIoController;
+
+            this.SubClassNumbers = new ObservableCollection<string>();
+            this.NumbersList = new ObservableCollection<string>();
+
+
+
             //this.individualUnitIoController = individualUnitIoController;
             //int formerNumberRowPosition = c_formerNumberPositionY;
 
@@ -85,7 +117,7 @@ namespace Shap.Units
             //InitializeComponent();
             //this.Text = this.classId;
             //labelTitleBar.Text = "Class Config - " + this.classId;
-            this.ClassData = new ClassDataType(classId);
+            //this.ClassData = new ClassDataType(classId);
 
             ////// location
             ////this.Location = new Point(450, 0);
@@ -164,24 +196,48 @@ namespace Shap.Units
             // If the file doesn't exist then leave m_classData, as initialised.
             if (this.unitsXmlIoController.DoesFileExist(classId))
             {
-                this.classDetailsModel =
+                this.classFileConfiguration =
                     this.unitsXmlIoController.Read(
                         classId);
 
-                this.ClassData =
-                  this.unitsXmlIoController.ReadClassDetailsXML(
-                    this.unitsIoController,
-                    classId);
+                this.version = this.classFileConfiguration.Version;
+                this.formation = this.classFileConfiguration.Formation;
+                this.alphaIdentifier = this.classFileConfiguration.AlphaId;
+                this.year = this.classFileConfiguration.Year;
 
-                //if (this.unitsXmlIoController.ReadClassDetailsXML(classId))
-                //{
-                //this.ClassData = this.unitsXmlIoController.GetClassData();
-                this.ClassData?.InitaliseSubClassIndex();
-
-                if (this.ClassData != null)
+                foreach(Subclass subclass in this.classFileConfiguration.Subclasses)
                 {
-                    this.ClassData.PropertyChanged += ModelChanged;
+                    this.SubClassNumbers.Add(subclass.Type);
                 }
+
+                if(this.SubClassNumbers.Count > 0)
+                {
+                    this.subClassListIndex = 0;
+
+                    foreach(Number number in this.classFileConfiguration.Subclasses[this.SubClassListIndex].Numbers)
+                    {
+                        this.NumbersList.Add(number.CurrentNumber);
+                    }
+                }
+                else
+                {
+                    this.subClassListIndex = -1;
+                }
+
+                //this.ClassData =
+                //  this.unitsXmlIoController.ReadClassDetailsXML(
+                //    this.unitsIoController,
+                //    classId);
+
+                ////if (this.unitsXmlIoController.ReadClassDetailsXML(classId))
+                ////{
+                ////this.ClassData = this.unitsXmlIoController.GetClassData();
+                //this.ClassData?.InitaliseSubClassIndex();
+
+                //if (this.ClassData != null)
+                //{
+                //    this.ClassData.PropertyChanged += ModelChanged;
+                //}
 
                 //List<string> imageFileNames = unitsController.GetImageFileList();
                 //foreach (string str in imageFileNames)
@@ -225,6 +281,7 @@ namespace Shap.Units
             }
             else
             {
+                this.classFileConfiguration = new ClassDetails();
                 // it's new, so mark it as too be saved.
                 //ClassDataHasChanged();
 
@@ -276,66 +333,169 @@ namespace Shap.Units
         //  }
         //}
 
-        /// <summary>
-        /// Gets or sets the class data.
-        /// </summary>
-        public ClassDataType ClassData { get; set; }
+        ///// <summary>
+        ///// Gets or sets the class data.
+        ///// </summary>
+        //public ClassDataType ClassData { get; set; }
 
+        /// <summary>
+        /// Gets or sets the version of this file.
+        /// </summary>
+        public int Version
+        {
+            get
+            {
+                return this.version;
+            }
+
+            set
+            {
+                if (this.version != value)
+                {
+                    return;
+                }
+
+                this.version = value;
+                this.RaisePropertyChanged(nameof(this.Version));
+                this.classFileConfiguration.Version = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the formation of the unit.
+        /// </summary>
+        public string Formation
+        {
+            get
+            {
+                return this.formation;
+            }
+
+            set
+            {
+                if (string.Compare(this.formation, value) == 0)
+                {
+                    return;
+                }
+
+                this.formation = value;
+                this.RaisePropertyChanged(nameof(this.Formation));
+                this.classFileConfiguration.Formation = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets an alpha prefix.
+        /// </summary>
+        public string AlphaIdentifier
+        {
+            get
+            {
+                return this.alphaIdentifier;
+            }
+
+            set
+            {
+                if (string.Compare(this.alphaIdentifier, value) == 0)
+                {
+                    return;
+                }
+
+                this.alphaIdentifier = value;
+                this.RaisePropertyChanged(nameof(this.AlphaIdentifier));
+                this.classFileConfiguration.AlphaId = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets the year of introduction.
+        /// </summary>
+        public string Year
+        {
+            get
+            {
+                return this.year;
+            }
+
+            set
+            {
+                if (string.Compare(this.year, value) == 0)
+                {
+                    return;
+                }
+
+                this.year = value;
+                this.RaisePropertyChanged(nameof(this.Year));
+                this.classFileConfiguration.Year = value;
+            }
+        }
+
+        /// <summary>
+        /// Gets the collection of sub classes present in this class.
+        /// </summary>
+        public ObservableCollection<string> SubClassNumbers { get; }
+
+        /// <summary>
+        /// Gets or sets the index of the selected subclass.
+        /// </summary>
+        public int SubClassListIndex
+        {
+            get
+            {
+                return this.subClassListIndex;
+            }
+
+            set
+            {
+                if (this.subClassListIndex != value)
+                {
+                    return;
+                }
+
+                this.subClassListIndex = value;
+                this.RaisePropertyChanged(nameof(this.SubClassListIndex));
+            }
+        }
+
+        /// <summary>
+        /// Get the collection of unit numbers in the current subclass.
+        /// </summary>
+        public ObservableCollection<string> NumbersList { get; }
+
+        /// <summary>
+        /// Indicates whether the save command can be run.
+        /// </summary>
         public bool CanSave { get; set; }
 
         /// <summary>
         /// Close window command.
         /// </summary>
-        public ICommand SaveCmd
-        {
-            get;
-            private set;
-        }
+        public ICommand SaveCmd { get; private set; }
 
         /// <summary>
         /// Close window command.
         /// </summary>
-        public ICommand AddNewSubClassCmd
-        {
-            get;
-            private set;
-        }
+        public ICommand AddNewSubClassCmd { get; private set; }
 
         /// <summary>
         /// Close window command.
         /// </summary>
-        public ICommand AddNewNumberCmd
-        {
-            get;
-            private set;
-        }
+        public ICommand AddNewNumberCmd { get; private set; }
 
         /// <summary>
         /// Close window command.
         /// </summary>
-        public ICommand AddNewNumberSeriesCmd
-        {
-            get;
-            private set;
-        }
+        public ICommand AddNewNumberSeriesCmd { get; private set; }
 
         /// <summary>
         /// Close window command.
         /// </summary>
-        public ICommand RenumberCmd
-        {
-            get;
-            private set;
-        }
+        public ICommand RenumberCmd { get; private set; }
 
         /// <summary>
         /// Close window command.
         /// </summary>
-        public ICommand CloseCmd
-        {
-            get;
-            private set;
-        }
+        public ICommand CloseCmd { get; private set; }
 
         //public ObservableCollection<VehicleNumberType> CurrentNumbersList
         //{
@@ -490,62 +650,62 @@ namespace Shap.Units
         //  return classId;
         //}
 
-        /// ---------- ---------- ---------- ---------- ---------- ----------
-        /// <name>getSubClassCount</name>
-        /// <date>30/09/12</date>
-        /// <summary>
-        ///   return m_classData.getSubClassCount()
-        /// </summary>
-        /// <returns>sub class count</returns>
-        /// ---------- ---------- ---------- ---------- ---------- ----------
-        public int GetSubClassCount()
-        {
-            return this.ClassData.GetSubClassCount();
-        }
+        ///// ---------- ---------- ---------- ---------- ---------- ----------
+        ///// <name>getSubClassCount</name>
+        ///// <date>30/09/12</date>
+        ///// <summary>
+        /////   return m_classData.getSubClassCount()
+        ///// </summary>
+        ///// <returns>sub class count</returns>
+        ///// ---------- ---------- ---------- ---------- ---------- ----------
+        //public int GetSubClassCount()
+        //{
+        //    return this.ClassData.GetSubClassCount();
+        //}
 
-        /// ---------- ---------- ---------- ---------- ---------- ----------
-        /// <name>getSubClass</name>
-        /// <date>30/09/12</date>
-        /// <summary>
-        ///   return m_classData.getSubClassCount()
-        /// </summary>
-        /// <param name="index">sub class index</param>
-        /// <returns>sub class</returns>
-        /// ---------- ---------- ---------- ---------- ---------- ----------
-        public string GetSubClass(int index)
-        {
-            return this.ClassData.GetSubClass(index);
-        }
+        ///// ---------- ---------- ---------- ---------- ---------- ----------
+        ///// <name>getSubClass</name>
+        ///// <date>30/09/12</date>
+        ///// <summary>
+        /////   return m_classData.getSubClassCount()
+        ///// </summary>
+        ///// <param name="index">sub class index</param>
+        ///// <returns>sub class</returns>
+        ///// ---------- ---------- ---------- ---------- ---------- ----------
+        //public string GetSubClass(int index)
+        //{
+        //    return this.ClassData.GetSubClass(index);
+        //}
 
-        /// ---------- ---------- ---------- ---------- ---------- ----------
-        /// <name>getCurrentNumberCount</name>
-        /// <date>05/10/12</date>
-        /// <summary>
-        ///   Gets the number of CurrentNumbers stored in m_classData
-        /// </summary>
-        /// <param name="subClassIndex">sub class index</param>
-        /// <returns>current number count</returns>
-        /// ---------- ---------- ---------- ---------- ---------- ----------
-        public int GetCurrentNumberCount(int subClassIndex)
-        {
-            return this.ClassData.GetCurrentNumberCount(subClassIndex);
-        }
+        ///// ---------- ---------- ---------- ---------- ---------- ----------
+        ///// <name>getCurrentNumberCount</name>
+        ///// <date>05/10/12</date>
+        ///// <summary>
+        /////   Gets the number of CurrentNumbers stored in m_classData
+        ///// </summary>
+        ///// <param name="subClassIndex">sub class index</param>
+        ///// <returns>current number count</returns>
+        ///// ---------- ---------- ---------- ---------- ---------- ----------
+        //public int GetCurrentNumberCount(int subClassIndex)
+        //{
+        //    return this.ClassData.GetCurrentNumberCount(subClassIndex);
+        //}
 
-        /// ---------- ---------- ---------- ---------- ---------- ----------
-        /// <name>getCurrentNumberCount</name>
-        /// <date>05/10/12</date>
-        /// <summary>
-        ///   Gets the current number in m_classData for the subClass at
-        ///     subClassIndex and the number at numberIndex.
-        /// </summary>
-        /// <param name="subClassIndex">sub class index</param>
-        /// <param name="numberIndex">number index</param>
-        /// <returns>current number</returns>
-        /// ---------- ---------- ---------- ---------- ---------- ----------
-        public int GetCurrentNumber(int subClassIndex, int numberIndex)
-        {
-            return this.ClassData.GetCurrentNumber(subClassIndex, numberIndex);
-        }
+        ///// ---------- ---------- ---------- ---------- ---------- ----------
+        ///// <name>getCurrentNumberCount</name>
+        ///// <date>05/10/12</date>
+        ///// <summary>
+        /////   Gets the current number in m_classData for the subClass at
+        /////     subClassIndex and the number at numberIndex.
+        ///// </summary>
+        ///// <param name="subClassIndex">sub class index</param>
+        ///// <param name="numberIndex">number index</param>
+        ///// <returns>current number</returns>
+        ///// ---------- ---------- ---------- ---------- ---------- ----------
+        //public int GetCurrentNumber(int subClassIndex, int numberIndex)
+        //{
+        //    return this.ClassData.GetCurrentNumber(subClassIndex, numberIndex);
+        //}
 
         ///// ---------- ---------- ---------- ---------- ---------- ----------
         ///// <name>showHideOldNumTextBoxes</name>
@@ -1027,7 +1187,7 @@ namespace Shap.Units
                 m_newNumberList.Clear();
 
                 //UnitsXmlIOController unitsController = UnitsXmlIOController.GetInstance();
-                this.unitsXmlIoController.WriteClassDetailsXML(classId, this.ClassData);
+                //this.unitsXmlIoController.WriteClassDetailsXML(classId, this.ClassData);
 
                 m_classChanged = false;
                 //pictureBoxHasChanged.BackColor = SystemColors.Control;
@@ -1466,7 +1626,7 @@ namespace Shap.Units
         /// </summary>
         private void CloseWindow()
         {
-            this.OnClosingRequest();
+            //this.OnClosingRequest();
         }
 
         /// <summary>
@@ -1486,11 +1646,11 @@ namespace Shap.Units
 
             if (dialogViewModel.Result == MessageBoxResult.OK)
             {
-                this.ClassData.AddNewSubClass(
-                  new SubClassDataType(
-                    this.unitsIoController,
-                    dialogViewModel.SubClass,
-                    string.Empty));
+                //this.ClassData.AddNewSubClass(
+                //  new SubClassDataType(
+                //    this.unitsIoController,
+                //    dialogViewModel.SubClass,
+                //    string.Empty));
             }
         }
 
@@ -1499,20 +1659,20 @@ namespace Shap.Units
         /// </summary>
         private void AddNewNumber()
         {
-            NewNumberViewModel dialogViewModel =
-              new NewNumberViewModel(
-                this.ClassData.SubClassNumbers);
+            //NewNumberViewModel dialogViewModel =
+            //  new NewNumberViewModel(
+            //    this.ClassData.SubClassNumbers);
 
-            DialogService service = new DialogService();
+            //DialogService service = new DialogService();
 
-            service.ShowDialog(
-              new NewNumberDialog()
-              {
-                  DataContext = dialogViewModel
-              });
+            //service.ShowDialog(
+            //  new NewNumberDialog()
+            //  {
+            //      DataContext = dialogViewModel
+            //  });
 
-            this.ClassData.AddCurrentNumber(dialogViewModel.SubClassIndex, dialogViewModel.Number);
-            this.m_newNumberList.Add(dialogViewModel.Number);
+            //this.ClassData.AddCurrentNumber(dialogViewModel.SubClassIndex, dialogViewModel.Number);
+            //this.m_newNumberList.Add(dialogViewModel.Number);
         }
 
         /// <summary>
@@ -1520,24 +1680,24 @@ namespace Shap.Units
         /// </summary>
         private void AddNewNumberSeries()
         {
-            NewNumberViewModel dialogViewModel =
-              new NewNumberViewModel(
-                this.ClassData.SubClassNumbers,
-                true);
+            //NewNumberViewModel dialogViewModel =
+            //  new NewNumberViewModel(
+            //    this.ClassData.SubClassNumbers,
+            //    true);
 
-            DialogService service = new DialogService();
+            //DialogService service = new DialogService();
 
-            service.ShowDialog(
-              new NewNumberSeriesDialog()
-              {
-                  DataContext = dialogViewModel
-              });
+            //service.ShowDialog(
+            //  new NewNumberSeriesDialog()
+            //  {
+            //      DataContext = dialogViewModel
+            //  });
 
-            for (int number = dialogViewModel.Number; number <= dialogViewModel.UpperNumber; ++number)
-            {
-                this.ClassData.AddCurrentNumber(dialogViewModel.SubClassIndex, number);
-                this.m_newNumberList.Add(number);
-            }
+            //for (int number = dialogViewModel.Number; number <= dialogViewModel.UpperNumber; ++number)
+            //{
+            //    this.ClassData.AddCurrentNumber(dialogViewModel.SubClassIndex, number);
+            //    this.m_newNumberList.Add(number);
+            //}
 
         }
 
@@ -1546,34 +1706,34 @@ namespace Shap.Units
         /// </summary>
         private void Renumber()
         {
-            RenumberViewModel dialogViewModel =
-              new RenumberViewModel(
-                this.ClassData.SubClassNumbers,
-                this.ClassData.GetAllNumbers());
+            //RenumberViewModel dialogViewModel =
+            //  new RenumberViewModel(
+            //    this.ClassData.SubClassNumbers,
+            //    this.ClassData.GetAllNumbers());
 
-            DialogService service = new DialogService();
+            //DialogService service = new DialogService();
 
-            service.ShowDialog(
-              new RenumberDialog()
-              {
-                  DataContext = dialogViewModel
-              });
+            //service.ShowDialog(
+            //  new RenumberDialog()
+            //  {
+            //      DataContext = dialogViewModel
+            //  });
 
-            for (int index = 0; index < dialogViewModel.TotalNumberToChange; ++index)
-            {
-                if (dialogViewModel.CurrentSubClassNumbersIndex + index < dialogViewModel.CurrentSubClassNumbersList.Count)
-                {
-                    m_renumberedList[0].Add(dialogViewModel.CurrentSubClassNumbersList[dialogViewModel.CurrentSubClassNumbersIndex + index]);                   // former number
-                    m_renumberedList[1].Add(dialogViewModel.NewNumber + index);                                     // new number
-                    m_renumberedListSubClass.Add(dialogViewModel.SubClasses[dialogViewModel.NewSubClassListIndex]); // subclass
+            //for (int index = 0; index < dialogViewModel.TotalNumberToChange; ++index)
+            //{
+            //    if (dialogViewModel.CurrentSubClassNumbersIndex + index < dialogViewModel.CurrentSubClassNumbersList.Count)
+            //    {
+            //        m_renumberedList[0].Add(dialogViewModel.CurrentSubClassNumbersList[dialogViewModel.CurrentSubClassNumbersIndex + index]);                   // former number
+            //        m_renumberedList[1].Add(dialogViewModel.NewNumber + index);                                     // new number
+            //        m_renumberedListSubClass.Add(dialogViewModel.SubClasses[dialogViewModel.NewSubClassListIndex]); // subclass
 
-                    this.ClassData.ReNumber(
-                      dialogViewModel.SubClasses[dialogViewModel.SubClassIndex],
-                      dialogViewModel.CurrentSubClassNumbersList[dialogViewModel.CurrentSubClassNumbersIndex + index],
-                      dialogViewModel.SubClasses[dialogViewModel.NewSubClassListIndex],
-                      dialogViewModel.NewNumber + index);
-                }
-            }
+            //        this.ClassData.ReNumber(
+            //          dialogViewModel.SubClasses[dialogViewModel.SubClassIndex],
+            //          dialogViewModel.CurrentSubClassNumbersList[dialogViewModel.CurrentSubClassNumbersIndex + index],
+            //          dialogViewModel.SubClasses[dialogViewModel.NewSubClassListIndex],
+            //          dialogViewModel.NewNumber + index);
+            //    }
+            //}
         }
     }
 }

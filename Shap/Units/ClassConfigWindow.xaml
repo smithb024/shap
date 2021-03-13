@@ -19,20 +19,20 @@
         </Grid.ColumnDefinitions>
 
         <DockPanel LastChildFill="True"
-                   Grid.Column="0" DataContext="{Binding ClassData}">
+                   Grid.Column="0">
             <ComboBox DockPanel.Dock="Top"
                       ItemsSource="{Binding Path=SubClassNumbers}"
                       SelectedIndex="{Binding SubClassListIndex}"
                       Style="{StaticResource ComboBoxStyle}">
             </ComboBox>
-            <Grid DataContext="{Binding SelectedSubClass}">
+            <Grid>
                 <ListView ItemsSource="{Binding Path=NumbersList}"
                   Style="{StaticResource StdListViewStyle}"/>
             </Grid>
         </DockPanel>
 
         <StackPanel Grid.Column="1">
-            <StackPanel  DataContext="{Binding ClassData}">
+            <StackPanel>
                 <StackPanel>
                     <Grid>
                         <Grid.ColumnDefinitions>
