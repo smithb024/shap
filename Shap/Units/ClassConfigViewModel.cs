@@ -198,11 +198,11 @@ namespace Shap.Units
             //}
 
             // If the file doesn't exist then leave m_classData, as initialised.
-            if (this.unitsXmlIoController.DoesFileExist(classId))
+            if (this.unitsXmlIoController.DoesFileExist(this.classId))
             {
                 this.classFileConfiguration =
                     this.unitsXmlIoController.Read(
-                        classId);
+                        this.classId);
 
                 this.version = this.classFileConfiguration.Version;
                 this.formation = this.classFileConfiguration.Formation;
@@ -320,7 +320,7 @@ namespace Shap.Units
 
             this.CanSave = false;
 
-            this.SaveCmd = new CommonCommand(this.SaveModel, this.SaveCmdAvailable);
+            this.SaveCmd = new CommonCommand(this.SaveModel, () => true);
             this.CloseCmd = new CommonCommand(this.CloseWindow);
             this.AddNewSubClassCmd = new CommonCommand(this.AddNewSubClass);
             this.AddNewNumberCmd = new CommonCommand(this.AddNewNumber);
@@ -1189,44 +1189,49 @@ namespace Shap.Units
         /// </summary>
         private void SaveModel()
         {
-            bool success = true;
+            ++this.classFileConfiguration.Version;
+            this.unitsXmlIoController.Write(
+                this.classFileConfiguration,
+                this.classId);
 
-            // create a new file for each new number
-            //IndividualUnitIOController individualUnitController = IndividualUnitIOController.GetInstance();
-            foreach (int vehicleNumber in m_newNumberList)
-            {
-                VehicleDetailsViewModel newVehicle =
-                  new VehicleDetailsViewModel(
-                    vehicleNumber.ToString());
+            //bool success = true;
 
-                if (!IndividualUnitIOController.WriteIndividualUnitFile(newVehicle, classId))
-                {
-                    success = false;
-                    Logger l = Logger.Instance;
-                    l.WriteLog("TRACE: Class Config Form - Save Failed - Failed to write " + newVehicle.UnitNumber.ToString() + ".txt");
-                    break;
-                }
-            }
+            //// create a new file for each new number
+            ////IndividualUnitIOController individualUnitController = IndividualUnitIOController.GetInstance();
+            //foreach (int vehicleNumber in m_newNumberList)
+            //{
+            //    VehicleDetailsViewModel newVehicle =
+            //      new VehicleDetailsViewModel(
+            //        vehicleNumber.ToString());
 
-            // renumber all files for each renumbered vehicle
-            for (int i = 0; i < m_renumberedList[0].Count; ++i)
-            {
-                IndividualUnitIOController.RenameIndividualUnitFile(
-                  m_renumberedList[1][i],
-                  classId,
-                  m_renumberedList[0][i]);
-            }
+            //    if (!IndividualUnitIOController.WriteIndividualUnitFile(newVehicle, classId))
+            //    {
+            //        success = false;
+            //        Logger l = Logger.Instance;
+            //        l.WriteLog("TRACE: Class Config Form - Save Failed - Failed to write " + newVehicle.UnitNumber.ToString() + ".txt");
+            //        break;
+            //    }
+            //}
 
-            if (success)
-            {
-                m_newNumberList.Clear();
+            //// renumber all files for each renumbered vehicle
+            //for (int i = 0; i < m_renumberedList[0].Count; ++i)
+            //{
+            //    IndividualUnitIOController.RenameIndividualUnitFile(
+            //      m_renumberedList[1][i],
+            //      classId,
+            //      m_renumberedList[0][i]);
+            //}
 
-                //UnitsXmlIOController unitsController = UnitsXmlIOController.GetInstance();
-                //this.unitsXmlIoController.WriteClassDetailsXML(classId, this.ClassData);
+            //if (success)
+            //{
+            //    m_newNumberList.Clear();
 
-                m_classChanged = false;
-                //pictureBoxHasChanged.BackColor = SystemColors.Control;
-            }
+            //    //UnitsXmlIOController unitsController = UnitsXmlIOController.GetInstance();
+            //    //this.unitsXmlIoController.WriteClassDetailsXML(classId, this.ClassData);
+
+            //    m_classChanged = false;
+            //    //pictureBoxHasChanged.BackColor = SystemColors.Control;
+            //}
         }
 
         /// ---------- ---------- ---------- ---------- ---------- ----------

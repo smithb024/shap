@@ -58,6 +58,22 @@
             return results;
         }
 
+        /// <summary>
+        /// Serialise the <see cref="ClassDetails"/> to <parmref name="filename"/>.
+        /// </summary>
+        /// <param name="file">file to serialise</param>
+        /// <param name="filename">location to save the file to</param>
+        public void Write(
+            ClassDetails file,
+            string filename)
+        {
+            string myPath = BasePathReader.GetBasePath() + StaticResources.classDetailsPath + filename + XmlExtensionLabel;
+
+            XmlFileIo.WriteXml<ClassDetails>(
+                file,
+                myPath);
+        }
+
         /// ---------- ---------- ---------- ---------- ---------- ----------
         /// <name>readClassDetailsXML</name>
         /// <date>12/05/13</date>
