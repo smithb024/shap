@@ -19,7 +19,7 @@
         /// Gets or sets the current number.
         /// </summary>
         [XmlAttribute("No")]
-        public string CurrentNumber { get; set; }
+        public int CurrentNumber { get; set; }
 
         /// <summary>
         /// Gets or sets the historical numbers.

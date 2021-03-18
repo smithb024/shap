@@ -15,13 +15,13 @@
     {
         public static ObservableCollection<SubClassViewModel> CreateSubClasses(
           FirstExampleManager firstExamples,
-          ObservableCollection<SubClassDataType> modelSubClasses,
+          ObservableCollection<SubClassDataTypeViewModel> modelSubClasses,
           ClassFunctionalViewModel parent)
         {
             ObservableCollection<SubClassViewModel> subClasses =
               new ObservableCollection<SubClassViewModel>();
 
-            foreach (SubClassDataType modelSubClass in modelSubClasses)
+            foreach (SubClassDataTypeViewModel modelSubClass in modelSubClasses)
             {
                 ObservableCollection<IUnitViewModel> units =
                   new ObservableCollection<IUnitViewModel>();

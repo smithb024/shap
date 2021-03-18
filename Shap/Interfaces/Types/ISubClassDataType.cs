@@ -42,7 +42,7 @@
     /// <summary>
     /// Index for the list of sub class image lists.
     /// </summary>
-    ObservableCollection<VehicleNumberType> VehicleNumbersList { get; }
+    ObservableCollection<VehicleNumberTypeViewModel> VehicleNumbersList { get; }
 
     /// <summary>
     /// Index for the list of sub class image lists.
@@ -61,13 +61,13 @@
     /// Add the <paramref name="newNumber"/> to the number list.
     /// </summary>
     /// <param name="newNumber"></param>
-    void AddNumber(VehicleNumberType newNumber);
+    void AddNumber(VehicleNumberTypeViewModel newNumber);
 
     /// <summary>
     /// Remove the <paramref name="oldNumber"/> from the number list.
     /// </summary>
     /// <param name="oldNumber"></param>
-    void RemoveNumber(VehicleNumberType oldNumber);
+    void RemoveNumber(VehicleNumberTypeViewModel oldNumber);
 
     /// <summary>
     /// append an new oldNumber to the specified <paramref name="currentNumber"/>.

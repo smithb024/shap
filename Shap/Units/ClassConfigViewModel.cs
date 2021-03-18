@@ -53,7 +53,7 @@ namespace Shap.Units
         /// <summary>
         /// The year of introduction.
         /// </summary>
-        private string year;
+        private int year;
 
         /// <summary>
         /// The index of the selected subclass.
@@ -110,7 +110,7 @@ namespace Shap.Units
             this.unitsXmlIoController = unitsXmlIoController;
 
             this.SubClassNumbers = new ObservableCollection<string>();
-            this.NumbersList = new ObservableCollection<string>();
+            this.NumbersList = new ObservableCollection<int>();
             this.Images = new ObservableCollection<IClassConfigImageSelectorViewModel>();
 
             //this.individualUnitIoController = individualUnitIoController;
@@ -439,7 +439,7 @@ namespace Shap.Units
         /// <summary>
         /// Gets or sets the year of introduction.
         /// </summary>
-        public string Year
+        public int Year
         {
             get
             {
@@ -448,7 +448,7 @@ namespace Shap.Units
 
             set
             {
-                if (string.Compare(this.year, value) == 0)
+                if (this.year == value)
                 {
                     return;
                 }
@@ -490,7 +490,7 @@ namespace Shap.Units
         /// <summary>
         /// Get the collection of unit numbers in the current subclass.
         /// </summary>
-        public ObservableCollection<string> NumbersList { get; }
+        public ObservableCollection<int> NumbersList { get; }
 
         /// <summary>
         /// Get the collection of image selector view models.

@@ -18,6 +18,6 @@
         /// Gets or sets the historical number.
         /// </summary>
         [XmlAttribute("on")]
-        public string Number { get; set; }
+        public int Number { get; set; }
     }
 }

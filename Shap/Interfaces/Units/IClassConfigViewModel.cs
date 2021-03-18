@@ -28,7 +28,7 @@
         /// <summary>
         /// Gets or sets the year of introduction.
         /// </summary>
-        string Year { get; set; }
+        int Year { get; set; }
 
         /// <summary>
         /// Gets the collection of sub classes present in this class.
@@ -43,7 +43,7 @@
         /// <summary>
         /// Get the collection of unit numbers in the current subclass.
         /// </summary>
-        ObservableCollection<string> NumbersList { get; }
+        ObservableCollection<int> NumbersList { get; }
 
         /// <summary>
         /// Get the collection of image selector view models.

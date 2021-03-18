@@ -233,7 +233,7 @@
     <Compile Include="Stats\FirstExampleIOController.cs" />
     <Compile Include="Stats\FirstExampleManager.cs" />
     <Compile Include="Stats\LocalListType.cs" />
-    <Compile Include="Types\ClassDataType.cs" />
+    <Compile Include="Types\ClassDataTypeViewModel.cs" />
     <Compile Include="Types\Enum\ComponentState.cs" />
     <Compile Include="Types\Enum\MainCommands.cs" />
     <Compile Include="Types\Factories\JourneyFactory.cs" />
@@ -243,9 +243,9 @@
     <Compile Include="Types\JnyId.cs" />
     <Compile Include="Types\JouneyDetailsType.cs" />
     <Compile Include="Types\RouteDetailsType.cs" />
-    <Compile Include="Types\SubClassDataType.cs" />
+    <Compile Include="Types\SubClassDataTypeViewModel.cs" />
     <Compile Include="Types\VehicleDetailsViewModel.cs" />
-    <Compile Include="Types\VehicleNumberType.cs" />
+    <Compile Include="Types\VehicleNumberTypeViewModel.cs" />
     <Compile Include="Types\VehicleServiceType.cs" />
     <Compile Include="Types\ViewModels\JourneyViewModel.cs" />
     <Compile Include="Units\ClassConfigImageSelector.xaml.cs">

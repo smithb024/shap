@@ -32,7 +32,7 @@
         /// Gets or sets the year the class was introduced.
         /// </summary>
         [XmlElement("Year")]
-        public string Year { get; set; }
+        public int Year { get; set; }
 
         /// <summary>
         /// Gets or sets the formation of the class.
