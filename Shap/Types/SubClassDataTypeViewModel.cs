@@ -100,43 +100,6 @@
         }
 
         /// <summary>
-        /// Index for the list of sub class image lists.
-        /// </summary>
-        public int SubClassImageListIndex
-        {
-            get
-            {
-                return this.subClassImageListIndex;
-            }
-
-            set
-            {
-                this.subClassImageListIndex = value;
-                this.RaisePropertyChangedEvent(nameof(this.SubClassImageListIndex));
-                this.RaisePropertyChangedEvent(nameof(this.SubClassImagePath));
-            }
-        }
-
-        /// <summary>
-        /// Index for the list of sub class image lists.
-        /// </summary>
-        public string SubClassImagePath
-        {
-            get
-            {
-                //      return System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().GetName().CodeBase);
-                //return "C:\\_myDocs\\bert\\03_projects\\my_programing\\cSharpWPF\\ShapDevelopment\\Shap\\data\\uts\\img\\37.jpg";
-                // string returnString = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().GetName().CodeBase) + "\\" +
-                string returnString = BasePathReader.GetBasePathUri() +
-                   StaticResources.classImgPath +
-                   this.SubClassImageList[this.SubClassImageListIndex] +
-                   ".jpg";
-
-                return returnString;
-            }
-        }
-
-        /// <summary>
         /// Name of the image file used.
         /// </summary>
         public string ImageName
@@ -432,6 +395,26 @@
             }
 
             return numberList;
+        }
+
+        /// <summary>
+        /// Return the path for an image, based on a specific index.
+        /// </summary>
+        /// <param name="index">image index</param>
+        /// <returns>image path</returns>
+        public string GetImagePath(int index)
+        {
+            if (index >= 0 && index < this.SubClassImageList.Count)
+            {
+                string returnString = BasePathReader.GetBasePathUri() +
+                   StaticResources.classImgPath +
+                   this.SubClassImageList[index] +
+                   ".jpg";
+
+                return returnString;
+            }
+
+            return string.Empty;
         }
     }
 }
