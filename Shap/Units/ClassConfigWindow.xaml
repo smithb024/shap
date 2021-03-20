@@ -42,21 +42,23 @@
                         <TextBlock Text="Version"
                                Grid.Column="0"
                                Style="{StaticResource StdTextBlockStyle}"/>
-                        <TextBox Text="{Binding Version}"
+                        <TextBlock Text="{Binding Version}"
                              Grid.Column="1"
-                             Style="{StaticResource StdTextBoxStyle}"/>
+                             Height="20"
+                             Style="{StaticResource StdTextBlockStyle}"/>
                     </Grid>
                     <Grid>
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="81*"/>
+                            <ColumnDefinition Width="17*"/>
+                            <ColumnDefinition Width="63*"/>
                         </Grid.ColumnDefinitions>
                         <TextBlock Text="Formation"
                                Grid.Column="0"
                                Style="{StaticResource StdTextBlockStyle}"/>
                         <TextBox Text="{Binding Formation}"
                              Grid.Column="1"
-                             Style="{StaticResource StdTextBoxStyle}"/>
+                             Style="{StaticResource StdTextBoxStyle}" Grid.ColumnSpan="2"/>
                     </Grid>
                     <Grid>
                         <Grid.ColumnDefinitions>

@@ -36,11 +36,6 @@ namespace Shap.Units
         private ClassDetails classFileConfiguration;
 
         /// <summary>
-        /// The version of this file.
-        /// </summary>
-        private int version;
-
-        /// <summary>
         /// The formation of the unit.
         /// </summary>
         private string formation;
@@ -71,7 +66,12 @@ namespace Shap.Units
         //private ClassIndexForm m_parent;
         private string classId = "0";
         //private ClassDataType m_classData;
-        private bool m_classChanged = false;
+
+        /// <summary>
+        /// Indicates whether there are any unsaved changes in the view model.
+        /// </summary>
+        private bool unsavedChanges;
+
         //private List<List<string>> m_formerNumberArray = new List<List<string>>();
         //private List<Label> m_formerNumberLabelList = new List<Label>();
         private int formerNumbersAvailable = 0;
@@ -108,6 +108,8 @@ namespace Shap.Units
         {
             this.unitsIoController = unitsIoController;
             this.unitsXmlIoController = unitsXmlIoController;
+
+            this.unsavedChanges = false;
 
             this.SubClassNumbers = new ObservableCollection<string>();
             this.NumbersList = new ObservableCollection<int>();
@@ -204,7 +206,6 @@ namespace Shap.Units
                     this.unitsXmlIoController.Read(
                         this.classId);
 
-                this.version = this.classFileConfiguration.Version;
                 this.formation = this.classFileConfiguration.Formation;
                 this.alphaIdentifier = this.classFileConfiguration.AlphaId;
                 this.year = this.classFileConfiguration.Year;
@@ -322,10 +323,10 @@ namespace Shap.Units
 
             this.SaveCmd = new CommonCommand(this.SaveModel, () => true);
             this.CloseCmd = new CommonCommand(this.CloseWindow);
-            this.AddNewSubClassCmd = new CommonCommand(this.AddNewSubClass);
-            this.AddNewNumberCmd = new CommonCommand(this.AddNewNumber);
-            this.AddNewNumberSeriesCmd = new CommonCommand(this.AddNewNumberSeries);
-            this.RenumberCmd = new CommonCommand(this.Renumber);
+            this.AddNewSubClassCmd = new CommonCommand(this.AddNewSubClass, this.CanPerformAction);
+            this.AddNewNumberCmd = new CommonCommand(this.AddNewNumber, this.CanPerformAction);
+            this.AddNewNumberSeriesCmd = new CommonCommand(this.AddNewNumberSeries, this.CanPerformAction);
+            this.RenumberCmd = new CommonCommand(this.Renumber, this.CanPerformAction);
         }
 
         ///// <summary>
@@ -368,27 +369,9 @@ namespace Shap.Units
         //public ClassDataType ClassData { get; set; }
 
         /// <summary>
-        /// Gets or sets the version of this file.
+        /// Gets the version of this file.
         /// </summary>
-        public int Version
-        {
-            get
-            {
-                return this.version;
-            }
-
-            set
-            {
-                if (this.version != value)
-                {
-                    return;
-                }
-
-                this.version = value;
-                this.RaisePropertyChangedEvent(nameof(this.Version));
-                this.classFileConfiguration.Version = value;
-            }
-        }
+        public int Version => this.classFileConfiguration.Version;
 
         /// <summary>
         /// Gets or sets the formation of the unit.
@@ -410,6 +393,7 @@ namespace Shap.Units
                 this.formation = value;
                 this.RaisePropertyChangedEvent(nameof(this.Formation));
                 this.classFileConfiguration.Formation = value;
+                this.unsavedChanges = true;
             }
         }
 
@@ -433,6 +417,7 @@ namespace Shap.Units
                 this.alphaIdentifier = value;
                 this.RaisePropertyChangedEvent(nameof(this.AlphaIdentifier));
                 this.classFileConfiguration.AlphaId = value;
+                this.unsavedChanges = true;
             }
         }
 
@@ -456,6 +441,7 @@ namespace Shap.Units
                 this.year = value;
                 this.RaisePropertyChangedEvent(nameof(this.Year));
                 this.classFileConfiguration.Year = value;
+                this.unsavedChanges = true;
             }
         }
 
@@ -1194,6 +1180,9 @@ namespace Shap.Units
                 this.classFileConfiguration,
                 this.classId);
 
+            this.RaisePropertyChangedEvent(nameof(this.Version));
+            this.unsavedChanges = false;
+
             //bool success = true;
 
             //// create a new file for each new number
@@ -1798,6 +1787,8 @@ namespace Shap.Units
 
                 this.classFileConfiguration.Subclasses[this.SubClassListIndex].Images.Add(newImage);
             }
+
+            this.unsavedChanges = true;
         }
 
         /// <summary>
@@ -1846,6 +1837,16 @@ namespace Shap.Units
 
             this.RaisePropertyChangedEvent(nameof(this.NumbersList));
             this.RaisePropertyChangedEvent(nameof(this.Images));
+        }
+
+        /// <summary>
+        /// Indicates whether the commands are available. They should not be, if there are
+        /// unsaved changes.
+        /// </summary>
+        /// <returns>Indicates whether the action can be performed.</returns>
+        private bool CanPerformAction()
+        {
+            return !this.unsavedChanges;
         }
     }
 }

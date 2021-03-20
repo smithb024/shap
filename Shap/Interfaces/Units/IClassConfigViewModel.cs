@@ -11,9 +11,9 @@
     public interface IClassConfigViewModel : INotifyPropertyChanged
     {
         /// <summary>
-        /// Gets or sets the version of this file.
+        /// Gets the version of this file.
         /// </summary>
-        int Version { get; set; }
+        int Version { get; }
 
         /// <summary>
         /// Gets or sets the formation of the unit.
