@@ -1675,6 +1675,17 @@ namespace Shap.Units
 
             if (dialogViewModel.Result == MessageBoxResult.OK)
             {
+                Subclass newSubclass =
+                    new Subclass()
+                    {
+                        Type = dialogViewModel.SubClass,
+                        Images = new List<Image>(),
+                        Numbers = new List<Number>()
+                    };
+
+                this.classFileConfiguration.Subclasses.Add(newSubclass);
+                this.SubClassNumbers.Add(newSubclass.Type);
+                this.SaveModel();
                 //this.ClassData.AddNewSubClass(
                 //  new SubClassDataType(
                 //    this.unitsIoController,
@@ -1688,20 +1699,46 @@ namespace Shap.Units
         /// </summary>
         private void AddNewNumber()
         {
-            //NewNumberViewModel dialogViewModel =
-            //  new NewNumberViewModel(
-            //    this.ClassData.SubClassNumbers);
+            NewNumberViewModel dialogViewModel =
+              new NewNumberViewModel(
+                this.SubClassNumbers);
 
-            //DialogService service = new DialogService();
+            DialogService service = new DialogService();
 
-            //service.ShowDialog(
-            //  new NewNumberDialog()
-            //  {
-            //      DataContext = dialogViewModel
-            //  });
+            service.ShowDialog(
+              new NewNumberDialog()
+              {
+                  DataContext = dialogViewModel
+              });
 
-            //this.ClassData.AddCurrentNumber(dialogViewModel.SubClassIndex, dialogViewModel.Number);
-            //this.m_newNumberList.Add(dialogViewModel.Number);
+            if (dialogViewModel.Result == MessageBoxResult.OK)
+            {
+                if (this.classFileConfiguration.Subclasses[dialogViewModel.SubClassIndex].Numbers.Find(n => n.CurrentNumber == dialogViewModel.Number) != null)
+                {
+                    return;
+                }
+
+                Number newNumber =
+                    new Number()
+                    {
+                        CurrentNumber = dialogViewModel.Number,
+                        Historical = new List<OldNumber>()
+                    };
+                this.classFileConfiguration.Subclasses[dialogViewModel.SubClassIndex].Numbers.Add(newNumber);
+
+                VehicleDetailsViewModel newVehicle =
+                  new VehicleDetailsViewModel(
+                    dialogViewModel.Number.ToString());
+
+                if (!IndividualUnitIOController.WriteIndividualUnitFile(newVehicle, classId))
+                {
+                    Logger l = Logger.Instance;
+                    l.WriteLog("TRACE: Class Config Form - Save Failed - Failed to write " + newVehicle.UnitNumber.ToString() + ".txt");
+                }
+
+                this.SaveModel();
+                this.SelectNewSubClass();
+            }
         }
 
         /// <summary>
@@ -1709,6 +1746,51 @@ namespace Shap.Units
         /// </summary>
         private void AddNewNumberSeries()
         {
+            NewNumberViewModel dialogViewModel =
+              new NewNumberViewModel(
+                this.SubClassNumbers,
+                true);
+
+            DialogService service = new DialogService();
+
+            service.ShowDialog(
+              new NewNumberSeriesDialog()
+              {
+                  DataContext = dialogViewModel
+              });
+
+            if (dialogViewModel.Result == MessageBoxResult.OK)
+            {
+                for (int number = dialogViewModel.Number; number <= dialogViewModel.UpperNumber; ++number)
+                {
+                    if (this.classFileConfiguration.Subclasses[dialogViewModel.SubClassIndex].Numbers.Find(n => n.CurrentNumber == number) != null)
+                    {
+                        return;
+                    }
+
+                    Number newNumber =
+                        new Number()
+                        {
+                            CurrentNumber = number,
+                            Historical = new List<OldNumber>()
+                        };
+                    this.classFileConfiguration.Subclasses[dialogViewModel.SubClassIndex].Numbers.Add(newNumber);
+
+                    VehicleDetailsViewModel newVehicle =
+                      new VehicleDetailsViewModel(
+                        number.ToString());
+
+                    if (!IndividualUnitIOController.WriteIndividualUnitFile(newVehicle, classId))
+                    {
+                        Logger l = Logger.Instance;
+                        l.WriteLog("TRACE: Class Config Form - Save Failed - Failed to write " + newVehicle.UnitNumber.ToString() + ".txt");
+                    }
+                }
+
+                this.SaveModel();
+                this.SelectNewSubClass();
+            }
+
             //NewNumberViewModel dialogViewModel =
             //  new NewNumberViewModel(
             //    this.ClassData.SubClassNumbers,
