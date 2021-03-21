@@ -1,5 +1,6 @@
 ﻿namespace Shap.Units.Factories
 {
+    using System;
     using System.Collections.ObjectModel;
 
     using Shap.Units.IO;
@@ -15,13 +16,14 @@
     {
         public static ObservableCollection<SubClassViewModel> CreateSubClasses(
           FirstExampleManager firstExamples,
-          ObservableCollection<SubClassDataType> modelSubClasses,
+          ObservableCollection<SubClassDataTypeViewModel> modelSubClasses,
           ClassFunctionalViewModel parent)
         {
+            Random r = new Random();
             ObservableCollection<SubClassViewModel> subClasses =
               new ObservableCollection<SubClassViewModel>();
 
-            foreach (SubClassDataType modelSubClass in modelSubClasses)
+            foreach (SubClassDataTypeViewModel modelSubClass in modelSubClasses)
             {
                 ObservableCollection<IUnitViewModel> units =
                   new ObservableCollection<IUnitViewModel>();
@@ -40,6 +42,8 @@
                     }
                     else
                     {
+                        int imageIndex = r.Next(0, modelSubClass.SubClassImageList.Count);
+
                         IUnitViewModel newUnit =
                           new UnitViewModel(
                             IndividualUnitIOController.WriteIndividualUnitFile,
@@ -48,7 +52,7 @@
                             unitRaw,
                             index == 0,
                             index == modelSubClass.VehicleNumbersList.Count - 1,
-                            modelSubClass.SubClassImagePath,
+                            modelSubClass.GetImagePath(imageIndex),
                             parent.ClassData.AlphaIdentifier);
 
                         units.Add(newUnit);

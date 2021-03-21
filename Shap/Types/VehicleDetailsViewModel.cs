@@ -47,7 +47,7 @@
     public VehicleDetailsViewModel(string unitNumber)
     {
       this.UnitNumber = unitNumber;
-      this.FormerNumbers = new VehicleNumberType();
+      this.FormerNumbers = new VehicleNumberTypeViewModel();
       this.JourneysList  = new List<IJourneyViewModel>();
       this.origMilage = new MilesChains();
     }
@@ -62,7 +62,7 @@
       FirstExampleManager firstExamples)
     {
       this.UnitNumber = rawData.UnitNumber;
-      this.FormerNumbers = new VehicleNumberType();
+      this.FormerNumbers = new VehicleNumberTypeViewModel();
       this.m_lastCheckDate = rawData.LastCheckDate;
       this.FormerNumbers = rawData.FormerNumbers;
       this.Notes = rawData.Notes;

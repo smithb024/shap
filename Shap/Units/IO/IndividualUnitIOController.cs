@@ -567,7 +567,7 @@
         private static IVehicleNumberType GetFormerNumbers(
           string numberList)
         {
-            IVehicleNumberType formerNumbers = new VehicleNumberType();
+            IVehicleNumberType formerNumbers = new VehicleNumberTypeViewModel();
 
             string[] formerNumbersArray = numberList.Split('\t');
             foreach (string formerNumber in formerNumbersArray)
