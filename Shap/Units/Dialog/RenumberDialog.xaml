@@ -8,60 +8,69 @@
         Background="{StaticResource StdBackground}"
         Name="Renumber"
         Title="RenumberDialog" Height="300" Width="350">
-  <Grid>
-    <Grid.RowDefinitions>
-      <RowDefinition Height="20"/>
-      <RowDefinition Height="*"/>
-    </Grid.RowDefinitions>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="20"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
 
-    <StackPanel Orientation="Horizontal"
+        <StackPanel Orientation="Horizontal"
                 Grid.Row="0">
-      <TextBlock Text="Sub Classes"
+            <TextBlock Text="Sub Classes"
                  Style="{StaticResource StdTextBlockStyle}"/>
-      <ComboBox ItemsSource="{Binding Path=SubClasses}"
+            <ComboBox ItemsSource="{Binding Path=SubClasses}"
                 SelectedIndex="{Binding SubClassIndex}"
                 Style="{StaticResource ComboBoxStyle}"/>
-    </StackPanel>
+        </StackPanel>
 
-    <Grid Grid.Row="1">
-      <Grid.ColumnDefinitions>
-        <ColumnDefinition Width="*"/>
-        <ColumnDefinition Width="*"/>
-        <ColumnDefinition Width="2*"/>
-      </Grid.ColumnDefinitions>
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="2*"/>
+            </Grid.ColumnDefinitions>
 
-      <ListView Grid.Column="0"
+            <ListView Grid.Column="0"
                 Style="{StaticResource StdListViewStyle}"
                 ItemsSource="{Binding Path=CurrentSubClassNumbersList}"
                 SelectedIndex="{Binding CurrentSubClassNumbersIndex}"/>
 
-      <StackPanel Grid.Column="1">
-        <TextBox Text="{Binding NewNumber}"
+            <StackPanel Grid.Column="1">
+                <TextBlock
+                    Text="New Number"
+                    Style="{StaticResource StdTextBlockStyle}"/>
+                <TextBox Text="{Binding NewNumber}"
                  Style="{StaticResource StdTextBoxStyle}"/>
-        <TextBox Text="{Binding TotalNumberToChange}"
+                <TextBlock
+                    Text="Series Length"
+                    Style="{StaticResource StdTextBlockStyle}"/>
+                <TextBox Text="{Binding TotalNumberToChange}"
                  Style="{StaticResource StdTextBoxStyle}"/>
-        <ListView ItemsSource="{Binding Path=SubClasses}"
+                <TextBlock
+                    Text="New Subclass"
+                    Style="{StaticResource StdTextBlockStyle}"/>
+                <ListView ItemsSource="{Binding Path=SubClasses}"
                   Style="{StaticResource StdListViewStyle}"
                   SelectedIndex="{Binding NewSubClassListIndex}"/>
-        <Button Content="Ok"
+                <Button Content="Ok"
                 Style="{StaticResource StdButtonStyle}"
                 Height="20"
                 Width="75"
-                Margin="2"
+                Margin="2,10,2,2"
                 Command="{Binding OkCmd}"
                 CommandParameter="{Binding ElementName=Renumber}"/>
-        <Button Content="Cancel"
+                <Button Content="Cancel"
                 Style="{StaticResource StdButtonStyle}"
                 Height="20"
                 Width="75"
                 Margin="2"
                 IsCancel="True"/>
-      </StackPanel>
+            </StackPanel>
 
-      <ListView Grid.Column="2"
+            <ListView Grid.Column="2"
                 Style="{StaticResource StdListViewStyle}"
                 ItemsSource="{Binding Path=NewNumbersDescriptionsList}"/>
 
+        </Grid>
     </Grid>
-  </Grid>
 </Window>

@@ -259,6 +259,7 @@
     <Compile Include="Units\ClassFrontPage.xaml.cs">
       <DependentUpon>ClassFrontPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Units\Factories\RenumberFactory.cs" />
     <Compile Include="Units\Factories\SearcherResults.cs" />
     <Compile Include="Units\Factories\SubClassFactory.cs" />
     <Compile Include="Units\IO\IndividualUnitFileContents.cs" />

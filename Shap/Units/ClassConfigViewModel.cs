@@ -19,6 +19,7 @@ namespace Shap.Units
     using Shap.Types;
     using Shap.Units.IO;
     using Shap.Units.Dialog;
+    using Shap.Units.Factories;
 
     public class ClassConfigViewModel : ViewModelBase, IClassConfigViewModel
     {
@@ -1809,7 +1810,6 @@ namespace Shap.Units
             //    this.ClassData.AddCurrentNumber(dialogViewModel.SubClassIndex, number);
             //    this.m_newNumberList.Add(number);
             //}
-
         }
 
         /// <summary>
@@ -1817,35 +1817,48 @@ namespace Shap.Units
         /// </summary>
         private void Renumber()
         {
-            //RenumberViewModel dialogViewModel =
-            //  new RenumberViewModel(
-            //    this.ClassData.SubClassNumbers,
-            //    this.ClassData.GetAllNumbers());
+            RenumberViewModel dialogViewModel =
+              new RenumberViewModel(
+                this.SubClassNumbers,
+                this.classFileConfiguration);
 
-            //DialogService service = new DialogService();
+            DialogService service = new DialogService();
 
-            //service.ShowDialog(
-            //  new RenumberDialog()
-            //  {
-            //      DataContext = dialogViewModel
-            //  });
+            service.ShowDialog(
+              new RenumberDialog()
+              {
+                  DataContext = dialogViewModel
+              });
 
-            //for (int index = 0; index < dialogViewModel.TotalNumberToChange; ++index)
-            //{
-            //    if (dialogViewModel.CurrentSubClassNumbersIndex + index < dialogViewModel.CurrentSubClassNumbersList.Count)
-            //    {
-            //        m_renumberedList[0].Add(dialogViewModel.CurrentSubClassNumbersList[dialogViewModel.CurrentSubClassNumbersIndex + index]);                   // former number
-            //        m_renumberedList[1].Add(dialogViewModel.NewNumber + index);                                     // new number
-            //        m_renumberedListSubClass.Add(dialogViewModel.SubClasses[dialogViewModel.NewSubClassListIndex]); // subclass
+            if (dialogViewModel.Result == MessageBoxResult.OK)
+            {
+                RenumberFactory.Renumber(
+                    this.classFileConfiguration,
+                    this.classId,
+                    dialogViewModel.OriginalNumber,
+                    dialogViewModel.OriginalSubClass,
+                    dialogViewModel.NewNumber,
+                    dialogViewModel.NewSubClass,
+                    dialogViewModel.TotalNumberToChange);
 
-            //        this.ClassData.ReNumber(
-            //          dialogViewModel.SubClasses[dialogViewModel.SubClassIndex],
-            //          dialogViewModel.CurrentSubClassNumbersList[dialogViewModel.CurrentSubClassNumbersIndex + index],
-            //          dialogViewModel.SubClasses[dialogViewModel.NewSubClassListIndex],
-            //          dialogViewModel.NewNumber + index);
-            //    }
-            //}
-        }
+                this.SaveModel();
+            }
+                //for (int index = 0; index < dialogViewModel.TotalNumberToChange; ++index)
+                //{
+                //    if (dialogViewModel.CurrentSubClassNumbersIndex + index < dialogViewModel.CurrentSubClassNumbersList.Count)
+                //    {
+                //        m_renumberedList[0].Add(dialogViewModel.CurrentSubClassNumbersList[dialogViewModel.CurrentSubClassNumbersIndex + index]);                   // former number
+                //        m_renumberedList[1].Add(dialogViewModel.NewNumber + index);                                     // new number
+                //        m_renumberedListSubClass.Add(dialogViewModel.SubClasses[dialogViewModel.NewSubClassListIndex]); // subclass
+
+                //        this.ClassData.ReNumber(
+                //          dialogViewModel.SubClasses[dialogViewModel.SubClassIndex],
+                //          dialogViewModel.CurrentSubClassNumbersList[dialogViewModel.CurrentSubClassNumbersIndex + index],
+                //          dialogViewModel.SubClasses[dialogViewModel.NewSubClassListIndex],
+                //          dialogViewModel.NewNumber + index);
+                //    }
+                //}
+            }
 
         /// <summary>
         /// One of the image selectors has changed. Reflect the change in the model.
