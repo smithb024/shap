@@ -1,7 +1,6 @@
 ﻿namespace Shap.Units.Dialog
 {
     using System.ComponentModel;
-    using System.Collections.Generic;
     using System.Collections.ObjectModel;
     using System.Windows.Input;
 
@@ -97,8 +96,8 @@
         /// Gets the first number to change.
         /// </summary>
         public string OriginalSubClass =>
-            this.CurrentSubClassNumbersIndex >= 0 && this.CurrentSubClassNumbersIndex < this.SubClasses.Count
-            ? this.SubClasses[this.CurrentSubClassNumbersIndex]
+            this.SubClassIndex >= 0 && this.SubClassIndex < this.SubClasses.Count
+            ? this.SubClasses[this.SubClassIndex]
             : string.Empty;
 
         /// <summary>
@@ -211,25 +210,6 @@
             if (e.PropertyName == nameof(this.SubClassIndex))
             {
                 this.PopulateCurrentSubClassNumbers();
-                //this.CurrentSubClassNumbersList.Clear();
-
-                //Subclass subclass =
-                //    this.classFileConfiguration.Subclasses.Find(
-                //    s => string.Compare(s.Type, this.SubClasses[this.SubClassIndex]) == 0);
-
-                //if (subclass != null)
-                //{
-                //    foreach(Number number in subclass.Numbers)
-                //    {
-                //        this.CurrentSubClassNumbersList.Add(number.CurrentNumber);
-                //    }
-                //}
-
-                //this.CurrentSubClassNumbersIndex =
-                //    this.CurrentSubClassNumbersList.Count > 0
-                //    ? 0 
-                //    : -1;
-
                 this.RaisePropertyChangedEvent(nameof(this.CurrentSubClassNumbersList));
             }
         }
