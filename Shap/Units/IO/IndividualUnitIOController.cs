@@ -304,11 +304,11 @@
                 originalFullPath =
                     IndividualUnitIOController.GetFilePath(
                         className,
-                        newNumber.ToString());
+                        formerNumber.ToString());
                 newFullPath =
                     IndividualUnitIOController.GetFilePath(
                         className,
-                        formerNumber.ToString());
+                        newNumber.ToString());
 
                 if (!File.Exists(originalFullPath))
                 {
@@ -343,10 +343,12 @@
                     return false;
                 }
 
-                // renumber the file.
-                File.Move(
-                    originalFullPath,
-                    newFullPath);
+                // A copy of the old file has now been saved under the new number,
+                // delete the old file.
+                File.Delete(originalFullPath);
+                //File.Move(
+                //    originalFullPath,
+                //    newFullPath);
             }
             catch (Exception ex)
             {
