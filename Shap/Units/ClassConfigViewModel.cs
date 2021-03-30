@@ -507,6 +507,7 @@
                     dialogViewModel.TotalNumberToChange);
 
                 this.SaveModel();
+                this.SelectNewSubClass();
             }
         }
 
