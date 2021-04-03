@@ -16,7 +16,7 @@
 
     <TextBox Grid.Row="0"
              Style="{StaticResource StdTextBoxStyle}"
-             Text="{Binding SubClass}"/>
+             Text="{Binding SubClass, UpdateSourceTrigger=PropertyChanged}"/>
     <StackPanel Grid.Row="1" Orientation="Horizontal">
       <Button Content="Ok"
               Style="{StaticResource StdButtonStyle}"
