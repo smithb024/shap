@@ -23,7 +23,7 @@
 
     <TextBox Grid.Row="1"
              Style="{ StaticResource StdTextBoxStyle}"
-             Text="{Binding Number}"/>
+             Text="{Binding Number, UpdateSourceTrigger=PropertyChanged}"/>
 
     <StackPanel Grid.Row="2"
                 FlowDirection="RightToLeft"

@@ -28,10 +28,10 @@
       </Grid.ColumnDefinitions>
       <TextBox Grid.Column="0"
                Style="{StaticResource StdTextBoxStyle}"
-               Text="{Binding Number}"/>
+               Text="{Binding Number, UpdateSourceTrigger=PropertyChanged}"/>
       <TextBox Grid.Column="1"
                Style="{StaticResource StdTextBoxStyle}"
-               Text="{Binding UpperNumber}"/>
+               Text="{Binding UpperNumber, UpdateSourceTrigger=PropertyChanged}"/>
     </Grid>
 
     <StackPanel Grid.Row="2" Orientation="Horizontal">

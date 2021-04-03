@@ -373,6 +373,12 @@
                         Numbers = new List<Number>()
                     };
 
+                // This will be null the first time a class is created.
+                if (this.classFileConfiguration.Subclasses == null)
+                {
+                    this.classFileConfiguration.Subclasses = new List<Subclass>();
+                }
+
                 this.classFileConfiguration.Subclasses.Add(newSubclass);
                 this.SubClassNumbers.Add(newSubclass.Type);
                 this.SaveModel();
