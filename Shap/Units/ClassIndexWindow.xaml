@@ -4,70 +4,31 @@
         xmlns:index="clr-namespace:Shap.Units"
         Title="ClassIndexWindow"
         Width="400"
-        SizeToContent="Height">
-  <Grid>
-    <Grid.RowDefinitions>
-      <RowDefinition Height="30"/>
-      <RowDefinition Height="Auto"/>
-    </Grid.RowDefinitions>
+        Height="800">
+    
+    <DockPanel LastChildFill="True">
 
-    <CheckBox Grid.Row="0"
+        <CheckBox DockPanel.Dock="Top"
               Content="Configuration Mode"
               IsChecked="{Binding InConfigurationMode}"/>
 
-    <!--<index:IndexItem DataContext="{Binding Item}" Grid.Row="1"></index:IndexItem>-->
+        <ScrollViewer
+                VerticalAlignment="Center"
+                VerticalContentAlignment="Stretch">
+                <ItemsControl ItemsSource="{Binding ItemsGroup}" >
 
-    <DockPanel LastChildFill="True" x:Name="IndexGrid" Grid.Row="1" VerticalAlignment="Stretch" MaxHeight="400">
-      <ScrollViewer Height="{Binding ElementName=IndexGrid, XPath=ActualHeight}" VerticalAlignment="Center" VerticalContentAlignment="Stretch">
-        <ItemsControl ItemsSource="{Binding ItemsGroup}" >
-          <ItemsControl.ItemsPanel>
-            <!-- specify the panel that is the container for the items -->
-            <ItemsPanelTemplate>
-              <StackPanel />
-            </ItemsPanelTemplate>
-          </ItemsControl.ItemsPanel>
-          <!-- specify the template used to render each item -->
-          <ItemsControl.ItemTemplate>
-            <DataTemplate>
-              <index:ClassIndexGroup/>
-              <!--<Button Content="{Binding CmdMessage}" Height="30"/>-->
-            </DataTemplate>
-          </ItemsControl.ItemTemplate>
-        </ItemsControl>
-      </ScrollViewer>
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <StackPanel />
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <index:ClassIndexGroup/>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </ScrollViewer>
     </DockPanel>
-
-    <!--<ItemsControl ItemsSource="{Binding Items}" Grid.Row="1">
-      <ItemsControl.ItemsPanel>
-        --><!-- specify the panel that is the container for the items --><!--
-        <ItemsPanelTemplate>
-          <WrapPanel />
-        </ItemsPanelTemplate>
-      </ItemsControl.ItemsPanel>
-      --><!-- specify the template used to render each item --><!--
-      <ItemsControl.ItemTemplate>
-        <DataTemplate>
-          <index:IndexItem/>
-          --><!--<Button Content="{Binding CmdMessage}" Height="30"/>--><!--
-        </DataTemplate>
-      </ItemsControl.ItemTemplate>
-    </ItemsControl>-->
-
-    <!--<ScrollViewer Grid.Row="1" HorizontalScrollBarVisibility="Visible">
-      <ItemsControl ItemsSource="{Binding MyMatrix}" >
-        <ItemsControl.ItemsPanel>
-          --><!-- specify the panel that is the container for the items --><!--
-          <ItemsPanelTemplate>
-            <WrapPanel />
-          </ItemsPanelTemplate>
-        </ItemsControl.ItemsPanel>
-        --><!-- specify the template used to render each item --><!--
-        <ItemsControl.ItemTemplate>
-          <DataTemplate>
-            <Button Content="{Binding CmdMessage}" Height="30"/>
-          </DataTemplate>
-        </ItemsControl.ItemTemplate>
-      </ItemsControl>
-    </ScrollViewer>-->
-  </Grid>
 </Window>
