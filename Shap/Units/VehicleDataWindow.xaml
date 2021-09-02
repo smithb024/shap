@@ -5,25 +5,52 @@
         xmlns:commonConverter="clr-namespace:NynaeveLib.Converters;assembly=NynaeveLib"
         xmlns:shapConverter="clr-namespace:Shap.Common.Converters"
         xmlns:vdw="clr-namespace:Shap.Units.VDW"
+        xmlns:winformchart="clr-namespace:System.Windows.Forms.DataVisualization.Charting;assembly=System.Windows.Forms.DataVisualization" 
         Title="VehicleDataWindow"
-        Height="800" Width="600">
+        Height="800"
+        Width="600"
+        WindowStartupLocation="Manual" 
+        Left="905" 
+        Top="0">
 
-  <!-- Believe the view model is UnitViewModel -->
+    <!-- Believe the view model is UnitViewModel -->
 
-  <Window.Resources>
-    <commonConverter:IntThresholdToVisibiltyConverter x:Key="summaryVisibilityConverter" AboveIsVisible="True" Threshold="10"/>
-    <commonConverter:IntThresholdToVisibiltyConverter x:Key="fullVisibilityConverter" AboveIsVisible="False" Threshold="10"/>
-    <shapConverter:ServiceTypeBrushConverter x:Key="serviceTypeBrushConverter"/>
-  </Window.Resources>
+    <Window.Resources>
+        <commonConverter:IntThresholdToVisibiltyConverter x:Key="summaryVisibilityConverter" AboveIsVisible="True" Threshold="10"/>
+        <commonConverter:IntThresholdToVisibiltyConverter x:Key="fullVisibilityConverter" AboveIsVisible="False" Threshold="10"/>
+        <shapConverter:ServiceTypeBrushConverter x:Key="serviceTypeBrushConverter"/>
+    </Window.Resources>
 
-  <Grid Background="{Binding Status, Converter={StaticResource serviceTypeBrushConverter}}">
-    <Grid.RowDefinitions>
-      <RowDefinition Height="150"/>
-      <RowDefinition Height="*"/>
-    </Grid.RowDefinitions>
+    <Grid Background="{Binding Status, Converter={StaticResource serviceTypeBrushConverter}}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="150"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="100"/>
+        </Grid.RowDefinitions>
 
-    <vdw:UnitDetails Grid.Row="0"/>
-    <vdw:FullJourneysList Grid.Row="1" Visibility="{Binding NumberOfJnys, Converter={StaticResource fullVisibilityConverter}}"/>
-    <vdw:SummaryJourneysPane Grid.Row="1" Visibility="{Binding NumberOfJnys, Converter={StaticResource summaryVisibilityConverter}}"/>
-  </Grid>
+        <vdw:UnitDetails Grid.Row="0"/>
+        <vdw:FullJourneysList Grid.Row="1" Visibility="{Binding NumberOfJnys, Converter={StaticResource fullVisibilityConverter}}"/>
+        <vdw:SummaryJourneysPane Grid.Row="1" Visibility="{Binding NumberOfJnys, Converter={StaticResource summaryVisibilityConverter}}"/>
+
+        <Grid Grid.Row="2" >
+            <WindowsFormsHost x:Name="host"
+                              Height="Auto" >
+                <winformchart:Chart 
+                    x:Name="chart1"
+                    Dock="Fill"
+                    BackColor="#FF003200">
+
+                    <winformchart:Chart.Series>
+                        <winformchart:Series 
+                            Color="White" 
+                            Name="series" 
+                            ChartType="Area"/>
+                    </winformchart:Chart.Series>
+                    <winformchart:Chart.ChartAreas>
+                        <winformchart:ChartArea BackColor="#FF003200" />
+                    </winformchart:Chart.ChartAreas>
+                </winformchart:Chart>
+            </WindowsFormsHost>
+        </Grid>
+    </Grid>
 </Window>

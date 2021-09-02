@@ -4,7 +4,10 @@
         xmlns:index="clr-namespace:Shap.Units"
         Title="ClassIndexWindow"
         Width="400"
-        Height="800">
+        Height="800"
+        WindowStartupLocation="Manual" 
+        Left="235" 
+        Top="0">
     
     <DockPanel LastChildFill="True">
 
