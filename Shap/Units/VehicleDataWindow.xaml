@@ -5,6 +5,7 @@
         xmlns:commonConverter="clr-namespace:NynaeveLib.Converters;assembly=NynaeveLib"
         xmlns:shapConverter="clr-namespace:Shap.Common.Converters"
         xmlns:vdw="clr-namespace:Shap.Units.VDW"
+        xmlns:winformchart="clr-namespace:System.Windows.Forms.DataVisualization.Charting;assembly=System.Windows.Forms.DataVisualization" 
         Title="VehicleDataWindow"
         Height="800"
         Width="600"
@@ -24,10 +25,32 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="150"/>
             <RowDefinition Height="*"/>
+            <RowDefinition Height="100"/>
         </Grid.RowDefinitions>
 
         <vdw:UnitDetails Grid.Row="0"/>
         <vdw:FullJourneysList Grid.Row="1" Visibility="{Binding NumberOfJnys, Converter={StaticResource fullVisibilityConverter}}"/>
         <vdw:SummaryJourneysPane Grid.Row="1" Visibility="{Binding NumberOfJnys, Converter={StaticResource summaryVisibilityConverter}}"/>
+        
+        <Grid Grid.Row="2" >
+            <WindowsFormsHost x:Name="host" Height="Auto" >
+                <winformchart:Chart x:Name="chart1"
+                                Dock="Fill">
+
+                    <winformchart:Chart.Series>
+                        <winformchart:Series 
+                        Name="series" 
+                        ChartType="Area"/>
+                    </winformchart:Chart.Series>
+                    <winformchart:Chart.ChartAreas>
+                        <winformchart:ChartArea />
+                    </winformchart:Chart.ChartAreas>
+                    <winformchart:Chart.Legends>
+                        <winformchart:Legend >
+                        </winformchart:Legend>
+                    </winformchart:Chart.Legends>
+                </winformchart:Chart>
+            </WindowsFormsHost>
+        </Grid>
     </Grid>
 </Window>
