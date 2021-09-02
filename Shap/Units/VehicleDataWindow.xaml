@@ -6,24 +6,28 @@
         xmlns:shapConverter="clr-namespace:Shap.Common.Converters"
         xmlns:vdw="clr-namespace:Shap.Units.VDW"
         Title="VehicleDataWindow"
-        Height="800" Width="600">
+        Height="800"
+        Width="600"
+        WindowStartupLocation="Manual" 
+        Left="905" 
+        Top="0">
 
-  <!-- Believe the view model is UnitViewModel -->
+    <!-- Believe the view model is UnitViewModel -->
 
-  <Window.Resources>
-    <commonConverter:IntThresholdToVisibiltyConverter x:Key="summaryVisibilityConverter" AboveIsVisible="True" Threshold="10"/>
-    <commonConverter:IntThresholdToVisibiltyConverter x:Key="fullVisibilityConverter" AboveIsVisible="False" Threshold="10"/>
-    <shapConverter:ServiceTypeBrushConverter x:Key="serviceTypeBrushConverter"/>
-  </Window.Resources>
+    <Window.Resources>
+        <commonConverter:IntThresholdToVisibiltyConverter x:Key="summaryVisibilityConverter" AboveIsVisible="True" Threshold="10"/>
+        <commonConverter:IntThresholdToVisibiltyConverter x:Key="fullVisibilityConverter" AboveIsVisible="False" Threshold="10"/>
+        <shapConverter:ServiceTypeBrushConverter x:Key="serviceTypeBrushConverter"/>
+    </Window.Resources>
 
-  <Grid Background="{Binding Status, Converter={StaticResource serviceTypeBrushConverter}}">
-    <Grid.RowDefinitions>
-      <RowDefinition Height="150"/>
-      <RowDefinition Height="*"/>
-    </Grid.RowDefinitions>
+    <Grid Background="{Binding Status, Converter={StaticResource serviceTypeBrushConverter}}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="150"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
 
-    <vdw:UnitDetails Grid.Row="0"/>
-    <vdw:FullJourneysList Grid.Row="1" Visibility="{Binding NumberOfJnys, Converter={StaticResource fullVisibilityConverter}}"/>
-    <vdw:SummaryJourneysPane Grid.Row="1" Visibility="{Binding NumberOfJnys, Converter={StaticResource summaryVisibilityConverter}}"/>
-  </Grid>
+        <vdw:UnitDetails Grid.Row="0"/>
+        <vdw:FullJourneysList Grid.Row="1" Visibility="{Binding NumberOfJnys, Converter={StaticResource fullVisibilityConverter}}"/>
+        <vdw:SummaryJourneysPane Grid.Row="1" Visibility="{Binding NumberOfJnys, Converter={StaticResource summaryVisibilityConverter}}"/>
+    </Grid>
 </Window>
