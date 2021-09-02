@@ -5,6 +5,7 @@
     using System.Windows;
     using NynaeveLib.Types;
     using Shap.Interfaces.ViewModels;
+    using Shap.Styles;
 
     /// <summary>
     /// Interaction logic for VehicleDataWindow.xaml
@@ -25,6 +26,13 @@
         /// <param name="journeysList">current set of distances.</param>
         public void SetUpGraph(List<IJourneyViewModel> journeysList)
         {
+            this.chart1.ChartAreas[0].AxisX.LineColor = ColoursDictionary.AxisColour;
+            this.chart1.ChartAreas[0].AxisY.LineColor = ColoursDictionary.AxisColour;
+            this.chart1.ChartAreas[0].AxisX.MajorGrid.Enabled = false;
+            this.chart1.ChartAreas[0].AxisY.MajorGrid.LineColor = ColoursDictionary.AxisColour;
+            this.chart1.ChartAreas[0].AxisX.LabelStyle.ForeColor = ColoursDictionary.AxisColour;
+            this.chart1.ChartAreas[0].AxisY.LabelStyle.ForeColor = ColoursDictionary.AxisColour;
+
             DateTime startTime = journeysList[journeysList.Count - 1].JnyId.Date.AddMonths(-1);
             DateTime lastTime = journeysList[0].JnyId.Date.AddMonths(1);
             double lastTimeInSeconds = lastTime.Subtract(startTime).TotalSeconds;

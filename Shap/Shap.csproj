@@ -236,6 +236,7 @@
     <Compile Include="Stats\FirstExampleIOController.cs" />
     <Compile Include="Stats\FirstExampleManager.cs" />
     <Compile Include="Stats\LocalListType.cs" />
+    <Compile Include="Styles\ColoursDictionary.cs" />
     <Compile Include="Types\ClassDataTypeViewModel.cs" />
     <Compile Include="Types\Enum\ComponentState.cs" />
     <Compile Include="Types\Enum\MainCommands.cs" />
