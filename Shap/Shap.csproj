@@ -175,14 +175,12 @@
       <DependentUpon>GroupsAndClassesDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="Config\GroupsAndClassesIOController.cs" />
-    <Compile Include="Config\ConfigFormCmd.cs" />
     <Compile Include="Config\GroupsAndClassesViewModel.cs" />
     <Compile Include="Config\PopularStnConfigDialog.xaml.cs">
       <DependentUpon>PopularStnConfigDialog.xaml</DependentUpon>
     </Compile>
     <Compile Include="Config\PopularStnConfigViewModel.cs" />
     <Compile Include="Config\PopularStnIOController.cs" />
-    <Compile Include="DisplayWindowCmd.cs" />
     <Compile Include="Icons\DayIcon.xaml.cs">
       <DependentUpon>DayIcon.xaml</DependentUpon>
     </Compile>
@@ -194,7 +192,6 @@
     </Compile>
     <Compile Include="Input\DayViewModel.cs" />
     <Compile Include="Input\Factories\DailyInputFactory.cs" />
-    <Compile Include="Input\InputFormCmd.cs" />
     <Compile Include="Input\InputForm.xaml.cs">
       <DependentUpon>InputForm.xaml</DependentUpon>
     </Compile>
@@ -231,8 +228,6 @@
     <Compile Include="StationDetails\MileageDetailsWindow.xaml.cs">
       <DependentUpon>MileageDetailsWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="StationDetails\EditViewModelCmd.cs" />
-    <Compile Include="StationDetails\StnDetailsCmd.cs" />
     <Compile Include="Stats\FirstExampleIOController.cs" />
     <Compile Include="Stats\FirstExampleManager.cs" />
     <Compile Include="Stats\LocalListType.cs" />
@@ -297,7 +292,6 @@
       <DependentUpon>IndexItem.xaml</DependentUpon>
     </Compile>
     <Compile Include="Units\IndexItemViewModel.cs" />
-    <Compile Include="Units\ClassIndexCmd.cs" />
     <Compile Include="Units\ClassIndexViewModel.cs" />
     <Compile Include="Units\ClassIndexWindow.xaml.cs">
       <DependentUpon>ClassIndexWindow.xaml</DependentUpon>
