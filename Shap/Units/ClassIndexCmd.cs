@@ -4,7 +4,8 @@
   using System.Windows.Input;
   using Shap.Units;
 
-  public class ClassIndexCmd : ICommand
+  public class ClassIndexCmd 
+
   {
     /// <summary>
     /// Creates a new instance of the <see cref="StnDetailsCmd"/> class
