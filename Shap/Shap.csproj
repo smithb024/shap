@@ -292,7 +292,6 @@
       <DependentUpon>IndexItem.xaml</DependentUpon>
     </Compile>
     <Compile Include="Units\IndexItemViewModel.cs" />
-    <Compile Include="Units\ClassIndexCmd.cs" />
     <Compile Include="Units\ClassIndexViewModel.cs" />
     <Compile Include="Units\ClassIndexWindow.xaml.cs">
       <DependentUpon>ClassIndexWindow.xaml</DependentUpon>
