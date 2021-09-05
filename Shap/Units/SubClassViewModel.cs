@@ -4,8 +4,8 @@
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
 
+    using Interfaces.ViewModels;
     using NynaeveLib.ViewModel;
-
     using Shap.Interfaces.Units;
 
     /// <summary>
@@ -86,8 +86,15 @@
             {
                 window = new VehicleDataWindow();
                 window.DataContext = unit;
-                window.SetUpGraph(unit.JourneysList);
 
+                if (unit.JourneysList != null)
+                {
+                    window.SetUpGraph(unit.JourneysList);
+                }
+                else
+                {
+                    window.SetUpGraph(new List<IJourneyViewModel>());
+                }
                 unit.ClosingRequest += this.CloseVcleDataWindow;
                 window.Closed += this.VcleDataWindowClosed;
 

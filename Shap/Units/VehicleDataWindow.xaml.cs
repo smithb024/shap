@@ -33,6 +33,11 @@
             this.chart1.ChartAreas[0].AxisX.LabelStyle.ForeColor = ColoursDictionary.AxisColour;
             this.chart1.ChartAreas[0].AxisY.LabelStyle.ForeColor = ColoursDictionary.AxisColour;
 
+            if (journeysList == null || journeysList.Count == 0)
+            {
+                return;
+            }
+
             DateTime startTime = journeysList[journeysList.Count - 1].JnyId.Date.AddMonths(-1);
             DateTime lastTime = journeysList[0].JnyId.Date.AddMonths(1);
             double lastTimeInSeconds = lastTime.Subtract(startTime).TotalSeconds;
