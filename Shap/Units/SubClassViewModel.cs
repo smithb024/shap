@@ -5,6 +5,7 @@
     using System.Collections.ObjectModel;
 
     using Interfaces.ViewModels;
+    using NynaeveLib.Logger;
     using NynaeveLib.ViewModel;
     using Shap.Interfaces.Units;
 
@@ -25,26 +26,26 @@
         private List<VehicleDataWindow> vcleWindows;
 
         /// <summary>
-        /// The parent class.
-        /// </summary>
-        private ClassFunctionalViewModel parentClass;
-
-        /// <summary>
         /// Initialises a new instance of the <see cref="SubClassViewModel"/> class.
         /// </summary>
-        /// <param name="parent">parent view model</param>
+        /// <param name="alphaIdentifier">
+        /// The alpha identifier for this <see cref="SubClassViewModel"/>
+        /// </param>
         /// <param name="units">list of units</param>
         public SubClassViewModel(
-          ClassFunctionalViewModel parent,
-          ObservableCollection<IUnitViewModel> units)
+            string alphaIdentifier,
+            ObservableCollection<IUnitViewModel> units)
         {
-            this.parentClass = parent;
+            this.AlphaIdentifier = alphaIdentifier;
             this.Units = units;
             this.vcleWindows = new List<VehicleDataWindow>();
 
-            foreach (IUnitViewModel unit in units)
+            foreach (IUnitViewModel unit in this.Units)
             {
-                this.SetUpEvents(unit);
+                unit.OpenEvent += new VehicleDataDelegate(this.ShowVcleData);
+                unit.CloseEvent += new VehicleDataDelegate(this.CloseVcleData);
+                unit.NextEvent += new VehicleDataDelegate(this.NextUnit);
+                unit.PreviousEvent += new VehicleDataDelegate(this.PreviousUnit);
             }
         }
 
@@ -56,19 +57,7 @@
         /// <summary>
         /// Gets the alpha identifier for this <see cref="SubClassViewModel"/>.
         /// </summary>
-        public string AlphaIdentifier => this.parentClass.ClassData.AlphaIdentifier;
-
-        /// <summary>
-        /// Set up all events
-        /// </summary>
-        /// <param name="newVehicle">vehicle containing the events</param>
-        private void SetUpEvents(IUnitViewModel newVehicle)
-        {
-            newVehicle.OpenEvent += new VehicleDataDelegate(this.ShowVcleData);
-            newVehicle.CloseEvent += new VehicleDataDelegate(this.CloseVcleData);
-            newVehicle.NextEvent += new VehicleDataDelegate(this.NextUnit);
-            newVehicle.PreviousEvent += new VehicleDataDelegate(this.PreviousUnit);
-        }
+        public string AlphaIdentifier { get; }
 
         /// <summary>
         /// Set up and show a vehicle data window for a unit.
@@ -84,8 +73,11 @@
             }
             else
             {
-                window = new VehicleDataWindow();
-                window.DataContext = unit;
+                window =
+                    new VehicleDataWindow
+                    {
+                        DataContext = unit
+                    };
 
                 if (unit.JourneysList != null)
                 {
@@ -95,7 +87,6 @@
                 {
                     window.SetUpGraph(new List<IJourneyViewModel>());
                 }
-                unit.ClosingRequest += this.CloseVcleDataWindow;
                 window.Closed += this.VcleDataWindowClosed;
 
                 this.vcleWindows.Add(window);
@@ -120,18 +111,8 @@
         /// <summary>
         /// Form closed, set to null.
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void CloseVcleDataWindow(object sender, EventArgs e)
-        {
-
-        }
-
-        /// <summary>
-        /// Form closed, set to null.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+        /// <param name="sender">vehicle data window</param>
+        /// <param name="e">event args</param>
         private void VcleDataWindowClosed(object sender, EventArgs e)
         {
             if (sender.GetType().Equals(typeof(VehicleDataWindow)))
@@ -143,29 +124,19 @@
         /// <summary>
         /// Display the next unit
         /// </summary>
-        /// <param name="unit">Unit to display</param>
+        /// <param name="unit">the unit from where the request originated</param>
         private void NextUnit(IUnitViewModel unit)
         {
-            if (this.vcleWindows.Exists(vw => vw.DataContext == unit))
+            int? index = this.GetUnitIndex(unit);
+
+            if (index != null &&
+                index < this.Units.Count - 1) 
             {
                 VehicleDataWindow window = this.vcleWindows.Find(vw => vw.DataContext == unit);
 
-                int? index = this.GetUnitIndex(unit);
-
-                if (index != null)
-                {
-                    window.DataContext = this.Units[(int)index + 1];
-
-                    if (this.Units[(int)index + 1].JourneysList != null)
-                    {
-                        window.SetUpGraph(this.Units[(int)index + 1].JourneysList);
-                    }
-                    else
-                    {
-                        window.SetUpGraph(new List<IJourneyViewModel>());
-                    }
-
-                }
+                this.ChangeWindowUnit(
+                    window,
+                    this.Units[(int)index + 1]);
             }
         }
 
@@ -175,28 +146,18 @@
         /// <param name="unit">Unit to display</param>
         private void PreviousUnit(IUnitViewModel unit)
         {
-            if (this.vcleWindows.Exists(vw => vw.DataContext == unit))
+            int? index = this.GetUnitIndex(unit);
+
+            if (index != null &&
+                index > 0)
             {
                 VehicleDataWindow window = this.vcleWindows.Find(vw => vw.DataContext == unit);
 
-                int? index = this.GetUnitIndex(unit);
-
-                if (index != null)
-                {
-                    window.DataContext = this.Units[(int)index - 1];
-
-                    if (this.Units[(int)index - 1].JourneysList != null)
-                    {
-                        window.SetUpGraph(this.Units[(int)index - 1].JourneysList);
-                    }
-                    else
-                    {
-                        window.SetUpGraph(new List<IJourneyViewModel>());
-                    }
-
-                }
+                this.ChangeWindowUnit(
+                    window,
+                    this.Units[(int)index - 1]);
             }
-        }
+       }
 
         /// <summary>
         /// Find and return the index of a unit.
@@ -214,6 +175,50 @@
             }
 
             return null;
+        }
+
+        /// <summary>
+        /// Change the data context of an existing window to display the indicated unit.
+        /// Update the graphs.
+        /// </summary>
+        /// <remarks>
+        /// The command is rejected if there is a window which already displays the indicated unit.
+        /// In that case, the other window is focused.
+        /// </remarks>
+        /// <param name="window">Window to change</param>
+        /// <param name="unit">Unit to display on the window</param>
+        private void ChangeWindowUnit(
+            VehicleDataWindow window,
+            IUnitViewModel unit)
+        {
+            // Focus on an existing window if one already exists.
+            if (this.vcleWindows.Exists(vw => vw.DataContext == unit))
+            {
+                VehicleDataWindow existingWindow =
+                    this.vcleWindows.Find(
+                        vw => vw.DataContext == unit);
+                existingWindow.Show();
+                existingWindow.Activate();
+
+                return;
+            }
+
+            if (window == null)
+            {
+                Logger.Instance.WriteLog("SubClassViewModel: failed to change unit in a window, failed to find valid window");
+                return;
+            }
+
+            window.DataContext = unit;
+
+            if (unit.JourneysList != null)
+            {
+                window.SetUpGraph(unit.JourneysList);
+            }
+            else
+            {
+                window.SetUpGraph(new List<IJourneyViewModel>());
+            }
         }
     }
 }
