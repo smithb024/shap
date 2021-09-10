@@ -61,7 +61,7 @@
 
                 SubClassViewModel newSubClass =
                   new SubClassViewModel(
-                    parent,
+                    parent.ClassData.AlphaIdentifier,
                     units);
 
                 subClasses.Add(newSubClass);
