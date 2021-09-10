@@ -42,6 +42,7 @@
             DateTime lastTime = journeysList[0].JnyId.Date.AddMonths(1);
             double lastTimeInSeconds = lastTime.Subtract(startTime).TotalSeconds;
 
+            this.chart1.Series[0].Points.Clear();
             this.chart1.Series[0].Points.AddXY(0, 0);
             MilesChains distance = new MilesChains();
 

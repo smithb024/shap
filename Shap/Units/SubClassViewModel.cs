@@ -155,6 +155,16 @@
                 if (index != null)
                 {
                     window.DataContext = this.Units[(int)index + 1];
+
+                    if (this.Units[(int)index + 1].JourneysList != null)
+                    {
+                        window.SetUpGraph(this.Units[(int)index + 1].JourneysList);
+                    }
+                    else
+                    {
+                        window.SetUpGraph(new List<IJourneyViewModel>());
+                    }
+
                 }
             }
         }
@@ -174,6 +184,16 @@
                 if (index != null)
                 {
                     window.DataContext = this.Units[(int)index - 1];
+
+                    if (this.Units[(int)index - 1].JourneysList != null)
+                    {
+                        window.SetUpGraph(this.Units[(int)index - 1].JourneysList);
+                    }
+                    else
+                    {
+                        window.SetUpGraph(new List<IJourneyViewModel>());
+                    }
+
                 }
             }
         }
