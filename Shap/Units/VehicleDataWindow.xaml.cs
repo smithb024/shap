@@ -3,6 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.Windows;
+    using System.Windows.Forms.DataVisualization.Charting;
     using NynaeveLib.Types;
     using Shap.Interfaces.ViewModels;
     using Shap.Styles;
@@ -11,13 +12,22 @@
     /// Interaction logic for VehicleDataWindow.xaml
     /// </summary>
     public partial class VehicleDataWindow : Window
-  {
+    {
+        /// <summary>
+        /// Time of the first point on the graph.
+        /// </summary>
+        private DateTime graphStartTime; 
+
         /// <summary>
         /// Initialises a new instance of the <see cref="VehicleDataWindow"/> class.
         /// </summary>
         public VehicleDataWindow()
         {
             this.InitializeComponent();
+
+            //customize the X-Axis to properly display Time 
+            chart1.Customize += Chart1Customise;
+            graphStartTime = DateTime.Now;
         }
 
         /// <summary>
@@ -39,6 +49,7 @@
             }
 
             DateTime startTime = journeysList[journeysList.Count - 1].JnyId.Date.AddMonths(-1);
+            this.graphStartTime = startTime;
             DateTime lastTime = journeysList[0].JnyId.Date.AddMonths(1);
             double lastTimeInSeconds = lastTime.Subtract(startTime).TotalSeconds;
 
@@ -57,6 +68,22 @@
             }
 
             this.chart1.Series[0].Points.AddXY(lastTimeInSeconds, distance.Miles);
+        }
+
+        /// <summary>
+        /// Customise the x axis to display the year.
+        /// </summary>
+        /// <param name="sender">sender graph</param>
+        /// <param name="e">event arguments</param>
+        private void Chart1Customise(object sender, EventArgs e)
+        {
+            CustomLabelsCollection xAxisLabels = ((Chart)sender).ChartAreas[0].AxisX.CustomLabels;
+            for (int cnt = 0; cnt < xAxisLabels.Count; cnt++)
+            {
+                TimeSpan ts = TimeSpan.FromSeconds(double.Parse(xAxisLabels[cnt].Text));
+                DateTime graphTime = this.graphStartTime + ts;
+                xAxisLabels[cnt].Text = graphTime.Year.ToString("0000");
+            }
         }
     }
 }
