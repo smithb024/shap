@@ -10,37 +10,52 @@
         Left="620" 
         Top="0">
 
-  <Grid Background="{StaticResource StdBackground}">
-    <Grid.RowDefinitions>
-      <RowDefinition Height="20"/>
-      <RowDefinition Height="*"/>
-    </Grid.RowDefinitions>
+    <Grid Background="{StaticResource StdBackground}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
 
-    <StackPanel Orientation="Horizontal"
-                Grid.Row="0">
-      <TextBlock Text="Sub Classes"
-                 Style="{StaticResource StdTextBlockStyle}"/>
-      <ComboBox ItemsSource="{Binding Path=SubClasses}"
+        <StackPanel 
+            Orientation="Horizontal"
+            Grid.Row="0"
+            Margin="5">
+            <TextBlock 
+                Text="Sub Classes"
+                VerticalAlignment="Center"
+                Style="{StaticResource StdTextBlockStyle}"
+                Margin="0,0,5,0"/>
+            <ComboBox 
+                ItemsSource="{Binding Path=SubClasses}"
                 SelectedIndex="{Binding SubClassIndex}"
-                Style="{StaticResource ComboBoxStyle}"/>
-    </StackPanel>
+                Style="{StaticResource ComboBoxStyle}"
+                Margin="0,0,5,0"/>
+            <Button 
+                Content="Refresh All"
+                Style="{StaticResource StdButtonStyle}"
+                Height="20"
+                Width="100"
+                Command="{Binding RefreshAll}"/>
+        </StackPanel>
 
-    <ListView ItemsSource="{Binding CurrentIndex.Units}"
-              Grid.Row="1"
-              VerticalContentAlignment="Stretch"
-              HorizontalContentAlignment="Stretch"
-              Background="Transparent">
-      <ItemsControl.ItemTemplate>
-        <DataTemplate>
-          <Grid>
-            <Grid.InputBindings>
-              <MouseBinding Gesture="LeftDoubleClick"
-                            Command="{Binding OpenWindowCmd}"/>
-            </Grid.InputBindings>
-            <controls:UnitIndex/>
-          </Grid>
-        </DataTemplate>
-      </ItemsControl.ItemTemplate>
-    </ListView>
-  </Grid>
+        <ListView 
+            ItemsSource="{Binding CurrentIndex.Units}"
+            Grid.Row="1"
+            VerticalContentAlignment="Stretch"
+            HorizontalContentAlignment="Stretch"
+            Background="Transparent">
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <Grid>
+                        <Grid.InputBindings>
+                            <MouseBinding 
+                                Gesture="LeftDoubleClick"
+                                Command="{Binding OpenWindowCmd}"/>
+                        </Grid.InputBindings>
+                        <controls:UnitIndex/>
+                    </Grid>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ListView>
+    </Grid>
 </Window>
