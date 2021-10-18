@@ -216,6 +216,42 @@
         //  }
         //}
 
+        /// <summary>
+        /// Refresh the units data.
+        /// </summary>
+        public void RefreshUnit()
+        {
+            this.JourneysList = new List<IJourneyViewModel>();
+
+            // TODO new each time. Really>?
+            //Searcher searcher = new Searcher();
+
+            SearcherResults results =
+            Searcher.RunCompleteSearch(
+              this.DisplayUnitNumber,
+              this.FormerNumbers.FormerNumbers);
+
+            //List<IJourneyDetailsType> rawData = searcher.FoundJourneys;
+
+            foreach (IJourneyDetailsType jny in results.FoundJourneys)
+            {
+                IJourneyViewModel journey =
+                  JourneyFactory.ToJourneyViewModel(
+                    jny,
+                    this.firstExamples,
+                    this.UnitNumber);
+
+                this.AddJourney(journey);
+            }
+
+            this.UnitLastCheck = results.LastDateChecked;
+
+            //this.RefreshUnitDistance();
+            this.CompleteUpdate();
+
+            this.SaveUnit();
+        }
+
         private void OpenWindow()
         {
             this.OpenEvent(this);
@@ -259,39 +295,6 @@
         private bool UpdateCmdAvailable()
         {
             return false;
-        }
-
-        private void RefreshUnit()
-        {
-            this.JourneysList = new List<IJourneyViewModel>();
-
-            // TODO new each time. Really>?
-            //Searcher searcher = new Searcher();
-
-            SearcherResults results =
-            Searcher.RunCompleteSearch(
-              this.DisplayUnitNumber,
-              this.FormerNumbers.FormerNumbers);
-
-            //List<IJourneyDetailsType> rawData = searcher.FoundJourneys;
-
-            foreach (IJourneyDetailsType jny in results.FoundJourneys)
-            {
-                IJourneyViewModel journey =
-                  JourneyFactory.ToJourneyViewModel(
-                    jny,
-                    this.firstExamples,
-                    this.UnitNumber);
-
-                this.AddJourney(journey);
-            }
-
-            this.UnitLastCheck = results.LastDateChecked;
-
-            //this.RefreshUnitDistance();
-            this.CompleteUpdate();
-
-            this.SaveUnit();
         }
 
         //private bool RefreshCmdAvailable()

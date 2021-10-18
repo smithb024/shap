@@ -3,10 +3,13 @@
     using System;
     using System.ComponentModel;
     using System.Collections.ObjectModel;
+    using System.Windows.Input;
 
     using Base;
 
+    using Shap.Common.Commands;
     using Shap.Common.SerialiseModel.ClassDetails;
+    using Shap.Interfaces.Units;
     using Shap.Units.Factories;
     using Shap.Units.IO;
     using NynaeveLib.Logger;
@@ -56,6 +59,11 @@
                 this.classData = new ClassDataTypeViewModel(classId);
                 return;
             }
+
+            this.RefreshAll =
+                new CommonCommand(
+                    this.RefreshAllUnits,
+                    () => true);
 
             ClassDetails classFile =
                 unitsXmlIoController.Read(
@@ -109,6 +117,11 @@
         /// </summary>
         public string ClassId => this.classId;
 
+        /// <summary>
+        /// Close window command.
+        /// </summary>
+        public ICommand RefreshAll { get; private set; }
+
         /// <date>12/08/18</date>
         /// <summary>
         ///   Loads each vehicle in turn.
@@ -132,6 +145,38 @@
             {
                 this.RaisePropertyChangedEvent("CurrentIndex");
             }
+        }
+
+        /// <summary>
+        /// Go through each unit in the currently selected sub class and refresh its data.
+        /// </summary>
+        private void RefreshAllUnits()
+        {
+            if (!this.IsSubClassValid())
+            {
+                return;
+            }
+
+            foreach(IUnitViewModel unit in this.ClassIndexes[this.SubClassIndex].Units)
+            {
+                unit.RefreshUnit();
+                //Searcher.RunCompleteSearch(
+                //    unit.DisplayUnitNumber,
+                //    unit.FormerNumbers.FormerNumbers);
+            }
+        }
+
+        /// <summary>
+        /// Gets a value indicating whether the currently selected sub class is valid or not.
+        /// </summary>
+        /// <returns>
+        /// Is the sub class valid.
+        /// </returns>
+        private bool IsSubClassValid()
+        {
+            return
+                this.SubClassIndex >= 0 &&
+                this.SubClassIndex < this.ClassIndexes.Count;
         }
     }
 }
