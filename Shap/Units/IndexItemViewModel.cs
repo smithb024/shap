@@ -4,11 +4,16 @@
     using System.Windows.Input;
     using NynaeveLib.ViewModel;
     using Shap.Common.Commands;
-    using Shap.Interfaces.Units;
+    using Shap.Common.SerialiseModel.ClassDetails;
+    using Shap.Types;
     using Shap.Units.IO;
     using Common;
     using Stats;
 
+    /// <summary>
+    /// View model which supports a tile on the Class Index Window. A tile provides access to a 
+    /// single named class. 
+    /// </summary>
     public class IndexItemViewModel : ViewModelBase
     {
         /// <summary>
@@ -16,13 +21,35 @@
         /// </summary>
         private FirstExampleManager firstExamples;
 
-        private string indexName;
+        /// <summary>
+        /// The name of the class which is accessed by this tile.
+        /// </summary>
+        private string className;
+
+        /// <summary>
+        /// Indicates whether the view is in configuration mode. This will determine wither the 
+        /// user can access the configuration window for the class, or the front page.
+        /// </summary>
         private bool inConfigurationMode;
 
+        /// <summary>
+        /// Units IO Controller.
+        /// </summary>
         private UnitsIOController unitsIoController;
+
+        /// <summary>
+        /// IO controller which is used to access XML data for a unit.
+        /// </summary>
         private UnitsXmlIOController unitsXmlIoController;
 
+        /// <summary>
+        /// The <see cref="ClassConfigWindow"/> XAML object. Used for configuration.
+        /// </summary>
         ClassConfigWindow classConfigWindow;
+
+        /// <summary>
+        /// The <see cref="ClassFrontPage"/> XAML object. Used for history.
+        /// </summary>
         ClassFrontPage classFrontPageWindow;
 
         /// <summary>
@@ -31,7 +58,7 @@
         /// <param name="unitsIoController">units IO controller</param>
         /// <param name="unitsXmlIoController">units XML IO controller</param>
         /// <param name="individualUnitIoController">individual Unit IO controller</param>
-        /// <param name="name">item name</param>
+        /// <param name="name">class name</param>
         public IndexItemViewModel(
           UnitsIOController unitsIoController,
           UnitsXmlIOController unitsXmlIoController,
@@ -41,9 +68,14 @@
             this.unitsIoController = unitsIoController;
             this.unitsXmlIoController = unitsXmlIoController;
             this.firstExamples = firstExamples;
-            this.indexName = name;
+            this.className = name;
             this.inConfigurationMode = false;
             this.OpenWindowCmd = new CommonCommand(this.ShowClassWindow);
+
+            ClassDetails classFileConfiguration =
+                    this.unitsXmlIoController.Read(
+                        name);
+            this.InService = classFileConfiguration?.ServiceType ?? VehicleServiceType.Withdrawn;
         }
 
         /// <summary>
@@ -53,12 +85,12 @@
         {
             get
             {
-                return this.indexName;
+                return this.className;
             }
 
             set
             {
-                this.indexName = value;
+                this.className = value;
                 this.RaisePropertyChangedEvent(nameof(this.IndexName));
                 this.RaisePropertyChangedEvent(nameof(this.IndexImagePath));
             }
@@ -71,9 +103,6 @@
         {
             get
             {
-                //      return System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().GetName().CodeBase);
-                //return "C:\\_myDocs\\bert\\03_projects\\my_programing\\cSharpWPF\\ShapDevelopment\\Shap\\data\\uts\\img\\37.jpg";
-                // string returnString = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().GetName().CodeBase) + "\\" +
                 string returnString = BasePathReader.GetBasePathUri() +
                    StaticResources.classIconPath +
                    this.IndexName +
@@ -99,6 +128,11 @@
                 this.RaisePropertyChangedEvent("InConfigurationMode");
             }
         }
+
+        /// <summary>
+        /// Gets a value indicating what the service state of the class is.
+        /// </summary>
+        public VehicleServiceType InService { get; }
 
         /// <summary>
         /// Close window command.
@@ -142,7 +176,7 @@
                   new ClassConfigViewModel(
                     this.unitsIoController,
                     this.unitsXmlIoController,
-                    this.indexName);
+                    this.className);
 
                 this.classConfigWindow = new ClassConfigWindow();
                 SetupWindow(
@@ -196,7 +230,7 @@
                     this.unitsIoController,
                     this.unitsXmlIoController,
                     this.firstExamples,
-                    this.indexName);
+                    this.className);
 
                 SetupWindow(
                   this.classFrontPageWindow,
