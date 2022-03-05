@@ -6,97 +6,98 @@
              xmlns:local="clr-namespace:Shap.Units.VDW"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
+    
     <Grid>
-    <Grid.ColumnDefinitions>
-      <ColumnDefinition Width="2*"/>
-      <ColumnDefinition Width="*"/>
-      <ColumnDefinition Width="250"/>
-    </Grid.ColumnDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="250"/>
+        </Grid.ColumnDefinitions>
 
-    <Grid Grid.Column="0">
-      <Grid.ColumnDefinitions>
-        <ColumnDefinition Width="*"/>
-        <ColumnDefinition Width="*"/>
-      </Grid.ColumnDefinitions>
-      <Grid.RowDefinitions>
-        <RowDefinition Height="*"/>
-        <RowDefinition Height="Auto"/>
-      </Grid.RowDefinitions>
+        <Grid Grid.Column="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
 
-      <StackPanel Grid.Column="0">
-        <Label Content="{Binding DisplayUnitNumber}"
+            <StackPanel Grid.Column="0">
+                <Label Content="{Binding DisplayUnitNumber}"
+                       Style="{StaticResource StdLabel}"/>
+                <ListView ItemsSource="{Binding Path=FormerNumbers.FormerNumbers}"/>
+            </StackPanel>
+
+            <StackPanel Grid.Column="1">
+                <Label Content="{Binding UnitDistanceString}"
                  Style="{StaticResource StdLabel}"/>
-        <ListView ItemsSource="{Binding Path=FormerNumbers.FormerNumbers}"/>
-      </StackPanel>
 
-      <StackPanel Grid.Column="1">
-        <Label Content="{Binding UnitDistanceString}"
-                 Style="{StaticResource StdLabel}"/>
+                <StackPanel Orientation="Horizontal">
+                    <Label
+                        Margin="0,0,10,0"
+                        Content="{Binding UnitOrigDistance}"
+                        Style="{StaticResource StdLabel}"/>
+                    <Label
+                        Content="{Binding UnitDistanceDifferenceString}"
+                        Style="{StaticResource LowLightLabel}"/>
+                </StackPanel>
 
-        <StackPanel
-            Orientation="Horizontal">
-          <Label
-              Margin="0,0,10,0"
-              Content="{Binding UnitOrigDistance}"
-              Style="{StaticResource StdLabel}"/>
-          <Label
-              Content="{Binding UnitDistanceDifferenceString}"
-              Style="{StaticResource LowLightLabel}"/>
+                <ComboBox SelectedIndex="{Binding ServiceIndex}"
+                          ItemsSource="{Binding ServiceTypeList}"
+                          Style="{StaticResource ComboBoxStyle}"/>
+                <Label Content="{Binding UnitLastDateString}"
+                       Style="{StaticResource StdLabel}"/>
+                <Label Content="{Binding UnitLastCheckString}"
+                       Style="{StaticResource StdLabel}"/>
+            </StackPanel>
+
+            <TextBox
+                Grid.Column="0"
+                Grid.Row="1"
+                Grid.ColumnSpan="2"
+                Text="{Binding Notes}"
+                Style="{StaticResource StdTextBoxStyle}"/>
+        </Grid>
+
+        <StackPanel Grid.Column="1">
+            <Button Content="Update"
+                    Command="{Binding UpdateUnitCmd}"
+                    Style="{StaticResource StdButtonStyle}"
+                    Height="20"
+                    Margin="2"/>
+            <Button Content="Refresh"
+                    Command="{Binding RefreshUnitCmd}"
+                    Style="{StaticResource StdButtonStyle}"
+                    Height="20"
+                    Margin="2"/>
+            <Button Content="Back"
+                    Command="{Binding PreviousUnitCmd}"
+                    Style="{StaticResource StdButtonStyle}"
+                    Height="20"
+                    Margin="2"/>
+            <Button Content="Forward"
+                    Command="{Binding NextUnitCmd}"
+                    Style="{StaticResource StdButtonStyle}"
+                    Height="20"
+                    Margin="2"/>
+            <Button Content="Close"
+                    Command="{Binding CloseWindowCmd}"
+                    Style="{StaticResource StdButtonStyle}"
+                    Height="20"
+                    Margin="2"/>
+            <Button Content="Save"
+                    Command="{Binding SaveUnitCmd}"
+                    Style="{StaticResource StdButtonStyle}"
+                    Height="20"
+                    Margin="2"/>
         </StackPanel>
 
-        <ComboBox SelectedIndex="{Binding ServiceIndex}"
-                    ItemsSource="{Binding ServiceTypeList}"
-                    Style="{StaticResource ComboBoxStyle}"/>
-        <Label Content="{Binding UnitLastDateString}"
-                 Style="{StaticResource StdLabel}"/>
-        <Label Content="{Binding UnitLastCheckString}"
-                 Style="{StaticResource StdLabel}"/>
-      </StackPanel>
-
-      <TextBox
-          Grid.Column="0"
-          Grid.Row="1"
-          Grid.ColumnSpan="2"
-          Text="{Binding Notes}"
-          Style="{StaticResource StdTextBoxStyle}"/>
+        <Image 
+            Grid.Column="2"
+            Height="150"
+            Width="250" 
+            Source="{Binding SubClassImagePath}"/>
     </Grid>
-
-    <StackPanel Grid.Column="1">
-      <Button Content="Update"
-                Command="{Binding UpdateUnitCmd}"
-                Style="{StaticResource StdButtonStyle}"
-                Height="20"
-                Margin="2"/>
-      <Button Content="Refresh"
-                Command="{Binding RefreshUnitCmd}"
-                Style="{StaticResource StdButtonStyle}"
-                Height="20"
-                Margin="2"/>
-      <Button Content="Back"
-                Command="{Binding PreviousUnitCmd}"
-                Style="{StaticResource StdButtonStyle}"
-                Height="20"
-                Margin="2"/>
-      <Button Content="Forward"
-                Command="{Binding NextUnitCmd}"
-                Style="{StaticResource StdButtonStyle}"
-                Height="20"
-                Margin="2"/>
-      <Button Content="Close"
-                Command="{Binding CloseWindowCmd}"
-                Style="{StaticResource StdButtonStyle}"
-                Height="20"
-                Margin="2"/>
-      <Button Content="Save"
-                Command="{Binding SaveUnitCmd}"
-                Style="{StaticResource StdButtonStyle}"
-                Height="20"
-                Margin="2"/>
-    </StackPanel>
-
-    <Image Grid.Column="2"
-             Height="150"
-             Width="250" 
-             Source="{Binding SubClassImagePath}"/>
-  </Grid>
 </UserControl>
