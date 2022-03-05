@@ -163,6 +163,7 @@
     <Compile Include="Common\SerialiseModel\ClassDetails\Image.cs" />
     <Compile Include="Common\SerialiseModel\ClassDetails\Number.cs" />
     <Compile Include="Common\SerialiseModel\ClassDetails\OldNumber.cs" />
+    <Compile Include="Common\SerialiseModel\ClassDetails\Operator.cs" />
     <Compile Include="Common\SerialiseModel\ClassDetails\Subclass.cs" />
     <Compile Include="Common\ViewModel\LocationCounterManagerViewModel.cs" />
     <Compile Include="Common\ViewModel\LocationCounterViewModel.cs" />
