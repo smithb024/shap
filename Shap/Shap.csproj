@@ -149,6 +149,7 @@
     <Compile Include="Common\Converters\ComponentStateBrushConverter.cs" />
     <Compile Include="Common\Converters\RouteEnabledConverter.cs" />
     <Compile Include="Common\Converters\IntToVisibilityConverter.cs" />
+    <Compile Include="Common\Converters\ServiceTypeHighlightBrushConverter.cs" />
     <Compile Include="Common\Converters\TrafficLightColourIntConverter.cs" />
     <Compile Include="Common\Converters\ServiceTypeBrushConverter.cs" />
     <Compile Include="Common\Converters\ServiceTypeColourConverter.cs" />

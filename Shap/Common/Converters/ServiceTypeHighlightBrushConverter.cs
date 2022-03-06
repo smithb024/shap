@@ -10,7 +10,7 @@
     /// Converter used to convert a <see cref="VehicleServiceType"/> to a brush.
     /// </summary>
     [ValueConversion(typeof(VehicleServiceType), typeof(Brush))]
-    public class ServiceTypeBrushConverter : IValueConverter
+    public class ServiceTypeHighlightBrushConverter : IValueConverter
     {
         /// <summary>
         /// Convert <see cref="VehicleServiceType"/> to a <see cref="Brush"/>.
@@ -26,15 +26,34 @@
           object parameter,
           System.Globalization.CultureInfo culture)
         {
+            Color brushColour;
+
             if (value.GetType() != typeof(VehicleServiceType))
             {
-                return new SolidColorBrush(Colors.HotPink);
+                brushColour = Colors.HotPink;
+            }
+            else
+            {
+                switch ((VehicleServiceType)value)
+                {
+                    case VehicleServiceType.InService:
+                        brushColour = Colors.MediumSeaGreen;
+                        break;
+                    case VehicleServiceType.Preserved:
+                        brushColour = Colors.Goldenrod;
+                        break;
+                    case VehicleServiceType.Reclassified:
+                    case VehicleServiceType.Withdrawn:
+                    default:
+                        brushColour = Colors.Gray;
+                        break;
+                }
             }
 
-            return new SolidColorBrush(
-              ServiceTypeToBrushHelper.GetColour(
-                (VehicleServiceType)value,
-                true));
+            SolidColorBrush returnBrush =
+                new SolidColorBrush(
+                    brushColour);
+            return returnBrush;
         }
 
         /// <summary>
