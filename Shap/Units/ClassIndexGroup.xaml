@@ -19,7 +19,7 @@
     <!-- specify the template used to render each item -->
     <ItemsControl.ItemTemplate>
       <DataTemplate>
-        <index:IndexItem/>
+        <index:IndexItem Margin="0,0,1,1"/>
         <!--<Button Content="{Binding CmdMessage}" Height="30"/>-->
       </DataTemplate>
     </ItemsControl.ItemTemplate>

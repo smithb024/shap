@@ -2,6 +2,7 @@
 {
     using System.Collections.Generic;
     using System.Xml.Serialization;
+    using Shap.Types;
 
     /// <summary>
     /// Class used to serialise and deserialise the class details.
@@ -45,6 +46,24 @@
         /// </summary>
         [XmlElement("AlphaId")]
         public string AlphaId { get; set; }
+
+        /// <summary>
+        /// Gets or sets the service state of the members of the class.
+        /// </summary>
+        [XmlElement("ServiceType")]
+        public VehicleServiceType ServiceType { get; set; }
+
+        /// <summary>
+        /// Gets or sets the family of the class.
+        /// </summary>
+        [XmlElement("Family")]
+        public string Family { get; set; }
+
+        /// <summary>
+        /// Gets or sets the collection of operators.
+        /// </summary>
+        [XmlElement("Operator")]
+        public List<Operator> Operators { get; set; }
 
         /// <summary>
         /// Gets or sets the collection of subclasses.

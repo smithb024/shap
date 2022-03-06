@@ -4,6 +4,7 @@
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
     using System.ComponentModel;
+    using System.Linq;
     using System.Windows;
     using System.Windows.Input;
 
@@ -47,6 +48,12 @@
         /// The year of introduction.
         /// </summary>
         private int year;
+
+        /// <summary>
+        /// Maintains the index of the currently selected in service state from the
+        /// <see cref="ServiceTypeList"/> list of in service states.
+        /// </summary>
+        private int serviceIndex;
 
         /// <summary>
         /// The index of the selected subclass.
@@ -106,6 +113,15 @@
                 this.formation = this.classFileConfiguration.Formation;
                 this.alphaIdentifier = this.classFileConfiguration.AlphaId;
                 this.year = this.classFileConfiguration.Year;
+
+                for (int index = 0; index < this.ServiceTypeList.Count; ++index)
+                {
+                    if (this.ServiceTypeList[index] == this.classFileConfiguration.ServiceType)
+                    {
+                        this.serviceIndex = index;
+                        break;
+                    }
+                }
 
                 foreach (Subclass subclass in this.classFileConfiguration.Subclasses)
                 {
@@ -240,6 +256,48 @@
                 this.RaisePropertyChangedEvent(nameof(this.Year));
                 this.classFileConfiguration.Year = value;
                 this.unsavedChanges = true;
+            }
+        }
+
+        /// <summary>
+        /// Gets the current status of the class.
+        /// </summary>
+        public VehicleServiceType Status => this.ServiceTypeList[this.ServiceIndex];
+
+        /// <summary>
+        /// Gets a collection containing all the enumerations in <see cref="VehicleServiceType"/>.
+        /// </summary>
+        /// <remarks>
+        /// This is bound to a combo box list.
+        /// </remarks>
+        public List<VehicleServiceType> ServiceTypeList =>
+            Enum.GetValues(typeof(VehicleServiceType)).
+            Cast<VehicleServiceType>().
+            ToList();
+
+        /// <summary>
+        /// Gets or sets the index of the currently selected in service state from the
+        /// <see cref="ServiceTypeList"/> list of in service states.
+        /// </summary>
+        public int ServiceIndex
+        {
+            get
+            {
+                return this.serviceIndex;
+            }
+
+            set
+            {
+                if (this.serviceIndex == value)
+                {
+                    return;
+                }
+
+                this.serviceIndex = value;
+                this.RaisePropertyChangedEvent(nameof(this.ServiceIndex));
+                this.RaisePropertyChangedEvent(nameof(this.Status));
+
+                this.classFileConfiguration.ServiceType = this.Status;
             }
         }
 
