@@ -166,6 +166,8 @@
     <Compile Include="Common\SerialiseModel\ClassDetails\OldNumber.cs" />
     <Compile Include="Common\SerialiseModel\ClassDetails\Operator.cs" />
     <Compile Include="Common\SerialiseModel\ClassDetails\Subclass.cs" />
+    <Compile Include="Common\SerialiseModel\Family\FamilyDetails.cs" />
+    <Compile Include="Common\SerialiseModel\Family\SingleFamily.cs" />
     <Compile Include="Common\ViewModel\LocationCounterManagerViewModel.cs" />
     <Compile Include="Common\ViewModel\LocationCounterViewModel.cs" />
     <Compile Include="Config\ConfigJobType.cs" />
@@ -265,6 +267,7 @@
     <Compile Include="Units\Factories\SubClassFactory.cs" />
     <Compile Include="Units\IO\IndividualUnitFileContents.cs" />
     <Compile Include="Units\Factories\Searcher.cs" />
+    <Compile Include="Units\IO\XmlFamilyIoController.cs" />
     <Compile Include="Units\SubClassViewModel.cs" />
     <Compile Include="Units\ClassFunctionalViewModel.cs" />
     <Compile Include="Units\ClassIndexGroup.xaml.cs">

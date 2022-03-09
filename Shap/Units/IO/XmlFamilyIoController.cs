@@ -2,24 +2,20 @@
 {
     using System.IO;
     using Common;
-    using NynaeveLib.Logger;
     using Shap.Common.Factories;
-    using Shap.Common.SerialiseModel.ClassDetails;
-    using Shap.Types;
+    using Shap.Common.SerialiseModel.Family;
 
     /// <summary>
-    /// Used to read and write to the uts config file.
+    /// Used to read and write to the family XML file.
     /// </summary>
-    public class UnitsXmlIOController
+    public class XmlFamilyIoController
     {
-        // Labels in the XML files
         private const string XmlExtensionLabel = ".xml";
 
         /// <summary>
         /// Prevents a default instance of this class from being created.
         /// </summary>
-        /// <param name="unitsIoController">units IO controller</param>
-        public UnitsXmlIOController(UnitsIOController unitsIoController)
+        public XmlFamilyIoController()
         {
         }
 
@@ -28,28 +24,31 @@
         /// </summary>
         /// <param name="filename">name of the file to read</param>
         /// <returns>deserialised file</returns>
-        public ClassDetails Read(string filename)
+        public FamilyDetails Read(string filename)
         {
             string myPath = BasePathReader.GetBasePath() + StaticResources.classDetailsPath + filename + XmlExtensionLabel;
-            ClassDetails results =
-                XmlFileIo.ReadXml<ClassDetails>(
+            FamilyDetails results =
+                XmlFileIo.ReadXml<FamilyDetails>(
                     myPath);
 
             return results;
         }
 
         /// <summary>
-        /// Serialise the <see cref="ClassDetails"/> to <parmref name="filename"/>.
+        /// Serialise the <see cref="FamilyDetails"/> to <parmref name="filename"/>.
         /// </summary>
         /// <param name="file">file to serialise</param>
         /// <param name="filename">location to save the file to</param>
         public void Write(
-            ClassDetails file,
-            string filename)
+            FamilyDetails file)
         {
-            string myPath = BasePathReader.GetBasePath() + StaticResources.classDetailsPath + filename + XmlExtensionLabel;
+            string myPath = 
+                BasePathReader.GetBasePath() +
+                StaticResources.classDetailsPath +
+                StaticResources.FileNameFamily + 
+                XmlExtensionLabel;
 
-            XmlFileIo.WriteXml<ClassDetails>(
+            XmlFileIo.WriteXml(
                 file,
                 myPath);
         }
@@ -59,12 +58,12 @@
         /// </summary>
         /// <param name="fileName">file name</param>
         /// <returns>file exists flag</returns>
-        public bool DoesFileExist(string fileName)
+        public bool DoesFileExist()
         {
             return File.Exists(
                 BasePathReader.GetBasePath() +
                 StaticResources.classDetailsPath +
-                fileName +
+                StaticResources.FileNameFamily +
                 XmlExtensionLabel);
         }
     }
