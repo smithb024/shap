@@ -11,6 +11,9 @@
     /// </summary>
     public class XmlFamilyIoController : IXmlFamilyIoController
     {
+        /// <summary>
+        /// Extension for the familty filename.
+        /// </summary>
         private const string XmlExtensionLabel = ".xml";
 
         /// <summary>
@@ -21,13 +24,17 @@
         }
 
         /// <summary>
-        /// Deserialise the <see cref="ClassDetails"/> from the <paramref name="filename"/>.
+        /// Deserialise the <see cref="FamilyDetails"/> from the <paramref name="filename"/>.
         /// </summary>
         /// <param name="filename">name of the file to read</param>
         /// <returns>deserialised file</returns>
-        public FamilyDetails Read(string filename)
+        public FamilyDetails Read()
         {
-            string myPath = BasePathReader.GetBasePath() + StaticResources.classDetailsPath + filename + XmlExtensionLabel;
+            string myPath = 
+                BasePathReader.GetBasePath() +
+                StaticResources.classDetailsPath +
+                StaticResources.FileNameFamily + 
+                XmlExtensionLabel;
             FamilyDetails results =
                 XmlFileIo.ReadXml<FamilyDetails>(
                     myPath);

@@ -180,6 +180,7 @@
     </Compile>
     <Compile Include="Config\GroupsAndClassesIOController.cs" />
     <Compile Include="Config\GroupsAndClassesViewModel.cs" />
+    <Compile Include="Config\GroupsAndClasses\FamilyManagerViewModel.cs" />
     <Compile Include="Config\GroupsAndClasses\GroupsView.xaml.cs">
       <DependentUpon>GroupsView.xaml</DependentUpon>
     </Compile>

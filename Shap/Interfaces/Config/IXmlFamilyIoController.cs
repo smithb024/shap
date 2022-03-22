@@ -10,9 +10,8 @@
         /// <summary>
         /// Deserialise the <see cref="ClassDetails"/> from the <paramref name="filename"/>.
         /// </summary>
-        /// <param name="filename">name of the file to read</param>
         /// <returns>deserialised file</returns>
-        FamilyDetails Read(string filename);
+        FamilyDetails Read();
 
         /// <summary>
         /// Serialise the <see cref="FamilyDetails"/> to <parmref name="filename"/>.

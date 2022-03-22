@@ -77,7 +77,15 @@
         /// <summary>
         /// Initialises a new instance of the <see cref="GroupsAndClassesViewModel"/> class.
         /// </summary>
-        public GroupsAndClassesViewModel(IGroupsAndClassesIOController reader)
+        /// <param name="reader">
+        /// Groups and classes reader.
+        /// </param>
+        /// <param name="familyReader">
+        /// Family reader.
+        /// </param>
+        public GroupsAndClassesViewModel(
+            IGroupsAndClassesIOController reader,
+            IXmlFamilyIoController familyReader)
         {
             this.reader = reader;
 
