@@ -1,14 +1,15 @@
-﻿namespace Shap.Units.IO
+﻿namespace Shap.Config
 {
     using System.IO;
     using Common;
     using Shap.Common.Factories;
     using Shap.Common.SerialiseModel.Family;
+    using Shap.Interfaces.Config;
 
     /// <summary>
     /// Used to read and write to the family XML file.
     /// </summary>
-    public class XmlFamilyIoController
+    public class XmlFamilyIoController : IXmlFamilyIoController
     {
         private const string XmlExtensionLabel = ".xml";
 

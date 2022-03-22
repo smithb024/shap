@@ -210,6 +210,7 @@
       <DependentUpon>InputJnyRow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Interfaces\Config\IGroupsAndClassesIOController.cs" />
+    <Compile Include="Interfaces\Config\IXmlFamilyIoController.cs" />
     <Compile Include="Interfaces\Types\ISubClassDataType.cs" />
     <Compile Include="Interfaces\Types\IVehicleDetailsType.cs" />
     <Compile Include="Interfaces\Types\IJouneyDetailsType.cs" />
@@ -273,7 +274,7 @@
     <Compile Include="Units\Factories\SubClassFactory.cs" />
     <Compile Include="Units\IO\IndividualUnitFileContents.cs" />
     <Compile Include="Units\Factories\Searcher.cs" />
-    <Compile Include="Units\IO\XmlFamilyIoController.cs" />
+    <Compile Include="Config\XmlFamilyIoController.cs" />
     <Compile Include="Units\SubClassViewModel.cs" />
     <Compile Include="Units\ClassFunctionalViewModel.cs" />
     <Compile Include="Units\ClassIndexGroup.xaml.cs">
