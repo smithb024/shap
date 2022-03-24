@@ -57,14 +57,23 @@
         IGroupsAndClassesIOController groupsAndClassesIoController;
 
         /// <summary>
+        /// IO Controller for the families.
+        /// </summary>
+        IXmlFamilyIoController familyIoController;
+
+        /// <summary>
         /// Initialises a new instance of the <see cref="ConfigViewModel"/> class.
         /// </summary>
         /// <param name="groupsAndClassesIoController">IO controller</param>
+        /// <param name="familyIoController">family reader</param>
+        /// <param name="firstExamples">first example manager</param>
         public ConfigViewModel(
           IGroupsAndClassesIOController groupsAndClassesIoController,
+          IXmlFamilyIoController familyIoController,
           FirstExampleManager firstExamples)
         {
             this.groupsAndClassesIoController = groupsAndClassesIoController;
+            this.familyIoController = familyIoController;
             this.firstExamples = firstExamples;
             this.PopulateYearCollection();
             this.PopulateOldNumbersAvailable();
@@ -277,7 +286,8 @@
         {
             GroupsAndClassesViewModel groupsViewModel =
               new GroupsAndClassesViewModel(
-                this.groupsAndClassesIoController);
+                this.groupsAndClassesIoController,
+                this.familyIoController);
 
             DialogService service = new DialogService();
 

@@ -10,6 +10,7 @@
     using NynaeveLib.DialogService.Interfaces;
     using NynaeveLib.ViewModel;
 
+    using Shap.Config.GroupsAndClasses;
     using Shap.Interfaces.Config;
     using Shap.Types;
 
@@ -88,6 +89,7 @@
             IXmlFamilyIoController familyReader)
         {
             this.reader = reader;
+            this.FamilyManager = new FamilyManagerViewModel(familyReader);
 
             this.AddGroupCmd = new CommonCommand(this.AddGroup, this.CanAddGroup);
             this.DeleteGroupCmd = new CommonCommand(this.DeleteGroup, this.CanDeleteGroup);
@@ -101,6 +103,11 @@
             this.rangeIndex = -1;
             this.groupIndex = -1;
         }
+
+        /// <summary>
+        /// The view model which supports the Family Manager part of this view.
+        /// </summary>
+        public FamilyManagerViewModel FamilyManager { get; }
 
         /// <summary>
         /// Gets the collection containing all groups by name.

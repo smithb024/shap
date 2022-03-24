@@ -12,8 +12,7 @@
         </Grid.ColumnDefinitions>
 
         <Grid 
-            Grid.Column="0"
-            Grid.Row="0">
+            Grid.Column="0">
 
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
@@ -36,7 +35,6 @@
 
         <ListView 
             Grid.Column="1"
-            Grid.Row="0"
             ItemsSource="{Binding Path=Families}"/>
     </Grid>
 </UserControl>

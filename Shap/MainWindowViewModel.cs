@@ -28,7 +28,16 @@
         private UnitsIOController unitsIoController;
         private UnitsXmlIOController unitsXmlIoController;
         //private IndividualUnitIOController individualUnitIoController;
+
+        /// <summary>
+        /// Groups and classes IO Controller.
+        /// </summary>
         private IGroupsAndClassesIOController groupsAndClassesIoController;
+
+        /// <summary>
+        /// The family IO Controller.
+        /// </summary>
+        private IXmlFamilyIoController familyIoController;
 
         /// <summary>
         /// Manager class holding collections of the first examples.
@@ -56,6 +65,7 @@
             this.unitsXmlIoController = unitsXmlIoController;
             this.firstExamples = firstExamples;
             this.groupsAndClassesIoController = new GroupsAndClassesIOController();
+            this.familyIoController = new XmlFamilyIoController();
 
             AddEditJnyDetailsCommand = new CommonCommand(this.ShowAddEditJnyDetailsWindow);
             AnalysisCommand = new CommonCommand(this.ShowAnalysisWindow);
@@ -207,7 +217,10 @@
             {
                 SetupWindow(
                   this.configWindow = new ConfigWindow(),
-                  new ConfigViewModel(this.groupsAndClassesIoController, this.firstExamples),
+                  new ConfigViewModel(
+                      this.groupsAndClassesIoController, 
+                      this.familyIoController,
+                      this.firstExamples),
                   CloseConfigurationWindow,
                   ConfigurationWindowClosed);
             }

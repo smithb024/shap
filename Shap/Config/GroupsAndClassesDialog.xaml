@@ -20,15 +20,19 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
         <gac:GroupsView Grid.Row="0"/>
         <gac:RangesView Grid.Row="1"/>
+        <gac:FamilyManagerView
+            Grid.Row="2"
+            DataContext="{Binding Path=FamilyManager}"/>
 
         <Grid 
             Grid.Column="0"
-            Grid.Row="2">
+            Grid.Row="3">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>

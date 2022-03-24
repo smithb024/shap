@@ -38,9 +38,17 @@
             this.serialisedFamilies = ioController.Read();
             this.Families = new List<string>();
 
-            foreach (SingleFamily singleFamily in this.serialisedFamilies.Families)
+            if (this.serialisedFamilies != null)
             {
-                this.Families.Add(singleFamily.Name);
+                foreach (SingleFamily singleFamily in this.serialisedFamilies.Families)
+                {
+                    this.Families.Add(singleFamily.Name);
+                }
+            }
+            else
+            {
+                this.serialisedFamilies = new FamilyDetails();
+                this.serialisedFamilies.Families = new List<SingleFamily>();
             }
 
             this.AddFamily = new CommonCommand(this.Add);
