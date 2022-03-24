@@ -12,12 +12,25 @@
     /// </summary>
     public class FamilyManagerViewModel : ViewModelBase
     {
+        /// <summary>
+        /// The family IO Controller.
+        /// </summary>
+        private readonly IXmlFamilyIoController ioController;
+
+        /// <summary>
+        /// The name of the family to be added.
+        /// </summary>
         private string family;
 
+        /// <summary>
+        /// The deserialised family, read from the config file.
+        /// </summary>
         private FamilyDetails serialisedFamilies;
 
-        private IXmlFamilyIoController ioController;
-
+        /// <summary>
+        /// Initialises a new instance of the <see cref="FamilyManagerViewModel"/> class.
+        /// </summary>
+        /// <param name="ioController">family io controller</param>
         public FamilyManagerViewModel(
             IXmlFamilyIoController ioController)
         {
@@ -33,6 +46,9 @@
             this.AddFile = new CommonCommand(this.Add);
         }
 
+        /// <summary>
+        /// Gets or sets a new family name.
+        /// </summary>
         public string Family
         {
             get
@@ -52,6 +68,9 @@
             }
         }
 
+        /// <summary>
+        /// Collection of all known familys.
+        /// </summary>
         public List<string> Families { get; }
 
         /// <summary>
@@ -90,6 +109,5 @@
 
             this.Family = string.Empty;
         }
-
     }
 }
