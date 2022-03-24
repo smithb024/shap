@@ -180,6 +180,9 @@
     </Compile>
     <Compile Include="Config\GroupsAndClassesIOController.cs" />
     <Compile Include="Config\GroupsAndClassesViewModel.cs" />
+    <Compile Include="Config\GroupsAndClasses\FamilyManagerView.xaml.cs">
+      <DependentUpon>FamilyManagerView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Config\GroupsAndClasses\FamilyManagerViewModel.cs" />
     <Compile Include="Config\GroupsAndClasses\GroupsView.xaml.cs">
       <DependentUpon>GroupsView.xaml</DependentUpon>
@@ -391,6 +394,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Config\GroupsAndClassesDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Config\GroupsAndClasses\FamilyManagerView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

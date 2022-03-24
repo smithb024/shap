@@ -43,7 +43,7 @@
                 this.Families.Add(singleFamily.Name);
             }
 
-            this.AddFile = new CommonCommand(this.Add);
+            this.AddFamily = new CommonCommand(this.Add);
         }
 
         /// <summary>
@@ -69,14 +69,14 @@
         }
 
         /// <summary>
-        /// Collection of all known familys.
+        /// Collection of all known families.
         /// </summary>
         public List<string> Families { get; }
 
         /// <summary>
         /// Add an item.
         /// </summary>
-        public ICommand AddFile{ get; private set; }
+        public ICommand AddFamily{ get; private set; }
 
         /// <summary>
         /// Save the updates.
