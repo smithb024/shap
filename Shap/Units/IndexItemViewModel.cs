@@ -5,6 +5,7 @@
     using NynaeveLib.ViewModel;
     using Shap.Common.Commands;
     using Shap.Common.SerialiseModel.ClassDetails;
+    using Shap.Interfaces.Config;
     using Shap.Types;
     using Shap.Units.IO;
     using Common;
@@ -43,6 +44,11 @@
         private UnitsXmlIOController unitsXmlIoController;
 
         /// <summary>
+        /// IO controller which is used to access XML data for families.
+        /// </summary>
+        private IXmlFamilyIoController familyIoController;
+
+        /// <summary>
         /// The <see cref="ClassConfigWindow"/> XAML object. Used for configuration.
         /// </summary>
         ClassConfigWindow classConfigWindow;
@@ -57,16 +63,18 @@
         /// </summary>
         /// <param name="unitsIoController">units IO controller</param>
         /// <param name="unitsXmlIoController">units XML IO controller</param>
-        /// <param name="individualUnitIoController">individual Unit IO controller</param>
+        /// <param name="familyIoController">Family IO controller</param>
         /// <param name="name">class name</param>
         public IndexItemViewModel(
           UnitsIOController unitsIoController,
           UnitsXmlIOController unitsXmlIoController,
+          IXmlFamilyIoController familyIoController,
           FirstExampleManager firstExamples,
           string name)
         {
             this.unitsIoController = unitsIoController;
             this.unitsXmlIoController = unitsXmlIoController;
+            this.familyIoController = familyIoController;
             this.firstExamples = firstExamples;
             this.className = name;
             this.inConfigurationMode = false;
@@ -176,6 +184,7 @@
                   new ClassConfigViewModel(
                     this.unitsIoController,
                     this.unitsXmlIoController,
+                    this.familyIoController,
                     this.className);
 
                 this.classConfigWindow = new ClassConfigWindow();

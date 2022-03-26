@@ -13,6 +13,9 @@
     using NynaeveLib.ViewModel;
     using Shap.Common.Commands;
     using Shap.Common.SerialiseModel.ClassDetails;
+    using Shap.Common.SerialiseModel.Family;
+
+    using Shap.Interfaces.Config;
     using Shap.Interfaces.Units;
     using Shap.Types;
     using Shap.Units.IO;
@@ -56,6 +59,11 @@
         private int serviceIndex;
 
         /// <summary>
+        /// Maintains the index of the currently selected family.
+        /// </summary>
+        private int familyIndex;
+
+        /// <summary>
         /// The index of the selected subclass.
         /// </summary>
         private int subClassListIndex;
@@ -90,16 +98,31 @@
         public ClassConfigViewModel(
           UnitsIOController unitsIoController,
           UnitsXmlIOController unitsXmlIoController,
+          IXmlFamilyIoController ioController,
           string classId)
         {
             this.unitsIoController = unitsIoController;
             this.unitsXmlIoController = unitsXmlIoController;
+            FamilyDetails serialisedFamilies = ioController.Read();
 
             this.unsavedChanges = false;
 
             this.SubClassNumbers = new ObservableCollection<string>();
             this.NumbersList = new ObservableCollection<int>();
             this.Images = new ObservableCollection<IClassConfigImageSelectorViewModel>();
+            this.FamilyList =
+                new ObservableCollection<string>
+            {
+                string.Empty
+            };
+
+            if (serialisedFamilies != null)
+            {
+                foreach (SingleFamily singleFamily in serialisedFamilies.Families)
+                {
+                    this.FamilyList.Add(singleFamily.Name);
+                }
+            }
 
             this.classId = classId;
 
@@ -298,6 +321,33 @@
                 this.RaisePropertyChangedEvent(nameof(this.Status));
 
                 this.classFileConfiguration.ServiceType = this.Status;
+            }
+        }
+
+        /// <summary>
+        /// Gets a collection of all known families.
+        /// </summary>
+        public ObservableCollection<string> FamilyList { get; }
+
+        /// <summary>
+        /// Gets or sets the index of the currently selected family.
+        /// </summary>
+        public int FamilyIndex
+        {
+            get
+            {
+                return this.familyIndex;
+            }
+
+            set
+            {
+                if (this.familyIndex == value)
+                {
+                    return;
+                }
+
+                this.familyIndex = value;
+                this.RaisePropertyChangedEvent(nameof(this.FamilyIndex));
             }
         }
 

@@ -274,6 +274,7 @@
                   new ClassIndexViewModel(
                     this.unitsIoController,
                     this.unitsXmlIoController,
+                    this.familyIoController,
                     this.firstExamples);
                 this.classIndexWindow = new ClassIndexWindow();
 

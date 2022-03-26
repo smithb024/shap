@@ -98,6 +98,20 @@
                             ItemsSource="{Binding ServiceTypeList}"
                             Style="{StaticResource ComboBoxStyle}"/>
                 </Grid>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBlock 
+                            Text="Family"
+                            Grid.Column="0"
+                            Style="{StaticResource StdTextBlockStyle}"/>
+                    <ComboBox SelectedIndex="{Binding FamilyIndex}"
+                            Grid.Column="1"
+                            ItemsSource="{Binding FamilyList}"
+                            Style="{StaticResource ComboBoxStyle}"/>
+                </Grid>
             </StackPanel>
             <StackPanel Margin="0,2,0,0">
                 <Button 

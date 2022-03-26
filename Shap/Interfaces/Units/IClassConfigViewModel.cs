@@ -1,5 +1,6 @@
 ﻿namespace Shap.Interfaces.Units
 {
+    using System.Collections.Generic;
     using System.Collections.ObjectModel;
     using System.ComponentModel;
     using System.Windows.Input;
@@ -29,6 +30,30 @@
         /// Gets or sets the year of introduction.
         /// </summary>
         int Year { get; set; }
+
+        /// <summary>
+        /// Gets a collection containing all the enumerations in <see cref="VehicleServiceType"/>.
+        /// </summary>
+        /// <remarks>
+        /// This is bound to a combo box list.
+        /// </remarks>
+        List<VehicleServiceType> ServiceTypeList { get; }
+
+        /// <summary>
+        /// Gets or sets the index of the currently selected in service state from the
+        /// <see cref="ServiceTypeList"/> list of in service states.
+        /// </summary>
+        int ServiceIndex { get; set; }
+
+        /// <summary>
+        /// Gets a collection of all known families.
+        /// </summary>
+        ObservableCollection<string> FamilyList { get; }
+
+        /// <summary>
+        /// Gets or sets the index of the currently selected family.
+        /// </summary>
+        int FamilyIndex { get; set; }
 
         /// <summary>
         /// Gets the collection of sub classes present in this class.
