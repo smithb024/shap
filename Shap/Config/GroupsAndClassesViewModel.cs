@@ -406,6 +406,7 @@
             this.Result = MessageBoxResult.OK;
 
             this.reader.SaveFile(this.groupsCollection);
+            this.FamilyManager.Save();
 
             window?.CloseObject();
         }
