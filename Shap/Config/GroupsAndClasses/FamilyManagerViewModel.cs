@@ -1,6 +1,7 @@
 ﻿namespace Shap.Config.GroupsAndClasses
 {
     using System.Collections.Generic;
+    using System.Collections.ObjectModel;
     using System.Windows.Input;
     using NynaeveLib.Commands;
     using NynaeveLib.ViewModel;
@@ -10,7 +11,7 @@
     /// <summary>
     /// View model which manages the ability to add families
     /// </summary>
-    public class FamilyManagerViewModel : ViewModelBase
+    public class FamilyManagerViewModel : ViewModelBase, IViewModelBase
     {
         /// <summary>
         /// The family IO Controller.
@@ -36,7 +37,7 @@
         {
             this.ioController = ioController;
             this.serialisedFamilies = ioController.Read();
-            this.Families = new List<string>();
+            this.Families = new ObservableCollection<string>();
 
             if (this.serialisedFamilies != null)
             {
@@ -79,7 +80,7 @@
         /// <summary>
         /// Collection of all known families.
         /// </summary>
-        public List<string> Families { get; }
+        public ObservableCollection<string> Families { get; }
 
         /// <summary>
         /// Add an item.
