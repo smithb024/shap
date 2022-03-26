@@ -4,7 +4,7 @@
     using Common;
     using Shap.Common.Factories;
     using Shap.Common.SerialiseModel.Family;
-    using Shap.Interfaces.Config;
+    using Shap.Interfaces.Io;
 
     /// <summary>
     /// Used to read and write to the family XML file.

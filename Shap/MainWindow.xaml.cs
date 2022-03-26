@@ -1,50 +1,44 @@
 ﻿namespace Shap
 {
-  using System;
-  using System.Windows;
+    using System;
+    using System.Windows;
 
-  using Shap.Units.IO;
-  using Shap.Stats;
+    using Shap.Io;
+    using Shap.Interfaces.Io;
+    using Shap.Units.IO;
+    using Shap.Stats;
 
-  using NynaeveLib.Logger;
+    using NynaeveLib.Logger;
 
-  /// <summary>
-  /// Interaction logic for MainWindow.xaml
-  /// </summary>
-  public partial class MainWindow : Window
-  {
-    public MainWindow()
+    /// <summary>
+    /// Interaction logic for MainWindow.xaml
+    /// </summary>
+    public partial class MainWindow : Window
     {
-      InitializeComponent();
+        /// <summary>
+        /// Initialises a new instance of the <see cref="MainWindow"/> class.
+        /// </summary>
+        public MainWindow()
+        {
+            InitializeComponent();
 
-      Console.Write("create Log");
-      Logger.SetInitialInstance("ShapLog");
+            Console.Write("create Log");
+            Logger.SetInitialInstance("ShapLog");
 
-      //DailyIOController dailyIoController = new DailyIOController();
+            IIoControllers ioControllers = new IoControllers();
 
-      //IDailyInputFactory dailyInputFactory =
-      //  new DailyInputFactory
-      //  (dailyIoController);
+            FirstExampleManager firstExamples =
+              new FirstExampleManager();
 
-      UnitsIOController unitsIoController = new UnitsIOController();
-      UnitsXmlIOController unitsXmlIoController =
-        new UnitsXmlIOController(
-          unitsIoController);
-      //IndividualUnitIOController individualUnitIoController =
-      //  new IndividualUnitIOController();
-      FirstExampleManager firstExamples =
-        new FirstExampleManager();
+            this.DataContext =
+              new MainWindowViewModel(
+                ioControllers,
+                firstExamples);
+        }
 
-      this.DataContext =
-        new MainWindowViewModel(
-          unitsIoController,
-          unitsXmlIoController,
-          firstExamples);
+        private void Window_Closed(object sender, EventArgs e)
+        {
+            Application.Current.Shutdown();
+        }
     }
-
-    private void Window_Closed(object sender, EventArgs e)
-    {
-      Application.Current.Shutdown();
-    }
-  }
 }

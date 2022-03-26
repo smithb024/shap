@@ -5,8 +5,8 @@
     using System.Collections.ObjectModel;
     using GalaSoft.MvvmLight;
     using Shap.Common;
+    using Shap.Interfaces.Io;
     using Shap.Interfaces.Units;
-    using Shap.Units.IO;
 
     /// <summary>
     /// View model which supports the 
@@ -24,12 +24,12 @@
         /// <param name="unitsIoController">IO Controller</param>
         /// <param name="loadedImageName">initial value of the image</param>
         public ClassConfigImageSelectorViewModel(
-            UnitsIOController unitsIoController,
+            IIoControllers ioControllers,
             string loadedImageName)
         {
 
             this.SubClassImageList = new ObservableCollection<string>();
-            List<string> imageFileNames = unitsIoController.GetImageFileList();
+            List<string> imageFileNames = ioControllers.Units.GetImageFileList();
             foreach (string str in imageFileNames)
             {
                 this.SubClassImageList.Add(str);

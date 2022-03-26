@@ -11,7 +11,7 @@
     using NynaeveLib.ViewModel;
 
     using Shap.Config.GroupsAndClasses;
-    using Shap.Interfaces.Config;
+    using Shap.Interfaces.Io;
     using Shap.Types;
 
     /// <summary>
@@ -25,9 +25,9 @@
         private List<GroupsType> groupsCollection;
 
         /// <summary>
-        /// Object used to read and write the groups and classes data.
+        /// IO Controlelrs.
         /// </summary>
-        private IGroupsAndClassesIOController reader;
+        private IIoControllers ioControllers;
 
         /// <summary>
         /// Gets a collection of all groups names.
@@ -85,11 +85,12 @@
         /// Family reader.
         /// </param>
         public GroupsAndClassesViewModel(
-            IGroupsAndClassesIOController reader,
-            IXmlFamilyIoController familyReader)
+            IIoControllers ioControllers)
         {
-            this.reader = reader;
-            this.FamilyManager = new FamilyManagerViewModel(familyReader);
+            this.ioControllers = ioControllers;
+            this.FamilyManager =
+                new FamilyManagerViewModel(
+                    this.ioControllers);
 
             this.AddGroupCmd = new CommonCommand(this.AddGroup, this.CanAddGroup);
             this.DeleteGroupCmd = new CommonCommand(this.DeleteGroup, this.CanDeleteGroup);
@@ -97,7 +98,7 @@
             this.DeleteRangeCmd = new CommonCommand(this.DeleteRange, this.CanDeleteRange);
             this.CompleteCmd = new CommonCommand<ICloseable>(this.SelectComplete, this.CanSelectComplete);
 
-            this.groupsCollection = reader.LoadFile();
+            this.groupsCollection = ioControllers.Gac.LoadFile();
             this.SetupGroupsNamesCollection();
 
             this.rangeIndex = -1;
@@ -405,7 +406,7 @@
         {
             this.Result = MessageBoxResult.OK;
 
-            this.reader.SaveFile(this.groupsCollection);
+            this.ioControllers.Gac.SaveFile(this.groupsCollection);
             this.FamilyManager.Save();
 
             window?.CloseObject();

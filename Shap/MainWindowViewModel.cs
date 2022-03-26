@@ -10,12 +10,15 @@
     using Shap.Common.Commands;
     using Shap.Config;
     using Shap.Input;
-    using Shap.Interfaces.Config;
+    using Shap.Interfaces.Io;
     using Shap.StationDetails;
     using Shap.Stats;
     using Shap.Units;
     using Shap.Units.IO;
 
+    /// <summary>
+    /// View model for the main window.
+    /// </summary>
     public class MainWindowViewModel
     {
         InputForm inputWindow;
@@ -25,19 +28,10 @@
         AnalysisWindow analysisWindow;
         ConfigWindow configWindow;
 
-        private UnitsIOController unitsIoController;
-        private UnitsXmlIOController unitsXmlIoController;
-        //private IndividualUnitIOController individualUnitIoController;
-
         /// <summary>
-        /// Groups and classes IO Controller.
+        /// Collection of IO controllers
         /// </summary>
-        private IGroupsAndClassesIOController groupsAndClassesIoController;
-
-        /// <summary>
-        /// The family IO Controller.
-        /// </summary>
-        private IXmlFamilyIoController familyIoController;
+        private IIoControllers controllers;
 
         /// <summary>
         /// Manager class holding collections of the first examples.
@@ -47,25 +41,18 @@
         /// <summary>
         /// Initialises a new instance of the <see cref="MainWindowViewModel"/> class.
         /// </summary>
-        /// <param name="unitsIoController"><
-        /// Unit input output controller
-        /// /param>
-        /// <param name="unitsXmlIoController">
-        /// Unit (xml) input output controller
+        /// <param name="controllers">
+        /// Factory containing IO controllers.
         /// </param>
         /// <param name="firstExamples">
         /// First examples manager
         /// </param>
         public MainWindowViewModel(
-          UnitsIOController unitsIoController,
-          UnitsXmlIOController unitsXmlIoController,
+          IIoControllers controllers,
           FirstExampleManager firstExamples)
         {
-            this.unitsIoController = unitsIoController;
-            this.unitsXmlIoController = unitsXmlIoController;
+            this.controllers = controllers;
             this.firstExamples = firstExamples;
-            this.groupsAndClassesIoController = new GroupsAndClassesIOController();
-            this.familyIoController = new XmlFamilyIoController();
 
             AddEditJnyDetailsCommand = new CommonCommand(this.ShowAddEditJnyDetailsWindow);
             AnalysisCommand = new CommonCommand(this.ShowAnalysisWindow);
@@ -80,62 +67,26 @@
             this.inputWindow = null;
         }
 
-        public ICommand AddEditJnyDetailsCommand
-        {
-            get;
-            private set;
-        }
+        public ICommand AddEditJnyDetailsCommand { get; private set; }
 
-        public ICommand AnalysisCommand
-        {
-            get;
-            private set;
-        }
+        public ICommand AnalysisCommand { get; private set; }
 
-        public ICommand ConfigurationCommand
-        {
-            get;
-            private set;
-        }
+        public ICommand ConfigurationCommand { get; private set; }
 
-        public ICommand ExitCommand
-        {
-            get;
-            private set;
-        }
+        public ICommand ExitCommand { get; private set; }
 
-        public ICommand OpenLogCommand
-        {
-            get;
-            private set;
-        }
+        public ICommand OpenLogCommand { get; private set; }
 
-        public ICommand OpenLogFolderCommand
-        {
-            get;
-            private set;
-        }
+        public ICommand OpenLogFolderCommand { get; private set; }
 
-        public ICommand ShowClassIndexCommand
-        {
-            get;
-            private set;
-        }
+        public ICommand ShowClassIndexCommand { get; private set; }
 
-        public ICommand ShowJnyDetailsCommand
-        {
-            get;
-            private set;
-        }
+        public ICommand ShowJnyDetailsCommand { get; private set; }
 
         /// <summary>
         /// Show the input form.
         /// </summary>
-        public ICommand ShowInputDataCommand
-        {
-            get;
-            private set;
-        }
+        public ICommand ShowInputDataCommand { get; private set; }
 
         public void ShowAddEditJnyDetailsWindow()
         {
@@ -180,7 +131,7 @@
             {
                 SetupWindow(
                   this.analysisWindow = new AnalysisWindow(),
-                  new AnalysisViewModel(this.groupsAndClassesIoController),
+                  new AnalysisViewModel(this.controllers),
                   CloseAnalysisWindow,
                   AnalysisWindowClosed);
             }
@@ -218,8 +169,7 @@
                 SetupWindow(
                   this.configWindow = new ConfigWindow(),
                   new ConfigViewModel(
-                      this.groupsAndClassesIoController, 
-                      this.familyIoController,
+                      this.controllers,
                       this.firstExamples),
                   CloseConfigurationWindow,
                   ConfigurationWindowClosed);
@@ -272,9 +222,7 @@
             {
                 ClassIndexViewModel classIndexViewModel =
                   new ClassIndexViewModel(
-                    this.unitsIoController,
-                    this.unitsXmlIoController,
-                    this.familyIoController,
+                    this.controllers,
                     this.firstExamples);
                 this.classIndexWindow = new ClassIndexWindow();
 

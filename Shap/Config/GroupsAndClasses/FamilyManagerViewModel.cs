@@ -6,7 +6,7 @@
     using NynaeveLib.Commands;
     using NynaeveLib.ViewModel;
     using Shap.Common.SerialiseModel.Family;
-    using Shap.Interfaces.Config;
+    using Shap.Interfaces.Io;
 
     /// <summary>
     /// View model which manages the ability to add families
@@ -14,9 +14,9 @@
     public class FamilyManagerViewModel : ViewModelBase, IViewModelBase
     {
         /// <summary>
-        /// The family IO Controller.
+        /// IO Controllers.
         /// </summary>
-        private readonly IXmlFamilyIoController ioController;
+        private readonly IIoControllers ioControllers;
 
         /// <summary>
         /// The name of the family to be added.
@@ -31,12 +31,12 @@
         /// <summary>
         /// Initialises a new instance of the <see cref="FamilyManagerViewModel"/> class.
         /// </summary>
-        /// <param name="ioController">family io controller</param>
+        /// <param name="ioControllers">IO Controllers</param>
         public FamilyManagerViewModel(
-            IXmlFamilyIoController ioController)
+            IIoControllers ioControllers)
         {
-            this.ioController = ioController;
-            this.serialisedFamilies = ioController.Read();
+            this.ioControllers = ioControllers;
+            this.serialisedFamilies = this.ioControllers.Family.Read();
             this.Families = new ObservableCollection<string>();
 
             if (this.serialisedFamilies != null)
@@ -92,7 +92,7 @@
         /// </summary>
         public void Save()
         {
-            this.ioController.Write(this.serialisedFamilies);
+            this.ioControllers.Family.Write(this.serialisedFamilies);
         }
 
         /// <summary>

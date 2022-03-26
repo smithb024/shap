@@ -213,8 +213,11 @@
     <Compile Include="Input\InputJnyRow.xaml.cs">
       <DependentUpon>InputJnyRow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Interfaces\Config\IGroupsAndClassesIOController.cs" />
-    <Compile Include="Interfaces\Config\IXmlFamilyIoController.cs" />
+    <Compile Include="Interfaces\Io\IGroupsAndClassesIOController.cs" />
+    <Compile Include="Interfaces\Io\IIoControllers.cs" />
+    <Compile Include="Interfaces\Io\IUnitsIoController.cs" />
+    <Compile Include="Interfaces\Io\IUnitsXmlIoController.cs" />
+    <Compile Include="Interfaces\Io\IXmlFamilyIoController.cs" />
     <Compile Include="Interfaces\Types\ISubClassDataType.cs" />
     <Compile Include="Interfaces\Types\IVehicleDetailsType.cs" />
     <Compile Include="Interfaces\Types\IJouneyDetailsType.cs" />
@@ -225,6 +228,7 @@
     <Compile Include="Interfaces\Units\ISubClassViewModel.cs" />
     <Compile Include="Interfaces\Units\IUnitViewModel.cs" />
     <Compile Include="Interfaces\ViewModels\IJourneyViewModel.cs" />
+    <Compile Include="Io\IoControllers.cs" />
     <Compile Include="MainWindowViewModel.cs" />
     <Compile Include="StaticResources.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -611,9 +615,7 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Common\Controls\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
   </ItemGroup>

@@ -2,7 +2,7 @@
 {
     using NynaeveLib.ViewModel;
     using ResultsPresentation;
-    using Shap.Interfaces.Config;
+    using Shap.Interfaces.Io;
 
     /// <summary>
     /// View model for class analysis.
@@ -31,11 +31,11 @@
         /// IO Controller for groups and controllers.
         /// </param>
         public ClassAnalysisViewModel(
-            IGroupsAndClassesIOController groupsAndClassesIoController)
+            IIoControllers controllers)
         {
             this.ClassControls =
                    new ClassAnalysisDashboardViewModel(
-                     groupsAndClassesIoController,
+                     controllers,
                      this.ClassGeneralReportResults,
                      this.ClassSingleYearReportResults,
                      this.SingleClassGeneralLocationReportResults,

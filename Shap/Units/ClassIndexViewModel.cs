@@ -4,8 +4,7 @@
     using System.Collections.ObjectModel;
 
     using NynaeveLib.ViewModel;
-    using Shap.Units.IO;
-    using Shap.Interfaces.Config;
+    using Shap.Interfaces.Io;
     using Stats;
 
     // TODO _ This, ClassIndexGroupViewModel and IndexItemViewModel seem to be a single 
@@ -22,31 +21,21 @@
 
         private bool inConfigurationMode;
 
-        private UnitsIOController unitsIoController;
-        private UnitsXmlIOController unitsXmlIoController;
-        //private IndividualUnitIOController individualUnitIoController;
-
         /// <summary>
-        /// IO controller which is used to access XML data for families.
+        /// IO controllers.
         /// </summary>
-        private IXmlFamilyIoController familyIoController;
+        private IIoControllers ioControllers;
 
         /// <summary>
         ///   Creates a new instance of the class index form
         /// </summary>
-        /// <param name="unitsIoController">units IO Controller</param>
-        /// <param name="unitsXmlIoController">units XML IO controller</param>
-        /// <param name="familyIoController">Family IO controller</param>
+        /// <param name="iocontrollers">IO controllers</param>
         /// <param name="firstExamples">first examples manager</param>
         public ClassIndexViewModel(
-          UnitsIOController unitsIoController,
-          UnitsXmlIOController unitsXmlIoController,
-          IXmlFamilyIoController familyIoController,
+          IIoControllers ioControllers,
           FirstExampleManager firstExamples)
         {
-            this.unitsIoController = unitsIoController;
-            this.unitsXmlIoController = unitsXmlIoController;
-            this.familyIoController = familyIoController;
+            this.ioControllers = ioControllers;
             this.firstExamples = firstExamples;
 
             this.ItemsGroup = new ObservableCollection<ClassIndexGroupViewModel>();
@@ -95,7 +84,8 @@
         /// </summary>
         private void AddControls()
         {
-            List<string> classList = this.unitsIoController.GetClassList();
+            List<string> classList = 
+                this.ioControllers.Units.GetClassList();
 
             ClassIndexGroupViewModel buildGroup = new ClassIndexGroupViewModel("NameNotSet");
 
@@ -111,9 +101,7 @@
                 {
                     buildGroup.AddNewItem(
                       new IndexItemViewModel(
-                        this.unitsIoController,
-                        this.unitsXmlIoController,
-                        this.familyIoController,
+                        this.ioControllers,
                         this.firstExamples,
                         classList[i]));
                 }

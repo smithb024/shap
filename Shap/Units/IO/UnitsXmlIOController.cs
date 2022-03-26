@@ -2,15 +2,14 @@
 {
     using System.IO;
     using Common;
-    using NynaeveLib.Logger;
     using Shap.Common.Factories;
     using Shap.Common.SerialiseModel.ClassDetails;
-    using Shap.Types;
+    using Shap.Interfaces.Io;
 
     /// <summary>
     /// Used to read and write to the uts config file.
     /// </summary>
-    public class UnitsXmlIOController
+    public class UnitsXmlIOController : IUnitsXmlIoController
     {
         // Labels in the XML files
         private const string XmlExtensionLabel = ".xml";
@@ -18,8 +17,7 @@
         /// <summary>
         /// Prevents a default instance of this class from being created.
         /// </summary>
-        /// <param name="unitsIoController">units IO controller</param>
-        public UnitsXmlIOController(UnitsIOController unitsIoController)
+        public UnitsXmlIOController()
         {
         }
 

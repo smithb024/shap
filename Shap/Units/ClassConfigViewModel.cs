@@ -15,7 +15,7 @@
     using Shap.Common.SerialiseModel.ClassDetails;
     using Shap.Common.SerialiseModel.Family;
 
-    using Shap.Interfaces.Config;
+    using Shap.Interfaces.Io;
     using Shap.Interfaces.Units;
     using Shap.Types;
     using Shap.Units.IO;
@@ -69,14 +69,9 @@
         private int subClassListIndex;
 
         /// <summary>
-        /// XML IO Controller class.
+        /// IO Controllers
         /// </summary>
-        private UnitsXmlIOController unitsXmlIoController;
-
-        /// <summary>
-        /// IO Controller class.
-        /// </summary>
-        private UnitsIOController unitsIoController;
+        private IIoControllers ioControllers;
 
         /// <summary>
         /// ID of the class in this view model.
@@ -91,19 +86,14 @@
         /// <summary>
         /// Initialises a new instance of the <see cref="ClassConfigViewModel"/> class.
         /// </summary>
-        /// <param name="unitsIoController">units IO controller</param>
-        /// <param name="unitsXmlIoController">units XML IO controller</param>
-        /// <param name=")">individual units XML IO controller</param>
+        /// <param name="ioControllers">IO controllers</param>
         /// <param name="classId">class id</param>
         public ClassConfigViewModel(
-          UnitsIOController unitsIoController,
-          UnitsXmlIOController unitsXmlIoController,
-          IXmlFamilyIoController ioController,
+          IIoControllers ioControllers,
           string classId)
         {
-            this.unitsIoController = unitsIoController;
-            this.unitsXmlIoController = unitsXmlIoController;
-            FamilyDetails serialisedFamilies = ioController.Read();
+            this.ioControllers = ioControllers;
+            FamilyDetails serialisedFamilies = ioControllers.Family.Read();
             this.familyIndex = 0;
 
             this.unsavedChanges = false;
@@ -128,10 +118,10 @@
             this.classId = classId;
 
             // If the file doesn't exist then leave m_classData, as initialised.
-            if (this.unitsXmlIoController.DoesFileExist(this.classId))
+            if (this.ioControllers.UnitsXml.DoesFileExist(this.classId))
             {
                 this.classFileConfiguration =
-                    this.unitsXmlIoController.Read(
+                    this.ioControllers.UnitsXml.Read(
                         this.classId);
 
                 this.formation = this.classFileConfiguration.Formation;
@@ -180,7 +170,7 @@
 
                         IClassConfigImageSelectorViewModel selector =
                                 new ClassConfigImageSelectorViewModel(
-                                    this.unitsIoController,
+                                    this.ioControllers,
                                     imageName);
                         selector.SelectionMadeEvent += this.UpdateImagesInModel;
                         this.Images.Add(selector);
@@ -194,7 +184,7 @@
                     {
                         IClassConfigImageSelectorViewModel selector =
                                 new ClassConfigImageSelectorViewModel(
-                                    this.unitsIoController,
+                                    this.ioControllers,
                                     string.Empty);
                         selector.SelectionMadeEvent += this.UpdateImagesInModel;
                         this.Images.Add(selector);
@@ -450,7 +440,7 @@
         private void SaveModel()
         {
             ++this.classFileConfiguration.Version;
-            this.unitsXmlIoController.Write(
+            this.ioControllers.UnitsXml.Write(
                 this.classFileConfiguration,
                 this.classId);
 
@@ -709,7 +699,7 @@
 
                 IClassConfigImageSelectorViewModel selector =
                         new ClassConfigImageSelectorViewModel(
-                            this.unitsIoController,
+                            this.ioControllers,
                             imageName);
                 selector.SelectionMadeEvent += this.UpdateImagesInModel;
                 this.Images.Add(selector);

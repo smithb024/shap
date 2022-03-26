@@ -1,4 +1,4 @@
-﻿namespace Shap.Interfaces.Config
+﻿namespace Shap.Interfaces.Io
 {
   using System.Collections.Generic;
   using Shap.Types;

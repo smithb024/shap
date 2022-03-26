@@ -5,7 +5,7 @@
     using NynaeveLib.ViewModel;
     using Shap.Common.Commands;
     using Shap.Common.SerialiseModel.ClassDetails;
-    using Shap.Interfaces.Config;
+    using Shap.Interfaces.Io;
     using Shap.Types;
     using Shap.Units.IO;
     using Common;
@@ -34,19 +34,9 @@
         private bool inConfigurationMode;
 
         /// <summary>
-        /// Units IO Controller.
+        /// IO controllers.
         /// </summary>
-        private UnitsIOController unitsIoController;
-
-        /// <summary>
-        /// IO controller which is used to access XML data for a unit.
-        /// </summary>
-        private UnitsXmlIOController unitsXmlIoController;
-
-        /// <summary>
-        /// IO controller which is used to access XML data for families.
-        /// </summary>
-        private IXmlFamilyIoController familyIoController;
+        private IIoControllers ioControllers;
 
         /// <summary>
         /// The <see cref="ClassConfigWindow"/> XAML object. Used for configuration.
@@ -61,27 +51,21 @@
         /// <summary>
         /// Initialises a new instance of the <see cref="IndexItemViewModel"/> class.
         /// </summary>
-        /// <param name="unitsIoController">units IO controller</param>
-        /// <param name="unitsXmlIoController">units XML IO controller</param>
-        /// <param name="familyIoController">Family IO controller</param>
+        /// <param name="ioController">IO Controllers</param>
         /// <param name="name">class name</param>
         public IndexItemViewModel(
-          UnitsIOController unitsIoController,
-          UnitsXmlIOController unitsXmlIoController,
-          IXmlFamilyIoController familyIoController,
+          IIoControllers ioControllers,
           FirstExampleManager firstExamples,
           string name)
         {
-            this.unitsIoController = unitsIoController;
-            this.unitsXmlIoController = unitsXmlIoController;
-            this.familyIoController = familyIoController;
+            this.ioControllers = ioControllers;
             this.firstExamples = firstExamples;
             this.className = name;
             this.inConfigurationMode = false;
             this.OpenWindowCmd = new CommonCommand(this.ShowClassWindow);
 
             ClassDetails classFileConfiguration =
-                    this.unitsXmlIoController.Read(
+                    this.ioControllers.UnitsXml.Read(
                         name);
             this.InService = classFileConfiguration?.ServiceType ?? VehicleServiceType.Withdrawn;
         }
@@ -182,9 +166,7 @@
             {
                 ClassConfigViewModel classConfig =
                   new ClassConfigViewModel(
-                    this.unitsIoController,
-                    this.unitsXmlIoController,
-                    this.familyIoController,
+                    this.ioControllers,
                     this.className);
 
                 this.classConfigWindow = new ClassConfigWindow();
@@ -236,8 +218,7 @@
                 this.classFrontPageWindow = new ClassFrontPage();
                 ClassFunctionalViewModel classFunctionalViewModel =
                   new ClassFunctionalViewModel(
-                    this.unitsIoController,
-                    this.unitsXmlIoController,
+                    this.ioControllers,
                     this.firstExamples,
                     this.className);
 
