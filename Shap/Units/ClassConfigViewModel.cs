@@ -104,6 +104,7 @@
             this.unitsIoController = unitsIoController;
             this.unitsXmlIoController = unitsXmlIoController;
             FamilyDetails serialisedFamilies = ioController.Read();
+            this.familyIndex = 0;
 
             this.unsavedChanges = false;
 
@@ -136,6 +137,16 @@
                 this.formation = this.classFileConfiguration.Formation;
                 this.alphaIdentifier = this.classFileConfiguration.AlphaId;
                 this.year = this.classFileConfiguration.Year;
+
+                // Select the correct family
+                for (int index = 0; index < this.FamilyList.Count; ++ index)
+                {
+                    if (string.Compare(this.classFileConfiguration.Family, this.FamilyList[index]) == 0)
+                    {
+                        this.familyIndex = index;
+                        continue;
+                    }
+                }
 
                 for (int index = 0; index < this.ServiceTypeList.Count; ++index)
                 {
@@ -348,6 +359,15 @@
 
                 this.familyIndex = value;
                 this.RaisePropertyChangedEvent(nameof(this.FamilyIndex));
+
+                if (this.familyIndex >= 0 && this.familyIndex < this.FamilyList.Count)
+                {
+                    this.classFileConfiguration.Family = this.FamilyList[this.familyIndex];
+                }
+                else
+                {
+                    this.classFileConfiguration.Family = string.Empty;
+                }
             }
         }
 
