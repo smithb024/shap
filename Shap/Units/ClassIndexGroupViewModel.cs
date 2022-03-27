@@ -23,13 +23,6 @@ namespace Shap.Units
         {
             this.GroupName = groupName;
             this.Items = new ObservableCollection<IndexItemViewModel>();
-
-            //this.items = new ObservableCollection<IndexItemViewModel>()
-            //{
-            //  new IndexItemViewModel(groupName + "-Test1"),
-            //  new IndexItemViewModel(groupName + "-Test2"),
-            //  new IndexItemViewModel(groupName + "-Test3")
-            //};
         }
 
         /// <summary>
@@ -75,6 +68,18 @@ namespace Shap.Units
                 {
                     item.InConfigurationMode = inConfigurationMode;
                 }
+            }
+        }
+
+        /// <summary>
+        /// The family which is currently being filtered on. Inform the Index Items.
+        /// </summary>
+        /// <param name="familyFilter">family being filter on</param>
+        public void SetFamilyFilter(string familyFilter)
+        {
+            foreach (IndexItemViewModel indexViewModel in this.Items)
+            {
+                indexViewModel.SetFamilyFilter(familyFilter);
             }
         }
     }

@@ -7,24 +7,31 @@
     using Shap.Interfaces.Io;
     using Stats;
 
-    // TODO _ This, ClassIndexGroupViewModel and IndexItemViewModel seem to be a single 
-    // view model covering the ClassIndexWindow. Can they be grouped together in a
-    // refactor.
+    /// <summary>
+    /// View model for the class index view. The index items are split into groups and this view
+    /// model manages the groups.
+    /// </summary>
     public class ClassIndexViewModel : ViewModelBase
     {
+        /// <summary>
+        /// Used to identify a new group.
+        /// </summary>
         private const string c_titleIdentifier = "*";
 
         /// <summary>
         /// Manager class holding collections of the first examples.
         /// </summary>
-        private FirstExampleManager firstExamples;
-
-        private bool inConfigurationMode;
+        private readonly FirstExampleManager firstExamples;
 
         /// <summary>
         /// IO controllers.
         /// </summary>
-        private IIoControllers ioControllers;
+        private readonly IIoControllers ioControllers;
+
+        /// <summary>
+        /// Indicates whether configuration mode has been selected.
+        /// </summary>
+        private bool inConfigurationMode;
 
         /// <summary>
         ///   Creates a new instance of the class index form
@@ -47,11 +54,7 @@
         /// <summary>
         /// Gets or sets a group of index items.
         /// </summary>
-        public ObservableCollection<ClassIndexGroupViewModel> ItemsGroup
-        {
-            get;
-            set;
-        }
+        public ObservableCollection<ClassIndexGroupViewModel> ItemsGroup { get; set; }
 
         /// <summary>
         /// Gets or sets a value indicating whether the class is in configuration mode or not.
@@ -75,6 +78,18 @@
                         group.SetConfigurationMode(value);
                     }
                 }
+            }
+        }
+
+        /// <summary>
+        /// The family which is currently being filtered on. Inform the groups
+        /// </summary>
+        /// <param name="familyFilter">family being filter on</param>
+        private void SetFamilyFilter(string familyFilter)
+        {
+            foreach(ClassIndexGroupViewModel indexViewModel in this.ItemsGroup)
+            {
+                indexViewModel.SetFamilyFilter(familyFilter);
             }
         }
 
@@ -112,11 +127,5 @@
                 this.ItemsGroup.Add(buildGroup);
             }
         }
-
-        private void NewClassSelected(string className)
-        {
-            string name = className;
-        }
-
     }
 }
