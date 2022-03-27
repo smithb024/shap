@@ -147,6 +147,7 @@
     <Compile Include="Common\BasePathReader.cs" />
     <Compile Include="Common\Commands\CommonCommand.cs" />
     <Compile Include="Common\Converters\ComponentStateBrushConverter.cs" />
+    <Compile Include="Common\Converters\BoolToVisibilityConverter.cs" />
     <Compile Include="Common\Converters\RouteEnabledConverter.cs" />
     <Compile Include="Common\Converters\IntToVisibilityConverter.cs" />
     <Compile Include="Common\Converters\ServiceTypeHighlightBrushConverter.cs" />

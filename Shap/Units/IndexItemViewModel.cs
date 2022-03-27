@@ -1,13 +1,13 @@
 ﻿namespace Shap.Units
 {
     using System;
+    using System.Windows;
     using System.Windows.Input;
     using NynaeveLib.ViewModel;
     using Shap.Common.Commands;
     using Shap.Common.SerialiseModel.ClassDetails;
     using Shap.Interfaces.Io;
     using Shap.Types;
-    using Shap.Units.IO;
     using Common;
     using Stats;
 
@@ -34,6 +34,11 @@
         private bool inConfigurationMode;
 
         /// <summary>
+        /// Inidicates whether the icon should be displayed or not.
+        /// </summary>
+        private bool isVisible;
+
+        /// <summary>
         /// IO controllers.
         /// </summary>
         private IIoControllers ioControllers;
@@ -47,6 +52,16 @@
         /// The <see cref="ClassFrontPage"/> XAML object. Used for history.
         /// </summary>
         ClassFrontPage classFrontPageWindow;
+
+        /// <summary>
+        /// The family which this item belongs to.
+        /// </summary>
+        private string itemFamily;
+
+        /// <summary>
+        /// The family currently being filter on.
+        /// </summary>
+        private string familyFilter;
 
         /// <summary>
         /// Initialises a new instance of the <see cref="IndexItemViewModel"/> class.
@@ -63,6 +78,9 @@
             this.className = name;
             this.inConfigurationMode = false;
             this.OpenWindowCmd = new CommonCommand(this.ShowClassWindow);
+            this.isVisible = true;
+            this.itemFamily = string.Empty;
+            this.familyFilter = string.Empty;
 
             ClassDetails classFileConfiguration =
                     this.ioControllers.UnitsXml.Read(
@@ -125,6 +143,11 @@
         /// Gets a value indicating what the service state of the class is.
         /// </summary>
         public VehicleServiceType InService { get; }
+
+        /// <summary>
+        /// Indicates whether the tile should be visible or not.
+        /// </summary>
+        public bool IsVisible => this.isVisible;
 
         /// <summary>
         /// Close window command.
@@ -260,7 +283,7 @@
         /// <param name="closedViewMethod">request from the view model to close the view</param>
         /// <param name="closedMethod">method to run when the window closes</param>
         public void SetupWindow(
-          System.Windows.Window window,
+          Window window,
           ViewModelBase viewModel,
           EventHandler closeViewMethod,
           EventHandler closedMethod)
@@ -272,6 +295,35 @@
 
             window.Show();
             window.Activate();
+        }
+
+        /// <summary>
+        /// The family which is currently being filtered on.
+        /// </summary>
+        /// <param name="familyFilter">family being filter on</param>
+        public void SetFamilyFilter(string familyFilter)
+        {
+            this.itemFamily = familyFilter;
+            this.AnalyseFilters();
+        }
+
+        /// <summary>
+        /// Determine whether this icon passes any filters which have been set and consequently
+        /// whether this icon should be displayed.
+        /// </summary>
+        private void AnalyseFilters()
+        {
+            if (string.IsNullOrEmpty(this.familyFilter))
+            {
+                this.isVisible = true;
+            }
+            else
+            {
+                this.isVisible =
+                    string.Compare(this.itemFamily, this.familyFilter) == 0;
+            }
+            
+            this.RaisePropertyChangedEvent(nameof(this.isVisible));
         }
     }
 }

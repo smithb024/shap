@@ -66,7 +66,7 @@
             set
             {
                 this.inConfigurationMode = value;
-                this.RaisePropertyChangedEvent("InConfigurationMode");
+                this.RaisePropertyChangedEvent(nameof(this.InConfigurationMode));
 
                 if (this.ItemsGroup != null)
                 {
