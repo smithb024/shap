@@ -4,6 +4,7 @@
     using System.Collections.ObjectModel;
 
     using NynaeveLib.ViewModel;
+    using Shap.Common.SerialiseModel.Family;
     using Shap.Interfaces.Io;
     using Stats;
 
@@ -34,6 +35,11 @@
         private bool inConfigurationMode;
 
         /// <summary>
+        /// The currently selected family index.
+        /// </summary>
+        private int familyIndex;
+
+        /// <summary>
         ///   Creates a new instance of the class index form
         /// </summary>
         /// <param name="iocontrollers">IO controllers</param>
@@ -48,6 +54,21 @@
             this.ItemsGroup = new ObservableCollection<ClassIndexGroupViewModel>();
             this.inConfigurationMode = false;
 
+            FamilyDetails serialisedFamilies = ioControllers.Family.Read();
+            this.Families =
+                new ObservableCollection<string>
+            {
+                string.Empty
+            };
+
+            if (serialisedFamilies != null)
+            {
+                foreach (SingleFamily singleFamily in serialisedFamilies.Families)
+                {
+                    this.Families.Add(singleFamily.Name);
+                }
+            }
+
             this.AddControls();
         }
 
@@ -55,6 +76,34 @@
         /// Gets or sets a group of index items.
         /// </summary>
         public ObservableCollection<ClassIndexGroupViewModel> ItemsGroup { get; set; }
+
+        /// <summary>
+        /// Gets or sets the currently selected family from the filter list.
+        /// </summary>
+        public int FamilyIndex
+        {
+            get
+            {
+                return this.familyIndex;
+            }
+
+            set
+            {
+                if (this.familyIndex == value)
+                {
+                    return;
+                }
+
+                this.familyIndex = value;
+                this.RaisePropertyChangedEvent(nameof(this.FamilyIndex));
+                this.SetFamilyFilter();
+            }
+        }
+
+        /// <summary>
+        /// Gets the list of families which can be used as a filter.
+        /// </summary>
+        public ObservableCollection<string> Families { get; }
 
         /// <summary>
         /// Gets or sets a value indicating whether the class is in configuration mode or not.
@@ -84,12 +133,15 @@
         /// <summary>
         /// The family which is currently being filtered on. Inform the groups
         /// </summary>
-        /// <param name="familyFilter">family being filter on</param>
-        private void SetFamilyFilter(string familyFilter)
+        private void SetFamilyFilter()
         {
-            foreach(ClassIndexGroupViewModel indexViewModel in this.ItemsGroup)
+            if (this.FamilyIndex >= 0 && this.FamilyIndex < this.Families.Count)
             {
-                indexViewModel.SetFamilyFilter(familyFilter);
+                foreach (ClassIndexGroupViewModel indexViewModel in this.ItemsGroup)
+                {
+                    indexViewModel.SetFamilyFilter(
+                        this.Families[this.FamilyIndex]);
+                }
             }
         }
 

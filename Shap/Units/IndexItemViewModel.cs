@@ -79,12 +79,15 @@
             this.inConfigurationMode = false;
             this.OpenWindowCmd = new CommonCommand(this.ShowClassWindow);
             this.isVisible = true;
-            this.itemFamily = string.Empty;
             this.familyFilter = string.Empty;
 
             ClassDetails classFileConfiguration =
                     this.ioControllers.UnitsXml.Read(
                         name);
+            this.itemFamily =
+                classFileConfiguration?.Family
+                ?? string.Empty;
+
             this.InService = classFileConfiguration?.ServiceType ?? VehicleServiceType.Withdrawn;
         }
 
@@ -303,7 +306,7 @@
         /// <param name="familyFilter">family being filter on</param>
         public void SetFamilyFilter(string familyFilter)
         {
-            this.itemFamily = familyFilter;
+            this.familyFilter = familyFilter;
             this.AnalyseFilters();
         }
 

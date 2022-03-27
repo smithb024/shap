@@ -3,35 +3,55 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:index="clr-namespace:Shap.Units"
         Title="ClassIndexWindow"
-        Width="445"
+        Width="450"
         Height="800"
         WindowStartupLocation="Manual" 
         Left="235" 
         Top="0">
-    
-    <DockPanel LastChildFill="True">
 
-        <CheckBox DockPanel.Dock="Top"
-              Content="Configuration Mode"
-              IsChecked="{Binding InConfigurationMode}"/>
+    <Grid 
+               Background="{StaticResource StdBackground}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <StackPanel Grid.Row="0">
+            <CheckBox 
+                DockPanel.Dock="Top"
+                Content="Configuration Mode"
+                Style="{StaticResource StdCheckBoxStyle}"
+                IsChecked="{Binding InConfigurationMode}"/>
+
+            <StackPanel
+                DockPanel.Dock="Top"
+                Orientation="Horizontal">
+                <ComboBox 
+                    ItemsSource="{Binding Path=Families}"
+                    SelectedIndex="{Binding FamilyIndex}"
+                    Style="{StaticResource ComboBoxStyle}"
+                    Margin="0,0,5,0"/>
+            </StackPanel>
+        </StackPanel>
 
         <ScrollViewer
-                VerticalAlignment="Center"
-                VerticalContentAlignment="Stretch">
-                <ItemsControl ItemsSource="{Binding ItemsGroup}" >
+            Grid.Row="1"
+            VerticalAlignment="Stretch"
+            VerticalContentAlignment="Stretch">
+            <ItemsControl ItemsSource="{Binding ItemsGroup}" >
 
-                    <ItemsControl.ItemsPanel>
-                        <ItemsPanelTemplate>
-                            <StackPanel />
-                        </ItemsPanelTemplate>
-                    </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <StackPanel />
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
 
-                    <ItemsControl.ItemTemplate>
-                        <DataTemplate>
-                            <index:ClassIndexGroup/>
-                        </DataTemplate>
-                    </ItemsControl.ItemTemplate>
-                </ItemsControl>
-            </ScrollViewer>
-    </DockPanel>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <index:ClassIndexGroup/>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+        </ScrollViewer>
+    </Grid>
 </Window>

@@ -12,7 +12,8 @@
         <shapConverter:BoolToVisibilityConverter x:Key="visibilityConverter"/>
     </UserControl.Resources>
 
-    <Border
+    <Border 
+        Margin="1"
         BorderBrush="{Binding InService, Converter={StaticResource serviceConverter}}"
         BorderThickness="7,2"
         CornerRadius="5"
