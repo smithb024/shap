@@ -9,26 +9,30 @@
 
     <UserControl.Resources>
         <shapConverter:ServiceTypeHighlightBrushConverter x:Key="serviceConverter"/>
+        <shapConverter:BoolToVisibilityConverter x:Key="visibilityConverter"/>
     </UserControl.Resources>
 
-    <Border
-            BorderBrush="{Binding InService, Converter={StaticResource serviceConverter}}"
-            BorderThickness="7,2"
-            CornerRadius="5"
-            Grid.Row="0">
+    <Border 
+        Margin="1"
+        BorderBrush="{Binding InService, Converter={StaticResource serviceConverter}}"
+        BorderThickness="7,2"
+        CornerRadius="5"
+        Visibility="{Binding Path=IsVisible, Converter={StaticResource visibilityConverter}}"
+        Grid.Row="0">
+        
         <StackPanel>
             <Image 
                 Height="67"
                 Width="67"
                 Source="{Binding IndexImagePath}"/>
             <Button 
-            Grid.Row="1"
-            Content="{Binding IndexName}"
-            Width="67"
-            Command="{Binding OpenWindowCmd}"
-            Style="{StaticResource StdButtonStyle}"
-            Height="20"
-            Margin="0"/>
+                Grid.Row="1"
+                Content="{Binding IndexName}"
+                Width="67"
+                Command="{Binding OpenWindowCmd}"
+                Style="{StaticResource StdButtonStyle}"
+                Height="20"
+                Margin="0"/>
         </StackPanel>
     </Border>
 </UserControl>

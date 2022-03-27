@@ -147,6 +147,7 @@
     <Compile Include="Common\BasePathReader.cs" />
     <Compile Include="Common\Commands\CommonCommand.cs" />
     <Compile Include="Common\Converters\ComponentStateBrushConverter.cs" />
+    <Compile Include="Common\Converters\BoolToVisibilityConverter.cs" />
     <Compile Include="Common\Converters\RouteEnabledConverter.cs" />
     <Compile Include="Common\Converters\IntToVisibilityConverter.cs" />
     <Compile Include="Common\Converters\ServiceTypeHighlightBrushConverter.cs" />
@@ -166,6 +167,8 @@
     <Compile Include="Common\SerialiseModel\ClassDetails\OldNumber.cs" />
     <Compile Include="Common\SerialiseModel\ClassDetails\Operator.cs" />
     <Compile Include="Common\SerialiseModel\ClassDetails\Subclass.cs" />
+    <Compile Include="Common\SerialiseModel\Family\FamilyDetails.cs" />
+    <Compile Include="Common\SerialiseModel\Family\SingleFamily.cs" />
     <Compile Include="Common\ViewModel\LocationCounterManagerViewModel.cs" />
     <Compile Include="Common\ViewModel\LocationCounterViewModel.cs" />
     <Compile Include="Config\ConfigJobType.cs" />
@@ -178,6 +181,16 @@
     </Compile>
     <Compile Include="Config\GroupsAndClassesIOController.cs" />
     <Compile Include="Config\GroupsAndClassesViewModel.cs" />
+    <Compile Include="Config\GroupsAndClasses\FamilyManagerView.xaml.cs">
+      <DependentUpon>FamilyManagerView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Config\GroupsAndClasses\FamilyManagerViewModel.cs" />
+    <Compile Include="Config\GroupsAndClasses\GroupsView.xaml.cs">
+      <DependentUpon>GroupsView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Config\GroupsAndClasses\RangesView.xaml.cs">
+      <DependentUpon>RangesView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Config\PopularStnConfigDialog.xaml.cs">
       <DependentUpon>PopularStnConfigDialog.xaml</DependentUpon>
     </Compile>
@@ -201,7 +214,11 @@
     <Compile Include="Input\InputJnyRow.xaml.cs">
       <DependentUpon>InputJnyRow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Interfaces\Config\IGroupsAndClassesIOController.cs" />
+    <Compile Include="Interfaces\Io\IGroupsAndClassesIOController.cs" />
+    <Compile Include="Interfaces\Io\IIoControllers.cs" />
+    <Compile Include="Interfaces\Io\IUnitsIoController.cs" />
+    <Compile Include="Interfaces\Io\IUnitsXmlIoController.cs" />
+    <Compile Include="Interfaces\Io\IXmlFamilyIoController.cs" />
     <Compile Include="Interfaces\Types\ISubClassDataType.cs" />
     <Compile Include="Interfaces\Types\IVehicleDetailsType.cs" />
     <Compile Include="Interfaces\Types\IJouneyDetailsType.cs" />
@@ -212,6 +229,7 @@
     <Compile Include="Interfaces\Units\ISubClassViewModel.cs" />
     <Compile Include="Interfaces\Units\IUnitViewModel.cs" />
     <Compile Include="Interfaces\ViewModels\IJourneyViewModel.cs" />
+    <Compile Include="Io\IoControllers.cs" />
     <Compile Include="MainWindowViewModel.cs" />
     <Compile Include="StaticResources.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -265,6 +283,7 @@
     <Compile Include="Units\Factories\SubClassFactory.cs" />
     <Compile Include="Units\IO\IndividualUnitFileContents.cs" />
     <Compile Include="Units\Factories\Searcher.cs" />
+    <Compile Include="Config\XmlFamilyIoController.cs" />
     <Compile Include="Units\SubClassViewModel.cs" />
     <Compile Include="Units\ClassFunctionalViewModel.cs" />
     <Compile Include="Units\ClassIndexGroup.xaml.cs">
@@ -380,6 +399,18 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Config\GroupsAndClassesDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Config\GroupsAndClasses\FamilyManagerView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Config\GroupsAndClasses\GroupsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Config\GroupsAndClasses\RangesView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -585,9 +616,7 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Common\Controls\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <WCFMetadata Include="Service References\" />
   </ItemGroup>

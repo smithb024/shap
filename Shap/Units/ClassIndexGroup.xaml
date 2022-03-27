@@ -7,21 +7,20 @@
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="300">
 
-  <ItemsControl ItemsSource="{Binding Items}"
+    <ItemsControl ItemsSource="{Binding Items}"
                 Grid.Row="1"
                 Background="{StaticResource StdBackground}">
-    <ItemsControl.ItemsPanel>
-      <!-- specify the panel that is the container for the items -->
-      <ItemsPanelTemplate>
-        <WrapPanel />
-      </ItemsPanelTemplate>
-    </ItemsControl.ItemsPanel>
-    <!-- specify the template used to render each item -->
-    <ItemsControl.ItemTemplate>
-      <DataTemplate>
-        <index:IndexItem Margin="0,0,1,1"/>
-        <!--<Button Content="{Binding CmdMessage}" Height="30"/>-->
-      </DataTemplate>
-    </ItemsControl.ItemTemplate>
-  </ItemsControl>
+        <ItemsControl.ItemsPanel>
+            <!-- specify the panel that is the container for the items -->
+            <ItemsPanelTemplate>
+                <WrapPanel />
+            </ItemsPanelTemplate>
+        </ItemsControl.ItemsPanel>
+        <!-- specify the template used to render each item -->
+        <ItemsControl.ItemTemplate>
+            <DataTemplate>
+                <index:IndexItem />
+            </DataTemplate>
+        </ItemsControl.ItemTemplate>
+    </ItemsControl>
 </UserControl>

@@ -7,7 +7,7 @@
   using NynaeveLib.Logger;
 
   using Shap.Common;
-  using Shap.Interfaces.Config;
+  using Shap.Interfaces.Io;
   using Shap.Types;
 
   /// <summary>

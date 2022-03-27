@@ -13,7 +13,7 @@
     using NynaeveLib.ViewModel;
     using Shap.Common;
     using Shap.Common.Commands;
-    using Shap.Interfaces.Config;
+    using Shap.Interfaces.Io;
     using Shap.Stats;
 
     /// <summary>
@@ -52,19 +52,20 @@
         string status;
 
         /// <summary>
-        /// IO Controller for groups and classes config.
+        /// IO Controllers.
         /// </summary>
-        IGroupsAndClassesIOController groupsAndClassesIoController;
+        IIoControllers ioControllers;
 
         /// <summary>
         /// Initialises a new instance of the <see cref="ConfigViewModel"/> class.
         /// </summary>
-        /// <param name="groupsAndClassesIoController">IO controller</param>
+        /// <param name="ioControllers">IO Controllers</param>
+        /// <param name="firstExamples">first example manager</param>
         public ConfigViewModel(
-          IGroupsAndClassesIOController groupsAndClassesIoController,
+          IIoControllers ioControllers,
           FirstExampleManager firstExamples)
         {
-            this.groupsAndClassesIoController = groupsAndClassesIoController;
+            this.ioControllers = ioControllers;
             this.firstExamples = firstExamples;
             this.PopulateYearCollection();
             this.PopulateOldNumbersAvailable();
@@ -277,7 +278,7 @@
         {
             GroupsAndClassesViewModel groupsViewModel =
               new GroupsAndClassesViewModel(
-                this.groupsAndClassesIoController);
+                this.ioControllers);
 
             DialogService service = new DialogService();
 

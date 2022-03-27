@@ -1,12 +1,13 @@
 ﻿namespace Shap.Units
 {
     using System;
+    using System.Windows;
     using System.Windows.Input;
     using NynaeveLib.ViewModel;
     using Shap.Common.Commands;
     using Shap.Common.SerialiseModel.ClassDetails;
+    using Shap.Interfaces.Io;
     using Shap.Types;
-    using Shap.Units.IO;
     using Common;
     using Stats;
 
@@ -33,14 +34,14 @@
         private bool inConfigurationMode;
 
         /// <summary>
-        /// Units IO Controller.
+        /// Inidicates whether the icon should be displayed or not.
         /// </summary>
-        private UnitsIOController unitsIoController;
+        private bool isVisible;
 
         /// <summary>
-        /// IO controller which is used to access XML data for a unit.
+        /// IO controllers.
         /// </summary>
-        private UnitsXmlIOController unitsXmlIoController;
+        private IIoControllers ioControllers;
 
         /// <summary>
         /// The <see cref="ClassConfigWindow"/> XAML object. Used for configuration.
@@ -53,28 +54,40 @@
         ClassFrontPage classFrontPageWindow;
 
         /// <summary>
+        /// The family which this item belongs to.
+        /// </summary>
+        private string itemFamily;
+
+        /// <summary>
+        /// The family currently being filter on.
+        /// </summary>
+        private string familyFilter;
+
+        /// <summary>
         /// Initialises a new instance of the <see cref="IndexItemViewModel"/> class.
         /// </summary>
-        /// <param name="unitsIoController">units IO controller</param>
-        /// <param name="unitsXmlIoController">units XML IO controller</param>
-        /// <param name="individualUnitIoController">individual Unit IO controller</param>
+        /// <param name="ioController">IO Controllers</param>
         /// <param name="name">class name</param>
         public IndexItemViewModel(
-          UnitsIOController unitsIoController,
-          UnitsXmlIOController unitsXmlIoController,
+          IIoControllers ioControllers,
           FirstExampleManager firstExamples,
           string name)
         {
-            this.unitsIoController = unitsIoController;
-            this.unitsXmlIoController = unitsXmlIoController;
+            this.ioControllers = ioControllers;
             this.firstExamples = firstExamples;
             this.className = name;
             this.inConfigurationMode = false;
             this.OpenWindowCmd = new CommonCommand(this.ShowClassWindow);
+            this.isVisible = true;
+            this.familyFilter = string.Empty;
 
             ClassDetails classFileConfiguration =
-                    this.unitsXmlIoController.Read(
+                    this.ioControllers.UnitsXml.Read(
                         name);
+            this.itemFamily =
+                classFileConfiguration?.Family
+                ?? string.Empty;
+
             this.InService = classFileConfiguration?.ServiceType ?? VehicleServiceType.Withdrawn;
         }
 
@@ -135,6 +148,11 @@
         public VehicleServiceType InService { get; }
 
         /// <summary>
+        /// Indicates whether the tile should be visible or not.
+        /// </summary>
+        public bool IsVisible => this.isVisible;
+
+        /// <summary>
         /// Close window command.
         /// </summary>
         public ICommand OpenWindowCmd
@@ -174,8 +192,7 @@
             {
                 ClassConfigViewModel classConfig =
                   new ClassConfigViewModel(
-                    this.unitsIoController,
-                    this.unitsXmlIoController,
+                    this.ioControllers,
                     this.className);
 
                 this.classConfigWindow = new ClassConfigWindow();
@@ -227,8 +244,7 @@
                 this.classFrontPageWindow = new ClassFrontPage();
                 ClassFunctionalViewModel classFunctionalViewModel =
                   new ClassFunctionalViewModel(
-                    this.unitsIoController,
-                    this.unitsXmlIoController,
+                    this.ioControllers,
                     this.firstExamples,
                     this.className);
 
@@ -270,7 +286,7 @@
         /// <param name="closedViewMethod">request from the view model to close the view</param>
         /// <param name="closedMethod">method to run when the window closes</param>
         public void SetupWindow(
-          System.Windows.Window window,
+          Window window,
           ViewModelBase viewModel,
           EventHandler closeViewMethod,
           EventHandler closedMethod)
@@ -282,6 +298,35 @@
 
             window.Show();
             window.Activate();
+        }
+
+        /// <summary>
+        /// The family which is currently being filtered on.
+        /// </summary>
+        /// <param name="familyFilter">family being filter on</param>
+        public void SetFamilyFilter(string familyFilter)
+        {
+            this.familyFilter = familyFilter;
+            this.AnalyseFilters();
+        }
+
+        /// <summary>
+        /// Determine whether this icon passes any filters which have been set and consequently
+        /// whether this icon should be displayed.
+        /// </summary>
+        private void AnalyseFilters()
+        {
+            if (string.IsNullOrEmpty(this.familyFilter))
+            {
+                this.isVisible = true;
+            }
+            else
+            {
+                this.isVisible =
+                    string.Compare(this.itemFamily, this.familyFilter) == 0;
+            }
+            
+            this.RaisePropertyChangedEvent(nameof(this.isVisible));
         }
     }
 }

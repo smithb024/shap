@@ -1,6 +1,5 @@
 ﻿namespace Shap.Units
 {
-    using System;
     using System.ComponentModel;
     using System.Collections.ObjectModel;
     using System.Windows.Input;
@@ -9,9 +8,9 @@
 
     using Shap.Common.Commands;
     using Shap.Common.SerialiseModel.ClassDetails;
+    using Shap.Interfaces.Io;
     using Shap.Interfaces.Units;
     using Shap.Units.Factories;
-    using Shap.Units.IO;
     using NynaeveLib.Logger;
 
     using Stats;
@@ -36,14 +35,12 @@
         /// <summary>
         ///   create a new instance of this class
         /// </summary>
-        /// <param name="unitsIoController">units IO controller</param>
-        /// <param name="unitsXmlIoController">Units XML IO Controller</param>
-        /// <param name="individualUnitIoController">Individual Unit IO Controller</param>
+        /// <param name="ioControllers">IO Controllers</param>
+        /// <param name="firstExamples">First example manager</param>
         /// <param name="classId">class id</param>
         /// ---------- ---------- ---------- ---------- ---------- ----------
         public ClassFunctionalViewModel(
-          UnitsIOController unitsIoController,
-          UnitsXmlIOController unitsXmlIoController,
+          IIoControllers ioControllers,
           FirstExampleManager firstExamples,
           string classId)
           : base(new ObservableCollection<string>())
@@ -53,7 +50,7 @@
 
             this.ClassIndexes = new ObservableCollection<SubClassViewModel>();
 
-            if (!unitsXmlIoController.DoesFileExist(classId))
+            if (!ioControllers.UnitsXml.DoesFileExist(classId))
             {
                 Logger.Instance.WriteLog($"ClassFunctionalViewModel: Aborted load: {classId} does not exist");
                 this.classData = new ClassDataTypeViewModel(classId);
@@ -66,7 +63,7 @@
                     () => true);
 
             ClassDetails classFile =
-                unitsXmlIoController.Read(
+                ioControllers.UnitsXml.Read(
                     classId);
             this.classData =
                 new ClassDataTypeViewModel(

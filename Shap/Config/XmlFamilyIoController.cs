@@ -1,53 +1,62 @@
-﻿namespace Shap.Units.IO
+﻿namespace Shap.Config
 {
     using System.IO;
     using Common;
     using Shap.Common.Factories;
-    using Shap.Common.SerialiseModel.ClassDetails;
+    using Shap.Common.SerialiseModel.Family;
     using Shap.Interfaces.Io;
 
     /// <summary>
-    /// Used to read and write to the uts config file.
+    /// Used to read and write to the family XML file.
     /// </summary>
-    public class UnitsXmlIOController : IUnitsXmlIoController
+    public class XmlFamilyIoController : IXmlFamilyIoController
     {
-        // Labels in the XML files
+        /// <summary>
+        /// Extension for the familty filename.
+        /// </summary>
         private const string XmlExtensionLabel = ".xml";
 
         /// <summary>
         /// Prevents a default instance of this class from being created.
         /// </summary>
-        public UnitsXmlIOController()
+        public XmlFamilyIoController()
         {
         }
 
         /// <summary>
-        /// Deserialise the <see cref="ClassDetails"/> from the <paramref name="filename"/>.
+        /// Deserialise the <see cref="FamilyDetails"/> from the <paramref name="filename"/>.
         /// </summary>
         /// <param name="filename">name of the file to read</param>
         /// <returns>deserialised file</returns>
-        public ClassDetails Read(string filename)
+        public FamilyDetails Read()
         {
-            string myPath = BasePathReader.GetBasePath() + StaticResources.classDetailsPath + filename + XmlExtensionLabel;
-            ClassDetails results =
-                XmlFileIo.ReadXml<ClassDetails>(
+            string myPath = 
+                BasePathReader.GetBasePath() +
+                StaticResources.classDetailsPath +
+                StaticResources.FileNameFamily + 
+                XmlExtensionLabel;
+            FamilyDetails results =
+                XmlFileIo.ReadXml<FamilyDetails>(
                     myPath);
 
             return results;
         }
 
         /// <summary>
-        /// Serialise the <see cref="ClassDetails"/> to <parmref name="filename"/>.
+        /// Serialise the <see cref="FamilyDetails"/> to <parmref name="filename"/>.
         /// </summary>
         /// <param name="file">file to serialise</param>
         /// <param name="filename">location to save the file to</param>
         public void Write(
-            ClassDetails file,
-            string filename)
+            FamilyDetails file)
         {
-            string myPath = BasePathReader.GetBasePath() + StaticResources.classDetailsPath + filename + XmlExtensionLabel;
+            string myPath = 
+                BasePathReader.GetBasePath() +
+                StaticResources.classDetailsPath +
+                StaticResources.FileNameFamily + 
+                XmlExtensionLabel;
 
-            XmlFileIo.WriteXml<ClassDetails>(
+            XmlFileIo.WriteXml(
                 file,
                 myPath);
         }
@@ -57,12 +66,12 @@
         /// </summary>
         /// <param name="fileName">file name</param>
         /// <returns>file exists flag</returns>
-        public bool DoesFileExist(string fileName)
+        public bool DoesFileExist()
         {
             return File.Exists(
                 BasePathReader.GetBasePath() +
                 StaticResources.classDetailsPath +
-                fileName +
+                StaticResources.FileNameFamily +
                 XmlExtensionLabel);
         }
     }

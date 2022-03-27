@@ -13,6 +13,9 @@
     using NynaeveLib.ViewModel;
     using Shap.Common.Commands;
     using Shap.Common.SerialiseModel.ClassDetails;
+    using Shap.Common.SerialiseModel.Family;
+
+    using Shap.Interfaces.Io;
     using Shap.Interfaces.Units;
     using Shap.Types;
     using Shap.Units.IO;
@@ -56,19 +59,19 @@
         private int serviceIndex;
 
         /// <summary>
+        /// Maintains the index of the currently selected family.
+        /// </summary>
+        private int familyIndex;
+
+        /// <summary>
         /// The index of the selected subclass.
         /// </summary>
         private int subClassListIndex;
 
         /// <summary>
-        /// XML IO Controller class.
+        /// IO Controllers
         /// </summary>
-        private UnitsXmlIOController unitsXmlIoController;
-
-        /// <summary>
-        /// IO Controller class.
-        /// </summary>
-        private UnitsIOController unitsIoController;
+        private IIoControllers ioControllers;
 
         /// <summary>
         /// ID of the class in this view model.
@@ -83,36 +86,57 @@
         /// <summary>
         /// Initialises a new instance of the <see cref="ClassConfigViewModel"/> class.
         /// </summary>
-        /// <param name="unitsIoController">units IO controller</param>
-        /// <param name="unitsXmlIoController">units XML IO controller</param>
-        /// <param name=")">individual units XML IO controller</param>
+        /// <param name="ioControllers">IO controllers</param>
         /// <param name="classId">class id</param>
         public ClassConfigViewModel(
-          UnitsIOController unitsIoController,
-          UnitsXmlIOController unitsXmlIoController,
+          IIoControllers ioControllers,
           string classId)
         {
-            this.unitsIoController = unitsIoController;
-            this.unitsXmlIoController = unitsXmlIoController;
+            this.ioControllers = ioControllers;
+            FamilyDetails serialisedFamilies = ioControllers.Family.Read();
+            this.familyIndex = 0;
 
             this.unsavedChanges = false;
 
             this.SubClassNumbers = new ObservableCollection<string>();
             this.NumbersList = new ObservableCollection<int>();
             this.Images = new ObservableCollection<IClassConfigImageSelectorViewModel>();
+            this.FamilyList =
+                new ObservableCollection<string>
+            {
+                string.Empty
+            };
+
+            if (serialisedFamilies != null)
+            {
+                foreach (SingleFamily singleFamily in serialisedFamilies.Families)
+                {
+                    this.FamilyList.Add(singleFamily.Name);
+                }
+            }
 
             this.classId = classId;
 
             // If the file doesn't exist then leave m_classData, as initialised.
-            if (this.unitsXmlIoController.DoesFileExist(this.classId))
+            if (this.ioControllers.UnitsXml.DoesFileExist(this.classId))
             {
                 this.classFileConfiguration =
-                    this.unitsXmlIoController.Read(
+                    this.ioControllers.UnitsXml.Read(
                         this.classId);
 
                 this.formation = this.classFileConfiguration.Formation;
                 this.alphaIdentifier = this.classFileConfiguration.AlphaId;
                 this.year = this.classFileConfiguration.Year;
+
+                // Select the correct family
+                for (int index = 0; index < this.FamilyList.Count; ++ index)
+                {
+                    if (string.Compare(this.classFileConfiguration.Family, this.FamilyList[index]) == 0)
+                    {
+                        this.familyIndex = index;
+                        continue;
+                    }
+                }
 
                 for (int index = 0; index < this.ServiceTypeList.Count; ++index)
                 {
@@ -146,7 +170,7 @@
 
                         IClassConfigImageSelectorViewModel selector =
                                 new ClassConfigImageSelectorViewModel(
-                                    this.unitsIoController,
+                                    this.ioControllers,
                                     imageName);
                         selector.SelectionMadeEvent += this.UpdateImagesInModel;
                         this.Images.Add(selector);
@@ -160,7 +184,7 @@
                     {
                         IClassConfigImageSelectorViewModel selector =
                                 new ClassConfigImageSelectorViewModel(
-                                    this.unitsIoController,
+                                    this.ioControllers,
                                     string.Empty);
                         selector.SelectionMadeEvent += this.UpdateImagesInModel;
                         this.Images.Add(selector);
@@ -302,6 +326,42 @@
         }
 
         /// <summary>
+        /// Gets a collection of all known families.
+        /// </summary>
+        public ObservableCollection<string> FamilyList { get; }
+
+        /// <summary>
+        /// Gets or sets the index of the currently selected family.
+        /// </summary>
+        public int FamilyIndex
+        {
+            get
+            {
+                return this.familyIndex;
+            }
+
+            set
+            {
+                if (this.familyIndex == value)
+                {
+                    return;
+                }
+
+                this.familyIndex = value;
+                this.RaisePropertyChangedEvent(nameof(this.FamilyIndex));
+
+                if (this.familyIndex >= 0 && this.familyIndex < this.FamilyList.Count)
+                {
+                    this.classFileConfiguration.Family = this.FamilyList[this.familyIndex];
+                }
+                else
+                {
+                    this.classFileConfiguration.Family = string.Empty;
+                }
+            }
+        }
+
+        /// <summary>
         /// Gets the collection of sub classes present in this class.
         /// </summary>
         public ObservableCollection<string> SubClassNumbers { get; }
@@ -380,7 +440,7 @@
         private void SaveModel()
         {
             ++this.classFileConfiguration.Version;
-            this.unitsXmlIoController.Write(
+            this.ioControllers.UnitsXml.Write(
                 this.classFileConfiguration,
                 this.classId);
 
@@ -639,7 +699,7 @@
 
                 IClassConfigImageSelectorViewModel selector =
                         new ClassConfigImageSelectorViewModel(
-                            this.unitsIoController,
+                            this.ioControllers,
                             imageName);
                 selector.SelectionMadeEvent += this.UpdateImagesInModel;
                 this.Images.Add(selector);
