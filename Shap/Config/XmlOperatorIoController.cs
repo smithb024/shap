@@ -3,57 +3,57 @@
     using System.IO;
     using Common;
     using Shap.Common.Factories;
-    using Shap.Common.SerialiseModel.Family;
+    using Shap.Common.SerialiseModel.Operator;
     using Shap.Interfaces.Io;
 
     /// <summary>
-    /// Used to read and write to the family XML file.
+    /// Used to read and write to the operator XML file.
     /// </summary>
-    public class XmlFamilyIoController : IXmlFamilyIoController
+    public class XmlOperatorIoController : IXmlOperatorIoController
     {
         /// <summary>
-        /// Extension for the family filename.
+        /// Extension for the operator filename.
         /// </summary>
         private const string XmlExtensionLabel = ".xml";
 
         /// <summary>
         /// Prevents a default instance of this class from being created.
         /// </summary>
-        public XmlFamilyIoController()
+        public XmlOperatorIoController()
         {
         }
 
         /// <summary>
-        /// Deserialise the <see cref="FamilyDetails"/> from the <paramref name="filename"/>.
+        /// Deserialise the <see cref="OperatorDetails"/> from the <paramref name="filename"/>.
         /// </summary>
         /// <param name="filename">name of the file to read</param>
         /// <returns>deserialised file</returns>
-        public FamilyDetails Read()
+        public OperatorDetails Read()
         {
             string myPath = 
                 BasePathReader.GetBasePath() +
                 StaticResources.classDetailsPath +
-                StaticResources.FileNameFamily + 
+                StaticResources.FileNameOperator + 
                 XmlExtensionLabel;
-            FamilyDetails results =
-                XmlFileIo.ReadXml<FamilyDetails>(
+            OperatorDetails results =
+                XmlFileIo.ReadXml<OperatorDetails>(
                     myPath);
 
             return results;
         }
 
         /// <summary>
-        /// Serialise the <see cref="FamilyDetails"/> to <parmref name="filename"/>.
+        /// Serialise the <see cref="OperatorDetails"/> to <parmref name="filename"/>.
         /// </summary>
         /// <param name="file">file to serialise</param>
         /// <param name="filename">location to save the file to</param>
         public void Write(
-            FamilyDetails file)
+            OperatorDetails file)
         {
             string myPath = 
                 BasePathReader.GetBasePath() +
                 StaticResources.classDetailsPath +
-                StaticResources.FileNameFamily + 
+                StaticResources.FileNameOperator + 
                 XmlExtensionLabel;
 
             XmlFileIo.WriteXml(
@@ -71,7 +71,7 @@
             return File.Exists(
                 BasePathReader.GetBasePath() +
                 StaticResources.classDetailsPath +
-                StaticResources.FileNameFamily +
+                StaticResources.FileNameOperator +
                 XmlExtensionLabel);
         }
     }

@@ -198,6 +198,7 @@
     </Compile>
     <Compile Include="Config\PopularStnConfigViewModel.cs" />
     <Compile Include="Config\PopularStnIOController.cs" />
+    <Compile Include="Config\XmlOperatorIoController.cs" />
     <Compile Include="Icons\DayIcon.xaml.cs">
       <DependentUpon>DayIcon.xaml</DependentUpon>
     </Compile>
@@ -220,6 +221,7 @@
     <Compile Include="Interfaces\Io\IIoControllers.cs" />
     <Compile Include="Interfaces\Io\IUnitsIoController.cs" />
     <Compile Include="Interfaces\Io\IUnitsXmlIoController.cs" />
+    <Compile Include="Interfaces\Io\IXmlOperatorIoController.cs" />
     <Compile Include="Interfaces\Io\IXmlFamilyIoController.cs" />
     <Compile Include="Interfaces\Types\ISubClassDataType.cs" />
     <Compile Include="Interfaces\Types\IVehicleDetailsType.cs" />

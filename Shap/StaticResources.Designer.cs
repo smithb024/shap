@@ -115,6 +115,15 @@ namespace Shap {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to optr.
+        /// </summary>
+        internal static string FileNameOperator {
+            get {
+                return ResourceManager.GetString("FileNameOperator", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to data\uts\idvl\.
         /// </summary>
         internal static string idvlDetailsPath {
