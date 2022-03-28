@@ -169,6 +169,8 @@
     <Compile Include="Common\SerialiseModel\ClassDetails\Subclass.cs" />
     <Compile Include="Common\SerialiseModel\Family\FamilyDetails.cs" />
     <Compile Include="Common\SerialiseModel\Family\SingleFamily.cs" />
+    <Compile Include="Common\SerialiseModel\Operator\OperatorDetails.cs" />
+    <Compile Include="Common\SerialiseModel\Operator\SingleOperator.cs" />
     <Compile Include="Common\ViewModel\LocationCounterManagerViewModel.cs" />
     <Compile Include="Common\ViewModel\LocationCounterViewModel.cs" />
     <Compile Include="Config\ConfigJobType.cs" />

@@ -10,7 +10,7 @@
         Top="0">
 
     <Grid 
-               Background="{StaticResource StdBackground}">
+        Background="{StaticResource StdBackground}">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
