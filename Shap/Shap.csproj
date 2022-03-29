@@ -186,6 +186,8 @@
     <Compile Include="Config\GroupsAndClasses\FamilyManagerView.xaml.cs">
       <DependentUpon>FamilyManagerView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Config\GroupsAndClasses\OperatorConfigViewModel.cs" />
+    <Compile Include="Config\GroupsAndClasses\OperatorManagerViewModel.cs" />
     <Compile Include="Config\GroupsAndClasses\FamilyManagerViewModel.cs" />
     <Compile Include="Config\GroupsAndClasses\GroupsView.xaml.cs">
       <DependentUpon>GroupsView.xaml</DependentUpon>
