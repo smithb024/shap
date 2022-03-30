@@ -52,7 +52,7 @@
                     OperatorConfigViewModel newOperator =
                         new OperatorConfigViewModel(
                             singleOperator.Name,
-                            true);
+                            singleOperator.IsActive);
                     this.Operators.Add(newOperator);
                 }
             }
@@ -100,7 +100,7 @@
 
             set
             {
-                if (this.operatorsIndex != value)
+                if (this.operatorsIndex == value)
                 {
                     return;
                 }
@@ -146,7 +146,8 @@
             SingleOperator newSingleOperator =
                 new SingleOperator()
                 {
-                    Name = this.Name
+                    Name = this.Name,
+                    IsActive = true
                 };
 
             this.serialisedOperators.Operators.Add(newSingleOperator);
@@ -167,7 +168,7 @@
         /// </summary>
         private void Retire()
         {
-            if (this.IsSelectionValid())
+            if (!this.IsSelectionValid())
             {
                 return;
             }

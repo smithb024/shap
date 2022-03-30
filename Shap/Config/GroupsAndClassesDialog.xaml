@@ -9,7 +9,7 @@
         mc:Ignorable="d"
         Background="{StaticResource StdBackground}"
         Name="GroupsConfigDialog"
-        Title="GroupsAndClassesDialog" Height="300" Width="300">
+        Title="GroupsAndClassesDialog" Height="600" Width="700">
 
     <Window.Resources>
         <commonConverters:BoolToVisCollapsedVisibilityConverter x:Key="boolVisibilityConverter"/>
@@ -21,18 +21,24 @@
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <gac:GroupsView Grid.Row="0"/>
-        <gac:RangesView Grid.Row="1"/>
+        <gac:GroupsView Grid.Row="0" Margin="5"/>
+        <gac:RangesView Grid.Row="1" Margin="5"/>
         <gac:FamilyManagerView
             Grid.Row="2"
+            Margin="5"
             DataContext="{Binding Path=FamilyManager}"/>
+        <gac:OperatorManagerView
+            Grid.Row="3"
+            Margin="5"
+            DataContext="{Binding Path=OperatorManager}"/>
 
         <Grid 
             Grid.Column="0"
-            Grid.Row="3">
+            Grid.Row="4">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>

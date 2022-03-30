@@ -150,6 +150,7 @@
     <Compile Include="Common\Converters\BoolToVisibilityConverter.cs" />
     <Compile Include="Common\Converters\RouteEnabledConverter.cs" />
     <Compile Include="Common\Converters\IntToVisibilityConverter.cs" />
+    <Compile Include="Common\Converters\ActiveBooleanColourConverter.cs" />
     <Compile Include="Common\Converters\ServiceTypeHighlightBrushConverter.cs" />
     <Compile Include="Common\Converters\TrafficLightColourIntConverter.cs" />
     <Compile Include="Common\Converters\ServiceTypeBrushConverter.cs" />
@@ -187,6 +188,12 @@
       <DependentUpon>FamilyManagerView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Config\GroupsAndClasses\OperatorConfigViewModel.cs" />
+    <Compile Include="Config\GroupsAndClasses\OperatorListViewItem.xaml.cs">
+      <DependentUpon>OperatorListViewItem.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Config\GroupsAndClasses\OperatorManagerView.xaml.cs">
+      <DependentUpon>OperatorManagerView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Config\GroupsAndClasses\OperatorManagerViewModel.cs" />
     <Compile Include="Config\GroupsAndClasses\FamilyManagerViewModel.cs" />
     <Compile Include="Config\GroupsAndClasses\GroupsView.xaml.cs">
@@ -413,6 +420,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Config\GroupsAndClasses\GroupsView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Config\GroupsAndClasses\OperatorListViewItem.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Config\GroupsAndClasses\OperatorManagerView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
