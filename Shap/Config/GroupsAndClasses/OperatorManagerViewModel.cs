@@ -62,8 +62,8 @@
                 this.serialisedOperators.Operators = new List<SingleOperator>();
             }
 
-            this.AddOperator = new CommonCommand(this.Add);
-            this.RetireOperator = new CommonCommand(this.Retire);
+            this.AddOperator = new CommonCommand(this.Add, this.CanAdd);
+            this.RetireOperator = new CommonCommand(this.Retire, this.CanRetire);
         }
 
         /// <summary>
@@ -164,6 +164,16 @@
         }
 
         /// <summary>
+        /// Indicates whether the <see cref="AddOperator"/> command can be run. It requires a valid
+        /// <see cref="Name"/> value;
+        /// </summary>
+        /// <returns>validity flag</returns>
+        private bool CanAdd()
+        {
+            return !string.IsNullOrEmpty(this.Name);
+        }
+
+        /// <summary>
         /// Retire/reinstate the selected operator.
         /// </summary>
         private void Retire()
@@ -179,6 +189,16 @@
                 this.serialisedOperators.Operators.Find(
                     o => string.Compare(o.Name, this.Operators[this.OperatorIndex].Name) == 0);
             modelOperator.IsActive = this.Operators[this.OperatorIndex].IsActive;
+        }
+
+        /// <summary>
+        /// Indicates whether the <see cref="RetireOperator"/> command can be run. It requires a valid
+        /// <see cref="OperatorIndex"/> value;
+        /// </summary>
+        /// <returns>validity flag</returns>
+        private bool CanRetire()
+        {
+            return this.IsSelectionValid();
         }
 
         /// <summary>

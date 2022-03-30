@@ -52,7 +52,7 @@
                 this.serialisedFamilies.Families = new List<SingleFamily>();
             }
 
-            this.AddFamily = new CommonCommand(this.Add);
+            this.AddFamily = new CommonCommand(this.Add, this.CanAdd);
         }
 
         /// <summary>
@@ -117,6 +117,16 @@
             this.RaisePropertyChangedEvent(nameof(this.Families));
 
             this.Family = string.Empty;
+        }
+
+        /// <summary>
+        /// Indicates whether the <see cref="AddFamily"/> command can be run. It requires a valid
+        /// <see cref="Family"/> value;
+        /// </summary>
+        /// <returns>validity flag</returns>
+        private bool CanAdd()
+        {
+            return !string.IsNullOrEmpty(this.Family);
         }
     }
 }
