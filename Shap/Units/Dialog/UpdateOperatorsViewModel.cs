@@ -1,6 +1,7 @@
 ﻿namespace Shap.Units.Dialog
 {
     using System.Collections.ObjectModel;
+    using System.Linq;
     using System.Windows.Input;
     using NynaeveLib.ViewModel;
     using Shap.Common.Commands;
@@ -9,10 +10,15 @@
     using Shap.Interfaces.Io;
 
     /// <summary>
-    /// 
+    /// View model which supports a dialog used to configure operators.
     /// </summary>
     public class UpdateOperatorsViewModel : ViewModelBase
     {
+        /// <summary>
+        /// The details of the class which is supported by this dialog.
+        /// </summary>
+        ClassDetails classDetails;
+
         /// <summary>
         /// The index of the currently selected operator on the combo box.
         /// </summary>
@@ -38,6 +44,7 @@
             IIoControllers ioControllers,
             ClassDetails details)
         {
+            this.classDetails = details;
             this.Operators = new ObservableCollection<OperatorComboBoxItemViewModel>();
             this.ClassOperators = new ObservableCollection<OperatorListItemViewModel>();
             OperatorDetails operatorDetails = ioControllers.Operator.Read();
@@ -51,7 +58,7 @@
                 this.Operators.Add(viewModel);
             }
 
-            foreach(Operator classOperator in details.Operators)
+            foreach (Operator classOperator in this.classDetails.Operators)
             {
                 bool isActive =
                     this.FindActiveState(
@@ -212,17 +219,31 @@
             OperatorComboBoxItemViewModel selectedOperator =
                 this.Operators[this.OperatorIndex];
 
-            bool isActive =
+            Operator newClassOperator =
+                new Operator()
+                {
+                    Name = selectedOperator.Name,
+                    IsContemporary = true
+                };
+            this.classDetails.Operators.Add(newClassOperator);
+            this.classDetails.Operators = this.classDetails.Operators.OrderBy(c => c.Name).ToList();
+
+            this.ClassOperators.Clear();
+
+            foreach (Operator classOperator in this.classDetails.Operators)
+            {
+                bool isActive =
                     this.FindActiveState(
-                        selectedOperator.Name);
+                        classOperator.Name);
 
-            OperatorListItemViewModel viewModel =
-                new OperatorListItemViewModel(
-                    selectedOperator.Name,
-                    isActive,
-                    true);
+                OperatorListItemViewModel viewModel =
+                    new OperatorListItemViewModel(
+                        classOperator.Name,
+                        isActive,
+                        classOperator.IsContemporary);
 
-            this.ClassOperators.Add(viewModel);
+                this.ClassOperators.Add(viewModel);
+            }
         }
     }
 }
