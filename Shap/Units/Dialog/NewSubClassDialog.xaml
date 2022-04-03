@@ -7,7 +7,7 @@
         mc:Ignorable="d"
         Background="{StaticResource StdBackground}"
         Name="NewSubClass"
-        Title="NewSubClassDialog" Width="300" Height="75">
+        Title="NewSubClassDialog" Width="300" Height="85">
     <Grid>
     <Grid.RowDefinitions>
       <RowDefinition Height="Auto"/>
