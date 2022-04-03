@@ -21,9 +21,9 @@
         public string Name { get; set; }
 
         /// <summary>
-        /// Gets or sets a value indicating whether this is a historical operator.
+        /// Gets or sets a value indicating whether this is a contemporary operator.
         /// </summary>
-        [XmlAttribute("Htc")]
-        public string IsHistorical { get; set; }
+        [XmlAttribute("Ctp")]
+        public bool IsContemporary { get; set; }
     }
 }

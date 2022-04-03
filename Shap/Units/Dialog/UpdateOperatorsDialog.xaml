@@ -17,14 +17,15 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <Grid Grid.Row="0">
+        <Grid Grid.Row="0"
+              Margin="5">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="3*"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
             <ComboBox
-                Grid.Row="0"
+                Grid.Column="0"
                 Style="{StaticResource ComboBoxStyle}"
                 ItemsSource="{Binding Path=Operators}" IsEditable="False"
                 SelectedIndex="{Binding OperatorIndex}">
@@ -49,7 +50,39 @@
                 Margin="2"
                 Command="{Binding AddCmd}"/>
         </Grid>
-        
-        
+
+        <Grid Grid.Row="1"
+              Margin="5">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="3*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+
+            <ListView 
+                Grid.Column="0"
+                ItemsSource="{Binding Path=ClassOperators}"
+                SelectedIndex="{Binding Path=ClassOperatorIndex}"
+                Style="{StaticResource StdListViewStyle}">
+                <ListBox.ItemContainerStyle>
+                    <Style TargetType="ListBoxItem">
+                        <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                    </Style>
+                </ListBox.ItemContainerStyle>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <local:OperatorListViewItem />
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ListView>
+
+            <!--<Button
+                Content="Add"
+                Grid.Column="1"
+                Style="{StaticResource StdButtonStyle}"
+                Height="20"
+                Width="75"
+                Margin="2"
+                Command="{Binding AddCmd}"/>-->
+        </Grid>
     </Grid>
 </Window>

@@ -294,7 +294,11 @@
     <Compile Include="Units\Dialog\OperatorComboBoxItem.xaml.cs">
       <DependentUpon>OperatorComboBoxItem.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Units\Dialog\OperatorListItemViewModel.cs" />
     <Compile Include="Units\Dialog\OperatorComboBoxItemViewModel.cs" />
+    <Compile Include="Units\Dialog\OperatorListViewItem.xaml.cs">
+      <DependentUpon>OperatorListViewItem.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Units\Dialog\UpdateOperatorsDialog.xaml.cs">
       <DependentUpon>UpdateOperatorsDialog.xaml</DependentUpon>
     </Compile>
@@ -568,6 +572,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Units\Dialog\OperatorComboBoxItem.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Units\Dialog\OperatorListViewItem.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
