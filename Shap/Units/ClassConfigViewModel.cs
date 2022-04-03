@@ -204,6 +204,7 @@
             this.AddNewNumberCmd = new CommonCommand(this.AddNewNumber, this.CanPerformAction);
             this.AddNewNumberSeriesCmd = new CommonCommand(this.AddNewNumberSeries, this.CanPerformAction);
             this.RenumberCmd = new CommonCommand(this.Renumber, this.CanPerformAction);
+            this.OperatorsCmd = new CommonCommand(this.UpdateOperators, this.CanPerformAction);
         }
 
         /// <summary>
@@ -405,29 +406,34 @@
         public bool CanSave { get; set; }
 
         /// <summary>
-        /// Close window command.
+        /// Save the current data.
         /// </summary>
         public ICommand SaveCmd { get; private set; }
 
         /// <summary>
-        /// Close window command.
+        /// Open the new sub class dialog.
         /// </summary>
         public ICommand AddNewSubClassCmd { get; private set; }
 
         /// <summary>
-        /// Close window command.
+        /// Open the new number dialog.
         /// </summary>
         public ICommand AddNewNumberCmd { get; private set; }
 
         /// <summary>
-        /// Close window command.
+        /// Open the new number series dialog.
         /// </summary>
         public ICommand AddNewNumberSeriesCmd { get; private set; }
 
         /// <summary>
-        /// Close window command.
+        /// Open the renumber dialog.
         /// </summary>
         public ICommand RenumberCmd { get; private set; }
+
+        /// <summary>
+        /// Open the operators dialog.
+        /// </summary>
+        public ICommand OperatorsCmd { get; private set; }
 
         /// <summary>
         /// Close window command.
@@ -633,6 +639,46 @@
                 this.SaveModel();
                 this.SelectNewSubClass();
             }
+        }
+
+        /// <summary>
+        /// Manages the operators.
+        /// </summary>
+        private void UpdateOperators()
+        {
+            UpdateOperatorsViewModel dialogViewModel =
+                new UpdateOperatorsViewModel(
+                    this.ioControllers,
+                    this.classFileConfiguration);
+
+            DialogService service = new DialogService();
+
+            service.ShowDialog(
+              new UpdateOperatorsDialog()
+              {
+                  DataContext = dialogViewModel
+              });
+
+            //if (dialogViewModel.Result == MessageBoxResult.OK)
+            //{
+            //    Subclass newSubclass =
+            //        new Subclass()
+            //        {
+            //            Type = dialogViewModel.SubClass,
+            //            Images = new List<Image>(),
+            //            Numbers = new List<Number>()
+            //        };
+
+            //    // This will be null the first time a class is created.
+            //    if (this.classFileConfiguration.Subclasses == null)
+            //    {
+            //        this.classFileConfiguration.Subclasses = new List<Subclass>();
+            //    }
+
+                //this.classFileConfiguration.Subclasses.Add(newSubclass);
+                //this.SubClassNumbers.Add(newSubclass.Type);
+                this.SaveModel();
+            //}
         }
 
         /// <summary>

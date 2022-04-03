@@ -1,6 +1,5 @@
 ﻿namespace Shap.Common.SerialiseModel.ClassDetails
 {
-    using System.Collections.Generic;
     using System.Xml.Serialization;
 
     /// <summary>
@@ -20,5 +19,11 @@
         /// </summary>
         [XmlAttribute("Name")]
         public string Name { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether this is a historical operator.
+        /// </summary>
+        [XmlAttribute("Htc")]
+        public string IsHistorical { get; set; }
     }
 }

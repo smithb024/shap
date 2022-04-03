@@ -291,6 +291,14 @@
     <Compile Include="Units\ClassFrontPage.xaml.cs">
       <DependentUpon>ClassFrontPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Units\Dialog\OperatorComboBoxItem.xaml.cs">
+      <DependentUpon>OperatorComboBoxItem.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Units\Dialog\OperatorComboBoxItemViewModel.cs" />
+    <Compile Include="Units\Dialog\UpdateOperatorsDialog.xaml.cs">
+      <DependentUpon>UpdateOperatorsDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Units\Dialog\UpdateOperatorsViewModel.cs" />
     <Compile Include="Units\Factories\RenumberFactory.cs" />
     <Compile Include="Units\Factories\SearcherResults.cs" />
     <Compile Include="Units\Factories\SubClassFactory.cs" />
@@ -559,7 +567,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Units\Dialog\OperatorComboBoxItem.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Units\Dialog\RenumberDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Units\Dialog\UpdateOperatorsDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
