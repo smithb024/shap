@@ -84,5 +84,14 @@
                 Style="{StaticResource StdCheckBoxStyle}"
                 IsChecked="{Binding Path=IsContemporary}"/>
         </Grid>
+
+        <Button Content="Ok"
+                Style="{StaticResource StdButtonStyle}"
+                Grid.Row="2"
+                Height="20"
+                Width="75"
+                Margin="2,10,2,2"
+                Command="{Binding OkCmd}"
+                CommandParameter="{Binding ElementName=UpdateOperators}"/>
     </Grid>
 </Window>

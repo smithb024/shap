@@ -3,8 +3,9 @@
     using System.Collections.ObjectModel;
     using System.Linq;
     using System.Windows.Input;
+    using NynaeveLib.Commands;
+    using NynaeveLib.DialogService.Interfaces;
     using NynaeveLib.ViewModel;
-    using Shap.Common.Commands;
     using Shap.Common.SerialiseModel.ClassDetails;
     using Shap.Common.SerialiseModel.Operator;
     using Shap.Interfaces.Io;
@@ -74,6 +75,7 @@
             }
 
             this.AddCmd = new CommonCommand(this.Add);
+            this.OkCmd = new CommonCommand<ICloseable>(this.Okay);
         }
 
         /// <summary>
@@ -161,6 +163,11 @@
                 this.SetConfigurationIsContemporary();
             }
         }
+
+        /// <summary>
+        /// Ok command.
+        /// </summary>
+        public ICommand OkCmd { get; private set; }
 
         /// <summary>
         /// Find the operator with a given name and return its active state.
@@ -295,6 +302,14 @@
                 this.ClassOperatorIndex < this.ClassOperators.Count;
 
             return isValid;
+        }
+
+        /// <summary>
+        /// Select the Ok command.
+        /// </summary>
+        private void Okay(ICloseable window)
+        {
+            window?.CloseObject();
         }
     }
 }
