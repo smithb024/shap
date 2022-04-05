@@ -55,7 +55,7 @@
               Margin="5">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="3*"/>
-                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="2*"/>
             </Grid.ColumnDefinitions>
 
             <ListView 
@@ -75,14 +75,14 @@
                 </ItemsControl.ItemTemplate>
             </ListView>
 
-            <!--<Button
-                Content="Add"
+            <CheckBox 
                 Grid.Column="1"
-                Style="{StaticResource StdButtonStyle}"
-                Height="20"
-                Width="75"
                 Margin="2"
-                Command="{Binding AddCmd}"/>-->
+                Content="Is Contemporary"
+                VerticalAlignment="Center"
+                HorizontalAlignment="Center"
+                Style="{StaticResource StdCheckBoxStyle}"
+                IsChecked="{Binding Path=IsContemporary}"/>
         </Grid>
     </Grid>
 </Window>

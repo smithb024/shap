@@ -123,6 +123,7 @@
 
                 this.classOperatorsIndex = value;
                 this.RaisePropertyChangedEvent(nameof(this.ClassOperatorIndex));
+                this.ReassessIsContemporary();
             }
         }
 
@@ -157,6 +158,7 @@
 
                 this.isContemporary = value;
                 this.RaisePropertyChangedEvent(nameof(this.IsContemporary));
+                this.SetConfigurationIsContemporary();
             }
         }
 
@@ -244,6 +246,55 @@
 
                 this.ClassOperators.Add(viewModel);
             }
+        }
+
+        /// <summary>
+        /// Set the <see cref="IsContemporary"/> property based on the currently selected 
+        /// <see cref="ClassOperators"/> object. This bypasses the property setter because the
+        /// property setter is used to handle user input.
+        /// </summary>
+        /// <remarks>
+        /// Ignore the call if <see cref="ClassOperatorIndex"/> is not valid.
+        /// </remarks>
+        private void ReassessIsContemporary()
+        {
+            if (this.IsOperatorIndexValid())
+            {
+                this.isContemporary = this.ClassOperators[this.ClassOperatorIndex].IsContemporary;
+                this.RaisePropertyChangedEvent(nameof(this.IsContemporary));
+            }
+        }
+
+        /// <summary>
+        /// Set the <see cref="IsContemporary"/> property based on the currently selected 
+        /// <see cref="ClassOperators"/> object. This bypasses the property setter because the
+        /// property setter is used to handle user input.
+        /// </summary>
+        /// <remarks>
+        /// Ignore the call if <see cref="ClassOperatorIndex"/> is not valid.
+        /// </remarks>
+        private void SetConfigurationIsContemporary()
+        {
+            if (this.IsOperatorIndexValid())
+            {
+                this.ClassOperators[this.ClassOperatorIndex].SetIsContemporary(
+                    this.IsContemporary);
+                this.classDetails.Operators[this.ClassOperatorIndex].IsContemporary =
+                    this.IsContemporary;
+            }
+        }
+
+        /// <summary>
+        /// Indicates whether the <see cref="ClassOperatorIndex"/> value is valid.
+        /// </summary>
+        /// <returns>validity flag</returns>
+        private bool IsOperatorIndexValid()
+        {
+            bool isValid =
+            this.ClassOperatorIndex >= 0 &&
+                this.ClassOperatorIndex < this.ClassOperators.Count;
+
+            return isValid;
         }
     }
 }
