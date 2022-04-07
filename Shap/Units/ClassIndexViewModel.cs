@@ -7,6 +7,7 @@
     using Shap.Common.SerialiseModel.Family;
     using Shap.Common.SerialiseModel.Operator;
     using Shap.Interfaces.Io;
+    using Shap.Units.Dialog;
     using Stats;
 
     /// <summary>
@@ -76,17 +77,25 @@
             }
 
             OperatorDetails serialisedOperators = ioControllers.Operator.Read();
+            OperatorComboBoxItemViewModel empty =
+                new OperatorComboBoxItemViewModel(
+                    string.Empty,
+                    true);
             this.Operators =
-                new ObservableCollection<string>
+                new ObservableCollection<OperatorComboBoxItemViewModel>
                 {
-                    string.Empty
+                    empty
                 };
 
             if (serialisedOperators != null)
             {
                 foreach(SingleOperator singleOperator in serialisedOperators.Operators)
                 {
-                    this.Operators.Add(singleOperator.Name);
+                    OperatorComboBoxItemViewModel comboBoxItem =
+                        new OperatorComboBoxItemViewModel(
+                            singleOperator.Name,
+                            singleOperator.IsActive);
+                    this.Operators.Add(comboBoxItem);
                 }
             }
 
@@ -152,7 +161,7 @@
         /// <summary>
         /// Gets the list of operators which can be used as a filter.
         /// </summary>
-        public ObservableCollection<string> Operators { get; }
+        public ObservableCollection<OperatorComboBoxItemViewModel> Operators { get; }
 
         /// <summary>
         /// Gets or sets a value indicating whether the class is in configuration mode or not.

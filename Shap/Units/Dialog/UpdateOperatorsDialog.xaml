@@ -27,7 +27,8 @@
             <ComboBox
                 Grid.Column="0"
                 Style="{StaticResource ComboBoxStyle}"
-                ItemsSource="{Binding Path=Operators}" IsEditable="False"
+                ItemsSource="{Binding Path=Operators}" 
+                IsEditable="False"
                 SelectedIndex="{Binding OperatorIndex}">
                 <ComboBox.ItemContainerStyle>
                     <Style TargetType="ComboBoxItem">
