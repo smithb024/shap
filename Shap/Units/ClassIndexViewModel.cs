@@ -5,6 +5,7 @@
 
     using NynaeveLib.ViewModel;
     using Shap.Common.SerialiseModel.Family;
+    using Shap.Common.SerialiseModel.Operator;
     using Shap.Interfaces.Io;
     using Stats;
 
@@ -40,6 +41,11 @@
         private int familyIndex;
 
         /// <summary>
+        /// The currently selected operator index.
+        /// </summary>
+        private int operatorsIndex;
+
+        /// <summary>
         ///   Creates a new instance of the class index form
         /// </summary>
         /// <param name="iocontrollers">IO controllers</param>
@@ -66,6 +72,21 @@
                 foreach (SingleFamily singleFamily in serialisedFamilies.Families)
                 {
                     this.Families.Add(singleFamily.Name);
+                }
+            }
+
+            OperatorDetails serialisedOperators = ioControllers.Operator.Read();
+            this.Operators =
+                new ObservableCollection<string>
+                {
+                    string.Empty
+                };
+
+            if (serialisedOperators != null)
+            {
+                foreach(SingleOperator singleOperator in serialisedOperators.Operators)
+                {
+                    this.Operators.Add(singleOperator.Name);
                 }
             }
 
@@ -106,6 +127,34 @@
         public ObservableCollection<string> Families { get; }
 
         /// <summary>
+        /// Gets or sets the currently selected operator from the filter list.
+        /// </summary>
+        public int OperatorIndex
+        {
+            get
+            {
+                return this.operatorsIndex;
+            }
+
+            set
+            {
+                if (this.operatorsIndex == value)
+                {
+                    return;
+                }
+
+                this.operatorsIndex = value;
+                this.RaisePropertyChangedEvent(nameof(this.OperatorIndex));
+                this.SetOperatorFilter();
+            }
+        }
+
+        /// <summary>
+        /// Gets the list of operators which can be used as a filter.
+        /// </summary>
+        public ObservableCollection<string> Operators { get; }
+
+        /// <summary>
         /// Gets or sets a value indicating whether the class is in configuration mode or not.
         /// </summary>
         public bool InConfigurationMode
@@ -143,6 +192,14 @@
                         this.Families[this.FamilyIndex]);
                 }
             }
+        }
+
+        /// <summary>
+        /// An filter operator has been chosen. Inform the groups.
+        /// </summary>
+        private void SetOperatorFilter()
+        {
+
         }
 
         /// <summary>
