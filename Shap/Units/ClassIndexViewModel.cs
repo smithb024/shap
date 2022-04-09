@@ -208,7 +208,14 @@
         /// </summary>
         private void SetOperatorFilter()
         {
-
+            if (this.OperatorIndex >= 0 && this.OperatorIndex < this.Operators.Count)
+            {
+                foreach (ClassIndexGroupViewModel indexViewModel in this.ItemsGroup)
+                {
+                    indexViewModel.SetOperatorFilter(
+                        this.Operators[this.OperatorIndex].Name);
+                }
+            }
         }
 
         /// <summary>
