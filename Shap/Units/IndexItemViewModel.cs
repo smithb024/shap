@@ -39,6 +39,14 @@
         private bool isVisible;
 
         /// <summary>
+        /// Inidicates whether the strike through should be displayed or not.
+        /// </summary>
+        /// <remarks>
+        /// This is used when a filter is applied, the filter is passed, but the current item is still obsolete.
+        /// </remarks>
+        private bool isStrikeThrough;
+
+        /// <summary>
         /// IO controllers.
         /// </summary>
         private IIoControllers ioControllers;
@@ -79,6 +87,7 @@
             this.inConfigurationMode = false;
             this.OpenWindowCmd = new CommonCommand(this.ShowClassWindow);
             this.isVisible = true;
+            this.isStrikeThrough = false;
             this.familyFilter = string.Empty;
 
             ClassDetails classFileConfiguration =
@@ -151,6 +160,11 @@
         /// Indicates whether the tile should be visible or not.
         /// </summary>
         public bool IsVisible => this.isVisible;
+
+        /// <summary>
+        /// Gets a value indicating whether the strike should be added.
+        /// </summary>
+        public bool IsStrikeThrough => this.isStrikeThrough;
 
         /// <summary>
         /// Close window command.
