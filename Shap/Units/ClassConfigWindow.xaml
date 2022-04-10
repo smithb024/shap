@@ -4,7 +4,7 @@
         xmlns:shapConverter="clr-namespace:Shap.Common.Converters"
         xmlns:local="clr-namespace:Shap.Units"
         Title="ClassConfigWindow"
-        Height="250"
+        Height="280"
         Width="600" >
 
     <Window.Resources>
@@ -134,6 +134,11 @@
                     Style="{StaticResource StdButtonStyle}"
                     Height="20"
                     Command="{Binding RenumberCmd}"/>
+                <Button 
+                    Content="Operators"
+                    Style="{StaticResource StdButtonStyle}"
+                    Height="20"
+                    Command="{Binding OperatorsCmd}"/>
             </StackPanel>
         </StackPanel>
 

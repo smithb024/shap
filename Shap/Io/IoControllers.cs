@@ -16,6 +16,7 @@
         {
             this.Gac = new GroupsAndClassesIOController();
             this.Family = new XmlFamilyIoController();
+            this.Operator = new XmlOperatorIoController();
             this.Units = new UnitsIOController();
             this.UnitsXml = new UnitsXmlIOController();
         }
@@ -29,6 +30,11 @@
         /// Gets the Family IO Controller
         /// </summary>
         public IXmlFamilyIoController Family { get; }
+
+        /// <summary>
+        /// Gets the Operator IO Controller
+        /// </summary>
+        public IXmlOperatorIoController Operator { get; }
 
         /// <summary>
         /// Gets the Units IO Controller.

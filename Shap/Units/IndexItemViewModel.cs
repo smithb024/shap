@@ -1,6 +1,7 @@
 ﻿namespace Shap.Units
 {
     using System;
+    using System.Collections.Generic;
     using System.Windows;
     using System.Windows.Input;
     using NynaeveLib.ViewModel;
@@ -39,6 +40,14 @@
         private bool isVisible;
 
         /// <summary>
+        /// Inidicates whether the strike through should be displayed or not.
+        /// </summary>
+        /// <remarks>
+        /// This is used when a filter is applied, the filter is passed, but the current item is still obsolete.
+        /// </remarks>
+        private bool isStrikeThrough;
+
+        /// <summary>
         /// IO controllers.
         /// </summary>
         private IIoControllers ioControllers;
@@ -64,6 +73,16 @@
         private string familyFilter;
 
         /// <summary>
+        /// The operators which this item belongs to.
+        /// </summary>
+        private Dictionary<string, bool> itemOperators;
+
+        /// <summary>
+        /// The operator currently being filter on.
+        /// </summary>
+        private string operatorFilter;
+
+        /// <summary>
         /// Initialises a new instance of the <see cref="IndexItemViewModel"/> class.
         /// </summary>
         /// <param name="ioController">IO Controllers</param>
@@ -79,14 +98,28 @@
             this.inConfigurationMode = false;
             this.OpenWindowCmd = new CommonCommand(this.ShowClassWindow);
             this.isVisible = true;
+            this.isStrikeThrough = false;
             this.familyFilter = string.Empty;
+            this.operatorFilter = string.Empty;
+            this.itemOperators = new Dictionary<string, bool>();
 
             ClassDetails classFileConfiguration =
                     this.ioControllers.UnitsXml.Read(
                         name);
-            this.itemFamily =
-                classFileConfiguration?.Family
-                ?? string.Empty;
+
+            if (classFileConfiguration == null)
+            {
+                this.itemFamily = string.Empty;
+            }
+            else
+            {
+                this.itemFamily = classFileConfiguration?.Family;
+
+                foreach (Operator op in classFileConfiguration.Operators)
+                {
+                    this.itemOperators.Add(op.Name, op.IsContemporary);
+                }
+            }
 
             this.InService = classFileConfiguration?.ServiceType ?? VehicleServiceType.Withdrawn;
         }
@@ -151,6 +184,11 @@
         /// Indicates whether the tile should be visible or not.
         /// </summary>
         public bool IsVisible => this.isVisible;
+
+        /// <summary>
+        /// Gets a value indicating whether the strike should be added.
+        /// </summary>
+        public bool IsStrikeThrough => this.isStrikeThrough;
 
         /// <summary>
         /// Close window command.
@@ -311,22 +349,65 @@
         }
 
         /// <summary>
+        /// The operator which is currently being filtered on.
+        /// </summary>
+        /// <param name="operatorFilter">operator being filter on</param>
+        public void SetOperatorFilter(string operatorFilter)
+        {
+            this.operatorFilter = operatorFilter;
+            this.AnalyseFilters();
+        }
+
+        /// <summary>
         /// Determine whether this icon passes any filters which have been set and consequently
         /// whether this icon should be displayed.
         /// </summary>
         private void AnalyseFilters()
         {
-            if (string.IsNullOrEmpty(this.familyFilter))
+            if (string.IsNullOrEmpty(this.familyFilter) && string.IsNullOrEmpty(this.operatorFilter))
             {
                 this.isVisible = true;
+                this.isStrikeThrough = false;
             }
-            else
+            else if (!string.IsNullOrEmpty(this.familyFilter) && !string.IsNullOrEmpty(this.operatorFilter))
+            {
+                this.isVisible =
+                    string.Compare(this.itemFamily, this.familyFilter) == 0 &&
+                    this.itemOperators.ContainsKey(this.operatorFilter);
+
+                if (this.itemOperators.ContainsKey(this.operatorFilter))
+                {
+                    this.isStrikeThrough =
+                        !this.itemOperators[this.operatorFilter];
+                }
+                else
+                {
+                    this.isStrikeThrough = false;
+                }
+            }
+            else if (!string.IsNullOrEmpty(this.familyFilter))
             {
                 this.isVisible =
                     string.Compare(this.itemFamily, this.familyFilter) == 0;
             }
-            
+            else 
+            {
+                this.isVisible = this.itemOperators.ContainsKey(this.operatorFilter);
+
+                if (this.itemOperators.ContainsKey(this.operatorFilter))
+                {
+                    this.isStrikeThrough =
+                        !this.itemOperators[this.operatorFilter];
+                }
+                else
+                {
+                    this.isStrikeThrough = false;
+                }
+            }
+
+
             this.RaisePropertyChangedEvent(nameof(this.isVisible));
+            this.RaisePropertyChangedEvent(nameof(this.IsStrikeThrough));
         }
     }
 }

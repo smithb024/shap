@@ -135,6 +135,9 @@
   <data name="FileNameOldNumbersAvailable" xml:space="preserve">
     <value>ona</value>
   </data>
+  <data name="FileNameOperator" xml:space="preserve">
+    <value>optr</value>
+  </data>
   <data name="idvlDetailsPath" xml:space="preserve">
     <value>data\uts\idvl\</value>
   </data>

@@ -16,6 +16,11 @@
         IXmlFamilyIoController Family { get; }
 
         /// <summary>
+        /// Gets the Operator IO Controller
+        /// </summary>
+        IXmlOperatorIoController Operator { get; }
+
+        /// <summary>
         /// Gets the Units IO Controller.
         /// </summary>
         IUnitsIoController Units { get; }

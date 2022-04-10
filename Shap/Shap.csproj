@@ -150,6 +150,7 @@
     <Compile Include="Common\Converters\BoolToVisibilityConverter.cs" />
     <Compile Include="Common\Converters\RouteEnabledConverter.cs" />
     <Compile Include="Common\Converters\IntToVisibilityConverter.cs" />
+    <Compile Include="Common\Converters\ActiveBooleanColourConverter.cs" />
     <Compile Include="Common\Converters\ServiceTypeHighlightBrushConverter.cs" />
     <Compile Include="Common\Converters\TrafficLightColourIntConverter.cs" />
     <Compile Include="Common\Converters\ServiceTypeBrushConverter.cs" />
@@ -169,6 +170,8 @@
     <Compile Include="Common\SerialiseModel\ClassDetails\Subclass.cs" />
     <Compile Include="Common\SerialiseModel\Family\FamilyDetails.cs" />
     <Compile Include="Common\SerialiseModel\Family\SingleFamily.cs" />
+    <Compile Include="Common\SerialiseModel\Operator\OperatorDetails.cs" />
+    <Compile Include="Common\SerialiseModel\Operator\SingleOperator.cs" />
     <Compile Include="Common\ViewModel\LocationCounterManagerViewModel.cs" />
     <Compile Include="Common\ViewModel\LocationCounterViewModel.cs" />
     <Compile Include="Config\ConfigJobType.cs" />
@@ -184,6 +187,14 @@
     <Compile Include="Config\GroupsAndClasses\FamilyManagerView.xaml.cs">
       <DependentUpon>FamilyManagerView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Config\GroupsAndClasses\OperatorConfigViewModel.cs" />
+    <Compile Include="Config\GroupsAndClasses\OperatorListViewItem.xaml.cs">
+      <DependentUpon>OperatorListViewItem.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Config\GroupsAndClasses\OperatorManagerView.xaml.cs">
+      <DependentUpon>OperatorManagerView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Config\GroupsAndClasses\OperatorManagerViewModel.cs" />
     <Compile Include="Config\GroupsAndClasses\FamilyManagerViewModel.cs" />
     <Compile Include="Config\GroupsAndClasses\GroupsView.xaml.cs">
       <DependentUpon>GroupsView.xaml</DependentUpon>
@@ -196,6 +207,7 @@
     </Compile>
     <Compile Include="Config\PopularStnConfigViewModel.cs" />
     <Compile Include="Config\PopularStnIOController.cs" />
+    <Compile Include="Config\XmlOperatorIoController.cs" />
     <Compile Include="Icons\DayIcon.xaml.cs">
       <DependentUpon>DayIcon.xaml</DependentUpon>
     </Compile>
@@ -218,6 +230,7 @@
     <Compile Include="Interfaces\Io\IIoControllers.cs" />
     <Compile Include="Interfaces\Io\IUnitsIoController.cs" />
     <Compile Include="Interfaces\Io\IUnitsXmlIoController.cs" />
+    <Compile Include="Interfaces\Io\IXmlOperatorIoController.cs" />
     <Compile Include="Interfaces\Io\IXmlFamilyIoController.cs" />
     <Compile Include="Interfaces\Types\ISubClassDataType.cs" />
     <Compile Include="Interfaces\Types\IVehicleDetailsType.cs" />
@@ -278,6 +291,18 @@
     <Compile Include="Units\ClassFrontPage.xaml.cs">
       <DependentUpon>ClassFrontPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Units\Dialog\OperatorComboBoxItem.xaml.cs">
+      <DependentUpon>OperatorComboBoxItem.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Units\Dialog\OperatorListItemViewModel.cs" />
+    <Compile Include="Units\Dialog\OperatorComboBoxItemViewModel.cs" />
+    <Compile Include="Units\Dialog\OperatorListViewItem.xaml.cs">
+      <DependentUpon>OperatorListViewItem.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Units\Dialog\UpdateOperatorsDialog.xaml.cs">
+      <DependentUpon>UpdateOperatorsDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Units\Dialog\UpdateOperatorsViewModel.cs" />
     <Compile Include="Units\Factories\RenumberFactory.cs" />
     <Compile Include="Units\Factories\SearcherResults.cs" />
     <Compile Include="Units\Factories\SubClassFactory.cs" />
@@ -410,6 +435,14 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Config\GroupsAndClasses\OperatorListViewItem.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Config\GroupsAndClasses\OperatorManagerView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Config\GroupsAndClasses\RangesView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -538,7 +571,19 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Units\Dialog\OperatorComboBoxItem.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Units\Dialog\OperatorListViewItem.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Units\Dialog\RenumberDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Units\Dialog\UpdateOperatorsDialog.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

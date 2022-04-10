@@ -21,10 +21,18 @@
         Grid.Row="0">
         
         <StackPanel>
-            <Image 
-                Height="67"
-                Width="67"
-                Source="{Binding IndexImagePath}"/>
+            <Grid>
+                <Image 
+                    Height="67"
+                    Width="67"
+                    Source="{Binding IndexImagePath}"/>
+                <Line  
+                    X1="0" Y1="67" 
+                    X2="67" Y2="0" 
+                    Stroke="Red"
+                    StrokeThickness="4"
+                    Visibility="{Binding Path=IsStrikeThrough, Converter={StaticResource visibilityConverter}}"/>
+            </Grid>
             <Button 
                 Grid.Row="1"
                 Content="{Binding IndexName}"

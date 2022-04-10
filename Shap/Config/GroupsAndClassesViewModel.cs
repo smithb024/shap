@@ -91,6 +91,9 @@
             this.FamilyManager =
                 new FamilyManagerViewModel(
                     this.ioControllers);
+            this.OperatorManager =
+                new OperatorManagerViewModel(
+                    this.ioControllers);
 
             this.AddGroupCmd = new CommonCommand(this.AddGroup, this.CanAddGroup);
             this.DeleteGroupCmd = new CommonCommand(this.DeleteGroup, this.CanDeleteGroup);
@@ -109,6 +112,11 @@
         /// The view model which supports the Family Manager part of this view.
         /// </summary>
         public FamilyManagerViewModel FamilyManager { get; }
+
+        /// <summary>
+        /// The view model which supports the Operator Manager part of this view.
+        /// </summary>
+        public OperatorManagerViewModel OperatorManager { get; }
 
         /// <summary>
         /// Gets the collection containing all groups by name.
@@ -408,6 +416,7 @@
 
             this.ioControllers.Gac.SaveFile(this.groupsCollection);
             this.FamilyManager.Save();
+            this.OperatorManager.Save();
 
             window?.CloseObject();
         }

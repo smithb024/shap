@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Shap.Units
+﻿namespace Shap.Units
 {
     using System.Collections.ObjectModel;
     using NynaeveLib.ViewModel;
@@ -74,12 +68,24 @@ namespace Shap.Units
         /// <summary>
         /// The family which is currently being filtered on. Inform the Index Items.
         /// </summary>
-        /// <param name="familyFilter">family being filter on</param>
+        /// <param name="familyFilter">family being filtered on</param>
         public void SetFamilyFilter(string familyFilter)
         {
             foreach (IndexItemViewModel indexViewModel in this.Items)
             {
                 indexViewModel.SetFamilyFilter(familyFilter);
+            }
+        }
+
+        /// <summary>
+        /// The operator which is currently being filtered on. Inform the Index Items.
+        /// </summary>
+        /// <param name="operatorFilter">operator being filtered on</param>
+        public void SetOperatorFilter(string operatorFilter)
+        {
+            foreach (IndexItemViewModel indexViewModel in this.Items)
+            {
+                indexViewModel.SetOperatorFilter(operatorFilter);
             }
         }
     }

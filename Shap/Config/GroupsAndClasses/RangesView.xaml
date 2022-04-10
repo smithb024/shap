@@ -94,6 +94,7 @@
         <ListView 
             Grid.Column="1"
             Grid.Row="1"
+            Style="{StaticResource StdListViewStyle}"
             ItemsSource="{Binding Path=RangeCollection}"
             SelectedIndex="{Binding RangeIndex}"/>
     </Grid>
