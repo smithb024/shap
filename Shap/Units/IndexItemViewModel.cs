@@ -367,12 +367,23 @@
             if (string.IsNullOrEmpty(this.familyFilter) && string.IsNullOrEmpty(this.operatorFilter))
             {
                 this.isVisible = true;
+                this.isStrikeThrough = false;
             }
             else if (!string.IsNullOrEmpty(this.familyFilter) && !string.IsNullOrEmpty(this.operatorFilter))
             {
                 this.isVisible =
                     string.Compare(this.itemFamily, this.familyFilter) == 0 &&
                     this.itemOperators.ContainsKey(this.operatorFilter);
+
+                if (this.itemOperators.ContainsKey(this.operatorFilter))
+                {
+                    this.isStrikeThrough =
+                        !this.itemOperators[this.operatorFilter];
+                }
+                else
+                {
+                    this.isStrikeThrough = false;
+                }
             }
             else if (!string.IsNullOrEmpty(this.familyFilter))
             {
@@ -382,10 +393,21 @@
             else 
             {
                 this.isVisible = this.itemOperators.ContainsKey(this.operatorFilter);
+
+                if (this.itemOperators.ContainsKey(this.operatorFilter))
+                {
+                    this.isStrikeThrough =
+                        !this.itemOperators[this.operatorFilter];
+                }
+                else
+                {
+                    this.isStrikeThrough = false;
+                }
             }
 
-            
+
             this.RaisePropertyChangedEvent(nameof(this.isVisible));
+            this.RaisePropertyChangedEvent(nameof(this.IsStrikeThrough));
         }
     }
 }
