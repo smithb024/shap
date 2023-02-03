@@ -3,7 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
-    using GalaSoft.MvvmLight;
+    using CommunityToolkit.Mvvm.ComponentModel;
     using Shap.Common;
     using Shap.Interfaces.Io;
     using Shap.Interfaces.Units;
@@ -11,7 +11,7 @@
     /// <summary>
     /// View model which supports the 
     /// </summary>
-    public class ClassConfigImageSelectorViewModel : ViewModelBase,  IClassConfigImageSelectorViewModel
+    public class ClassConfigImageSelectorViewModel : ObservableRecipient,  IClassConfigImageSelectorViewModel
     {
         /// <summary>
         /// The index of the image list for the currently selected image.
@@ -78,9 +78,9 @@
                 }
 
                 this.imageIndex = value;
-                this.RaisePropertyChanged(nameof(this.SubClassImageListIndex));
-                this.RaisePropertyChanged(nameof(this.SelectedImage));
-                this.RaisePropertyChanged(nameof(this.Path));
+                this.OnPropertyChanged(nameof(this.SubClassImageListIndex));
+                this.OnPropertyChanged(nameof(this.SelectedImage));
+                this.OnPropertyChanged(nameof(this.Path));
                 this.SelectionMadeEvent?.Invoke();
             }
         }
