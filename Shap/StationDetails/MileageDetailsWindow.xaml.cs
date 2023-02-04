@@ -14,14 +14,21 @@ using System.Windows.Shapes;
 
 namespace Shap.StationDetails
 {
-  /// <summary>
-  /// Interaction logic for MileageDetailsWindow.xaml
-  /// </summary>
-  public partial class MileageDetailsWindow : Window
-  {
-    public MileageDetailsWindow()
+    using CommunityToolkit.Mvvm.DependencyInjection;
+    using Interfaces.StationDetails;
+
+    /// <summary>
+    /// Interaction logic for MileageDetailsWindow.xaml
+    /// </summary>
+    public partial class MileageDetailsWindow : Window
     {
-      InitializeComponent();
+        /// <summary>
+        /// Initialises a new instance of the <see cref="MileageDetailsWindow"/> class.
+        /// </summary>
+        public MileageDetailsWindow()
+        {
+            this.InitializeComponent();
+            this.DataContext = Ioc.Default.GetService<IMileageDetailsViewModel>();
+        }
     }
-  }
 }

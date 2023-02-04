@@ -1,17 +1,24 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Configuration;
-using System.Data;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Windows;
-
-namespace Shap
+﻿namespace Shap
 {
-  /// <summary>
-  /// Interaction logic for App.xaml
-  /// </summary>
-  public partial class App : Application
+    using System;
+    using System.Windows;
+
+    using NynaeveLib.Logger;
+
+    /// <summary>
+    /// Interaction logic for App.xaml
+    /// </summary>
+    public partial class App : Application
   {
-  }
+        /// <summary>
+        /// Initialises a new instance of the <see cref="App"/> class.
+        /// </summary>
+        public App()
+        {
+            Console.Write("create Log");
+            Logger.SetInitialInstance("ShapLog");
+
+            IocFactory.Setup();
+        }
+    }
 }

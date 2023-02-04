@@ -263,11 +263,10 @@
         {
             if (this.jnyDetailsWindow == null)
             {
-                SetupWindow(
-                  this.jnyDetailsWindow = new MileageDetailsWindow(),
-                  new MileageDetailsViewModel(),
-                  CloseJnyDetailsWindow,
-                  JnyDetailsWindowClosed);
+                this.jnyDetailsWindow = new MileageDetailsWindow();
+                this.SetupWindow(
+                    this.jnyDetailsWindow,
+                    this.JnyDetailsWindowClosed);
             }
 
             this.jnyDetailsWindow.Focus();
@@ -278,18 +277,9 @@
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        public void CloseJnyDetailsWindow(object sender, EventArgs e)
-        {
-            this.jnyDetailsWindow.Close();
-        }
-
-        /// <summary>
-        /// Form closed, set to null.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
         public void JnyDetailsWindowClosed(object sender, EventArgs e)
         {
+            this.jnyDetailsWindow.Closed -= this.JnyDetailsWindowClosed;
             this.jnyDetailsWindow = null;
         }
 
@@ -337,7 +327,7 @@
         /// <param name="viewModel">view model to assign to the view model</param>
         /// <param name="closedViewMethod">request from the view model to close the view</param>
         /// <param name="closedMethod">method to run when the window closes</param>
-        public void SetupWindow(
+        private void SetupWindow(
           System.Windows.Window window,
           NynaeveLib.ViewModel.ViewModelBase viewModel,
           EventHandler closeViewMethod,
@@ -348,6 +338,20 @@
             viewModel.ClosingRequest += closeViewMethod;
             window.Closed += closedMethod;
 
+            window.Show();
+            window.Activate();
+        }
+
+        /// <summary>
+        /// Setup and show a window.
+        /// </summary>
+        /// <param name="window">window to set up</param>
+        /// <param name="closedMethod">method to run when the window closes</param>
+        private void SetupWindow(
+          Window window,
+          EventHandler closedMethod)
+        {
+            window.Closed += closedMethod;
             window.Show();
             window.Activate();
         }

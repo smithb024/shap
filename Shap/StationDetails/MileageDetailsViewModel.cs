@@ -2,14 +2,15 @@
 {
     using System.Collections.ObjectModel;
     using System.Windows.Input;
-    using NynaeveLib.ViewModel;
+    using CommunityToolkit.Mvvm.ComponentModel;
+    using Interfaces.StationDetails;
     using Shap.Common.Commands;
     using Shap.Types;
 
     /// <summary>
     /// View model which supports the mileage details window.
     /// </summary>
-    public class MileageDetailsViewModel : ViewModelBase
+    public class MileageDetailsViewModel : ObservableRecipient, IMileageDetailsViewModel
     {
         /// <summary>
         /// the journey controller.
@@ -37,7 +38,7 @@
         public MileageDetailsViewModel()
         {
             this.journeyController = JourneyIOController.Instance;
-            routes = new ObservableCollection<RouteDetailsType>();
+            this.routes = new ObservableCollection<RouteDetailsType>();
             this.RefreshCmd = new CommonCommand(CalculateRoutes);
 
             InitialiseComboBoxPrimary();
@@ -48,14 +49,17 @@
         /// </summary>
         public ObservableCollection<string> StnList
         {
-            get
-            {
-                return this.stnList;
-            }
+            get => this.stnList;
+
             set
             {
+                if (this.stnList == value)
+                {
+                    return;
+                }
+
                 this.stnList = value;
-                this.RaisePropertyChangedEvent("StnList");
+                this.OnPropertyChanged(nameof(this.StnList));
             }
         }
 
@@ -64,14 +68,17 @@
         /// </summary>
         public string Stn
         {
-            get
-            {
-                return this.stn;
-            }
+            get => this.stn;
+
             set
             {
+                if (this.stn == value)
+                {
+                    return;
+                }
+
                 this.stn = value;
-                this.RaisePropertyChangedEvent("Stn");
+                this.OnPropertyChanged(nameof(this.Stn));
                 this.CalculateRoutes();
             }
         }
@@ -81,25 +88,24 @@
         /// </summary>
         public ObservableCollection<RouteDetailsType> Routes
         {
-            get
-            {
-                return this.routes;
-            }
+            get => this.routes;
+
             set
             {
+                if (this.routes == value)
+                {
+                    return;
+                }
+
                 this.routes = value;
-                this.RaisePropertyChangedEvent("Routes");
+                this.OnPropertyChanged(nameof(this.Routes));
             }
         }
 
         /// <summary>
         /// Refresh all.
         /// </summary>
-        public ICommand RefreshCmd
-        {
-            get;
-            private set;
-        }
+        public ICommand RefreshCmd { get; private set; }
 
         /// <summary>
         /// Refresh the stn list.
@@ -107,14 +113,6 @@
         private void RefreshStnList()
         {
             this.InitialiseComboBoxPrimary();
-        }
-
-        /// <summary>
-        /// Close the window.
-        /// </summary>
-        private void CloseWindow()
-        {
-            this.OnClosingRequest();
         }
 
         /// <summary>
