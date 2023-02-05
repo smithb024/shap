@@ -269,6 +269,7 @@
     <Compile Include="IocFactory.cs" />
     <Compile Include="Io\IoControllers.cs" />
     <Compile Include="MainWindowViewModel.cs" />
+    <Compile Include="Messages\NewLocationAddedMessage.cs" />
     <Compile Include="StaticResources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

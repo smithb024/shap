@@ -5,12 +5,13 @@
     using System.Collections.ObjectModel;
     using System.Windows.Input;
     using CommunityToolkit.Mvvm.ComponentModel;
+    using CommunityToolkit.Mvvm.Messaging;
     using Interfaces.StationDetails;
+    using Messages;
     using Shap.Common.Commands;
     using Shap.Types;
     using NynaeveLib.Logger;
     using NynaeveLib.Types;
-    using NynaeveLib.ViewModel;
 
     /// <summary>
     /// Used for editing mileage
@@ -526,6 +527,9 @@
 
             this.InitialiseAddFields();
             this.RaiseAddPropertyChangedEvents();
+
+            NewLocationAddedMessage message = new NewLocationAddedMessage();
+            this.Messenger.Send(message);
         }
 
         /// <summary>

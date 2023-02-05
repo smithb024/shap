@@ -3,7 +3,9 @@
     using System.Collections.ObjectModel;
     using System.Windows.Input;
     using CommunityToolkit.Mvvm.ComponentModel;
+    using CommunityToolkit.Mvvm.Messaging;
     using Interfaces.StationDetails;
+    using Messages;
     using Shap.Common.Commands;
     using Shap.Types;
 
@@ -39,9 +41,11 @@
         {
             this.journeyController = JourneyIOController.Instance;
             this.routes = new ObservableCollection<RouteDetailsType>();
-            this.RefreshCmd = new CommonCommand(CalculateRoutes);
+            this.RefreshCmd = new CommonCommand(this.CalculateRoutes);
 
-            InitialiseComboBoxPrimary();
+            this.InitialiseComboBoxPrimary();
+
+            this.Messenger.Register<NewLocationAddedMessage>(this, (r, message) => this.OnMyMessageReceived(message));
         }
 
         /// <summary>
@@ -108,9 +112,9 @@
         public ICommand RefreshCmd { get; private set; }
 
         /// <summary>
-        /// Refresh the stn list.
+        /// Refresh the location list.
         /// </summary>
-        private void RefreshStnList()
+        private void RefreshLocationList()
         {
             this.InitialiseComboBoxPrimary();
         }
@@ -157,6 +161,17 @@
                     this.Routes.Add(journeyController.GetRoute(index));
                 }
             }
+        }
+
+        /// <summary>
+        /// A new location has been added to the database, reinitialise this viewmodel
+        /// </summary>
+        /// <param name="message">
+        /// Message indicating that a new location has been added.
+        /// </param>
+        private void OnMyMessageReceived(NewLocationAddedMessage message)
+        {
+            this.RefreshLocationList();
         }
     }
 }
