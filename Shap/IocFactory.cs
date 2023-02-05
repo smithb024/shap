@@ -18,6 +18,7 @@
             Ioc.Default.ConfigureServices(
                 new ServiceCollection()
                 .AddSingleton<IMileageDetailsViewModel, MileageDetailsViewModel>()
+                .AddSingleton<IEditMileageViewModel, EditMileageViewModel>()
                 .BuildServiceProvider());
         }
     }

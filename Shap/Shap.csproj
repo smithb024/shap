@@ -254,6 +254,7 @@
     <Compile Include="Interfaces\Io\IUnitsXmlIoController.cs" />
     <Compile Include="Interfaces\Io\IXmlOperatorIoController.cs" />
     <Compile Include="Interfaces\Io\IXmlFamilyIoController.cs" />
+    <Compile Include="Interfaces\StationDetails\IEditMileageViewModel.cs" />
     <Compile Include="Interfaces\StationDetails\IMileageDetailsViewModel.cs" />
     <Compile Include="Interfaces\Types\ISubClassDataType.cs" />
     <Compile Include="Interfaces\Types\IVehicleDetailsType.cs" />

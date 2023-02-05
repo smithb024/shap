@@ -88,14 +88,16 @@
         /// </summary>
         public ICommand ShowInputDataCommand { get; private set; }
 
+        /// <summary>
+        /// Display the add edit window.
+        /// </summary>
         public void ShowAddEditJnyDetailsWindow()
         {
             if (this.editMileageWindow == null)
             {
-                SetupWindow(
-                  this.editMileageWindow = new EditMileageWindow(),
-                  new EditMileageViewModel(),
-                  this.CloseEditJnyDetailsWindow,
+                this.editMileageWindow = new EditMileageWindow();
+                this.SetupWindow(
+                  this.editMileageWindow,
                   this.EditJnyDetailsWindowClosed);
             }
 
@@ -107,18 +109,9 @@
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        public void CloseEditJnyDetailsWindow(object sender, EventArgs e)
-        {
-            this.editMileageWindow.Close();
-        }
-
-        /// <summary>
-        /// Form closed, set to null.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
         public void EditJnyDetailsWindowClosed(object sender, EventArgs e)
         {
+            this.editMileageWindow.Closed -= this.EditJnyDetailsWindowClosed;
             this.editMileageWindow = null;
         }
 
