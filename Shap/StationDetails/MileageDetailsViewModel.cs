@@ -1,5 +1,6 @@
 ﻿namespace Shap.StationDetails
 {
+    using System.Collections.Generic;
     using System.Collections.ObjectModel;
     using System.Windows.Input;
     using CommunityToolkit.Mvvm.ComponentModel;
@@ -43,6 +44,7 @@
             this.routes = new ObservableCollection<RouteDetailsType>();
             this.RefreshCmd = new CommonCommand(this.CalculateRoutes);
 
+            this.stnList = new ObservableCollection<string>();
             this.InitialiseComboBoxPrimary();
 
             this.Messenger.Register<NewLocationAddedMessage>(this, (r, message) => this.OnMyMessageReceived(message));
@@ -127,15 +129,25 @@
         /// </summary>
         private void InitialiseComboBoxPrimary()
         {
-            this.stnList = new ObservableCollection<string>();
+            this.stnList.Clear();
             this.stnList.Add(string.Empty);
 
-            string previousvalue = string.Empty;
-            string location = string.Empty;
+            // Get all locations from the model.
+            int routesCount = journeyController.GetMileageDetailsLength();
+            List<string> locations = new List<string>();
 
-            for (int i = 0; i < journeyController.GetMileageDetailsLength(); i++)
+            for (int i = 0; i < routesCount; i++)
             {
-                location = journeyController.GetFromStation(i);
+                locations.Add(journeyController.GetFromStation(i));
+            }
+
+            // Ensure the locations are in alphabetical order.
+            locations.Sort();
+
+            // Filter out duplicates.
+            string previousvalue = string.Empty;
+            foreach (string location in locations)
+            {
                 if (location != previousvalue)
                 {
                     this.stnList.Add(location);
