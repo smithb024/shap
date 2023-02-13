@@ -4,6 +4,7 @@
     using System.Windows;
     using System.Windows.Input;
 
+    using CommunityToolkit.Mvvm.DependencyInjection;
     using NynaeveLib.Logger;
     using Shap.Analysis.ViewModels;
     using Shap.Analysis.Windows;
@@ -11,6 +12,7 @@
     using Shap.Config;
     using Shap.Input;
     using Shap.Interfaces.Io;
+    using Shap.Interfaces.Stats;
     using Shap.StationDetails;
     using Shap.Stats;
     using Shap.Units;
@@ -36,7 +38,7 @@
         /// <summary>
         /// Manager class holding collections of the first examples.
         /// </summary>
-        private FirstExampleManager firstExamples;
+        private IFirstExampleManager firstExamples;
 
         /// <summary>
         /// Initialises a new instance of the <see cref="MainWindowViewModel"/> class.
@@ -48,11 +50,10 @@
         /// First examples manager
         /// </param>
         public MainWindowViewModel(
-          IIoControllers controllers,
-          FirstExampleManager firstExamples)
+          IIoControllers controllers)
         {
             this.controllers = controllers;
-            this.firstExamples = firstExamples;
+            this.firstExamples = Ioc.Default.GetService<IFirstExampleManager>();
 
             AddEditJnyDetailsCommand = new CommonCommand(this.ShowAddEditJnyDetailsWindow);
             AnalysisCommand = new CommonCommand(this.ShowAnalysisWindow);
@@ -266,10 +267,10 @@
         }
 
         /// <summary>
-        /// Form closed, set to null.
+        /// The window has closed, release events and set to null.
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+        /// <param name="sender">the <see cref="MileageDetailsWindow"/></param>
+        /// <param name="e">event arguments</param>
         public void JnyDetailsWindowClosed(object sender, EventArgs e)
         {
             this.jnyDetailsWindow.Closed -= this.JnyDetailsWindowClosed;
@@ -283,33 +284,23 @@
         {
             if (this.inputWindow == null)
             {
-                SetupWindow(
-                  this.inputWindow = new InputForm(),
-                  new InputFormViewModel(this.firstExamples),
-                  CloseInputForm,
-                  InputFormClosed);
+                this.inputWindow = new InputForm();
+                this.SetupWindow(
+                  this.inputWindow,
+                  this.InputFormClosed);
             }
 
             this.inputWindow.Focus();
         }
 
         /// <summary>
-        /// Form closed, set to null.
+        /// The window has closed, release events and set to null.
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        public void CloseInputForm(object sender, EventArgs e)
-        {
-            this.inputWindow.Close();
-        }
-
-        /// <summary>
-        /// Form closed, set to null.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+        /// <param name="sender">the <see cref="InputForm"/></param>
+        /// <param name="e">event arguments</param>
         public void InputFormClosed(object sender, EventArgs e)
         {
+            this.inputWindow.Closed -= this.JnyDetailsWindowClosed;
             this.inputWindow = null;
         }
 

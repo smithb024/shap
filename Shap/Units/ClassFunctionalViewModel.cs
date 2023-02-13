@@ -5,7 +5,7 @@
     using System.Windows.Input;
 
     using Base;
-
+    using Interfaces.Stats;
     using Shap.Common.Commands;
     using Shap.Common.SerialiseModel.ClassDetails;
     using Shap.Interfaces.Io;
@@ -25,7 +25,7 @@
         /// <summary>
         /// Manager class holding collections of the first examples.
         /// </summary>
-        private FirstExampleManager firstExamples;
+        private IFirstExampleManager firstExamples;
         private string classId = string.Empty;
         private ClassDataTypeViewModel classData;
 
@@ -41,7 +41,7 @@
         /// ---------- ---------- ---------- ---------- ---------- ----------
         public ClassFunctionalViewModel(
           IIoControllers ioControllers,
-          FirstExampleManager firstExamples,
+          IFirstExampleManager firstExamples,
           string classId)
           : base(new ObservableCollection<string>())
         {

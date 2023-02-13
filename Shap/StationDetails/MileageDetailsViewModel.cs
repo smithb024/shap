@@ -47,7 +47,7 @@
             this.stnList = new ObservableCollection<string>();
             this.InitialiseComboBoxPrimary();
 
-            this.Messenger.Register<NewLocationAddedMessage>(this, (r, message) => this.OnMyMessageReceived(message));
+            this.Messenger.Register<NewLocationAddedMessage>(this, (r, message) => this.OnLocationAddedMessageReceived(message));
         }
 
         /// <summary>
@@ -181,7 +181,7 @@
         /// <param name="message">
         /// Message indicating that a new location has been added.
         /// </param>
-        private void OnMyMessageReceived(NewLocationAddedMessage message)
+        private void OnLocationAddedMessageReceived(NewLocationAddedMessage message)
         {
             this.RefreshLocationList();
         }

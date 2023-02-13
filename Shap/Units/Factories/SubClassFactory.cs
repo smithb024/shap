@@ -2,7 +2,7 @@
 {
     using System;
     using System.Collections.ObjectModel;
-
+    using Interfaces.Stats;
     using Shap.Units.IO;
     using Shap.Interfaces.Units;
     using Types;
@@ -15,7 +15,7 @@
     public static class SubClassFactory
     {
         public static ObservableCollection<SubClassViewModel> CreateSubClasses(
-          FirstExampleManager firstExamples,
+          IFirstExampleManager firstExamples,
           ObservableCollection<SubClassDataTypeViewModel> modelSubClasses,
           ClassFunctionalViewModel parent)
         {

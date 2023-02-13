@@ -3,7 +3,7 @@
     using System;
 
     using Enum;
-
+    using Interfaces.Stats;
     using Interfaces.Types;
     using Interfaces.ViewModels;
 
@@ -19,7 +19,7 @@
         /// <summary>
         /// Link to the first examples.
         /// </summary>
-        private FirstExampleManager firstExamples;
+        private IFirstExampleManager firstExamples;
 
         /// <summary>
         /// Id of the parent unit, only relevent if this jny is recorded against a specfic unit. 
@@ -32,7 +32,7 @@
         /// <param name="modelJourney"></param>
         /// <param name="firstExamples"></param>
         public JourneyViewModel(
-          FirstExampleManager firstExamples,
+          IFirstExampleManager firstExamples,
           string parentUnit,
           string journeyNumber,
           string from,
@@ -208,7 +208,7 @@
         private ComponentState CalculateLocationState(
           string location,
           IJnyId id,
-          FirstExampleManager firstExamples)
+          IFirstExampleManager firstExamples)
         {
             if (firstExamples.IsCopLocation(location, id, LocalListType.complete))
             {
@@ -237,7 +237,7 @@
         private ComponentState CalculateUnitState(
           string unit,
           IJnyId id,
-          FirstExampleManager firstExamples,
+          IFirstExampleManager firstExamples,
           string parent)
         {
             if (string.Compare(unit, parent) == 0)

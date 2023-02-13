@@ -8,6 +8,7 @@
     using System.ComponentModel;
     using System.Windows;
 
+    using Interfaces.Stats;
     using NynaeveLib.DialogService;
     using NynaeveLib.Logger;
     using NynaeveLib.ViewModel;
@@ -24,7 +25,7 @@
         /// <summary>
         /// Manager class holding collections of the first examples.
         /// </summary>
-        private FirstExampleManager firstExamples;
+        private IFirstExampleManager firstExamples;
 
         /// <summary>
         /// Collection of all years with data.
@@ -63,7 +64,7 @@
         /// <param name="firstExamples">first example manager</param>
         public ConfigViewModel(
           IIoControllers ioControllers,
-          FirstExampleManager firstExamples)
+          IFirstExampleManager firstExamples)
         {
             this.ioControllers = ioControllers;
             this.firstExamples = firstExamples;

@@ -3,17 +3,19 @@
     using System;
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
-    using System.Linq;
     using System.Windows.Input;
-
+    using CommunityToolkit.Mvvm.ComponentModel;
+    using CommunityToolkit.Mvvm.DependencyInjection;
+    using CommunityToolkit.Mvvm.Messaging;
     using Factories;
 
-    using NynaeveLib.ViewModel;
     using Shap.Common.Commands;
+    using Shap.Interfaces.Input;
+    using Shap.Interfaces.Stats;
     using Shap.Interfaces.Types;
     using Shap.Interfaces.ViewModels;
+    using Shap.Messages;
     using Shap.StationDetails;
-    using Shap.Stats;
     using Shap.Types;
     using Shap.Types.Factories;
     using Shap.Types.ViewModels;
@@ -23,25 +25,21 @@
     /// <summary>
     /// Main form for inputting data.
     /// </summary>
-    public class InputFormViewModel : ViewModelBase
+    public class InputFormViewModel : ObservableRecipient, IInputFormViewModel
     {
-        /// <summary>
-        /// Factory to handle file IO for this view model.
-        /// </summary>
-        //private IDailyInputFactory mainFactory;
-        private JourneyIOController journeyController = JourneyIOController.GetInstance();
+        private readonly string lastErrorString = string.Empty;
+
+        private readonly JourneyIOController journeyController = JourneyIOController.GetInstance();
 
         /// <summary>
         /// Manages the collection of all first examples.
         /// </summary>
-        private FirstExampleManager firstExamples;
+        private readonly IFirstExampleManager firstExamples;
 
         private string currentYear = "1970";
-        private string lastErrorString = string.Empty;
 
         private DateTime date;
         private int jnyNumber;
-        private int numberOfVehicles;
         private string firstVehicle;
         private string secondVehicle;
         private string thirdVehicle;
@@ -58,16 +56,13 @@
         /// <summary>
         /// Creates a new instance of this form.
         /// </summary>
-        /// <param name="mainForm">pare11nt form</param>
-        public InputFormViewModel(FirstExampleManager firstExamples)
+        public InputFormViewModel()
         {
-            //this.mainFactory = mainFactory;
-
-            currentYear = DateTime.Now.Year.ToString();
+            this.currentYear = DateTime.Now.Year.ToString();
             this.date = DateTime.Now;
 
-            this.firstExamples = firstExamples;
-            firstExamples.LoadAnnualList(currentYear);
+            this.firstExamples = Ioc.Default.GetService<IFirstExampleManager>();
+            this.firstExamples.LoadAnnualList(this.currentYear);
 
             this.PreviousDayCmd = new CommonCommand(this.PreviousDay);
             this.NextDayCmd = new CommonCommand(this.NextDay);
@@ -75,17 +70,25 @@
             this.SaveCmd = new CommonCommand(this.SaveDay, this.CanSave);
             this.CloseCmd = new CommonCommand(this.CloseWindow);
 
+            this.JnyFromList = new ObservableCollection<string>(); 
             this.JnyList = new ObservableCollection<IJourneyViewModel>();
 
             this.InitialiseInputForm();
 
-            firstVehicle = string.Empty;
-            secondVehicle = string.Empty;
-            thirdVehicle = string.Empty;
-            fourthVehicle = string.Empty;
+            this.firstVehicle = string.Empty;
+            this.secondVehicle = string.Empty;
+            this.thirdVehicle = string.Empty;
+            this.fourthVehicle = string.Empty;
 
             this.SetupDays();
+
+            this.Messenger.Register<NewLocationAddedMessage>(this, (r, message) => this.OnLocationAddedMessageReceived(message));
         }
+
+        /// <summary>
+        /// view close request event handler
+        /// </summary>
+        public event EventHandler ClosingRequest;
 
         /// <summary>
         /// Gets or sets the date.
@@ -95,15 +98,9 @@
         /// </remarks>
         public DateTime Date
         {
-            get
-            {
-                return this.date;
-            }
+            get => this.date;
 
-            set
-            {
-                this.SetNewDate(value);
-            }
+            set => this.SetNewDate(value);
         }
 
         /// <summary>
@@ -178,15 +175,12 @@
         /// </summary>
         public int JnyNumber
         {
-            get
-            {
-                return this.jnyNumber;
-            }
+            get => this.jnyNumber;
 
             set
             {
                 this.jnyNumber = value;
-                RaisePropertyChangedEvent(nameof(this.JnyNumber));
+                this.OnPropertyChanged(nameof(this.JnyNumber));
             }
         }
 
@@ -374,15 +368,12 @@
         /// </summary>
         public string Status
         {
-            get
-            {
-                return this.status;
-            }
+            get => this.status;
 
             set
             {
                 this.status = value;
-                RaisePropertyChangedEvent(nameof(this.Status));
+                this.OnPropertyChanged(nameof(this.Status));
             }
         }
 
@@ -539,7 +530,10 @@
         /// </summary>
         private void CloseWindow()
         {
-            this.OnClosingRequest();
+            if (this.ClosingRequest != null)
+            {
+                this.ClosingRequest(this, EventArgs.Empty);
+            }
         }
 
         /// <summary>
@@ -547,33 +541,68 @@
         ///    1. Get the routes data and populate the outward combobox.
         ///    2. Load the current days journeys.
         /// </summary>
-        private void InitialiseInputForm()
+        private void InitialiseInputForm(
+            bool initialiseJnyList = true)
         {
-            string previousvalue = string.Empty;
+            //string previousvalue = string.Empty;
             string fromString = string.Empty;
-            this.JnyFromList = new ObservableCollection<string>();
-            this.JnyFromList.Add(string.Empty);
+            //this.JnyFromList = new ObservableCollection<string>();
+            //this.JnyFromList.Add(string.Empty);
             this.JnyFromIndex = 0;
             this.Status = "Initialising";
 
-            for (int i = 0; i < journeyController.GetMileageDetailsLength(); i++)
+            //for (int i = 0; i < journeyController.GetMileageDetailsLength(); i++)
+            //{
+            //    fromString = journeyController.GetFromStation(i);
+            //    if (fromString != previousvalue)
+            //    {
+            //        JnyFromList.Add(fromString);
+            //    }
+
+            //    previousvalue = fromString;
+            //}
+
+            this.JnyFromList.Clear();
+            this.JnyFromList.Add(string.Empty);
+
+            // Get all locations from the model.
+            int routesCount = journeyController.GetMileageDetailsLength();
+            List<string> locations = new List<string>();
+
+            for (int i = 0; i < routesCount; i++)
             {
-                fromString = journeyController.GetFromStation(i);
-                if (fromString != previousvalue)
+                locations.Add(journeyController.GetFromStation(i));
+            }
+
+            // Ensure the locations are in alphabetical order.
+            locations.Sort();
+
+            // Filter out duplicates and add to JnyFromList.
+            string previousvalue = string.Empty;
+            foreach (string location in locations)
+            {
+                if (location != previousvalue)
                 {
-                    JnyFromList.Add(fromString);
+                    this.JnyFromList.Add(location);
                 }
 
-                previousvalue = fromString;
+                previousvalue = location;
             }
 
             this.ResetInputProperties();
 
-            // load the days journeys
-            this.Status =
-              LoadJourneysForSelectedDay() ?
-              "Initialised" :
-              lastErrorString;
+            if (initialiseJnyList)
+            {
+                // load the days journeys
+                this.Status =
+                  LoadJourneysForSelectedDay() ?
+                  "Initialised" :
+                  lastErrorString;
+            }
+            else
+            {
+                this.Status = "Reinitialised";
+            }
         }
 
         /// <summary>
@@ -654,7 +683,7 @@
                 this.JnyList.Add(journey);
             }
 
-            this.RaisePropertyChangedEvent(nameof(this.JnyList));
+            this.OnPropertyChanged(nameof(this.JnyList));
             return true;
         }
 
@@ -836,13 +865,13 @@
         /// </summary>
         private void RaisePropertyChangedEventsOnJny()
         {
-            this.RaisePropertyChangedEvent(nameof(this.JnyFromIndex));
-            this.RaisePropertyChangedEvent(nameof(this.JnyToIndex));
-            this.RaisePropertyChangedEvent(nameof(this.JnyToList));
-            this.RaisePropertyChangedEvent(nameof(this.JnyViaIndex));
-            this.RaisePropertyChangedEvent(nameof(this.JnyViaList));
-            this.RaisePropertyChangedEvent(nameof(this.JnyDistance));
-            this.RaisePropertyChangedEvent(nameof(this.JnyDistanceString));
+            this.OnPropertyChanged(nameof(this.JnyFromIndex));
+            this.OnPropertyChanged(nameof(this.JnyToIndex));
+            this.OnPropertyChanged(nameof(this.JnyToList));
+            this.OnPropertyChanged(nameof(this.JnyViaIndex));
+            this.OnPropertyChanged(nameof(this.JnyViaList));
+            this.OnPropertyChanged(nameof(this.JnyDistance));
+            this.OnPropertyChanged(nameof(this.JnyDistanceString));
         }
 
         /// <summary>
@@ -850,13 +879,13 @@
         /// </summary>
         private void RaisePropertyChangedEventsOnDate()
         {
-            this.RaisePropertyChangedEvent(nameof(this.Date));
-            this.RaisePropertyChangedEvent(nameof(this.Day));
-            this.RaisePropertyChangedEvent(nameof(this.Month));
-            this.RaisePropertyChangedEvent(nameof(this.Year));
-            this.RaisePropertyChangedEvent(nameof(this.Days));
-            this.RaisePropertyChangedEvent(nameof(this.DayDistance));
-            this.RaisePropertyChangedEvent(nameof(this.DayDistanceString));
+            this.OnPropertyChanged(nameof(this.Date));
+            this.OnPropertyChanged(nameof(this.Day));
+            this.OnPropertyChanged(nameof(this.Month));
+            this.OnPropertyChanged(nameof(this.Year));
+            this.OnPropertyChanged(nameof(this.Days));
+            this.OnPropertyChanged(nameof(this.DayDistance));
+            this.OnPropertyChanged(nameof(this.DayDistanceString));
         }
 
         /// <summary>
@@ -864,7 +893,7 @@
         /// </summary>
         private void RaisePropertyChangedEventJnysPanelProperties()
         {
-            this.RaisePropertyChangedEvent(nameof(this.JnyList));
+            this.OnPropertyChanged(nameof(this.JnyList));
         }
 
         /// <summary>
@@ -872,11 +901,11 @@
         /// </summary>
         private void RaisePropertyChangeNumbers()
         {
-            RaisePropertyChangedEvent(nameof(this.FirstVehicle));
-            RaisePropertyChangedEvent(nameof(this.SecondVehicle));
-            RaisePropertyChangedEvent(nameof(this.ThirdVehicle));
-            RaisePropertyChangedEvent(nameof(this.FourthVehicle));
-            RaisePropertyChangedEvent(nameof(this.NumberOfVehicles));
+            this.OnPropertyChanged(nameof(this.FirstVehicle));
+            this.OnPropertyChanged(nameof(this.SecondVehicle));
+            this.OnPropertyChanged(nameof(this.ThirdVehicle));
+            this.OnPropertyChanged(nameof(this.FourthVehicle));
+            this.OnPropertyChanged(nameof(this.NumberOfVehicles));
         }
 
         /// <summary>
@@ -892,6 +921,18 @@
             {
                 collection.Add(newValue);
             }
+        }
+
+        /// <summary>
+        /// A new location has been added to the database, reinitialise the data input part of the
+        /// model.
+        /// </summary>
+        /// <param name="message">
+        /// Message indicating that a new location has been added.
+        /// </param>
+        private void OnLocationAddedMessageReceived(NewLocationAddedMessage message)
+        {
+            this.InitialiseInputForm(false);
         }
     }
 }

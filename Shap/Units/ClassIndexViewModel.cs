@@ -3,6 +3,7 @@
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
 
+    using Interfaces.Stats;
     using NynaeveLib.ViewModel;
     using Shap.Common.SerialiseModel.Family;
     using Shap.Common.SerialiseModel.Operator;
@@ -24,7 +25,7 @@
         /// <summary>
         /// Manager class holding collections of the first examples.
         /// </summary>
-        private readonly FirstExampleManager firstExamples;
+        private readonly IFirstExampleManager firstExamples;
 
         /// <summary>
         /// IO controllers.
@@ -53,7 +54,7 @@
         /// <param name="firstExamples">first examples manager</param>
         public ClassIndexViewModel(
           IIoControllers ioControllers,
-          FirstExampleManager firstExamples)
+          IFirstExampleManager firstExamples)
         {
             this.ioControllers = ioControllers;
             this.firstExamples = firstExamples;
