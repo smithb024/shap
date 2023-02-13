@@ -2,11 +2,8 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.Linq;
     using System.Windows.Input;
-
-    using NynaeveLib.ViewModel;
-
+    using Interfaces.Stats;
     using Shap.Common.Commands;
     using Factories;
     using Shap.Interfaces.Types;
@@ -15,8 +12,6 @@
     using Shap.Types;
     using Shap.Types.Factories;
     using Shap.Units.IO;
-    using Stats;
-    using Types.ViewModels;
 
     /// <summary>
     /// View model for a single unit. 
@@ -31,7 +26,7 @@
         /// <summary>
         /// First Example manager class.
         /// </summary>
-        private FirstExampleManager firstExamples;
+        private IFirstExampleManager firstExamples;
 
         /// <summary>
         /// Event used to indicate to the parent <see cref="SubClassViewModel"/> that an open unit data
@@ -75,7 +70,7 @@
         /// <param name="className">name of the parent class.</param>
         public UnitViewModel(
           Func<IUnitViewModel, string, bool> saveAction,
-          FirstExampleManager firstExamples,
+          IFirstExampleManager firstExamples,
           string className,
           IndividualUnitFileContents rawData,
           bool isFirst,

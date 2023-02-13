@@ -4,6 +4,7 @@
     using System.Collections.Generic;
     using System.Windows;
     using System.Windows.Input;
+    using Interfaces.Stats;
     using NynaeveLib.ViewModel;
     using Shap.Common.Commands;
     using Shap.Common.SerialiseModel.ClassDetails;
@@ -21,7 +22,7 @@
         /// <summary>
         /// Manager class holding collections of the first examples.
         /// </summary>
-        private FirstExampleManager firstExamples;
+        private IFirstExampleManager firstExamples;
 
         /// <summary>
         /// The name of the class which is accessed by this tile.
@@ -89,7 +90,7 @@
         /// <param name="name">class name</param>
         public IndexItemViewModel(
           IIoControllers ioControllers,
-          FirstExampleManager firstExamples,
+          IFirstExampleManager firstExamples,
           string name)
         {
             this.ioControllers = ioControllers;

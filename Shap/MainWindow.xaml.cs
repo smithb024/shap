@@ -27,13 +27,9 @@
 
             IIoControllers ioControllers = new IoControllers();
 
-            FirstExampleManager firstExamples =
-              new FirstExampleManager();
-
             this.DataContext =
               new MainWindowViewModel(
-                ioControllers,
-                firstExamples);
+                ioControllers);
         }
 
         private void Window_Closed(object sender, EventArgs e)

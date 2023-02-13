@@ -1,18 +1,22 @@
 ﻿namespace Shap.StationDetails
 {
+    using System;
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
     using System.Windows.Input;
+    using CommunityToolkit.Mvvm.ComponentModel;
+    using CommunityToolkit.Mvvm.Messaging;
+    using Interfaces.StationDetails;
+    using Messages;
     using Shap.Common.Commands;
     using Shap.Types;
     using NynaeveLib.Logger;
     using NynaeveLib.Types;
-    using NynaeveLib.ViewModel;
 
     /// <summary>
     /// Used for editing mileage
     /// </summary>
-    public partial class EditMileageViewModel : ViewModelBase
+    public partial class EditMileageViewModel : ObservableRecipient, IEditMileageViewModel
     {
         /// <summary>
         /// Contains all the journeys.
@@ -137,19 +141,26 @@
         }
 
         /// <summary>
+        /// view close request event handler
+        /// </summary>
+        public event EventHandler ClosingRequest;
+
+        /// <summary>
         /// Gets or sets the new from location
         /// </summary>
         public string NewFromStn
         {
-            get
-            {
-                return this.newFromLocation;
-            }
+            get => this.newFromLocation;
 
             set
             {
+                if (this.newFromLocation == value)
+                {
+                    return;
+                }
+
                 this.newFromLocation = value;
-                this.RaisePropertyChangedEvent(nameof(this.NewFromStn));
+                this.OnPropertyChanged(nameof(this.NewFromStn));
             }
         }
 
@@ -158,15 +169,17 @@
         /// </summary>
         public string NewToStn
         {
-            get
-            {
-                return this.newToLocation;
-            }
+            get => this.newToLocation;
 
             set
             {
+            if (this.newToLocation == value)
+                {
+                    return;
+                }
+
                 this.newToLocation = value;
-                this.RaisePropertyChangedEvent(nameof(this.NewToStn));
+                this.OnPropertyChanged(nameof(this.NewToStn));
             }
         }
 
@@ -175,17 +188,19 @@
         /// </summary>
         public string NewViaRoute
         {
-            get
-            {
-                return this.newViaRoute;
-            }
+            get => this.newViaRoute;
 
             set
             {
+                if (this.newViaRoute == value)
+                {
+                    return;
+                }
+
                 this.newViaRoute = value;
                 this.newViaReturnRoute = value;
-                this.RaisePropertyChangedEvent(nameof(this.NewViaRoute));
-                RaisePropertyChangedEvent(nameof(this.NewViaReturnRoute));
+                this.OnPropertyChanged(nameof(this.NewViaRoute));
+                this.OnPropertyChanged(nameof(this.NewViaReturnRoute));
             }
         }
 
@@ -194,15 +209,9 @@
         /// </summary>
         public string NewViaReturnRoute
         {
-            get
-            {
-                return this.newViaReturnRoute;
-            }
+            get => this.newViaReturnRoute;
 
-            set
-            {
-                this.newViaReturnRoute = value;
-            }
+            set => this.newViaReturnRoute = value;
         }
 
         /// <summary>
@@ -210,16 +219,18 @@
         /// </summary>
         public int NewOutMiles
         {
-            get
-            {
-                return this.newOutMiles;
-            }
+            get => this.newOutMiles;
 
             set
             {
+                if (this.newOutMiles == value)
+                {
+                    return;
+                }
+
                 this.newOutMiles = value;
                 this.newBackMiles = value;
-                RaisePropertyChangedEvent(nameof(this.NewBackMiles));
+                this.OnPropertyChanged(nameof(this.NewBackMiles));
             }
         }
 
@@ -228,15 +239,9 @@
         /// </summary>
         public int NewBackMiles
         {
-            get
-            {
-                return this.newBackMiles;
-            }
+            get => this.newBackMiles;
 
-            set
-            {
-                this.newBackMiles = value;
-            }
+            set => this.newBackMiles = value;
         }
 
         /// <summary>
@@ -244,16 +249,18 @@
         /// </summary>
         public int NewOutChains
         {
-            get
-            {
-                return this.newOutChains;
-            }
+            get => this.newOutChains;
 
             set
             {
+                if (this.newOutChains == value)
+                {
+                    return;
+                }
+
                 this.newOutChains = value;
                 this.newBackChains = value;
-                RaisePropertyChangedEvent(nameof(this.NewBackChains));
+                this.OnPropertyChanged(nameof(this.NewBackChains));
             }
         }
 
@@ -262,15 +269,9 @@
         /// </summary>
         public int NewBackChains
         {
-            get
-            {
-                return this.newBackChains;
-            }
+            get => this.newBackChains;
 
-            set
-            {
-                this.newBackChains = value;
-            }
+            set => this.newBackChains = value;
         }
 
         /// <summary>
@@ -278,13 +279,15 @@
         /// </summary>
         public int JnyToIndex
         {
-            get
-            {
-                return this.jnyToIndex;
-            }
+            get => this.jnyToIndex;
 
             set
             {
+                if (this.jnyToIndex == value)
+                {
+                    return;
+                }
+
                 this.jnyToIndex = value;
                 this.ToIndexChanged();
             }
@@ -295,15 +298,17 @@
         /// </summary>
         public ObservableCollection<string> JnyToList
         {
-            get
-            {
-                return this.jnyToList;
-            }
+            get => this.jnyToList;
 
             set
             {
+                if (this.jnyToList == value)
+                {
+                    return;
+                }
+
                 this.jnyToList = value;
-                RaisePropertyChangedEvent(nameof(this.JnyToList));
+                this.OnPropertyChanged(nameof(this.JnyToList));
             }
         }
 
@@ -312,15 +317,16 @@
         /// </summary>
         public int JnyFromIndex
         {
-            get
-            {
-                return this.jnyFromIndex;
-            }
+            get => this.jnyFromIndex;
 
             set
             {
-                this.jnyFromIndex = value;
+                if (this.jnyFromIndex == value)
+                {
+                    return;
+                }
 
+                this.jnyFromIndex = value;
                 this.FromIndexChanged();
             }
         }
@@ -330,15 +336,17 @@
         /// </summary>
         public ObservableCollection<string> JnyFromList
         {
-            get
-            {
-                return this.jnyFromList;
-            }
+            get => this.jnyFromList;
 
             set
             {
+                if (this.jnyFromList == value)
+                {
+                    return;
+                }
+
                 this.jnyFromList = value;
-                RaisePropertyChangedEvent(nameof(this.JnyFromList));
+                this.OnPropertyChanged(nameof(this.JnyFromList));
             }
         }
 
@@ -347,15 +355,9 @@
         /// </summary>
         public int JnyViaIndex
         {
-            get
-            {
-                return this.jnyViaIndex;
-            }
+            get => this.jnyViaIndex;
 
-            set
-            {
-                this.jnyViaIndex = value;
-            }
+            set => this.jnyViaIndex = value;
         }
 
         /// <summary>
@@ -363,15 +365,17 @@
         /// </summary>
         public ObservableCollection<string> JnyViaList
         {
-            get
-            {
-                return this.jnyViaList;
-            }
+            get => this.jnyViaList;
 
             set
             {
+                if (this.jnyViaList == value)
+                {
+                    return;
+                }
+
                 this.jnyViaList = value;
-                RaisePropertyChangedEvent(nameof(this.JnyViaList));
+                this.OnPropertyChanged(nameof(this.JnyViaList));
             }
         }
 
@@ -380,15 +384,17 @@
         /// </summary>
         public int TabIndex
         {
-            get
-            {
-                return this.tabIndex;
-            }
+            get => this.tabIndex;
 
             set
             {
+                if (this.tabIndex == value)
+                {
+                    return;
+                }
+
                 this.tabIndex = value;
-                RaisePropertyChangedEvent(nameof(this.TabIndex));
+                this.OnPropertyChanged(nameof(this.TabIndex));
 
                 if (value == 0)
                 {
@@ -407,15 +413,17 @@
         /// </summary>
         public bool EditMode
         {
-            get
-            {
-                return this.editMode;
-            }
+            get => this.editMode;
 
             set
             {
+                if (this.editMode == value)
+                {
+                    return;
+                }
+
                 this.editMode = value;
-                RaisePropertyChangedEvent(nameof(this.EditMode));
+                this.OnPropertyChanged(nameof(this.EditMode));
             }
         }
 
@@ -449,7 +457,10 @@
         /// </summary>
         private void CloseWindow()
         {
-            this.OnClosingRequest();
+            if (this.ClosingRequest != null)
+            {
+                this.ClosingRequest(this, EventArgs.Empty);
+            }
         }
 
         /// <summary>
@@ -516,6 +527,9 @@
 
             this.InitialiseAddFields();
             this.RaiseAddPropertyChangedEvents();
+
+            NewLocationAddedMessage message = new NewLocationAddedMessage();
+            this.Messenger.Send(message);
         }
 
         /// <summary>
@@ -783,14 +797,14 @@
         /// </remarks>
         private void RaiseAddPropertyChangedEvents()
         {
-            RaisePropertyChangedEvent(nameof(this.NewFromStn));
-            RaisePropertyChangedEvent(nameof(this.NewToStn));
-            RaisePropertyChangedEvent(nameof(this.NewViaRoute));
-            RaisePropertyChangedEvent(nameof(this.NewViaReturnRoute));
-            RaisePropertyChangedEvent(nameof(this.NewOutMiles));
-            RaisePropertyChangedEvent(nameof(this.NewBackMiles));
-            RaisePropertyChangedEvent(nameof(this.NewOutChains));
-            RaisePropertyChangedEvent(nameof(this.NewBackChains));
+            this.OnPropertyChanged(nameof(this.NewFromStn));
+            this.OnPropertyChanged(nameof(this.NewToStn));
+            this.OnPropertyChanged(nameof(this.NewViaRoute));
+            this.OnPropertyChanged(nameof(this.NewViaReturnRoute));
+            this.OnPropertyChanged(nameof(this.NewOutMiles));
+            this.OnPropertyChanged(nameof(this.NewBackMiles));
+            this.OnPropertyChanged(nameof(this.NewOutChains));
+            this.OnPropertyChanged(nameof(this.NewBackChains));
         }
 
         /// <summary>
@@ -798,12 +812,12 @@
         /// </summary>
         private void RaiseEditPropertyChangedEvents()
         {
-            RaisePropertyChangedEvent(nameof(this.JnyFromList));
-            RaisePropertyChangedEvent(nameof(this.JnyToList));
-            RaisePropertyChangedEvent(nameof(this.JnyViaList));
-            RaisePropertyChangedEvent(nameof(this.JnyToIndex));
-            RaisePropertyChangedEvent(nameof(this.JnyFromIndex));
-            RaisePropertyChangedEvent(nameof(this.JnyViaIndex));
+            this.OnPropertyChanged(nameof(this.JnyFromList));
+            this.OnPropertyChanged(nameof(this.JnyToList));
+            this.OnPropertyChanged(nameof(this.JnyViaList));
+            this.OnPropertyChanged(nameof(this.JnyToIndex));
+            this.OnPropertyChanged(nameof(this.JnyFromIndex));
+            this.OnPropertyChanged(nameof(this.JnyViaIndex));
         }
     }
 }

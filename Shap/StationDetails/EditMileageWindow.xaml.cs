@@ -1,27 +1,37 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
-
-namespace Shap.StationDetails
+﻿namespace Shap.StationDetails
 {
-  /// <summary>
-  /// Interaction logic for EditMileageWindow.xaml
-  /// </summary>
-  public partial class EditMileageWindow : Window
-  {
-    public EditMileageWindow()
+    using System;
+    using System.Windows;
+    using CommunityToolkit.Mvvm.DependencyInjection;
+    using Interfaces.StationDetails;
+
+    /// <summary>
+    /// Interaction logic for EditMileageWindow.xaml
+    /// </summary>
+    public partial class EditMileageWindow : Window
     {
-      InitializeComponent();
+        /// <summary>
+        /// Initialises a new instance of the <see cref="EditMileageViewModel"/> class.
+        /// </summary>
+        public EditMileageWindow()
+        {
+            this.InitializeComponent();
+            this.DataContext = Ioc.Default.GetService<IEditMileageViewModel>();
+
+            ((IEditMileageViewModel)this.DataContext).ClosingRequest += this.CloseConfigurationWindow;
+        }
+
+        /// <summary>
+        /// Close the window.
+        /// </summary>
+        /// <param name="sender">
+        /// The object which sent the event.
+        /// </param>
+        /// <param name="e">Event arguments</param>
+        private void CloseConfigurationWindow(object sender, EventArgs e)
+        {
+            ((IEditMileageViewModel)this.DataContext).ClosingRequest -= this.CloseConfigurationWindow;
+            this.Close();
+        }
     }
-  }
 }

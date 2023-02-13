@@ -1,15 +1,19 @@
 ﻿namespace Shap.StationDetails
 {
+    using System.Collections.Generic;
     using System.Collections.ObjectModel;
     using System.Windows.Input;
-    using NynaeveLib.ViewModel;
+    using CommunityToolkit.Mvvm.ComponentModel;
+    using CommunityToolkit.Mvvm.Messaging;
+    using Interfaces.StationDetails;
+    using Messages;
     using Shap.Common.Commands;
     using Shap.Types;
 
     /// <summary>
     /// View model which supports the mileage details window.
     /// </summary>
-    public class MileageDetailsViewModel : ViewModelBase
+    public class MileageDetailsViewModel : ObservableRecipient, IMileageDetailsViewModel
     {
         /// <summary>
         /// the journey controller.
@@ -37,10 +41,13 @@
         public MileageDetailsViewModel()
         {
             this.journeyController = JourneyIOController.Instance;
-            routes = new ObservableCollection<RouteDetailsType>();
-            this.RefreshCmd = new CommonCommand(CalculateRoutes);
+            this.routes = new ObservableCollection<RouteDetailsType>();
+            this.RefreshCmd = new CommonCommand(this.CalculateRoutes);
 
-            InitialiseComboBoxPrimary();
+            this.stnList = new ObservableCollection<string>();
+            this.InitialiseComboBoxPrimary();
+
+            this.Messenger.Register<NewLocationAddedMessage>(this, (r, message) => this.OnLocationAddedMessageReceived(message));
         }
 
         /// <summary>
@@ -48,14 +55,17 @@
         /// </summary>
         public ObservableCollection<string> StnList
         {
-            get
-            {
-                return this.stnList;
-            }
+            get => this.stnList;
+
             set
             {
+                if (this.stnList == value)
+                {
+                    return;
+                }
+
                 this.stnList = value;
-                this.RaisePropertyChangedEvent("StnList");
+                this.OnPropertyChanged(nameof(this.StnList));
             }
         }
 
@@ -64,14 +74,17 @@
         /// </summary>
         public string Stn
         {
-            get
-            {
-                return this.stn;
-            }
+            get => this.stn;
+
             set
             {
+                if (this.stn == value)
+                {
+                    return;
+                }
+
                 this.stn = value;
-                this.RaisePropertyChangedEvent("Stn");
+                this.OnPropertyChanged(nameof(this.Stn));
                 this.CalculateRoutes();
             }
         }
@@ -81,40 +94,31 @@
         /// </summary>
         public ObservableCollection<RouteDetailsType> Routes
         {
-            get
-            {
-                return this.routes;
-            }
+            get => this.routes;
+
             set
             {
+                if (this.routes == value)
+                {
+                    return;
+                }
+
                 this.routes = value;
-                this.RaisePropertyChangedEvent("Routes");
+                this.OnPropertyChanged(nameof(this.Routes));
             }
         }
 
         /// <summary>
         /// Refresh all.
         /// </summary>
-        public ICommand RefreshCmd
-        {
-            get;
-            private set;
-        }
+        public ICommand RefreshCmd { get; private set; }
 
         /// <summary>
-        /// Refresh the stn list.
+        /// Refresh the location list.
         /// </summary>
-        private void RefreshStnList()
+        private void RefreshLocationList()
         {
             this.InitialiseComboBoxPrimary();
-        }
-
-        /// <summary>
-        /// Close the window.
-        /// </summary>
-        private void CloseWindow()
-        {
-            this.OnClosingRequest();
         }
 
         /// <summary>
@@ -125,15 +129,25 @@
         /// </summary>
         private void InitialiseComboBoxPrimary()
         {
-            this.stnList = new ObservableCollection<string>();
+            this.stnList.Clear();
             this.stnList.Add(string.Empty);
 
-            string previousvalue = string.Empty;
-            string location = string.Empty;
+            // Get all locations from the model.
+            int routesCount = journeyController.GetMileageDetailsLength();
+            List<string> locations = new List<string>();
 
-            for (int i = 0; i < journeyController.GetMileageDetailsLength(); i++)
+            for (int i = 0; i < routesCount; i++)
             {
-                location = journeyController.GetFromStation(i);
+                locations.Add(journeyController.GetFromStation(i));
+            }
+
+            // Ensure the locations are in alphabetical order.
+            locations.Sort();
+
+            // Filter out duplicates.
+            string previousvalue = string.Empty;
+            foreach (string location in locations)
+            {
                 if (location != previousvalue)
                 {
                     this.stnList.Add(location);
@@ -159,6 +173,17 @@
                     this.Routes.Add(journeyController.GetRoute(index));
                 }
             }
+        }
+
+        /// <summary>
+        /// A new location has been added to the database, reinitialise this viewmodel
+        /// </summary>
+        /// <param name="message">
+        /// Message indicating that a new location has been added.
+        /// </param>
+        private void OnLocationAddedMessageReceived(NewLocationAddedMessage message)
+        {
+            this.RefreshLocationList();
         }
     }
 }

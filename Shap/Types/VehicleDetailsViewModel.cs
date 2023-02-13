@@ -3,7 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
-
+    using Interfaces.Stats;
     using NynaeveLib.Types;
     using NynaeveLib.ViewModel;
 
@@ -11,9 +11,7 @@
     using Shap.Interfaces.Types;
     using Shap.Interfaces.ViewModels;
     using Shap.Types.Factories;
-    using Shap.Types.ViewModels;
     using Shap.Units.IO;
-    using Stats;
 
     /// ---------- ---------- ---------- ---------- ---------- ----------
     /// <summary>
@@ -59,7 +57,7 @@
         /// <param name="rawData"> raw data, read from the file.</param>
         public VehicleDetailsViewModel(
           IndividualUnitFileContents rawData,
-          FirstExampleManager firstExamples)
+          IFirstExampleManager firstExamples)
         {
             this.UnitNumber = rawData.UnitNumber;
             this.FormerNumbers = new VehicleNumberTypeViewModel();

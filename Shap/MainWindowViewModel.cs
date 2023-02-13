@@ -4,6 +4,7 @@
     using System.Windows;
     using System.Windows.Input;
 
+    using CommunityToolkit.Mvvm.DependencyInjection;
     using NynaeveLib.Logger;
     using Shap.Analysis.ViewModels;
     using Shap.Analysis.Windows;
@@ -11,6 +12,7 @@
     using Shap.Config;
     using Shap.Input;
     using Shap.Interfaces.Io;
+    using Shap.Interfaces.Stats;
     using Shap.StationDetails;
     using Shap.Stats;
     using Shap.Units;
@@ -36,7 +38,7 @@
         /// <summary>
         /// Manager class holding collections of the first examples.
         /// </summary>
-        private FirstExampleManager firstExamples;
+        private IFirstExampleManager firstExamples;
 
         /// <summary>
         /// Initialises a new instance of the <see cref="MainWindowViewModel"/> class.
@@ -48,11 +50,10 @@
         /// First examples manager
         /// </param>
         public MainWindowViewModel(
-          IIoControllers controllers,
-          FirstExampleManager firstExamples)
+          IIoControllers controllers)
         {
             this.controllers = controllers;
-            this.firstExamples = firstExamples;
+            this.firstExamples = Ioc.Default.GetService<IFirstExampleManager>();
 
             AddEditJnyDetailsCommand = new CommonCommand(this.ShowAddEditJnyDetailsWindow);
             AnalysisCommand = new CommonCommand(this.ShowAnalysisWindow);
@@ -88,14 +89,16 @@
         /// </summary>
         public ICommand ShowInputDataCommand { get; private set; }
 
+        /// <summary>
+        /// Display the add edit window.
+        /// </summary>
         public void ShowAddEditJnyDetailsWindow()
         {
             if (this.editMileageWindow == null)
             {
-                SetupWindow(
-                  this.editMileageWindow = new EditMileageWindow(),
-                  new EditMileageViewModel(),
-                  this.CloseEditJnyDetailsWindow,
+                this.editMileageWindow = new EditMileageWindow();
+                this.SetupWindow(
+                  this.editMileageWindow,
                   this.EditJnyDetailsWindowClosed);
             }
 
@@ -107,18 +110,9 @@
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        public void CloseEditJnyDetailsWindow(object sender, EventArgs e)
-        {
-            this.editMileageWindow.Close();
-        }
-
-        /// <summary>
-        /// Form closed, set to null.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
         public void EditJnyDetailsWindowClosed(object sender, EventArgs e)
         {
+            this.editMileageWindow.Closed -= this.EditJnyDetailsWindowClosed;
             this.editMileageWindow = null;
         }
 
@@ -263,33 +257,23 @@
         {
             if (this.jnyDetailsWindow == null)
             {
-                SetupWindow(
-                  this.jnyDetailsWindow = new MileageDetailsWindow(),
-                  new MileageDetailsViewModel(),
-                  CloseJnyDetailsWindow,
-                  JnyDetailsWindowClosed);
+                this.jnyDetailsWindow = new MileageDetailsWindow();
+                this.SetupWindow(
+                    this.jnyDetailsWindow,
+                    this.JnyDetailsWindowClosed);
             }
 
             this.jnyDetailsWindow.Focus();
         }
 
         /// <summary>
-        /// Form closed, set to null.
+        /// The window has closed, release events and set to null.
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        public void CloseJnyDetailsWindow(object sender, EventArgs e)
-        {
-            this.jnyDetailsWindow.Close();
-        }
-
-        /// <summary>
-        /// Form closed, set to null.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+        /// <param name="sender">the <see cref="MileageDetailsWindow"/></param>
+        /// <param name="e">event arguments</param>
         public void JnyDetailsWindowClosed(object sender, EventArgs e)
         {
+            this.jnyDetailsWindow.Closed -= this.JnyDetailsWindowClosed;
             this.jnyDetailsWindow = null;
         }
 
@@ -300,33 +284,23 @@
         {
             if (this.inputWindow == null)
             {
-                SetupWindow(
-                  this.inputWindow = new InputForm(),
-                  new InputFormViewModel(this.firstExamples),
-                  CloseInputForm,
-                  InputFormClosed);
+                this.inputWindow = new InputForm();
+                this.SetupWindow(
+                  this.inputWindow,
+                  this.InputFormClosed);
             }
 
             this.inputWindow.Focus();
         }
 
         /// <summary>
-        /// Form closed, set to null.
+        /// The window has closed, release events and set to null.
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        public void CloseInputForm(object sender, EventArgs e)
-        {
-            this.inputWindow.Close();
-        }
-
-        /// <summary>
-        /// Form closed, set to null.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
+        /// <param name="sender">the <see cref="InputForm"/></param>
+        /// <param name="e">event arguments</param>
         public void InputFormClosed(object sender, EventArgs e)
         {
+            this.inputWindow.Closed -= this.JnyDetailsWindowClosed;
             this.inputWindow = null;
         }
 
@@ -337,7 +311,7 @@
         /// <param name="viewModel">view model to assign to the view model</param>
         /// <param name="closedViewMethod">request from the view model to close the view</param>
         /// <param name="closedMethod">method to run when the window closes</param>
-        public void SetupWindow(
+        private void SetupWindow(
           System.Windows.Window window,
           NynaeveLib.ViewModel.ViewModelBase viewModel,
           EventHandler closeViewMethod,
@@ -348,6 +322,20 @@
             viewModel.ClosingRequest += closeViewMethod;
             window.Closed += closedMethod;
 
+            window.Show();
+            window.Activate();
+        }
+
+        /// <summary>
+        /// Setup and show a window.
+        /// </summary>
+        /// <param name="window">window to set up</param>
+        /// <param name="closedMethod">method to run when the window closes</param>
+        private void SetupWindow(
+          Window window,
+          EventHandler closedMethod)
+        {
+            window.Closed += closedMethod;
             window.Show();
             window.Activate();
         }
