@@ -41,7 +41,13 @@
             Height="20"
             Margin="2"/>
 
-    <Button Content="Open Log"
+        <Button Content="Location Index"
+            Command="{Binding ShowLocationIndexCommand}"
+            Style="{StaticResource StdButtonStyle}"
+            Height="20"
+            Margin="2"/>
+
+        <Button Content="Open Log"
             Command="{Binding OpenLogCommand}"
             Style="{StaticResource StdButtonStyle}"
             Height="20"

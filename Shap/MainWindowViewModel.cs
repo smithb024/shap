@@ -55,15 +55,16 @@
             this.controllers = controllers;
             this.firstExamples = Ioc.Default.GetService<IFirstExampleManager>();
 
-            AddEditJnyDetailsCommand = new CommonCommand(this.ShowAddEditJnyDetailsWindow);
-            AnalysisCommand = new CommonCommand(this.ShowAnalysisWindow);
-            ConfigurationCommand = new CommonCommand(this.ShowConfigurationWindow);
-            ExitCommand = new CommonCommand(this.ExitProgram);
-            OpenLogCommand = new CommonCommand(this.ShowLog);
-            OpenLogFolderCommand = new CommonCommand(this.ShowLogFolder);
-            ShowClassIndexCommand = new CommonCommand(this.ShowClassIndexWindow);
-            ShowJnyDetailsCommand = new CommonCommand(this.ShowJnyDetailsWindow);
-            ShowInputDataCommand = new CommonCommand(this.ShowInputWindow);
+            this.AddEditJnyDetailsCommand = new CommonCommand(this.ShowAddEditJnyDetailsWindow);
+            this.AnalysisCommand = new CommonCommand(this.ShowAnalysisWindow);
+            this.ConfigurationCommand = new CommonCommand(this.ShowConfigurationWindow);
+            this.ExitCommand = new CommonCommand(this.ExitProgram);
+            this.OpenLogCommand = new CommonCommand(this.ShowLog);
+            this.OpenLogFolderCommand = new CommonCommand(this.ShowLogFolder);
+            this.ShowClassIndexCommand = new CommonCommand(this.ShowClassIndexWindow);
+            this.ShowLocationIndexCommand = new CommonCommand(this.ShowLocationIndexWindow);
+            this.ShowJnyDetailsCommand = new CommonCommand(this.ShowJnyDetailsWindow);
+            this.ShowInputDataCommand = new CommonCommand(this.ShowInputWindow);
 
             this.inputWindow = null;
         }
@@ -80,7 +81,15 @@
 
         public ICommand OpenLogFolderCommand { get; private set; }
 
+        /// <summary>
+        /// Gets the command which is used to display the class index window.
+        /// </summary>
         public ICommand ShowClassIndexCommand { get; private set; }
+
+        /// <summary>
+        /// Gets the command which is used to dispayed the location index window.
+        /// </summary>
+        public ICommand ShowLocationIndexCommand { get; private set; }
 
         public ICommand ShowJnyDetailsCommand { get; private set; }
 
@@ -228,6 +237,14 @@
             }
 
             this.classIndexWindow.Focus();
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public void ShowLocationIndexWindow()
+        {
+
         }
 
         /// <summary>
