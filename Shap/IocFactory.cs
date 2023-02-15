@@ -5,7 +5,9 @@
     using Interfaces.Input;
     using Interfaces.StationDetails;
     using Interfaces.Stats;
+    using Locations;
     using Microsoft.Extensions.DependencyInjection;
+    using Shap.Interfaces.Locations;
     using StationDetails;
     using Stats;
 
@@ -22,6 +24,7 @@
             Ioc.Default.ConfigureServices(
                 new ServiceCollection()
                 .AddSingleton<IFirstExampleManager, FirstExampleManager>()
+                .AddSingleton<ILocationsIndexViewModel, LocationsIndexViewModel>()
                 .AddSingleton<IInputFormViewModel, InputFormViewModel>()
                 .AddSingleton<IMileageDetailsViewModel, MileageDetailsViewModel>()
                 .AddSingleton<IEditMileageViewModel, EditMileageViewModel>()

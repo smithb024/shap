@@ -255,6 +255,7 @@
     <Compile Include="Interfaces\Io\IUnitsXmlIoController.cs" />
     <Compile Include="Interfaces\Io\IXmlOperatorIoController.cs" />
     <Compile Include="Interfaces\Io\IXmlFamilyIoController.cs" />
+    <Compile Include="Interfaces\Locations\ILocationsIndexViewModel.cs" />
     <Compile Include="Interfaces\StationDetails\IEditMileageViewModel.cs" />
     <Compile Include="Interfaces\StationDetails\IMileageDetailsViewModel.cs" />
     <Compile Include="Interfaces\Types\ISubClassDataType.cs" />
@@ -269,6 +270,10 @@
     <Compile Include="Interfaces\ViewModels\IJourneyViewModel.cs" />
     <Compile Include="IocFactory.cs" />
     <Compile Include="Io\IoControllers.cs" />
+    <Compile Include="Locations\LocationsIndexViewModel.cs" />
+    <Compile Include="Locations\LocationsIndexWindow.xaml.cs">
+      <DependentUpon>LocationsIndexWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="MainWindowViewModel.cs" />
     <Compile Include="Messages\NewLocationAddedMessage.cs" />
     <Compile Include="StaticResources.Designer.cs">
@@ -494,6 +499,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Input\InputJnyRow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Locations\LocationsIndexWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

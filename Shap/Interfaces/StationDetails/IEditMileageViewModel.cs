@@ -5,7 +5,7 @@
     using System.Windows.Input;
 
     /// <summary>
-    /// Interface which supports the edit mileage view.
+    /// Interface which supports the edit mileage view model.
     /// </summary>
     public interface IEditMileageViewModel
     {

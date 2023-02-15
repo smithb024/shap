@@ -13,6 +13,7 @@
     using Shap.Input;
     using Shap.Interfaces.Io;
     using Shap.Interfaces.Stats;
+    using Shap.Locations;
     using Shap.StationDetails;
     using Shap.Stats;
     using Shap.Units;
@@ -23,12 +24,18 @@
     /// </summary>
     public class MainWindowViewModel
     {
-        InputForm inputWindow;
-        MileageDetailsWindow jnyDetailsWindow;
-        EditMileageWindow editMileageWindow;
-        ClassIndexWindow classIndexWindow;
-        AnalysisWindow analysisWindow;
-        ConfigWindow configWindow;
+        private InputForm inputWindow;
+        private MileageDetailsWindow jnyDetailsWindow;
+        private EditMileageWindow editMileageWindow;
+
+        /// <summary>
+        /// The locations index window.
+        /// </summary>
+        private LocationsIndexWindow locationsIndexWindow;
+
+        private ClassIndexWindow classIndexWindow;
+        private AnalysisWindow analysisWindow;
+        private ConfigWindow configWindow;
 
         /// <summary>
         /// Collection of IO controllers
@@ -244,7 +251,26 @@
         /// </summary>
         public void ShowLocationIndexWindow()
         {
+            if (this.locationsIndexWindow == null)
+            {
+                this.locationsIndexWindow = new LocationsIndexWindow();
+                this.SetupWindow(
+                  this.locationsIndexWindow,
+                  this.LocationsIndexWindowClosed);
+            }
 
+            this.locationsIndexWindow.Focus();
+        }
+
+        /// <summary>
+        /// Window has closed, set to null.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        public void LocationsIndexWindowClosed(object sender, EventArgs e)
+        {
+            this.locationsIndexWindow.Closed -= this.LocationsIndexWindowClosed;
+            this.locationsIndexWindow = null;
         }
 
         /// <summary>
