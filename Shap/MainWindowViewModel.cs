@@ -13,7 +13,7 @@
     using Shap.Input;
     using Shap.Interfaces.Io;
     using Shap.Interfaces.Stats;
-    using Shap.Locations;
+    using Shap.Locations.Views;
     using Shap.StationDetails;
     using Shap.Stats;
     using Shap.Units;

@@ -5,9 +5,9 @@
     using Interfaces.Input;
     using Interfaces.StationDetails;
     using Interfaces.Stats;
-    using Locations;
+    using Locations.ViewModels;
     using Microsoft.Extensions.DependencyInjection;
-    using Shap.Interfaces.Locations;
+    using Shap.Interfaces.Locations.ViewModels;
     using StationDetails;
     using Stats;
 

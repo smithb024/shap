@@ -1,7 +1,7 @@
-﻿namespace Shap.Locations
+﻿namespace Shap.Locations.ViewModels
 {
     using CommunityToolkit.Mvvm.ComponentModel;
-    using Shap.Interfaces.Locations;
+    using Shap.Interfaces.Locations.ViewModels;
 
     /// <summary>
     /// View model which supports the locations index window.

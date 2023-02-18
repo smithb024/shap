@@ -255,7 +255,7 @@
     <Compile Include="Interfaces\Io\IUnitsXmlIoController.cs" />
     <Compile Include="Interfaces\Io\IXmlOperatorIoController.cs" />
     <Compile Include="Interfaces\Io\IXmlFamilyIoController.cs" />
-    <Compile Include="Interfaces\Locations\ILocationsIndexViewModel.cs" />
+    <Compile Include="Interfaces\Locations\ViewModels\ILocationsIndexViewModel.cs" />
     <Compile Include="Interfaces\StationDetails\IEditMileageViewModel.cs" />
     <Compile Include="Interfaces\StationDetails\IMileageDetailsViewModel.cs" />
     <Compile Include="Interfaces\Types\ISubClassDataType.cs" />
@@ -270,10 +270,26 @@
     <Compile Include="Interfaces\ViewModels\IJourneyViewModel.cs" />
     <Compile Include="IocFactory.cs" />
     <Compile Include="Io\IoControllers.cs" />
-    <Compile Include="Locations\LocationsIndexViewModel.cs" />
-    <Compile Include="Locations\LocationsIndexWindow.xaml.cs">
+    <Compile Include="Locations\Views\LinesSelectorView.xaml.cs">
+      <DependentUpon>LinesSelectorView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Locations\ViewModels\LinesSelectorViewModel.cs" />
+    <Compile Include="Locations\Views\LocationConfigurationView.xaml.cs">
+      <DependentUpon>LocationConfigurationView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Locations\ViewModels\LocationConfigurationViewModel.cs" />
+    <Compile Include="Locations\ViewModels\LocationsIndexViewModel.cs" />
+    <Compile Include="Locations\Views\LocationsIndexWindow.xaml.cs">
       <DependentUpon>LocationsIndexWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Locations\Views\LocationsSelectorView.xaml.cs">
+      <DependentUpon>LocationsSelectorView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Locations\ViewModels\LocationsSelectorViewModel.cs" />
+    <Compile Include="Locations\Views\LocationView.xaml.cs">
+      <DependentUpon>LocationView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Locations\ViewModels\LocationViewModel.cs" />
     <Compile Include="MainWindowViewModel.cs" />
     <Compile Include="Messages\NewLocationAddedMessage.cs" />
     <Compile Include="StaticResources.Designer.cs">
@@ -502,7 +518,23 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Locations\LocationsIndexWindow.xaml">
+    <Page Include="Locations\Views\LinesSelectorView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Locations\Views\LocationConfigurationView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Locations\Views\LocationsIndexWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Locations\Views\LocationsSelectorView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Locations\Views\LocationView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

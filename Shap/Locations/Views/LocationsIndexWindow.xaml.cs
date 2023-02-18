@@ -1,7 +1,7 @@
-﻿namespace Shap.Locations
+﻿namespace Shap.Locations.Views
 {
     using CommunityToolkit.Mvvm.DependencyInjection;
-    using Shap.Interfaces.Locations;
+    using Shap.Interfaces.Locations.ViewModels;
     using System.Windows;
 
     /// <summary>
