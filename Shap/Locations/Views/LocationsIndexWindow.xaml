@@ -13,16 +13,22 @@
         Width="800">
 
     <Window.Resources>
-        <DataTemplate x:Name="LocationCounterTemplate" DataType="{x:Type viewModels:LocationsSelectorViewModel}">
+        <DataTemplate x:Name="AlphabeticalNavigationTemplate" DataType="{x:Type viewModels:AlphabeticalNavigationViewModel}">
+            <local:AlphabeticalNavigationView DataContext="{Binding}"/>
+        </DataTemplate>
+        <DataTemplate x:Name="DirectNavigationTemplate" DataType="{x:Type viewModels:DirectNavigationViewModel}">
+            <local:DirectNavigationView DataContext="{Binding}"/>
+        </DataTemplate>
+        <DataTemplate x:Name="LocationsSelectoTemplate" DataType="{x:Type viewModels:LocationsSelectorViewModel}">
             <local:LocationsSelectorView DataContext="{Binding}"/>
         </DataTemplate>
-        <DataTemplate x:Name="LocationCounterTemplate" DataType="{x:Type viewModels:LinesSelectorViewModel}">
+        <DataTemplate x:Name="LinesSelectorTemplate" DataType="{x:Type viewModels:LinesSelectorViewModel}">
             <local:LinesSelectorView DataContext="{Binding}"/>
         </DataTemplate>
-        <DataTemplate x:Name="LocationCounterTemplate" DataType="{x:Type viewModels:LocationViewModel}">
+        <DataTemplate x:Name="LocationTemplate" DataType="{x:Type viewModels:LocationViewModel}">
             <local:LocationView DataContext="{Binding}"/>
         </DataTemplate>
-        <DataTemplate x:Name="LocationCounterTemplate" DataType="{x:Type viewModels:LocationConfigurationViewModel}">
+        <DataTemplate x:Name="LocationConfigurationTemplate" DataType="{x:Type viewModels:LocationConfigurationViewModel}">
             <local:LocationConfigurationView DataContext="{Binding}"/>
         </DataTemplate>
     </Window.Resources>

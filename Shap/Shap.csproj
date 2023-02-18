@@ -270,6 +270,14 @@
     <Compile Include="Interfaces\ViewModels\IJourneyViewModel.cs" />
     <Compile Include="IocFactory.cs" />
     <Compile Include="Io\IoControllers.cs" />
+    <Compile Include="Locations\ViewModels\AlphabeticalNavigationViewModel.cs" />
+    <Compile Include="Locations\ViewModels\DirectNavigationViewModel.cs" />
+    <Compile Include="Locations\Views\AlphabeticalNavigationView.xaml.cs">
+      <DependentUpon>AlphabeticalNavigationView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Locations\Views\DirectNavigationView.xaml.cs">
+      <DependentUpon>DirectNavigationView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Locations\Views\LinesSelectorView.xaml.cs">
       <DependentUpon>LinesSelectorView.xaml</DependentUpon>
     </Compile>
@@ -515,6 +523,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Input\InputJnyRow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Locations\Views\AlphabeticalNavigationView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Locations\Views\DirectNavigationView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
