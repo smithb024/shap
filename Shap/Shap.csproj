@@ -255,7 +255,16 @@
     <Compile Include="Interfaces\Io\IUnitsXmlIoController.cs" />
     <Compile Include="Interfaces\Io\IXmlOperatorIoController.cs" />
     <Compile Include="Interfaces\Io\IXmlFamilyIoController.cs" />
+    <Compile Include="Interfaces\Locations\ViewModels\IAlphabeticalNavigationViewModel.cs" />
+    <Compile Include="Interfaces\Locations\ViewModels\IDetailsViewModel.cs" />
+    <Compile Include="Interfaces\Locations\ViewModels\IDirectNavigationViewModel.cs" />
+    <Compile Include="Interfaces\Locations\ViewModels\ILinesSelectorViewModel.cs" />
+    <Compile Include="Interfaces\Locations\ViewModels\ILocationConfigurationViewModel.cs" />
+    <Compile Include="Interfaces\Locations\ViewModels\ILocationSelectorViewModel.cs" />
     <Compile Include="Interfaces\Locations\ViewModels\ILocationsIndexViewModel.cs" />
+    <Compile Include="Interfaces\Locations\ViewModels\ILocationViewModel.cs" />
+    <Compile Include="Interfaces\Locations\ViewModels\INavigationViewModel.cs" />
+    <Compile Include="Interfaces\Locations\ViewModels\ISelectorViewModel.cs" />
     <Compile Include="Interfaces\StationDetails\IEditMileageViewModel.cs" />
     <Compile Include="Interfaces\StationDetails\IMileageDetailsViewModel.cs" />
     <Compile Include="Interfaces\Types\ISubClassDataType.cs" />

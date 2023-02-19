@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Shap.Locations.ViewModels
+﻿namespace Shap.Locations.ViewModels
 {
-    public class DirectNavigationViewModel
+    using CommunityToolkit.Mvvm.ComponentModel;
+    using Shap.Interfaces.Locations.ViewModels;
+
+    public class DirectNavigationViewModel : ObservableRecipient, IDirectNavigationViewModel
     {
     }
 }

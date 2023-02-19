@@ -34,6 +34,44 @@
     </Window.Resources>
 
     <Grid>
-        
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="Auto"/>
+        </Grid.ColumnDefinitions>
+
+        <StackPanel 
+            Orientation="Vertical"
+            Grid.Column="0">
+            <StackPanel Orientation="Horizontal">
+                <Button Content="Alphabetical" 
+                        Command="{Binding Path=AlphabeticalNavigationCommand}"
+                        Style="{StaticResource StdButtonStyle}"
+                        Height="20"
+                        Margin="2"/>
+                <Button Content="Operators" 
+                        Command="{Binding Path=OperatorsNavigationCommand}"
+                        Style="{StaticResource StdButtonStyle}"
+                        Height="20"
+                        Margin="2"/>
+                <Button Content="Regions" 
+                        Command="{Binding Path=RegionsNavigationCommand}"
+                        Style="{StaticResource StdButtonStyle}"
+                        Height="20"
+                        Margin="2"/>
+                <Button Content="Lines" 
+                        Command="{Binding Path=LinesNavigationCommand}"
+                        Style="{StaticResource StdButtonStyle}"
+                        Height="20"
+                        Margin="2"/>
+            </StackPanel>
+
+            <ContentControl Content="{Binding Path=Navigation}"/>
+
+            <ContentControl Content="{Binding Path=Selector}"/>
+        </StackPanel>
+
+        <ContentControl 
+            Grid.Column="1"
+            Content="{Binding Path=LocationDetails}"/>
     </Grid>
 </Window>
