@@ -47,21 +47,25 @@
                         Command="{Binding Path=AlphabeticalNavigationCommand}"
                         Style="{StaticResource StdButtonStyle}"
                         Height="20"
+                        Width="80"
                         Margin="2"/>
                 <Button Content="Operators" 
                         Command="{Binding Path=OperatorsNavigationCommand}"
                         Style="{StaticResource StdButtonStyle}"
                         Height="20"
+                        Width="80"
                         Margin="2"/>
                 <Button Content="Regions" 
                         Command="{Binding Path=RegionsNavigationCommand}"
                         Style="{StaticResource StdButtonStyle}"
                         Height="20"
+                        Width="80"
                         Margin="2"/>
                 <Button Content="Lines" 
                         Command="{Binding Path=LinesNavigationCommand}"
                         Style="{StaticResource StdButtonStyle}"
                         Height="20"
+                        Width="80"
                         Margin="2"/>
             </StackPanel>
 

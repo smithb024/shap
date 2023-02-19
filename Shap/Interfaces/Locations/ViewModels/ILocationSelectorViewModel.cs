@@ -1,6 +1,6 @@
 ﻿namespace Shap.Interfaces.Locations.ViewModels
 {
-    public interface ILocationSelectorViewModel : IDetailsViewModel
+    public interface ILocationSelectorViewModel : ISelectorViewModel
     {
     }
 }
