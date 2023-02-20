@@ -3,13 +3,36 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:Shap.Locations.Views"
+     xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+      xmlns:shapConverter="clr-namespace:Shap.Common.Converters"
+          xmlns:local="clr-namespace:Shap.Locations.Views" 
+             xmlns:icons="clr-namespace:Shap.Icons"
              mc:Ignorable="d" 
-             Width="100"
-             Height="100"
-             Background="HotPink"
              d:DesignHeight="450" d:DesignWidth="800">
-    <Grid>
-            
-    </Grid>
+
+    <UserControl.Resources>
+        <shapConverter:DayIconHighlightBrushConverter x:Key="highlightConverter"/>
+    </UserControl.Resources>
+
+    <ItemsControl ItemsSource="{Binding Letters}">
+        <ItemsControl.ItemsPanel>
+            <ItemsPanelTemplate>
+                <UniformGrid Columns="7"/>
+            </ItemsPanelTemplate>
+        </ItemsControl.ItemsPanel>
+        <ItemsControl.ItemTemplate>
+            <DataTemplate>
+                <icons:LetterIcon
+                        Character="{Binding CurrentCharacter}"
+                        BackgroundBrush="DarkOliveGreen"
+                        IconSelectedBrush="{Binding Path=IsSelected, Converter={StaticResource highlightConverter}}">
+                    <i:Interaction.Triggers>
+                        <i:EventTrigger EventName="MouseLeftButtonDown">
+                            <i:InvokeCommandAction Command="{Binding SelectLetterCmd}"/>
+                        </i:EventTrigger>
+                    </i:Interaction.Triggers>
+                </icons:LetterIcon>
+            </DataTemplate>
+        </ItemsControl.ItemTemplate>
+    </ItemsControl>
 </UserControl>

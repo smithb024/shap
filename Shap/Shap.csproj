@@ -233,8 +233,13 @@
     <Compile Include="Icons\DayIcon.xaml.cs">
       <DependentUpon>DayIcon.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Icons\ILetterIconViewModel.cs" />
+    <Compile Include="Icons\LetterIconViewModel.cs" />
     <Compile Include="Icons\Led.xaml.cs">
       <DependentUpon>Led.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Icons\LetterIcon.xaml.cs">
+      <DependentUpon>LetterIcon.xaml</DependentUpon>
     </Compile>
     <Compile Include="Icons\MonthBar.xaml.cs">
       <DependentUpon>MonthBar.xaml</DependentUpon>
@@ -520,6 +525,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Icons\Led.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Icons\LetterIcon.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

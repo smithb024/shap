@@ -51,7 +51,7 @@
         private int jnyViaIndex;
         private ObservableCollection<string> jnyViaList;
         private string status;
-        private ObservableCollection<DayViewModel> days;
+        private ObservableCollection<LetterIconViewModel> days;
 
         /// <summary>
         /// Creates a new instance of this form.
@@ -380,7 +380,7 @@
         /// <summary>
         /// Gets the days.
         /// </summary>
-        public ObservableCollection<DayViewModel> Days => this.days;
+        public ObservableCollection<LetterIconViewModel> Days => this.days;
 
         /// <summary>
         /// Gets the jny distance as a string.
@@ -782,7 +782,7 @@
                 this.Year,
                 this.Month);
 
-            foreach (DayViewModel day in this.days)
+            foreach (LetterIconViewModel day in this.days)
             {
                 if (day.CurrentDate.Date == this.Date.Date)
                 {
@@ -812,7 +812,7 @@
         /// </remarks>
         private void FindAndSetDaySelectedFlag()
         {
-            foreach (DayViewModel day in this.Days)
+            foreach (LetterIconViewModel day in this.Days)
             {
                 day.IsSelected =
                   day.CurrentDate.Date == this.Date.Date;

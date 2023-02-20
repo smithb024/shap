@@ -20,7 +20,7 @@
         int Day { get; }
         MilesChains DayDistance { get; }
         string DayDistanceString { get; }
-        ObservableCollection<DayViewModel> Days { get; }
+        ObservableCollection<LetterIconViewModel> Days { get; }
         string FirstVehicle { get; set; }
         string FourthVehicle { get; set; }
         MilesChains JnyDistance { get; }
