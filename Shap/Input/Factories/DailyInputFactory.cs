@@ -46,7 +46,7 @@
     /// <param name="year">current year</param>
     /// <param name="month">current year</param>
     /// <returns>list of all distances in a month</returns>
-    public static ObservableCollection<LetterIconViewModel> GetAllDaysInMonth(
+    public static ObservableCollection<DayViewModel> GetAllDaysInMonth(
       int year,
       int month)
     {
@@ -292,22 +292,22 @@
       }
     }
 
-    /// <summary>
-    /// Convert a collection of <see cref="MilesChains"/> to
-    /// <see cref="LetterIconViewModel"/>. Assumes <paramref name="distanceList"/> is an appropriate
-    /// length.
-    /// </summary>
-    /// <param name="year">current year</param>
-    /// <param name="month">current month</param>
-    /// <param name="distanceList">collection of distances</param>
-    /// <returns></returns>
-    private static ObservableCollection<LetterIconViewModel> SetupDayViewModel(
+        /// <summary>
+        /// Convert a collection of <see cref="MilesChains"/> to
+        /// <see cref="DayViewModel"/>. Assumes <paramref name="distanceList"/> is an appropriate
+        /// length.
+        /// </summary>
+        /// <param name="year">current year</param>
+        /// <param name="month">current month</param>
+        /// <param name="distanceList">collection of distances</param>
+        /// <returns></returns>
+        private static ObservableCollection<DayViewModel> SetupDayViewModel(
       int year,
       int month,
       List<MilesChains> distanceList)
     {
       int day = 1;
-      ObservableCollection<LetterIconViewModel> days = new ObservableCollection<LetterIconViewModel>();
+      ObservableCollection<DayViewModel> days = new ObservableCollection<DayViewModel>();
 
       foreach (MilesChains dayDistance in distanceList)
       {

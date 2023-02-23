@@ -15,7 +15,7 @@
     /// <summary>
     /// View models to describe a single day with a piece of supplementary information.
     /// </summary>
-    public class LetterIconViewModel : ViewModelBase
+    public class DayViewModel : ViewModelBase
     {
         /// <summary>
         /// date time callback
@@ -38,11 +38,11 @@
         private bool isSelected;
 
         /// <summary>
-        /// Initialise a new instance of the <see cref="LetterIconViewModel"/> class.
+        /// Initialise a new instance of the <see cref="DayViewModel"/> class.
         /// </summary>
         /// <param name="curentDate">current date</param>
         /// <param name="distance">current date distance</param>
-        public LetterIconViewModel(
+        public DayViewModel(
           DateTime curentDate,
           string distance)
         {
