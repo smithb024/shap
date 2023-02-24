@@ -261,6 +261,7 @@
     <Compile Include="Interfaces\Io\IXmlOperatorIoController.cs" />
     <Compile Include="Interfaces\Io\IXmlFamilyIoController.cs" />
     <Compile Include="Interfaces\Locations\ViewModels\IAlphabeticalNavigationViewModel.cs" />
+    <Compile Include="Interfaces\Locations\ViewModels\Icons\ISelectorRowViewModel.cs" />
     <Compile Include="Interfaces\Locations\ViewModels\IDetailsViewModel.cs" />
     <Compile Include="Interfaces\Locations\ViewModels\IDirectNavigationViewModel.cs" />
     <Compile Include="Interfaces\Locations\ViewModels\ILinesSelectorViewModel.cs" />
@@ -286,11 +287,15 @@
     <Compile Include="Io\IoControllers.cs" />
     <Compile Include="Locations\ViewModels\AlphabeticalNavigationViewModel.cs" />
     <Compile Include="Locations\ViewModels\DirectNavigationViewModel.cs" />
+    <Compile Include="Locations\ViewModels\Icons\SelectorRowViewModel.cs" />
     <Compile Include="Locations\Views\AlphabeticalNavigationView.xaml.cs">
       <DependentUpon>AlphabeticalNavigationView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Locations\Views\DirectNavigationView.xaml.cs">
       <DependentUpon>DirectNavigationView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Locations\Views\Icons\SelectorRowIcon.xaml.cs">
+      <DependentUpon>SelectorRowIcon.xaml</DependentUpon>
     </Compile>
     <Compile Include="Locations\Views\LinesSelectorView.xaml.cs">
       <DependentUpon>LinesSelectorView.xaml</DependentUpon>
@@ -549,6 +554,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Locations\Views\DirectNavigationView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Locations\Views\Icons\SelectorRowIcon.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
