@@ -89,13 +89,16 @@
         {
             this.selectedNatigation = NavigationType.Alphabetical;
 
-            ISelectorViewModel locationSelectorViewModel =
-                new LocationsSelectorViewModel();
             IAlphabeticalNavigationViewModel alphabeticalViewModel =
                 new AlphabeticalNavigationViewModel();
+            ISelectorViewModel locationSelectorViewModel =
+                new LocationsSelectorViewModel();
 
-            this.Selector = locationSelectorViewModel;
+            this.Navigation?.Dispose();
+            this.Selector?.Dispose();
+
             this.Navigation = alphabeticalViewModel;
+            this.Selector = locationSelectorViewModel;
 
             this.OnPropertyChanged(nameof(Navigation));
             this.OnPropertyChanged(nameof(Selector));
@@ -108,13 +111,16 @@
         {
             this.selectedNatigation = NavigationType.Operators;
 
-            ISelectorViewModel locationSelectorViewModel =
-                new LocationsSelectorViewModel();
             IDirectNavigationViewModel operatorsViewModel =
                 new DirectNavigationViewModel();
+            ISelectorViewModel locationSelectorViewModel =
+                new LocationsSelectorViewModel();
 
-            this.Selector = locationSelectorViewModel;
+            this.Navigation?.Dispose();
+            this.Selector?.Dispose();
+
             this.Navigation = operatorsViewModel;
+            this.Selector = locationSelectorViewModel;
 
             this.OnPropertyChanged(nameof(Navigation));
             this.OnPropertyChanged(nameof(Selector));
@@ -127,13 +133,13 @@
         {
             this.selectedNatigation = NavigationType.Regions;
 
-            ISelectorViewModel locationSelectorViewModel =
-                new LocationsSelectorViewModel();
             IDirectNavigationViewModel regionsViewModel =
                 new DirectNavigationViewModel();
+            ISelectorViewModel locationSelectorViewModel =
+                new LocationsSelectorViewModel();
 
-            this.Selector = locationSelectorViewModel;
             this.Navigation = regionsViewModel;
+            this.Selector = locationSelectorViewModel;
 
             this.OnPropertyChanged(nameof(Navigation));
             this.OnPropertyChanged(nameof(Selector));
@@ -146,13 +152,16 @@
         {
             this.selectedNatigation = NavigationType.Lines;
 
-            ILinesSelectorViewModel linesSelectorViewModel =
-                new LinesSelectorViewModel();
             IDirectNavigationViewModel linesViewModel =
                 new DirectNavigationViewModel();
+            ILinesSelectorViewModel linesSelectorViewModel =
+                new LinesSelectorViewModel();
 
-            this.Selector = linesSelectorViewModel;
+            this.Navigation?.Dispose();
+            this.Selector?.Dispose();
+
             this.Navigation = linesViewModel;
+            this.Selector = linesSelectorViewModel;
 
             this.OnPropertyChanged(nameof(Navigation));
             this.OnPropertyChanged(nameof(Selector));

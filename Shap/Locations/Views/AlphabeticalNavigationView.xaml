@@ -23,14 +23,9 @@
         <ItemsControl.ItemTemplate>
             <DataTemplate>
                 <icons:LetterIcon
-                        Character="{Binding CurrentCharacter}"
+                        Character="{Binding Path=Character}"
                         BackgroundBrush="DarkOliveGreen"
                         IconSelectedBrush="{Binding Path=IsSelected, Converter={StaticResource highlightConverter}}">
-                    <i:Interaction.Triggers>
-                        <i:EventTrigger EventName="MouseLeftButtonDown">
-                            <i:InvokeCommandAction Command="{Binding SelectLetterCmd}"/>
-                        </i:EventTrigger>
-                    </i:Interaction.Triggers>
                 </icons:LetterIcon>
             </DataTemplate>
         </ItemsControl.ItemTemplate>
