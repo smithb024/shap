@@ -192,6 +192,9 @@
     <Compile Include="Common\SerialiseModel\ClassDetails\Subclass.cs" />
     <Compile Include="Common\SerialiseModel\Family\FamilyDetails.cs" />
     <Compile Include="Common\SerialiseModel\Family\SingleFamily.cs" />
+    <Compile Include="Common\SerialiseModel\Location\LocationDetails.cs" />
+    <Compile Include="Common\SerialiseModel\Location\LocationOperators.cs" />
+    <Compile Include="Common\SerialiseModel\Location\LocationPhotos.cs" />
     <Compile Include="Common\SerialiseModel\Operator\OperatorDetails.cs" />
     <Compile Include="Common\SerialiseModel\Operator\SingleOperator.cs" />
     <Compile Include="Common\ViewModel\LocationCounterManagerViewModel.cs" />
@@ -256,6 +259,7 @@
     </Compile>
     <Compile Include="Interfaces\Io\IGroupsAndClassesIOController.cs" />
     <Compile Include="Interfaces\Io\IIoControllers.cs" />
+    <Compile Include="Interfaces\Io\ILocationIoController.cs" />
     <Compile Include="Interfaces\Io\IUnitsIoController.cs" />
     <Compile Include="Interfaces\Io\IUnitsXmlIoController.cs" />
     <Compile Include="Interfaces\Io\IXmlOperatorIoController.cs" />
@@ -285,6 +289,7 @@
     <Compile Include="Interfaces\ViewModels\IJourneyViewModel.cs" />
     <Compile Include="IocFactory.cs" />
     <Compile Include="Io\IoControllers.cs" />
+    <Compile Include="Locations\IO\LocationIoController.cs" />
     <Compile Include="Locations\ViewModels\AlphabeticalNavigationViewModel.cs" />
     <Compile Include="Locations\ViewModels\DirectNavigationViewModel.cs" />
     <Compile Include="Locations\ViewModels\Icons\SelectorRowViewModel.cs" />

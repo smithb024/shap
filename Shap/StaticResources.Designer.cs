@@ -142,6 +142,24 @@ namespace Shap {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to data\loc\idvl.
+        /// </summary>
+        internal static string locIdvlPath {
+            get {
+                return ResourceManager.GetString("locIdvlPath", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to data\loc\img.
+        /// </summary>
+        internal static string locImgPath {
+            get {
+                return ResourceManager.GetString("locImgPath", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to log\.
         /// </summary>
         internal static string logPath {
