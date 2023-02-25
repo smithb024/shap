@@ -5,6 +5,7 @@
     using System.Windows.Input;
 
     using CommunityToolkit.Mvvm.DependencyInjection;
+    using Interfaces;
     using NynaeveLib.Logger;
     using Shap.Analysis.ViewModels;
     using Shap.Analysis.Windows;
@@ -15,14 +16,12 @@
     using Shap.Interfaces.Stats;
     using Shap.Locations.Views;
     using Shap.StationDetails;
-    using Shap.Stats;
     using Shap.Units;
-    using Shap.Units.IO;
 
     /// <summary>
     /// View model for the main window.
     /// </summary>
-    public class MainWindowViewModel
+    public class MainWindowViewModel : IMainWindowViewModel
     {
         private InputForm inputWindow;
         private MileageDetailsWindow jnyDetailsWindow;

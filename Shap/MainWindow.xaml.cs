@@ -9,6 +9,9 @@
     using Shap.Stats;
 
     using NynaeveLib.Logger;
+    using CommunityToolkit.Mvvm.DependencyInjection;
+    using Shap.Interfaces.StationDetails;
+    using Shap.Interfaces;
 
     /// <summary>
     /// Interaction logic for MainWindow.xaml
@@ -25,11 +28,7 @@
             Console.Write("create Log");
             Logger.SetInitialInstance("ShapLog");
 
-            IIoControllers ioControllers = new IoControllers();
-
-            this.DataContext =
-              new MainWindowViewModel(
-                ioControllers);
+            this.DataContext = Ioc.Default.GetService<IMainWindowViewModel>();
         }
 
         private void Window_Closed(object sender, EventArgs e)

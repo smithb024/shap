@@ -247,6 +247,7 @@
     <Compile Include="Icons\MonthBar.xaml.cs">
       <DependentUpon>MonthBar.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Interfaces\IMainWindowViewModel.cs" />
     <Compile Include="Input\DayViewModel.cs" />
     <Compile Include="Input\Factories\DailyInputFactory.cs" />
     <Compile Include="Interfaces\Input\IInputFormViewModel.cs" />
