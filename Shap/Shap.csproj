@@ -193,8 +193,11 @@
     <Compile Include="Common\SerialiseModel\Family\FamilyDetails.cs" />
     <Compile Include="Common\SerialiseModel\Family\SingleFamily.cs" />
     <Compile Include="Common\SerialiseModel\Location\LocationDetails.cs" />
+    <Compile Include="Common\SerialiseModel\Location\LocationClass.cs" />
+    <Compile Include="Common\SerialiseModel\Location\LocationYear.cs" />
     <Compile Include="Common\SerialiseModel\Location\LocationOperators.cs" />
     <Compile Include="Common\SerialiseModel\Location\LocationPhotos.cs" />
+    <Compile Include="Common\SerialiseModel\Location\Trip.cs" />
     <Compile Include="Common\SerialiseModel\Operator\OperatorDetails.cs" />
     <Compile Include="Common\SerialiseModel\Operator\SingleOperator.cs" />
     <Compile Include="Common\ViewModel\LocationCounterManagerViewModel.cs" />
@@ -265,6 +268,7 @@
     <Compile Include="Interfaces\Io\IUnitsXmlIoController.cs" />
     <Compile Include="Interfaces\Io\IXmlOperatorIoController.cs" />
     <Compile Include="Interfaces\Io\IXmlFamilyIoController.cs" />
+    <Compile Include="Interfaces\Locations\Model\ILocationManager.cs" />
     <Compile Include="Interfaces\Locations\ViewModels\IAlphabeticalNavigationViewModel.cs" />
     <Compile Include="Interfaces\Locations\ViewModels\Icons\ISelectorRowViewModel.cs" />
     <Compile Include="Interfaces\Locations\ViewModels\IDetailsViewModel.cs" />
@@ -291,6 +295,7 @@
     <Compile Include="IocFactory.cs" />
     <Compile Include="Io\IoControllers.cs" />
     <Compile Include="Locations\IO\LocationIoController.cs" />
+    <Compile Include="Locations\Model\LocationManager.cs" />
     <Compile Include="Locations\ViewModels\AlphabeticalNavigationViewModel.cs" />
     <Compile Include="Locations\ViewModels\DirectNavigationViewModel.cs" />
     <Compile Include="Locations\ViewModels\Icons\SelectorRowViewModel.cs" />
@@ -349,6 +354,7 @@
     <Compile Include="Styles\ColoursDictionary.cs" />
     <Compile Include="Types\ClassDataTypeViewModel.cs" />
     <Compile Include="Types\Enum\ComponentState.cs" />
+    <Compile Include="Types\Enum\LocationCategories.cs" />
     <Compile Include="Types\Enum\MainCommands.cs" />
     <Compile Include="Types\Factories\JourneyFactory.cs" />
     <Compile Include="Types\FirstExampleType.cs" />

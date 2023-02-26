@@ -9,8 +9,10 @@
     using Locations.ViewModels;
     using Microsoft.Extensions.DependencyInjection;
     using Shap.Interfaces;
+    using Shap.Interfaces.Locations.Model;
     using Shap.Interfaces.Locations.ViewModels;
     using Shap.Io;
+    using Shap.Locations.Model;
     using StationDetails;
     using Stats;
 
@@ -28,6 +30,7 @@
                 new ServiceCollection()
                 .AddSingleton<IIoControllers, IoControllers>()
                 .AddSingleton<IFirstExampleManager, FirstExampleManager>()
+                .AddSingleton<ILocationManager, LocationManager>()
                 .AddSingleton<ILocationsIndexViewModel, LocationsIndexViewModel>()
                 .AddSingleton<IInputFormViewModel, InputFormViewModel>()
                 .AddSingleton<IMileageDetailsViewModel, MileageDetailsViewModel>()

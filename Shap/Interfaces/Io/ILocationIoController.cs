@@ -26,8 +26,8 @@
         /// <summary>
         ///   Checks to see if a file exists.
         /// </summary>
-        /// <param name="fileName">file name</param>
+        /// <param name="filename">The name of the location</param>
         /// <returns>file exists flag</returns>
-        bool DoesFileExist();
+        bool DoesFileExist(string filename);
     }
 }

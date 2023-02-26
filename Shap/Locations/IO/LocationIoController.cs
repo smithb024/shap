@@ -25,7 +25,7 @@
         {
             string myPath =
             BasePathReader.GetBasePath() +
-            StaticResources.classDetailsPath +
+            StaticResources.locIdvlPath +
             filename +
             XmlExtensionLabel;
             LocationDetails results =
@@ -46,7 +46,7 @@
         {
             string myPath =
                BasePathReader.GetBasePath() +
-               StaticResources.classDetailsPath +
+               StaticResources.locIdvlPath +
                filename +
                XmlExtensionLabel;
 
@@ -58,14 +58,14 @@
         /// <summary>
         ///   Checks to see if a file exists.
         /// </summary>
-        /// <param name="fileName">file name</param>
+        /// <param name="filename">The name of the location</param>
         /// <returns>file exists flag</returns>
-        public bool DoesFileExist()
+        public bool DoesFileExist(string filename)
         {
             return File.Exists(
              BasePathReader.GetBasePath() +
-             StaticResources.classDetailsPath +
-             StaticResources.FileNameOperator +
+             StaticResources.locIdvlPath +
+             filename +
              XmlExtensionLabel);
         }
     }

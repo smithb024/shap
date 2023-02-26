@@ -1,6 +1,7 @@
 ﻿namespace Shap.Common.SerialiseModel.Location
 {
     using Shap.Common.SerialiseModel.Family;
+    using Shap.Types.Enum;
     using System;
     using System.Collections.Generic;
     using System.Linq;
@@ -43,19 +44,37 @@
         /// Gets or sets the year that the location opened.
         /// </summary>
         [XmlAttribute("Opened")]
-        public int Opened { get; set; }
+        public string Opened { get; set; }
+
+        /// <summary>
+        /// Gets or sets the year that the location closed.
+        /// </summary>
+        [XmlAttribute("Closed")]
+        public string Closed { get; set; }
 
         /// <summary>
         /// Gets or sets the location of the location.
         /// </summary>
-        [XmlAttribute("Shire")]
-        public string Shire { get; set; }
+        [XmlAttribute("County")]
+        public string County { get; set; }
 
         /// <summary>
         /// Gets or sets the type of the location.
         /// </summary>
-        [XmlAttribute("Type")]
-        public string Type { get; set; }
+        [XmlAttribute("Cat")]
+        public LocationCategories Category { get; set; }
+
+        /// <summary>
+        /// Gets or sets number from.
+        /// </summary>
+        [XmlAttribute("From")]
+        public int TotalFrom { get; set; }
+
+        /// <summary>
+        /// Gets or sets the number to.
+        /// </summary>
+        [XmlAttribute("To")]
+        public int TotalTo { get; set; }
 
         /// <summary>
         /// Gets or sets the collection of operators.
@@ -68,5 +87,23 @@
         /// </summary>
         [XmlElement("Photo")]
         public List<LocationPhotos> Photos { get; set; }
+
+        /// <summary>
+        /// Gets or sets the collection of years.
+        /// </summary>
+        [XmlElement("Years")]
+        public List<LocationYear> Years { get; set; }
+
+        /// <summary>
+        /// Gets or sets the collection of classes.
+        /// </summary>
+        [XmlElement("Clss")]
+        public List<LocationClass> Classes { get; set; }
+
+        /// <summary>
+        /// Gets or sets the collection of trips.
+        /// </summary>
+        [XmlElement("Trips")]
+        public List<Trip> Trips { get; set; }
     }
 }

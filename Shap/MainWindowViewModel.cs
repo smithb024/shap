@@ -13,6 +13,7 @@
     using Shap.Config;
     using Shap.Input;
     using Shap.Interfaces.Io;
+    using Shap.Interfaces.Locations.Model;
     using Shap.Interfaces.Stats;
     using Shap.Locations.Views;
     using Shap.StationDetails;
@@ -47,18 +48,25 @@
         private IFirstExampleManager firstExamples;
 
         /// <summary>
+        /// The location manager
+        /// </summary>
+        private ILocationManager locationManager;
+
+        /// <summary>
         /// Initialises a new instance of the <see cref="MainWindowViewModel"/> class.
         /// </summary>
         /// <param name="controllers">
         /// Factory containing IO controllers.
         /// </param>
-        /// <param name="firstExamples">
-        /// First examples manager
+        /// <param name="locationManager">
+        /// The location manager
         /// </param>
         public MainWindowViewModel(
-          IIoControllers controllers)
+          IIoControllers controllers,
+          ILocationManager locationManager)
         {
             this.controllers = controllers;
+            this.locationManager = locationManager;
             this.firstExamples = Ioc.Default.GetService<IFirstExampleManager>();
 
             this.AddEditJnyDetailsCommand = new CommonCommand(this.ShowAddEditJnyDetailsWindow);

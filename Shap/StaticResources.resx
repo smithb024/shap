@@ -145,10 +145,10 @@
     <value>data\img\</value>
   </data>
   <data name="locIdvlPath" xml:space="preserve">
-    <value>data\loc\idvl</value>
+    <value>data\loc\idvl\</value>
   </data>
   <data name="locImgPath" xml:space="preserve">
-    <value>data\loc\img</value>
+    <value>data\loc\img\</value>
   </data>
   <data name="logPath" xml:space="preserve">
     <value>log\</value>

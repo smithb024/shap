@@ -142,7 +142,7 @@ namespace Shap {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to data\loc\idvl.
+        ///   Looks up a localized string similar to data\loc\idvl\.
         /// </summary>
         internal static string locIdvlPath {
             get {
@@ -151,7 +151,7 @@ namespace Shap {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to data\loc\img.
+        ///   Looks up a localized string similar to data\loc\img\.
         /// </summary>
         internal static string locImgPath {
             get {
