@@ -4,6 +4,7 @@
     using CommunityToolkit.Mvvm.Messaging;
     using Shap.Interfaces.Locations.ViewModels;
     using Shap.Interfaces.Locations.ViewModels.Icons;
+    using Shap.Locations.Messages;
     using Shap.Locations.ViewModels.Icons;
     using Shap.Messages;
     using Shap.StationDetails;
@@ -41,7 +42,9 @@
             this.Messenger.Register<NewLocationAddedMessage>(
                 this, 
                 (r, message) => this.OnLocationAddedMessageReceived(message));
-
+            this.Messenger.Register<AlphaSelectorMessage>(
+                this,
+                (r, message) => this.NewAlphaCharacterSelected(message));
         }
 
         /// <summary>
@@ -78,6 +81,11 @@
         /// </param>
         private void OnLocationAddedMessageReceived(NewLocationAddedMessage message)
         {
+        }
+
+        public void NewAlphaCharacterSelected(AlphaSelectorMessage message)
+        {
+
         }
 
         ///// <summary>
