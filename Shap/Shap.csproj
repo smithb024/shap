@@ -295,6 +295,8 @@
     <Compile Include="IocFactory.cs" />
     <Compile Include="Io\IoControllers.cs" />
     <Compile Include="Locations\IO\LocationIoController.cs" />
+    <Compile Include="Locations\Messages\RegionSelectorMessage.cs" />
+    <Compile Include="Locations\Messages\OperatorSelectorMessage.cs" />
     <Compile Include="Locations\Messages\AlphaSelectorMessage.cs" />
     <Compile Include="Locations\Model\LocationManager.cs" />
     <Compile Include="Locations\ViewModels\AlphabeticalNavigationViewModel.cs" />

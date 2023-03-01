@@ -26,6 +26,16 @@
         private List<string> locations;
 
         /// <summary>
+        /// Indicates how the locations are displayed.
+        /// </summary>
+        private SelectorType type;
+
+        /// <summary>
+        /// The criteria by which the locations are selected.
+        /// </summary>
+        private string searchCriteria;
+
+        /// <summary>
         /// Initialise a new instance of the <see cref="LocationsSelectorViewModel"/> class.
         /// </summary>
         public LocationsSelectorViewModel()
@@ -45,6 +55,12 @@
             this.Messenger.Register<AlphaSelectorMessage>(
                 this,
                 (r, message) => this.NewAlphaCharacterSelected(message));
+            this.Messenger.Register<OperatorSelectorMessage>(
+                this,
+                (r, message) => this.NewOperatorCharacterSelected(message));
+            this.Messenger.Register<RegionSelectorMessage>(
+                this,
+                (r, message) => this.NewRegionCharacterSelected(message));
         }
 
         /// <summary>
@@ -83,9 +99,40 @@
         {
         }
 
+        /// <summary>
+        /// Display all locations starting with the indicated string.
+        /// </summary>
+        /// <param name="message">
+        /// The <see cref="AlphaSelectorMessage"/> message.
+        /// </param>
         public void NewAlphaCharacterSelected(AlphaSelectorMessage message)
         {
+            this.type = SelectorType.Alphabetical;
+            this.searchCriteria = message.Character;
+        }
 
+        /// <summary>
+        /// Display all locations managed by the the indicated operator.
+        /// </summary>
+        /// <param name="message">
+        /// The <see cref="OperatorSelectorMessage"/> message.
+        /// </param>
+        public void NewOperatorCharacterSelected(OperatorSelectorMessage message)
+        {
+            this.type = SelectorType.Operator;
+            this.searchCriteria = message.Operator;
+        }
+
+        /// <summary>
+        /// Display all locations in the indicated region.
+        /// </summary>
+        /// <param name="message">
+        /// The <see cref="RegionSelectorMessage"/> message.
+        /// </param>
+        public void NewRegionCharacterSelected(RegionSelectorMessage message)
+        {
+            this.type = SelectorType.Region;
+            this.searchCriteria = message.Region;
         }
 
         ///// <summary>
@@ -123,5 +170,15 @@
         //        previousvalue = location;
         //    }
         //}
+
+        /// <summary>
+        /// Enumeration which defines how the locations are displayed.
+        /// </summary>
+        private enum SelectorType
+        {
+            Alphabetical,
+            Operator,
+            Region
+        }
     }
 }
