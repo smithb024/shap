@@ -2,14 +2,16 @@
 {
     using System;
     using CommunityToolkit.Mvvm.ComponentModel;
+    using CommunityToolkit.Mvvm.Messaging;
     using Shap.Icon;
     using Shap.Interfaces.Locations.ViewModels;
     using System.Collections.ObjectModel;
+    using Shap.Locations.Messages;
 
     public class AlphabeticalNavigationViewModel : ObservableRecipient, IAlphabeticalNavigationViewModel
     {
         /// <summary>
-        /// 
+        /// Initialise a new instance of the <see cref="AlphabeticalNavigationViewModel"/> class.
         /// </summary>
         public AlphabeticalNavigationViewModel()
         {
@@ -99,6 +101,12 @@
                 icon.IsSelected =
                     string.Compare(icon.Character, character) == 0;
             }
+
+            AlphaSelectorMessage message =
+                new AlphaSelectorMessage(
+                    character);
+
+            this.Messenger.Send(message);
         }
     }
 }

@@ -2,7 +2,9 @@
 {
     using CommunityToolkit.Mvvm.ComponentModel;
     using NynaeveLib.Commands;
+    using Shap.Interfaces.Locations.Model;
     using Shap.Interfaces.Locations.ViewModels;
+    using Shap.Locations.Model;
     using System.Windows.Input;
 
     /// <summary>
@@ -11,6 +13,11 @@
     public class LocationsIndexViewModel : ObservableRecipient, ILocationsIndexViewModel
     {
         /// <summary>
+        /// The location manager.
+        /// </summary>
+        private readonly ILocationManager locationManager;
+
+        /// <summary>
         /// The navigation window which is currently selected.
         /// </summary>
         private NavigationType selectedNatigation;
@@ -18,8 +25,12 @@
         /// <summary>
         /// Initialises a new instance of the <see cref="LocationsIndexViewModel"/> class.
         /// </summary>
-        public LocationsIndexViewModel()
+        /// <param name="locationManager">The location manager</param>
+        public LocationsIndexViewModel(
+            ILocationManager locationManager)
         {
+            this.locationManager = locationManager;
+
             this.selectedNatigation = NavigationType.Alphabetical;
             this.AlphabeticalNavigationCommand =
                 new CommonCommand(
@@ -39,7 +50,8 @@
                     this.CanSelectLines);
 
             ISelectorViewModel locationSelectorViewModel =
-              new LocationsSelectorViewModel();
+              new LocationsSelectorViewModel(
+                  this.locationManager);
             IAlphabeticalNavigationViewModel alphabeticalViewModel =
                 new AlphabeticalNavigationViewModel();
 
@@ -92,7 +104,8 @@
             IAlphabeticalNavigationViewModel alphabeticalViewModel =
                 new AlphabeticalNavigationViewModel();
             ISelectorViewModel locationSelectorViewModel =
-                new LocationsSelectorViewModel();
+                new LocationsSelectorViewModel(
+                    this.locationManager);
 
             this.Navigation?.Dispose();
             this.Selector?.Dispose();
@@ -114,7 +127,8 @@
             IDirectNavigationViewModel operatorsViewModel =
                 new DirectNavigationViewModel();
             ISelectorViewModel locationSelectorViewModel =
-                new LocationsSelectorViewModel();
+                new LocationsSelectorViewModel(
+                    this.locationManager);
 
             this.Navigation?.Dispose();
             this.Selector?.Dispose();
@@ -136,7 +150,8 @@
             IDirectNavigationViewModel regionsViewModel =
                 new DirectNavigationViewModel();
             ISelectorViewModel locationSelectorViewModel =
-                new LocationsSelectorViewModel();
+                new LocationsSelectorViewModel(
+                    this.locationManager);
 
             this.Navigation = regionsViewModel;
             this.Selector = locationSelectorViewModel;

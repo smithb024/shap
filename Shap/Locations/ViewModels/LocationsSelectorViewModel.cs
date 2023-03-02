@@ -2,6 +2,7 @@
 {
     using CommunityToolkit.Mvvm.ComponentModel;
     using CommunityToolkit.Mvvm.Messaging;
+    using Shap.Interfaces.Locations.Model;
     using Shap.Interfaces.Locations.ViewModels;
     using Shap.Interfaces.Locations.ViewModels.Icons;
     using Shap.Locations.Messages;
@@ -21,9 +22,9 @@
     public class LocationsSelectorViewModel : ObservableRecipient, ILocationSelectorViewModel
     {
         /// <summary>
-        /// A list of all locations which are available.
+        /// The location manager.
         /// </summary>
-        private List<string> locations;
+        private readonly ILocationManager locationManager;
 
         /// <summary>
         /// Indicates how the locations are displayed.
@@ -38,16 +39,13 @@
         /// <summary>
         /// Initialise a new instance of the <see cref="LocationsSelectorViewModel"/> class.
         /// </summary>
-        public LocationsSelectorViewModel()
+        /// <param name="locationManager">The location manager</param>
+        public LocationsSelectorViewModel(
+            ILocationManager locationManager)
         {
             this.Locations = new ObservableCollection<ISelectorRowViewModel>();
+            this.locationManager = locationManager;
 
-            ISelectorRowViewModel tempRow1 = new SelectorRowViewModel("Row 1");
-            ISelectorRowViewModel tempRow2 = new SelectorRowViewModel("Row 2");
-            ISelectorRowViewModel tempRow3 = new SelectorRowViewModel("Row 3");
-            this.Locations.Add(tempRow1);
-            this.Locations.Add(tempRow2);
-            this.Locations.Add(tempRow3);
 
             this.Messenger.Register<NewLocationAddedMessage>(
                 this, 
@@ -109,6 +107,7 @@
         {
             this.type = SelectorType.Alphabetical;
             this.searchCriteria = message.Character;
+            this.RebuildLocationsList();
         }
 
         /// <summary>
@@ -121,6 +120,7 @@
         {
             this.type = SelectorType.Operator;
             this.searchCriteria = message.Operator;
+            this.RebuildLocationsList();
         }
 
         /// <summary>
@@ -133,43 +133,46 @@
         {
             this.type = SelectorType.Region;
             this.searchCriteria = message.Region;
+            this.RebuildLocationsList();
         }
 
-        ///// <summary>
-        /////   Loops through all the from Stations and adds them to the 
-        /////     comboBoxPrimary combo box. It only adds one of each station, 
-        /////     since they are sorted alphabetically it does this by checking 
-        /////     against the previous value.
-        ///// </summary>
-        //private void InitialiseComboBoxPrimary()
-        //{
-        //    this.stnList.Clear();
-        //    this.stnList.Add(string.Empty);
+        /// <summary>
+        /// Rebuild the locations list based on the current search criteria.
+        /// </summary>
+        private void RebuildLocationsList()
+        {
+            List<string> allLocations = this.locationManager.GetLocations();
+            this.Locations.Clear();
 
-        //    // Get all locations from the model.
-        //    int routesCount = journeyController.GetMileageDetailsLength();
-        //    List<string> locations = new List<string>();
+            switch (this.type)
+            {
+                case SelectorType.Alphabetical:
+                    {
+                        foreach (string location in allLocations)
+                        {
+                            if (string.Equals(location.Substring(0,1), this.searchCriteria))
+                            {
+                                ISelectorRowViewModel row =
+                                    new SelectorRowViewModel(
+                                        location);
+                                this.Locations.Add(row);
+                            }
+                        }
+                        break;
+                    }
+                case SelectorType.Operator:
+                    {
+                        break;
+                    }
 
-        //    for (int i = 0; i < routesCount; i++)
-        //    {
-        //        locations.Add(journeyController.GetFromStation(i));
-        //    }
+                case SelectorType.Region:
+                    {
+                        break;
+                    }
+            }
 
-        //    // Ensure the locations are in alphabetical order.
-        //    locations.Sort();
-
-        //    // Filter out duplicates.
-        //    string previousvalue = string.Empty;
-        //    foreach (string location in locations)
-        //    {
-        //        if (location != previousvalue)
-        //        {
-        //            this.stnList.Add(location);
-        //        }
-
-        //        previousvalue = location;
-        //    }
-        //}
+            this.OnPropertyChanged(nameof(this.Locations));
+        }
 
         /// <summary>
         /// Enumeration which defines how the locations are displayed.
