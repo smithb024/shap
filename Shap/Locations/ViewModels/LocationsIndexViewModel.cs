@@ -1,10 +1,11 @@
 ﻿namespace Shap.Locations.ViewModels
 {
     using CommunityToolkit.Mvvm.ComponentModel;
+    using CommunityToolkit.Mvvm.Messaging;
     using NynaeveLib.Commands;
     using Shap.Interfaces.Locations.Model;
     using Shap.Interfaces.Locations.ViewModels;
-    using Shap.Locations.Model;
+    using Shap.Locations.Messages;
     using System.Windows.Input;
 
     /// <summary>
@@ -23,6 +24,11 @@
         private NavigationType selectedNatigation;
 
         /// <summary>
+        /// Indicates whether the locations are being configured.
+        /// </summary>
+        private bool isConfigurationMode;
+
+        /// <summary>
         /// Initialises a new instance of the <see cref="LocationsIndexViewModel"/> class.
         /// </summary>
         /// <param name="locationManager">The location manager</param>
@@ -30,6 +36,7 @@
             ILocationManager locationManager)
         {
             this.locationManager = locationManager;
+            this.isConfigurationMode = false;
 
             this.selectedNatigation = NavigationType.Alphabetical;
             this.AlphabeticalNavigationCommand =
@@ -57,6 +64,28 @@
 
             this.Selector = locationSelectorViewModel;
             this.Navigation = alphabeticalViewModel;
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether the locations are being configured.
+        /// </summary>
+        public bool IsConfigurationMode {
+            get => this.isConfigurationMode;
+            set
+            {
+                if (this.isConfigurationMode == value)
+                {
+                    return;
+                }
+
+                this.isConfigurationMode = value;
+                this.OnPropertyChanged(nameof(this.IsConfigurationMode));
+
+                ConfigurationModeMessage message =
+                    new ConfigurationModeMessage(
+                        this.isConfigurationMode);
+                this.Messenger.Send(message);
+            }
         }
 
         /// <summary>

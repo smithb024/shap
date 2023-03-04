@@ -42,6 +42,12 @@
         <StackPanel 
             Orientation="Vertical"
             Grid.Column="0">
+            <CheckBox 
+                Margin="5"
+                Content="Configuration Mode"
+                Style="{StaticResource StdCheckBoxStyle}"
+                IsChecked="{Binding Path=IsConfigurationMode}"/>
+            
             <StackPanel Orientation="Horizontal">
                 <Button Content="Alphabetical" 
                         Command="{Binding Path=AlphabeticalNavigationCommand}"

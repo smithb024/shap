@@ -8,6 +8,11 @@
     public interface ILocationsIndexViewModel
     {
         /// <summary>
+        /// Gets or sets a value indicating whether the locations are being configured.
+        /// </summary>
+        bool IsConfigurationMode { get; set; }
+
+        /// <summary>
         /// Gets the command which is used to dispayed the alphabetical navigation view.
         /// </summary>
         ICommand AlphabeticalNavigationCommand { get; }
