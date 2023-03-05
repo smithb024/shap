@@ -84,22 +84,19 @@
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
-                <TextBlock 
-                            Text="Family"
-                            Grid.Column="0"
-                            Style="{StaticResource StdTextBlockStyle}"/>
+                <TextBlock Text="Family"
+                           Grid.Column="0"
+                           Style="{StaticResource StdTextBlockStyle}"/>
                 <ComboBox SelectedIndex="{Binding Path=CategoryIndex}"
-                            Grid.Column="1"
-                            ItemsSource="{Binding Path=Categories}"
-                            Style="{StaticResource ComboBoxStyle}"/>
+                          Grid.Column="1"
+                          ItemsSource="{Binding Path=Categories}"
+                          Style="{StaticResource ComboBoxStyle}"/>
             </Grid>
-            <Button 
-                    Content="Save"
+            <Button Content="Save"
                     Style="{StaticResource StdButtonStyle}"
                     Height="20"
                     Command="{Binding Path=SaveCmd}"/>
-            <Button 
-                    Content="Cancel"
+            <Button Content="Cancel"
                     Style="{StaticResource StdButtonStyle}"
                     Height="20"
                     Command="{Binding Path=CancelCmd}"/>

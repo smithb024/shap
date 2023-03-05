@@ -2,6 +2,7 @@
 {
     using CommunityToolkit.Mvvm.ComponentModel;
     using CommunityToolkit.Mvvm.Messaging;
+    using Shap.Common.Commands;
     using Shap.Common.SerialiseModel.Location;
     using Shap.Interfaces.Io;
     using Shap.Interfaces.Locations.ViewModels;
@@ -11,6 +12,7 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Windows.Forms;
     using System.Windows.Input;
 
     public class LocationConfigurationViewModel : ObservableRecipient, ILocationConfigurationViewModel
@@ -63,6 +65,9 @@
             IIoControllers ioControllers)
         {
             this.ioControllers = ioControllers;
+
+            this.SaveCmd = new CommonCommand(this.Save, () => true);
+            this.CancelCmd = new CommonCommand(this.Cancel, () => true);
 
             this.Messenger.Register<DisplayLocationMessage>(
                 this,
@@ -186,6 +191,31 @@
             this.Size = string.Empty;
             this.Opened = string.Empty;
             this.Closed = string.Empty;
+        }
+
+        /// <summary>
+        /// Save the current location.
+        /// </summary>
+        private void Save()
+        {
+            this.currentLocation.Code = this.Code;
+            this.currentLocation.Size = this.Size;
+            this.currentLocation.Opened = this.Opened;
+            this.currentLocation.Closed = this.Closed;
+
+            this.ioControllers.Location.Write(
+                this.currentLocation,
+                this.Name);
+        }
+
+        /// <summary>
+        /// Cancel updates. Send message to close the window.
+        /// </summary>
+        private void Cancel()
+        {
+            this.Clear();
+            DisplayLocationMessage message = new DisplayLocationMessage(string.Empty);
+            this.Messenger.Send(message);
         }
     }
 }
