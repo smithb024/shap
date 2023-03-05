@@ -4,12 +4,106 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Shap.Locations"
-             Width="100"
-             Height="100"
-             Background="DarkCyan"
              mc:Ignorable="d" 
+             Width="550"
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
-            
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="250"/>
+        </Grid.ColumnDefinitions>
+
+        <StackPanel Grid.Column="0">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Text="Name"
+                               Grid.Column="0"
+                               Style="{StaticResource StdTextBlockStyle}"/>
+                <TextBlock Text="{Binding Path=Name}"
+                             Grid.Column="1"
+                             Height="20"
+                             Style="{StaticResource StdTextBlockStyle}"/>
+            </Grid>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Text="Code"
+                               Grid.Column="0"
+                               Style="{StaticResource StdTextBlockStyle}"/>
+                <TextBox Text="{Binding Path=Code}"
+                             Grid.Column="1"
+                             Height="20"
+                             Style="{StaticResource StdTextBoxStyle}"/>
+            </Grid>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Text="Size"
+                               Grid.Column="0"
+                               Style="{StaticResource StdTextBlockStyle}"/>
+                <TextBox Text="{Binding Path=Size}"
+                             Grid.Column="1"
+                             Height="20"
+                             Style="{StaticResource StdTextBoxStyle}"/>
+            </Grid>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Text="Opened"
+                               Grid.Column="0"
+                               Style="{StaticResource StdTextBlockStyle}"/>
+                <TextBox Text="{Binding Path=Opened}"
+                             Grid.Column="1"
+                             Height="20"
+                             Style="{StaticResource StdTextBoxStyle}"/>
+            </Grid>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Text="Closed"
+                               Grid.Column="0"
+                               Style="{StaticResource StdTextBlockStyle}"/>
+                <TextBox Text="{Binding Path=Closed}"
+                             Grid.Column="1"
+                             Height="20"
+                             Style="{StaticResource StdTextBoxStyle}"/>
+            </Grid>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock 
+                            Text="Family"
+                            Grid.Column="0"
+                            Style="{StaticResource StdTextBlockStyle}"/>
+                <ComboBox SelectedIndex="{Binding Path=CategoryIndex}"
+                            Grid.Column="1"
+                            ItemsSource="{Binding Path=Categories}"
+                            Style="{StaticResource ComboBoxStyle}"/>
+            </Grid>
+            <Button 
+                    Content="Save"
+                    Style="{StaticResource StdButtonStyle}"
+                    Height="20"
+                    Command="{Binding Path=SaveCmd}"/>
+            <Button 
+                    Content="Cancel"
+                    Style="{StaticResource StdButtonStyle}"
+                    Height="20"
+                    Command="{Binding Path=CancelCmd}"/>
+        </StackPanel>
+
     </Grid>
 </UserControl>

@@ -269,6 +269,7 @@
     <Compile Include="Interfaces\Io\IXmlOperatorIoController.cs" />
     <Compile Include="Interfaces\Io\IXmlFamilyIoController.cs" />
     <Compile Include="Interfaces\Locations\Model\ILocationManager.cs" />
+    <Compile Include="Interfaces\Locations\ViewModels\Helpers\ILocationImageSelectorViewModel.cs" />
     <Compile Include="Interfaces\Locations\ViewModels\IAlphabeticalNavigationViewModel.cs" />
     <Compile Include="Interfaces\Locations\ViewModels\Icons\ISelectorRowViewModel.cs" />
     <Compile Include="Interfaces\Locations\ViewModels\IDetailsViewModel.cs" />
@@ -296,12 +297,14 @@
     <Compile Include="Io\IoControllers.cs" />
     <Compile Include="Locations\IO\LocationIoController.cs" />
     <Compile Include="Locations\Messages\ConfigurationModeMessage.cs" />
+    <Compile Include="Locations\Messages\DisplayLocationMessage.cs" />
     <Compile Include="Locations\Messages\RegionSelectorMessage.cs" />
     <Compile Include="Locations\Messages\OperatorSelectorMessage.cs" />
     <Compile Include="Locations\Messages\AlphaSelectorMessage.cs" />
     <Compile Include="Locations\Model\LocationManager.cs" />
     <Compile Include="Locations\ViewModels\AlphabeticalNavigationViewModel.cs" />
     <Compile Include="Locations\ViewModels\DirectNavigationViewModel.cs" />
+    <Compile Include="Locations\ViewModels\Helpers\LocationImageSelectorViewModel.cs" />
     <Compile Include="Locations\ViewModels\Icons\SelectorRowViewModel.cs" />
     <Compile Include="Locations\Views\AlphabeticalNavigationView.xaml.cs">
       <DependentUpon>AlphabeticalNavigationView.xaml</DependentUpon>

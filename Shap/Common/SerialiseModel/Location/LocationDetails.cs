@@ -38,7 +38,7 @@
         /// Gets or sets the size of the location.
         /// </summary>
         [XmlAttribute("Size")]
-        public int Size { get; set; }
+        public string Size { get; set; }
 
         /// <summary>
         /// Gets or sets the year that the location opened.

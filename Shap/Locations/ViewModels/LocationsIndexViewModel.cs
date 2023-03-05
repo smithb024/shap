@@ -3,6 +3,7 @@
     using CommunityToolkit.Mvvm.ComponentModel;
     using CommunityToolkit.Mvvm.Messaging;
     using NynaeveLib.Commands;
+    using Shap.Interfaces.Io;
     using Shap.Interfaces.Locations.Model;
     using Shap.Interfaces.Locations.ViewModels;
     using Shap.Locations.Messages;
@@ -29,11 +30,23 @@
         private bool isConfigurationMode;
 
         /// <summary>
+        /// The location configuration view model.
+        /// </summary>
+        private ILocationConfigurationViewModel locationConfigurationViewModel;
+
+        /// <summary>
+        /// The location view model.
+        /// </summary>
+        private ILocationViewModel locationViewModel;
+
+        /// <summary>
         /// Initialises a new instance of the <see cref="LocationsIndexViewModel"/> class.
         /// </summary>
         /// <param name="locationManager">The location manager</param>
+        /// <param name="ioControllers">The IO Controller manager object</param>
         public LocationsIndexViewModel(
-            ILocationManager locationManager)
+            ILocationManager locationManager,
+            IIoControllers ioControllers)
         {
             this.locationManager = locationManager;
             this.isConfigurationMode = false;
@@ -56,14 +69,24 @@
                     this.SelectLines,
                     this.CanSelectLines);
 
+            IAlphabeticalNavigationViewModel alphabeticalViewModel =
+                new AlphabeticalNavigationViewModel();
             ISelectorViewModel locationSelectorViewModel =
               new LocationsSelectorViewModel(
                   this.locationManager);
-            IAlphabeticalNavigationViewModel alphabeticalViewModel =
-                new AlphabeticalNavigationViewModel();
 
-            this.Selector = locationSelectorViewModel;
             this.Navigation = alphabeticalViewModel;
+            this.Selector = locationSelectorViewModel;
+
+            this.locationViewModel =
+                new LocationViewModel();
+            this.locationConfigurationViewModel = 
+                new LocationConfigurationViewModel(
+                    ioControllers);
+
+            this.Messenger.Register<DisplayLocationMessage>(
+                this,
+                (r, message) => this.OnDisplayLocationMessageReceived(message));
         }
 
         /// <summary>
@@ -85,6 +108,20 @@
                     new ConfigurationModeMessage(
                         this.isConfigurationMode);
                 this.Messenger.Send(message);
+
+                if (this.LocationDetails != null)
+                {
+                    if (this.isConfigurationMode)
+                    {
+                        this.LocationDetails = this.locationConfigurationViewModel;
+                    }
+                    else
+                    {
+                        this.LocationDetails = this.locationViewModel;
+                    }
+
+                    this.OnPropertyChanged(nameof(this.LocationDetails));
+                }
             }
         }
 
@@ -121,7 +158,7 @@
         /// <summary>
         /// Gets the locations details view model.
         /// </summary>
-        public IDetailsViewModel LocationDetails { get; }
+        public IDetailsViewModel LocationDetails { get; private set; }
 
         /// <summary>
         /// Select the alphabetical navigation view.
@@ -245,6 +282,33 @@
         private bool CanSelectLines()
         {
             return this.selectedNatigation != NavigationType.Lines;
+        }
+
+        /// <summary>
+        /// Load a new location into the view model.
+        /// </summary>
+        /// <param name="message">
+        /// Message requesting that a new location is added.
+        /// </param>
+        private void OnDisplayLocationMessageReceived(DisplayLocationMessage message)
+        {
+            if (string.IsNullOrEmpty(message.Location))
+            {
+                this.LocationDetails = null;
+            }
+            else
+            {
+                if (this.isConfigurationMode)
+                {
+                    this.LocationDetails = this.locationConfigurationViewModel;
+                }
+                else
+                {
+                    this.LocationDetails = this.locationViewModel;
+                }
+            }
+
+            this.OnPropertyChanged(nameof(this.LocationDetails));
         }
 
         /// <summary>

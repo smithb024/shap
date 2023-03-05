@@ -1,11 +1,5 @@
 ﻿namespace Shap.Types.Enum
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
-    using System.Threading.Tasks;
-
     /// <summary>
     /// Enumeration describing the different location categories
     /// </summary>
