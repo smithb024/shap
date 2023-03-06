@@ -131,10 +131,22 @@
         /// <summary>
         /// Gets the collection of all possible location categories.
         /// </summary>
-        public List<LocationCategories> Categories =>
-            Enum.GetValues(typeof(LocationCategories)).
-            Cast<LocationCategories>().
-            ToList();
+        public List<string> Categories
+        {
+            get
+            {
+                List<string> categories = new List<string>();
+
+                foreach(LocationCategories category in Enum.GetValues(typeof(LocationCategories)))
+                {
+                    categories.Add(
+                        LocationCategoriesConverter.Convert(
+                            category));
+                }
+
+                return categories; 
+            }
+        }
 
         /// <summary>
         /// Get the image selector view models.
@@ -179,6 +191,7 @@
             this.Size = this.currentLocation.Size ?? string.Empty;
             this.Opened = this.currentLocation.Opened ?? string.Empty;
             this.Closed = this.currentLocation.Closed ?? string.Empty;
+            this.CategoryIndex = (int)this.currentLocation.Category;
         }
 
         /// <summary>
@@ -191,6 +204,7 @@
             this.Size = string.Empty;
             this.Opened = string.Empty;
             this.Closed = string.Empty;
+            this.CategoryIndex = 0;
         }
 
         /// <summary>
@@ -202,6 +216,7 @@
             this.currentLocation.Size = this.Size;
             this.currentLocation.Opened = this.Opened;
             this.currentLocation.Closed = this.Closed;
+            this.currentLocation.Category = (LocationCategories)this.CategoryIndex;
 
             this.ioControllers.Location.Write(
                 this.currentLocation,

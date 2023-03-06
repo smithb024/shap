@@ -362,6 +362,7 @@
     <Compile Include="Types\ClassDataTypeViewModel.cs" />
     <Compile Include="Types\Enum\ComponentState.cs" />
     <Compile Include="Types\Enum\LocationCategories.cs" />
+    <Compile Include="Types\Enum\LocationCategoriesConverter.cs" />
     <Compile Include="Types\Enum\MainCommands.cs" />
     <Compile Include="Types\Factories\JourneyFactory.cs" />
     <Compile Include="Types\FirstExampleType.cs" />

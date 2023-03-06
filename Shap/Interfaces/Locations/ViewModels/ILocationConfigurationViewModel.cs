@@ -43,7 +43,7 @@
         /// <summary>
         /// Gets the collection of all possible location categories.
         /// </summary>
-        List<LocationCategories> Categories { get; }
+        List<string> Categories { get; }
 
         /// <summary>
         /// Get the collection of image selector view models.

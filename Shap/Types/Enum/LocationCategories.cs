@@ -5,17 +5,17 @@
     /// </summary>
     public enum LocationCategories
     {
+        /// <summary>
+        /// Not defined
+        /// </summary>
+        ND,
+
         A,
         B,
         C1,
         C2,
         D,
         E,
-        F,
-
-        /// <summary>
-        /// Not defined
-        /// </summary>
-        ND
+        F
     }
 }
