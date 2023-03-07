@@ -29,7 +29,7 @@
         {
 
             this.LocationImageList = new ObservableCollection<string>();
-            List<string> imageFileNames = ioControllers.Units.GetImageFileList();
+            List<string> imageFileNames = ioControllers.Location.GetImageFileList();
             foreach (string str in imageFileNames)
             {
                 this.LocationImageList.Add(str);
@@ -121,12 +121,37 @@
                 }
 
                 string returnString = BasePathReader.GetBasePathUri() +
-              StaticResources.classImgPath +
+              StaticResources.locImgPath +
               this.LocationImageList[this.LocationImageListIndex] +
               ".jpg";
 
                 return returnString;
             }
+        }
+
+        /// <summary>
+        /// Set a new image.
+        /// </summary>
+        /// <param name="image">the image name</param>
+        public void SetImage(string image)
+        {
+            this.imageIndex = -1;
+
+            if (!string.IsNullOrWhiteSpace(image))
+            {
+                for (int index = 0; index < this.LocationImageList.Count; ++index)
+                {
+                    if (string.Compare(this.LocationImageList[index], image) == 0)
+                    {
+                        this.imageIndex = index;
+                        break;
+                    }
+                }
+            }
+
+            this.OnPropertyChanged(nameof(this.LocationImageListIndex));
+            this.OnPropertyChanged(nameof(this.SelectedImage));
+            this.OnPropertyChanged(nameof(this.Path));
         }
     }
 }

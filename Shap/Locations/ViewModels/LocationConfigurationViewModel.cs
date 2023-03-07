@@ -8,11 +8,10 @@
     using Shap.Interfaces.Locations.ViewModels;
     using Shap.Interfaces.Locations.ViewModels.Helpers;
     using Shap.Locations.Messages;
+    using Shap.Locations.ViewModels.Helpers;
     using Shap.Types.Enum;
     using System;
     using System.Collections.Generic;
-    using System.Linq;
-    using System.Windows.Forms;
     using System.Windows.Input;
 
     public class LocationConfigurationViewModel : ObservableRecipient, ILocationConfigurationViewModel
@@ -68,6 +67,10 @@
 
             this.SaveCmd = new CommonCommand(this.Save, () => true);
             this.CancelCmd = new CommonCommand(this.Cancel, () => true);
+            this.Image =
+                new LocationImageSelectorViewModel(
+                    ioControllers,
+                    string.Empty);
 
             this.Messenger.Register<DisplayLocationMessage>(
                 this,
@@ -151,7 +154,7 @@
         /// <summary>
         /// Get the image selector view models.
         /// </summary>
-        public ILocationImageSelectorViewModel Images { get; }
+        public ILocationImageSelectorViewModel Image { get; }
 
         /// <summary>
         /// Indicates whether the save command can be run.
@@ -192,6 +195,15 @@
             this.Opened = this.currentLocation.Opened ?? string.Empty;
             this.Closed = this.currentLocation.Closed ?? string.Empty;
             this.CategoryIndex = (int)this.currentLocation.Category;
+
+            if (this.currentLocation.Photos.Count > 0)
+            {
+                this.Image.SetImage(this.currentLocation.Photos[0].Path);
+            }
+            else
+            {
+                this.Image.SetImage(string.Empty);
+            }
         }
 
         /// <summary>
@@ -205,6 +217,7 @@
             this.Opened = string.Empty;
             this.Closed = string.Empty;
             this.CategoryIndex = 0;
+            this.Image.SetImage(string.Empty);
         }
 
         /// <summary>
@@ -217,6 +230,15 @@
             this.currentLocation.Opened = this.Opened;
             this.currentLocation.Closed = this.Closed;
             this.currentLocation.Category = (LocationCategories)this.CategoryIndex;
+
+            this.currentLocation.Photos =
+                new List<LocationPhotos>()
+                {
+                    new LocationPhotos()
+                    {
+                        Path = this.Image.SelectedImage
+                    }
+                };
 
             this.ioControllers.Location.Write(
                 this.currentLocation,

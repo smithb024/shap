@@ -32,5 +32,11 @@
         /// Gets the path to the selected image.
         /// </summary>
         string Path { get; }
+
+        /// <summary>
+        /// Set a new image.
+        /// </summary>
+        /// <param name="image">the image name</param>
+        void SetImage(string image);
     }
 }

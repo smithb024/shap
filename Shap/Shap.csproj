@@ -312,6 +312,9 @@
     <Compile Include="Locations\Views\DirectNavigationView.xaml.cs">
       <DependentUpon>DirectNavigationView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Locations\Views\Icons\LocationConfigImageSelector.xaml.cs">
+      <DependentUpon>LocationConfigImageSelector.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Locations\Views\Icons\SelectorRowIcon.xaml.cs">
       <DependentUpon>SelectorRowIcon.xaml</DependentUpon>
     </Compile>
@@ -574,6 +577,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Locations\Views\DirectNavigationView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Locations\Views\Icons\LocationConfigImageSelector.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

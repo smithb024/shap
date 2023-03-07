@@ -1,6 +1,7 @@
 ﻿namespace Shap.Interfaces.Io
 {
     using Shap.Common.SerialiseModel.Location;
+    using System.Collections.Generic;
 
     /// <summary>
     /// Used to read and write to the location XML file.
@@ -29,5 +30,11 @@
         /// <param name="filename">The name of the location</param>
         /// <returns>file exists flag</returns>
         bool DoesFileExist(string filename);
+
+        /// <summary>
+        /// Returns all the files in location image Path.
+        /// </summary>
+        /// <returns>list of image names</returns>
+        List<string> GetImageFileList();
     }
 }

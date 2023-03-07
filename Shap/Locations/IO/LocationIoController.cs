@@ -5,6 +5,7 @@
     using Shap.Common;
     using Shap.Common.SerialiseModel.Location;
     using Shap.Interfaces.Io;
+    using System.Collections.Generic;
 
     /// <summary>
     /// Used to read and write to the location XML file.
@@ -24,13 +25,13 @@
         public LocationDetails Read(string filename)
         {
             string myPath =
-            BasePathReader.GetBasePath() +
-            StaticResources.locIdvlPath +
-            filename +
-            XmlExtensionLabel;
-            LocationDetails results =
-                XmlFileIo.ReadXml<LocationDetails>(
-                    myPath);
+                BasePathReader.GetBasePath() +
+                StaticResources.locIdvlPath +
+                filename +
+                XmlExtensionLabel;
+                LocationDetails results =
+                    XmlFileIo.ReadXml<LocationDetails>(
+                        myPath);
 
             return results;
         }
@@ -67,6 +68,27 @@
              StaticResources.locIdvlPath +
              filename +
              XmlExtensionLabel);
+        }
+
+        /// <summary>
+        /// Returns all the files in location image Path.
+        /// </summary>
+        /// <returns>list of image names</returns>
+        public List<string> GetImageFileList()
+        {
+            List<string> imageFileNameList = new List<string>();
+            string[] fileNamesArray =
+                Directory.GetFiles(
+                    BasePathReader.GetBasePath() + StaticResources.locImgPath);
+
+            foreach (string file in fileNamesArray)
+            {
+                string fileName = file.Substring(file.LastIndexOf('\\') + 1);
+                fileName = fileName.Substring(0, fileName.LastIndexOf('.'));
+                imageFileNameList.Add(fileName);
+            }
+
+            return imageFileNameList;
         }
     }
 }

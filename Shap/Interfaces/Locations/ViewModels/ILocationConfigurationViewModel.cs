@@ -48,7 +48,7 @@
         /// <summary>
         /// Get the collection of image selector view models.
         /// </summary>
-        ILocationImageSelectorViewModel Images { get; }
+        ILocationImageSelectorViewModel Image { get; }
 
         /// <summary>
         /// Indicates whether the save command can be run.

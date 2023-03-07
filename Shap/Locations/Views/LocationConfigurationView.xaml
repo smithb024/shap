@@ -3,7 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:Shap.Locations"
+             xmlns:local="clr-namespace:Shap.Locations" xmlns:icons="clr-namespace:Shap.Locations.Views.Icons"
              mc:Ignorable="d" 
              Width="550"
              d:DesignHeight="450" d:DesignWidth="800">
@@ -102,5 +102,8 @@
                     Command="{Binding Path=CancelCmd}"/>
         </StackPanel>
 
+        <icons:LocationConfigImageSelector
+            Grid.Column="1"
+            DataContext="{Binding Path=Image}"/>
     </Grid>
 </UserControl>
