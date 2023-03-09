@@ -29,5 +29,10 @@
         /// Gets the Units IO XML Controller.
         /// </summary>
         IUnitsXmlIoController UnitsXml { get; }
+
+        /// <summary>
+        /// Gets the location IO Controller.
+        /// </summary>
+        ILocationIoController Location { get; }
     }
 }

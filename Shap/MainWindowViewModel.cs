@@ -5,6 +5,7 @@
     using System.Windows.Input;
 
     using CommunityToolkit.Mvvm.DependencyInjection;
+    using Interfaces;
     using NynaeveLib.Logger;
     using Shap.Analysis.ViewModels;
     using Shap.Analysis.Windows;
@@ -12,23 +13,29 @@
     using Shap.Config;
     using Shap.Input;
     using Shap.Interfaces.Io;
+    using Shap.Interfaces.Locations.Model;
     using Shap.Interfaces.Stats;
+    using Shap.Locations.Views;
     using Shap.StationDetails;
-    using Shap.Stats;
     using Shap.Units;
-    using Shap.Units.IO;
 
     /// <summary>
     /// View model for the main window.
     /// </summary>
-    public class MainWindowViewModel
+    public class MainWindowViewModel : IMainWindowViewModel
     {
-        InputForm inputWindow;
-        MileageDetailsWindow jnyDetailsWindow;
-        EditMileageWindow editMileageWindow;
-        ClassIndexWindow classIndexWindow;
-        AnalysisWindow analysisWindow;
-        ConfigWindow configWindow;
+        private InputForm inputWindow;
+        private MileageDetailsWindow jnyDetailsWindow;
+        private EditMileageWindow editMileageWindow;
+
+        /// <summary>
+        /// The locations index window.
+        /// </summary>
+        private LocationsIndexWindow locationsIndexWindow;
+
+        private ClassIndexWindow classIndexWindow;
+        private AnalysisWindow analysisWindow;
+        private ConfigWindow configWindow;
 
         /// <summary>
         /// Collection of IO controllers
@@ -41,29 +48,37 @@
         private IFirstExampleManager firstExamples;
 
         /// <summary>
+        /// The location manager
+        /// </summary>
+        private ILocationManager locationManager;
+
+        /// <summary>
         /// Initialises a new instance of the <see cref="MainWindowViewModel"/> class.
         /// </summary>
         /// <param name="controllers">
         /// Factory containing IO controllers.
         /// </param>
-        /// <param name="firstExamples">
-        /// First examples manager
+        /// <param name="locationManager">
+        /// The location manager
         /// </param>
         public MainWindowViewModel(
-          IIoControllers controllers)
+          IIoControllers controllers,
+          ILocationManager locationManager)
         {
             this.controllers = controllers;
+            this.locationManager = locationManager;
             this.firstExamples = Ioc.Default.GetService<IFirstExampleManager>();
 
-            AddEditJnyDetailsCommand = new CommonCommand(this.ShowAddEditJnyDetailsWindow);
-            AnalysisCommand = new CommonCommand(this.ShowAnalysisWindow);
-            ConfigurationCommand = new CommonCommand(this.ShowConfigurationWindow);
-            ExitCommand = new CommonCommand(this.ExitProgram);
-            OpenLogCommand = new CommonCommand(this.ShowLog);
-            OpenLogFolderCommand = new CommonCommand(this.ShowLogFolder);
-            ShowClassIndexCommand = new CommonCommand(this.ShowClassIndexWindow);
-            ShowJnyDetailsCommand = new CommonCommand(this.ShowJnyDetailsWindow);
-            ShowInputDataCommand = new CommonCommand(this.ShowInputWindow);
+            this.AddEditJnyDetailsCommand = new CommonCommand(this.ShowAddEditJnyDetailsWindow);
+            this.AnalysisCommand = new CommonCommand(this.ShowAnalysisWindow);
+            this.ConfigurationCommand = new CommonCommand(this.ShowConfigurationWindow);
+            this.ExitCommand = new CommonCommand(this.ExitProgram);
+            this.OpenLogCommand = new CommonCommand(this.ShowLog);
+            this.OpenLogFolderCommand = new CommonCommand(this.ShowLogFolder);
+            this.ShowClassIndexCommand = new CommonCommand(this.ShowClassIndexWindow);
+            this.ShowLocationIndexCommand = new CommonCommand(this.ShowLocationIndexWindow);
+            this.ShowJnyDetailsCommand = new CommonCommand(this.ShowJnyDetailsWindow);
+            this.ShowInputDataCommand = new CommonCommand(this.ShowInputWindow);
 
             this.inputWindow = null;
         }
@@ -80,7 +95,15 @@
 
         public ICommand OpenLogFolderCommand { get; private set; }
 
+        /// <summary>
+        /// Gets the command which is used to display the class index window.
+        /// </summary>
         public ICommand ShowClassIndexCommand { get; private set; }
+
+        /// <summary>
+        /// Gets the command which is used to dispayed the location index window.
+        /// </summary>
+        public ICommand ShowLocationIndexCommand { get; private set; }
 
         public ICommand ShowJnyDetailsCommand { get; private set; }
 
@@ -228,6 +251,33 @@
             }
 
             this.classIndexWindow.Focus();
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public void ShowLocationIndexWindow()
+        {
+            if (this.locationsIndexWindow == null)
+            {
+                this.locationsIndexWindow = new LocationsIndexWindow();
+                this.SetupWindow(
+                  this.locationsIndexWindow,
+                  this.LocationsIndexWindowClosed);
+            }
+
+            this.locationsIndexWindow.Focus();
+        }
+
+        /// <summary>
+        /// Window has closed, set to null.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        public void LocationsIndexWindowClosed(object sender, EventArgs e)
+        {
+            this.locationsIndexWindow.Closed -= this.LocationsIndexWindowClosed;
+            this.locationsIndexWindow = null;
         }
 
         /// <summary>

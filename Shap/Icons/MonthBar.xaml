@@ -11,43 +11,33 @@
     d:DesignHeight="300" 
     d:DesignWidth="300">
 
-  <UserControl.Resources>
-    <shapConverter:DayIconBackgroundColourConverter x:Key="backgroundConverter"/>
-    <shapConverter:DayIconHighlightBrushConverter x:Key="highlightConverter"/>
-  </UserControl.Resources>
+    <UserControl.Resources>
+        <shapConverter:DayIconBackgroundColourConverter x:Key="backgroundConverter"/>
+        <shapConverter:DayIconHighlightBrushConverter x:Key="highlightConverter"/>
+    </UserControl.Resources>
 
-  <Grid>
-    <!--<local:DayIcon
-      DayNumber="1"
-      DayDetail="22"
-      BackgroundBrush="Green"
-      DaySelectedBrush="Red"/>-->
-    <!--<local:DayIcon
-            DayNumber="{Binding CurrentDay}"
-            DayDetail="{Binding Dist}"
-            BackgroundBrush="{Binding Path=IsWeekend, Converter={StaticResource backgroundConverter}}"
-            DaySelectedBrush="{Binding Path=IsSelected, Converter={StaticResource highlightConverter}}"/>-->
-    <ItemsControl ItemsSource="{Binding Days}">
-      <ItemsControl.ItemsPanel>
-        <ItemsPanelTemplate>
-          <WrapPanel/>
-        </ItemsPanelTemplate>
-      </ItemsControl.ItemsPanel>
-      <ItemsControl.ItemTemplate>
-        <DataTemplate>
-          <local:DayIcon
-            DayNumber="{Binding CurrentDay}"
-            DayDetail="{Binding Dist}"
-            BackgroundBrush="{Binding Path=IsWeekend, Converter={StaticResource backgroundConverter}}"
-            DaySelectedBrush="{Binding Path=IsSelected, Converter={StaticResource highlightConverter}}">
-            <i:Interaction.Triggers>
-              <i:EventTrigger EventName="MouseLeftButtonDown">
-                <i:InvokeCommandAction Command="{Binding SelectDayCmd}"/>
-              </i:EventTrigger>
-            </i:Interaction.Triggers>
-          </local:DayIcon>
-        </DataTemplate>
-      </ItemsControl.ItemTemplate>
-    </ItemsControl>
+    <Grid>
+        <ItemsControl ItemsSource="{Binding Days}">
+            <ItemsControl.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <WrapPanel/>
+                </ItemsPanelTemplate>
+            </ItemsControl.ItemsPanel>
+            <ItemsControl.ItemTemplate>
+                <DataTemplate>
+                    <local:DayIcon 
+                        DayNumber="{Binding CurrentDay}"
+                        DayDetail="{Binding Dist}"
+                        BackgroundBrush="{Binding Path=IsWeekend, Converter={StaticResource backgroundConverter}}"
+                        DaySelectedBrush="{Binding Path=IsSelected, Converter={StaticResource highlightConverter}}">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="MouseLeftButtonDown">
+                                <i:InvokeCommandAction Command="{Binding SelectDayCmd}"/>
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </local:DayIcon>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
     </Grid>
 </UserControl>

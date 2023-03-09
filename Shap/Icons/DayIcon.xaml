@@ -11,33 +11,27 @@
   Width="25"
   d:DesignHeight="300" d:DesignWidth="300">
 
-  <UserControl.Resources>
-    <nynaeveConverters:StringToVisibilityConverter x:Key="StringVisConverter"/>
-  </UserControl.Resources>
+    <UserControl.Resources>
+        <nynaeveConverters:StringToVisibilityConverter x:Key="StringVisConverter"/>
+    </UserControl.Resources>
 
-  <Grid Background="{Binding BackgroundBrush, ElementName=DayIconUserControl}">
-    <Border BorderBrush="{Binding DaySelectedBrush, ElementName=DayIconUserControl}"
+    <Grid Background="{Binding BackgroundBrush, ElementName=DayIconUserControl}">
+        <Border BorderBrush="{Binding DaySelectedBrush, ElementName=DayIconUserControl}"
               BorderThickness="2">
-      <StackPanel Orientation="Vertical">
-        <Label
-          Style="{StaticResource CentreLabel}"
-          Content="{Binding DayNumber, ElementName=DayIconUserControl}"
-          FontSize="12"
-          Padding="0,3,0,0"
-          HorizontalContentAlignment="Center"/>
-        <Label
-          Style="{StaticResource CentreLabel}"
-          Content="{Binding DayDetail, ElementName=DayIconUserControl}"
-          FontSize="8"
-          Padding="0,4,0,3"
-          HorizontalContentAlignment="Center"/>
-      </StackPanel>
-    </Border>
-    <!--<i:Interaction.Triggers>
-      <i:EventTrigger>
-        <i:InvokeCommandAction Command="{Binding SelectDayCmd}"/>
-      </i:EventTrigger>
-      
-    </i:Interaction.Triggers>-->
-  </Grid>
+            <StackPanel Orientation="Vertical">
+                <Label 
+                    Style="{StaticResource CentreLabel}"
+                    Content="{Binding DayNumber, ElementName=DayIconUserControl}"
+                    FontSize="12"
+                    Padding="0,3,0,0"
+                    HorizontalContentAlignment="Center"/>
+                <Label 
+                    Style="{StaticResource CentreLabel}"
+                    Content="{Binding DayDetail, ElementName=DayIconUserControl}"
+                    FontSize="8"
+                    Padding="0,4,0,3"
+                    HorizontalContentAlignment="Center"/>
+            </StackPanel>
+        </Border>
+    </Grid>
 </UserControl>

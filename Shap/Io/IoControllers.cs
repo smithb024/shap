@@ -2,6 +2,7 @@
 {
     using Shap.Config;
     using Shap.Interfaces.Io;
+    using Shap.Locations.IO;
     using Shap.Units.IO;
 
     /// <summary>
@@ -19,6 +20,7 @@
             this.Operator = new XmlOperatorIoController();
             this.Units = new UnitsIOController();
             this.UnitsXml = new UnitsXmlIOController();
+            this.Location = new LocationIoController();
         }
 
         /// <summary>
@@ -45,5 +47,10 @@
         /// Gets the Units IO XML Controller.
         /// </summary>
         public IUnitsXmlIoController UnitsXml { get; }
+
+        /// <summary>
+        /// Gets the location IO Controller.
+        /// </summary>
+        public ILocationIoController Location { get; }
     }
 }

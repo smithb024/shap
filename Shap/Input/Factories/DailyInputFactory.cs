@@ -292,16 +292,16 @@
       }
     }
 
-    /// <summary>
-    /// Convert a collection of <see cref="MilesChains"/> to
-    /// <see cref="DayViewModel"/>. Assumes <paramref name="distanceList"/> is an appropriate
-    /// length.
-    /// </summary>
-    /// <param name="year">current year</param>
-    /// <param name="month">current month</param>
-    /// <param name="distanceList">collection of distances</param>
-    /// <returns></returns>
-    private static ObservableCollection<DayViewModel> SetupDayViewModel(
+        /// <summary>
+        /// Convert a collection of <see cref="MilesChains"/> to
+        /// <see cref="DayViewModel"/>. Assumes <paramref name="distanceList"/> is an appropriate
+        /// length.
+        /// </summary>
+        /// <param name="year">current year</param>
+        /// <param name="month">current month</param>
+        /// <param name="distanceList">collection of distances</param>
+        /// <returns></returns>
+        private static ObservableCollection<DayViewModel> SetupDayViewModel(
       int year,
       int month,
       List<MilesChains> distanceList)
