@@ -39,16 +39,17 @@
             <ColumnDefinition Width="Auto"/>
         </Grid.ColumnDefinitions>
 
-        <StackPanel 
-            Orientation="Vertical"
+        <DockPanel LastChildFill="True" 
             Grid.Column="0">
             <CheckBox 
+                DockPanel.Dock="Top"
                 Margin="5"
                 Content="Configuration Mode"
                 Style="{StaticResource StdCheckBoxStyle}"
                 IsChecked="{Binding Path=IsConfigurationMode}"/>
             
-            <StackPanel Orientation="Horizontal">
+            <StackPanel Orientation="Horizontal"
+                        DockPanel.Dock="Top">
                 <Button Content="Alphabetical" 
                         Command="{Binding Path=AlphabeticalNavigationCommand}"
                         Style="{StaticResource StdButtonStyle}"
@@ -75,10 +76,12 @@
                         Margin="2"/>
             </StackPanel>
 
-            <ContentControl Content="{Binding Path=Navigation}"/>
+            <ContentControl 
+                DockPanel.Dock="Top"
+                Content="{Binding Path=Navigation}"/>
 
             <ContentControl Content="{Binding Path=Selector}"/>
-        </StackPanel>
+        </DockPanel>
 
         <ContentControl 
             Grid.Column="1"
