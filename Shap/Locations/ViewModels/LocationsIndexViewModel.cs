@@ -20,6 +20,11 @@
         private readonly ILocationManager locationManager;
 
         /// <summary>
+        /// The location analyser.
+        /// </summary>
+        private readonly ILocationAnalyser locationAnalyser;
+
+        /// <summary>
         /// The navigation window which is currently selected.
         /// </summary>
         private NavigationType selectedNatigation;
@@ -43,12 +48,15 @@
         /// Initialises a new instance of the <see cref="LocationsIndexViewModel"/> class.
         /// </summary>
         /// <param name="locationManager">The location manager</param>
+        /// <param name="locationAnalyser">The location analyser</param>
         /// <param name="ioControllers">The IO Controller manager object</param>
         public LocationsIndexViewModel(
             ILocationManager locationManager,
+            ILocationAnalyser locationAnalyser,
             IIoControllers ioControllers)
         {
             this.locationManager = locationManager;
+            this.locationAnalyser = locationAnalyser;
             this.isConfigurationMode = false;
 
             this.selectedNatigation = NavigationType.Alphabetical;

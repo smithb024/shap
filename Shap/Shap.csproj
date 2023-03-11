@@ -268,6 +268,7 @@
     <Compile Include="Interfaces\Io\IUnitsXmlIoController.cs" />
     <Compile Include="Interfaces\Io\IXmlOperatorIoController.cs" />
     <Compile Include="Interfaces\Io\IXmlFamilyIoController.cs" />
+    <Compile Include="Interfaces\Locations\Model\ILocationAnalyser.cs" />
     <Compile Include="Interfaces\Locations\Model\ILocationManager.cs" />
     <Compile Include="Interfaces\Locations\ViewModels\Helpers\ILocationImageSelectorViewModel.cs" />
     <Compile Include="Interfaces\Locations\ViewModels\IAlphabeticalNavigationViewModel.cs" />
@@ -301,6 +302,7 @@
     <Compile Include="Locations\Messages\RegionSelectorMessage.cs" />
     <Compile Include="Locations\Messages\OperatorSelectorMessage.cs" />
     <Compile Include="Locations\Messages\AlphaSelectorMessage.cs" />
+    <Compile Include="Locations\Model\LocationAnalyser.cs" />
     <Compile Include="Locations\Model\LocationManager.cs" />
     <Compile Include="Locations\ViewModels\AlphabeticalNavigationViewModel.cs" />
     <Compile Include="Locations\ViewModels\DirectNavigationViewModel.cs" />

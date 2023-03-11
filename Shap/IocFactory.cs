@@ -31,6 +31,7 @@
                 .AddSingleton<IIoControllers, IoControllers>()
                 .AddSingleton<IFirstExampleManager, FirstExampleManager>()
                 .AddSingleton<ILocationManager, LocationManager>()
+                .AddSingleton<ILocationAnalyser, LocationAnalyser>()
                 .AddSingleton<ILocationsIndexViewModel, LocationsIndexViewModel>()
                 .AddSingleton<IInputFormViewModel, InputFormViewModel>()
                 .AddSingleton<IMileageDetailsViewModel, MileageDetailsViewModel>()
