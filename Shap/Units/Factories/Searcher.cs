@@ -120,7 +120,7 @@
         /// </summary>
         /// <param name="monthFilename">month filename</param>
         /// <returns>month as integer, null if invalid</returns>
-        private static int? ConvertMonthFilename(
+        public static int? ConvertMonthFilename(
           string monthFilename)
         {
             int month;

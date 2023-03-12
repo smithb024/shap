@@ -19,7 +19,7 @@
         /// Gets or sets the class name.
         /// </summary>
         [XmlAttribute("Cls")]
-        public int Name { get; set; }
+        public string Name { get; set; }
 
         /// <summary>
         /// Gets or sets number from.
