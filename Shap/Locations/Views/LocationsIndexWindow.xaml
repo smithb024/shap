@@ -76,6 +76,9 @@
                         Margin="2"/>
             </StackPanel>
 
+            <local:RefreshView DockPanel.Dock="Bottom"
+                               DataContext="{Binding Path=Refresh}"/>
+
             <ContentControl 
                 DockPanel.Dock="Top"
                 Content="{Binding Path=Navigation}"/>

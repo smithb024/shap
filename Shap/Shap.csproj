@@ -282,6 +282,7 @@
     <Compile Include="Interfaces\Locations\ViewModels\ILocationsIndexViewModel.cs" />
     <Compile Include="Interfaces\Locations\ViewModels\ILocationViewModel.cs" />
     <Compile Include="Interfaces\Locations\ViewModels\INavigationViewModel.cs" />
+    <Compile Include="Interfaces\Locations\ViewModels\IRefreshViewModel.cs" />
     <Compile Include="Interfaces\Locations\ViewModels\ISelectorViewModel.cs" />
     <Compile Include="Interfaces\StationDetails\IEditMileageViewModel.cs" />
     <Compile Include="Interfaces\StationDetails\IMileageDetailsViewModel.cs" />
@@ -309,6 +310,7 @@
     <Compile Include="Locations\ViewModels\DirectNavigationViewModel.cs" />
     <Compile Include="Locations\ViewModels\Helpers\LocationImageSelectorViewModel.cs" />
     <Compile Include="Locations\ViewModels\Icons\SelectorRowViewModel.cs" />
+    <Compile Include="Locations\ViewModels\RefreshViewModel.cs" />
     <Compile Include="Locations\Views\AlphabeticalNavigationView.xaml.cs">
       <DependentUpon>AlphabeticalNavigationView.xaml</DependentUpon>
     </Compile>
@@ -341,6 +343,9 @@
       <DependentUpon>LocationView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Locations\ViewModels\LocationViewModel.cs" />
+    <Compile Include="Locations\Views\RefreshView.xaml.cs">
+      <DependentUpon>RefreshView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="MainWindowViewModel.cs" />
     <Compile Include="Messages\NewLocationAddedMessage.cs" />
     <Compile Include="StaticResources.Designer.cs">
@@ -608,6 +613,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Locations\Views\LocationView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Locations\Views\RefreshView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

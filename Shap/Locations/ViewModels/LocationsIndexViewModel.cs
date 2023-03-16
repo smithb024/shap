@@ -92,6 +92,8 @@
                 new LocationConfigurationViewModel(
                     ioControllers);
 
+            this.Refresh = new RefreshViewModel();
+
             this.Messenger.Register<DisplayLocationMessage>(
                 this,
                 (r, message) => this.OnDisplayLocationMessageReceived(message));
@@ -167,6 +169,11 @@
         /// Gets the locations details view model.
         /// </summary>
         public IDetailsViewModel LocationDetails { get; private set; }
+
+        /// <summary>
+        /// Gets the refresh details view model.
+        /// </summary>
+        public IRefreshViewModel Refresh { get; }
 
         /// <summary>
         /// Select the alphabetical navigation view.
