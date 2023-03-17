@@ -1,7 +1,10 @@
 ﻿namespace Shap.Locations.ViewModels
 {
     using NynaeveLib.Commands;
+    using Shap.Interfaces.Io;
+    using Shap.Interfaces.Locations.Model;
     using Shap.Interfaces.Locations.ViewModels;
+    using System.Collections.Generic;
     using System.Windows.Input;
 
     /// <summary>
@@ -10,10 +13,31 @@
     public class RefreshViewModel : IRefreshViewModel
     {
         /// <summary>
+        /// The instance of the <see cref="ILocationAnalyser"/> class.
+        /// </summary>
+        private ILocationAnalyser locationAnalyser;
+
+        /// <summary>
+        /// The instance of the <see cref="ILocationManager"/> class.
+        /// </summary>
+        private ILocationManager locationManager;
+
+        /// <summary>
         /// Initialise a new instance of the <see cref="RefreshViewModel"/> class.
         /// </summary>
-        public RefreshViewModel() 
+        /// <param name="locationManager">
+        /// The instance of the location manager.
+        /// </param>
+        /// <param name="locationAnalyser">
+        /// The instance of the location analyser.
+        /// </param>
+        public RefreshViewModel(
+            ILocationManager locationManager,
+            ILocationAnalyser locationAnalyser) 
         {
+            this.locationAnalyser = locationAnalyser;
+            this.locationManager = locationManager;
+
             this.RefreshAllCommand =
                     new CommonCommand(
                         this.RefreshAll);
@@ -37,7 +61,8 @@
         /// </summary>
         private void RefreshAll()
         {
-
+            List<string> locations = this.locationManager.GetLocations();
+            this.locationAnalyser.Analyse(locations);
         }
 
         /// <summary>

@@ -92,7 +92,9 @@
                 new LocationConfigurationViewModel(
                     ioControllers);
 
-            this.Refresh = new RefreshViewModel();
+            this.Refresh = 
+                new RefreshViewModel(
+                    locationAnalyser);
 
             this.Messenger.Register<DisplayLocationMessage>(
                 this,
