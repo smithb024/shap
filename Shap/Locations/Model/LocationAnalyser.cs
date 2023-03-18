@@ -1,5 +1,6 @@
 ﻿namespace Shap.Locations.Model
 {
+    using NynaeveLib.Logger;
     using Shap.Common;
     using Shap.Common.SerialiseModel.Location;
     using Shap.Config.GroupsAndClasses;
@@ -67,6 +68,8 @@
             IIoControllers ioController,
             List<GroupsType> types)
         {
+            int yearClosed = 0;
+
             // For each location:
             // Create new lists for trips, classes and years.
             // Create empty to and from counts.
@@ -82,6 +85,15 @@
             currentLocation.TotalFrom = 0;
             currentLocation.TotalTo = 0;
 
+            // If there is a closed year, convert it to an integer. Default is 0.
+            if (currentLocation.Closed != null &&
+                !int.TryParse(currentLocation.Closed, out yearClosed))
+            {
+                Logger.Instance.WriteLog(
+                    $"LocationAnalyser: Didn't analyse {currentLocation.Name}, invalid closed date.");
+                return;
+            }
+
             string[] yearDirsArray =
               Directory.GetDirectories(
                 BasePathReader.GetBasePath() + StaticResources.baPath);
@@ -93,6 +105,12 @@
                 if (!int.TryParse(calculatedYear, out int year))
                 {
                     continue;
+                }
+
+                // Not interesting in continuing once the location has closed.
+                if (year > yearClosed && yearClosed != 0)
+                {
+                    break;
                 }
 
                 this.AnalyseYear(
@@ -162,7 +180,9 @@
 
             // For each year:
             // Add the LocationYear object to the list.{If the count is zero and there is nothing in the list don't add, this will prevent leading zeros}
-            if (currentLocationYear.TotalFrom > 0 ||
+            // If the years count is creater than zero, then add anyway. We are keeping count for all years after the first visit.
+            if (currentLocation.Years.Count > 0 ||
+                currentLocationYear.TotalFrom > 0 ||
                 currentLocationYear.TotalTo > 0)
             {
                 currentLocation.Years.Add(currentLocationYear);
