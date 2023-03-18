@@ -262,7 +262,7 @@
             currentLocation.Trips.Insert(0, trip);
             if (currentLocation.Trips.Count > 10)
             {
-                currentLocation.Trips.RemoveAt(11);
+                currentLocation.Trips.RemoveAt(10);
             }
 
             List<string> foundUnitTypes = new List<string>();

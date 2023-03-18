@@ -94,6 +94,7 @@
 
             this.Refresh = 
                 new RefreshViewModel(
+                    locationManager,
                     locationAnalyser);
 
             this.Messenger.Register<DisplayLocationMessage>(
