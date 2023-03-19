@@ -1,16 +1,18 @@
 ﻿namespace Shap.Locations.ViewModels
 {
+    using CommunityToolkit.Mvvm.ComponentModel;
+    using CommunityToolkit.Mvvm.Messaging;
     using NynaeveLib.Commands;
-    using Shap.Interfaces.Io;
     using Shap.Interfaces.Locations.Model;
     using Shap.Interfaces.Locations.ViewModels;
+    using Shap.Locations.Messages;
     using System.Collections.Generic;
     using System.Windows.Input;
 
     /// <summary>
     /// View model which supports the refresh view.
     /// </summary>
-    public class RefreshViewModel : IRefreshViewModel
+    public class RefreshViewModel : ObservableRecipient, IRefreshViewModel
     {
         /// <summary>
         /// The instance of the <see cref="ILocationAnalyser"/> class.
@@ -70,7 +72,8 @@
         /// </summary>
         private void RefreshVisible() 
         {
-
+            RequestLocationsRefreshMessage message = new RequestLocationsRefreshMessage();
+            this.Messenger.Send(message);
         }
     }
 }

@@ -81,7 +81,8 @@
                 new AlphabeticalNavigationViewModel();
             ISelectorViewModel locationSelectorViewModel =
               new LocationsSelectorViewModel(
-                  this.locationManager);
+                  this.locationManager,
+                  this.locationAnalyser);
 
             this.Navigation = alphabeticalViewModel;
             this.Selector = locationSelectorViewModel;
