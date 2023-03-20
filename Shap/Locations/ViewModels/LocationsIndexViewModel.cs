@@ -190,7 +190,8 @@
                 new AlphabeticalNavigationViewModel();
             ISelectorViewModel locationSelectorViewModel =
                 new LocationsSelectorViewModel(
-                    this.locationManager);
+                    this.locationManager,
+                    this.locationAnalyser);
 
             this.Navigation?.Dispose();
             this.Selector?.Dispose();
@@ -213,7 +214,8 @@
                 new DirectNavigationViewModel();
             ISelectorViewModel locationSelectorViewModel =
                 new LocationsSelectorViewModel(
-                    this.locationManager);
+                    this.locationManager,
+                    this.locationAnalyser);
 
             this.Navigation?.Dispose();
             this.Selector?.Dispose();
@@ -236,7 +238,8 @@
                 new DirectNavigationViewModel();
             ISelectorViewModel locationSelectorViewModel =
                 new LocationsSelectorViewModel(
-                    this.locationManager);
+                    this.locationManager,
+                    this.locationAnalyser);
 
             this.Navigation = regionsViewModel;
             this.Selector = locationSelectorViewModel;
