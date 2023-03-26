@@ -45,16 +45,21 @@
         public void Analyse(
             List<string> locations)
         {
+            Logger.Instance.WriteLog("Start Location Analysis");
+
             // Loop through each location.
             List<GroupsType> types = ioControllers.Gac.LoadFile();
 
             foreach(string location in locations)
             {
+                Logger.Instance.WriteLog($"Analyse {location}");
                 this.AnalyseLocation(
                     location,
                     ioControllers,
                     types);
             }
+
+            Logger.Instance.WriteLog("Complete Location Analysis");
         }
 
         /// <summary>
