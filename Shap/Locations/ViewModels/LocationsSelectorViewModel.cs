@@ -27,6 +27,11 @@
         private readonly ILocationManager locationManager;
 
         /// <summary>
+        /// The location analyser.
+        /// </summary>
+        private readonly ILocationAnalyser locationAnalyser;
+
+        /// <summary>
         /// Indicates how the locations are displayed.
         /// </summary>
         private SelectorType type;
@@ -39,13 +44,19 @@
         /// <summary>
         /// Initialise a new instance of the <see cref="LocationsSelectorViewModel"/> class.
         /// </summary>
-        /// <param name="locationManager">The location manager</param>
+        /// <param name="locationManager">
+        /// The instance of the location manager.
+        /// </param>
+        /// <param name="locationAnalyser">
+        /// The instance of the location analyser.
+        /// </param>
         public LocationsSelectorViewModel(
-            ILocationManager locationManager)
+            ILocationManager locationManager,
+            ILocationAnalyser locationAnalyser)
         {
             this.Locations = new ObservableCollection<ISelectorRowViewModel>();
             this.locationManager = locationManager;
-
+            this.locationAnalyser = locationAnalyser;
 
             this.Messenger.Register<NewLocationAddedMessage>(
                 this, 
@@ -59,6 +70,10 @@
             this.Messenger.Register<RegionSelectorMessage>(
                 this,
                 (r, message) => this.NewRegionCharacterSelected(message));
+            this.Messenger.Register<RequestLocationsRefreshMessage>(
+                this, 
+                (r, message) => this.OnRequestLocationsRefreshMessage(message));
+
         }
 
         /// <summary>
@@ -134,6 +149,24 @@
             this.type = SelectorType.Region;
             this.searchCriteria = message.Region;
             this.RebuildLocationsList();
+        }
+
+        /// <summary>
+        /// Request that all of the currently displayed locations are refreshed.
+        /// </summary>
+        /// <param name="message">
+        /// The <see cref="RequestLocationsRefreshMessage"/> message.
+        /// </param>
+        private void OnRequestLocationsRefreshMessage(RequestLocationsRefreshMessage message)
+        {
+            List<string> locations = new List<string>();
+
+            foreach(ISelectorRowViewModel selector in this.Locations)
+            {
+                locations.Add(selector.Name);
+            }
+
+            this.locationAnalyser.Analyse(locations);
         }
 
         /// <summary>

@@ -46,5 +46,10 @@
         /// Gets the locations details view model.
         /// </summary>
         IDetailsViewModel LocationDetails { get; }
+
+        /// <summary>
+        /// Gets the refresh details view model.
+        /// </summary>
+        IRefreshViewModel Refresh { get; }
     }
 }
