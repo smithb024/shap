@@ -46,6 +46,16 @@
         List<string> Categories { get; }
 
         /// <summary>
+        /// Gets the index of the selected regions.
+        /// </summary>
+        int RegionIndex { get; set; }
+
+        /// <summary>
+        /// Gets the collection of all possible location regions.
+        /// </summary>
+        List<string> Regions { get; }
+
+        /// <summary>
         /// Get the collection of image selector view models.
         /// </summary>
         ILocationImageSelectorViewModel Image { get; }

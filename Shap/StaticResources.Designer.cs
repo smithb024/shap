@@ -124,6 +124,15 @@ namespace Shap {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to regions.
+        /// </summary>
+        internal static string FileNameRegions {
+            get {
+                return ResourceManager.GetString("FileNameRegions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to data\uts\idvl\.
         /// </summary>
         internal static string idvlDetailsPath {
@@ -156,6 +165,15 @@ namespace Shap {
         internal static string locImgPath {
             get {
                 return ResourceManager.GetString("locImgPath", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to data\loc\.
+        /// </summary>
+        internal static string locPath {
+            get {
+                return ResourceManager.GetString("locPath", resourceCulture);
             }
         }
         

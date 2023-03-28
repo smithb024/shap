@@ -52,6 +52,11 @@
         private int categoryIndex;
 
         /// <summary>
+        /// The index of the selected region.
+        /// </summary>
+        private int regionIndex;
+
+        /// <summary>
         /// The currently loaded location.
         /// </summary>
         private LocationDetails currentLocation;
@@ -71,6 +76,9 @@
                 new LocationImageSelectorViewModel(
                     ioControllers,
                     string.Empty);
+
+            this.Regions = this.ioControllers.Location.GetRegions();
+            this.Regions.Insert(0, string.Empty);
 
             this.Messenger.Register<DisplayLocationMessage>(
                 this,
@@ -150,6 +158,20 @@
                 return categories; 
             }
         }
+
+        /// <summary>
+        /// Gets the index of the selected region.
+        /// </summary>
+        public int RegionIndex
+        {
+            get => this.regionIndex;
+            set => this.SetProperty(ref this.regionIndex, value);
+        }
+
+        /// <summary>
+        /// Gets the collection of all possible location categories.
+        /// </summary>
+        public List<string> Regions { get; private set; }
 
         /// <summary>
         /// Get the image selector view models.
