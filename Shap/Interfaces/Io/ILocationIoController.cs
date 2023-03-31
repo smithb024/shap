@@ -36,5 +36,13 @@
         /// </summary>
         /// <returns>list of image names</returns>
         List<string> GetImageFileList();
-    }
+
+        /// <summary>
+        /// Get all the regions from the config file.
+        /// </summary>
+        /// <returns>
+        /// A list of all regions.
+        /// </returns>
+        List<string> GetRegions();
+  }
 }

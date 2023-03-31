@@ -52,6 +52,11 @@
         private int categoryIndex;
 
         /// <summary>
+        /// The index of the selected region.
+        /// </summary>
+        private int regionIndex;
+
+        /// <summary>
         /// The currently loaded location.
         /// </summary>
         private LocationDetails currentLocation;
@@ -71,6 +76,12 @@
                 new LocationImageSelectorViewModel(
                     ioControllers,
                     string.Empty);
+
+            this.Regions = this.ioControllers.Location.GetRegions();
+            this.Regions.Insert(0, string.Empty);
+            this.regionIndex = 0;
+
+            this.categoryIndex = 0;
 
             this.Messenger.Register<DisplayLocationMessage>(
                 this,
@@ -152,6 +163,20 @@
         }
 
         /// <summary>
+        /// Gets the index of the selected region.
+        /// </summary>
+        public int RegionIndex
+        {
+            get => this.regionIndex;
+            set => this.SetProperty(ref this.regionIndex, value);
+        }
+
+        /// <summary>
+        /// Gets the collection of all possible location categories.
+        /// </summary>
+        public List<string> Regions { get; private set; }
+
+        /// <summary>
         /// Get the image selector view models.
         /// </summary>
         public ILocationImageSelectorViewModel Image { get; }
@@ -196,6 +221,16 @@
             this.Closed = this.currentLocation.Closed ?? string.Empty;
             this.CategoryIndex = (int)this.currentLocation.Category;
 
+            this.RegionIndex = 0;
+            for (int index = 0; index < this.Regions.Count; ++index)
+            {
+                if (string.Compare(this.currentLocation.County, this.Regions[index]) == 0)
+                {
+                    this.RegionIndex = index;
+                    break;
+                }
+            }
+
             if (this.currentLocation.Photos.Count > 0)
             {
                 this.Image.SetImage(this.currentLocation.Photos[0].Path);
@@ -217,6 +252,7 @@
             this.Opened = string.Empty;
             this.Closed = string.Empty;
             this.CategoryIndex = 0;
+            this.RegionIndex = 0;
             this.Image.SetImage(string.Empty);
         }
 
@@ -230,6 +266,8 @@
             this.currentLocation.Opened = this.Opened;
             this.currentLocation.Closed = this.Closed;
             this.currentLocation.Category = (LocationCategories)this.CategoryIndex;
+            this.currentLocation.County = this.Regions[this.RegionIndex];
+
 
             this.currentLocation.Photos =
                 new List<LocationPhotos>()

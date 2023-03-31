@@ -92,6 +92,19 @@
                           ItemsSource="{Binding Path=Categories}"
                           Style="{StaticResource ComboBoxStyle}"/>
             </Grid>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Text="Region"
+                           Grid.Column="0"
+                           Style="{StaticResource StdTextBlockStyle}"/>
+                <ComboBox SelectedIndex="{Binding Path=RegionIndex}"
+                          Grid.Column="1"
+                          ItemsSource="{Binding Path=Regions}"
+                          Style="{StaticResource ComboBoxStyle}"/>
+            </Grid>
             <Button Content="Save"
                     Style="{StaticResource StdButtonStyle}"
                     Height="20"

@@ -6,6 +6,10 @@
     using Shap.Common.SerialiseModel.Location;
     using Shap.Interfaces.Io;
     using System.Collections.Generic;
+    using NynaeveLib.Logger;
+    using Shap.Types;
+    using System.Windows.Shapes;
+    using System.Linq;
 
     /// <summary>
     /// Used to read and write to the location XML file.
@@ -16,6 +20,11 @@
         /// Extension for the location filename.
         /// </summary>
         private const string XmlExtensionLabel = ".xml";
+
+        /// <summary>
+        /// Extension for the regiosn filename.
+        /// </summary>
+        private const string TxtExtensionLabel = ".txt";
 
         /// <summary>
         /// Deserialise the <see cref="LocationDetails"/> from the <paramref name="filename"/>.
@@ -89,6 +98,44 @@
             }
 
             return imageFileNameList;
+        }
+
+        /// <summary>
+        /// Get all the regions from the config file.
+        /// </summary>
+        /// <returns>
+        /// A list of all regions.
+        /// </returns>
+        public List<string> GetRegions()
+        {
+            List<string> regions = new List<string>();
+
+            string regionsPath =
+               BasePathReader.GetBasePath() +
+               StaticResources.locPath +
+               StaticResources.FileNameRegions +
+               TxtExtensionLabel;
+
+            if (!File.Exists(regionsPath))
+            {
+                return regions;
+            }
+
+            using (StreamReader reader = new StreamReader(regionsPath))
+            {
+                string currentLine = string.Empty;
+                currentLine = reader.ReadLine();
+
+                while (currentLine != null)
+                {
+                    regions.Add(currentLine);
+                    currentLine = reader.ReadLine();
+                }
+            }
+
+            regions.Sort();
+
+            return regions;
         }
     }
 }

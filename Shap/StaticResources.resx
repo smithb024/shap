@@ -138,6 +138,9 @@
   <data name="FileNameOperator" xml:space="preserve">
     <value>optr</value>
   </data>
+  <data name="FileNameRegions" xml:space="preserve">
+    <value>regions</value>
+  </data>
   <data name="idvlDetailsPath" xml:space="preserve">
     <value>data\uts\idvl\</value>
   </data>
@@ -149,6 +152,9 @@
   </data>
   <data name="locImgPath" xml:space="preserve">
     <value>data\loc\img\</value>
+  </data>
+  <data name="locPath" xml:space="preserve">
+    <value>data\loc\</value>
   </data>
   <data name="logPath" xml:space="preserve">
     <value>log\</value>
