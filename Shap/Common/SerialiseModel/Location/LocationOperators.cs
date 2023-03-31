@@ -19,5 +19,11 @@
         /// </summary>
         [XmlAttribute("Name")]
         public string Name { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether this is a contemporary operator.
+        /// </summary>
+        [XmlAttribute("Ctp")]
+        public bool IsContemporary { get; set; }
     }
 }
