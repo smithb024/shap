@@ -2,16 +2,20 @@
 {
     using CommunityToolkit.Mvvm.ComponentModel;
     using CommunityToolkit.Mvvm.Messaging;
+    using Icons;
     using Shap.Common.Commands;
     using Shap.Common.SerialiseModel.Location;
+    using Shap.Common.SerialiseModel.Operator;
     using Shap.Interfaces.Io;
     using Shap.Interfaces.Locations.ViewModels;
     using Shap.Interfaces.Locations.ViewModels.Helpers;
+    using Shap.Interfaces.Locations.ViewModels.Icons;
     using Shap.Locations.Messages;
     using Shap.Locations.ViewModels.Helpers;
     using Shap.Types.Enum;
     using System;
     using System.Collections.Generic;
+    using System.Collections.ObjectModel;
     using System.Windows.Input;
 
     public class LocationConfigurationViewModel : ObservableRecipient, ILocationConfigurationViewModel
@@ -82,6 +86,18 @@
             this.regionIndex = 0;
 
             this.categoryIndex = 0;
+
+            this.Operators = new ObservableCollection<IOperatorComboBoxItemViewModel>();
+            OperatorDetails operatorDetails = ioControllers.Operator.Read();
+
+            foreach (SingleOperator singleOperator in operatorDetails.Operators)
+            {
+                IOperatorComboBoxItemViewModel viewModel =
+                    new OperatorComboBoxItemViewModel(
+                        singleOperator.Name,
+                        singleOperator.IsActive);
+                this.Operators.Add(viewModel);
+            }
 
             this.Messenger.Register<DisplayLocationMessage>(
                 this,
@@ -175,6 +191,11 @@
         /// Gets the collection of all possible location categories.
         /// </summary>
         public List<string> Regions { get; private set; }
+
+        /// <summary>
+        /// Collection of all known operators.
+        /// </summary>
+        public ObservableCollection<IOperatorComboBoxItemViewModel> Operators { get; }
 
         /// <summary>
         /// Get the image selector view models.

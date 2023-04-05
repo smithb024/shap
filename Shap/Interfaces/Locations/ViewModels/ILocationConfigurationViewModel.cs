@@ -1,8 +1,9 @@
 ﻿namespace Shap.Interfaces.Locations.ViewModels
 {
     using Helpers;
-    using Shap.Types.Enum;
+    using Icons;
     using System.Collections.Generic;
+    using System.Collections.ObjectModel;
     using System.Windows.Input;
 
     /// <summary>
@@ -54,6 +55,11 @@
         /// Gets the collection of all possible location regions.
         /// </summary>
         List<string> Regions { get; }
+
+        /// <summary>
+        /// Collection of all known operators.
+        /// </summary>
+        ObservableCollection<IOperatorComboBoxItemViewModel> Operators { get; }
 
         /// <summary>
         /// Get the collection of image selector view models.
