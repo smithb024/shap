@@ -6,6 +6,7 @@
     using Shap.Common.Commands;
     using Shap.Common.SerialiseModel.Location;
     using Shap.Common.SerialiseModel.Operator;
+    using Shap.Icons.ComboBoxItems;
     using Shap.Interfaces.Io;
     using Shap.Interfaces.Locations.ViewModels;
     using Shap.Interfaces.Locations.ViewModels.Helpers;
@@ -87,13 +88,13 @@
 
             this.categoryIndex = 0;
 
-            this.Operators = new ObservableCollection<IOperatorComboBoxItemViewModel>();
+            this.Operators = new ObservableCollection<IOperatorItemViewModel>();
             OperatorDetails operatorDetails = ioControllers.Operator.Read();
 
             foreach (SingleOperator singleOperator in operatorDetails.Operators)
             {
-                IOperatorComboBoxItemViewModel viewModel =
-                    new OperatorComboBoxItemViewModel(
+                IOperatorItemViewModel viewModel =
+                    new OperatorItemViewModel(
                         singleOperator.Name,
                         singleOperator.IsActive);
                 this.Operators.Add(viewModel);
@@ -195,7 +196,7 @@
         /// <summary>
         /// Collection of all known operators.
         /// </summary>
-        public ObservableCollection<IOperatorComboBoxItemViewModel> Operators { get; }
+        public ObservableCollection<IOperatorItemViewModel> Operators { get; }
 
         /// <summary>
         /// Get the image selector view models.

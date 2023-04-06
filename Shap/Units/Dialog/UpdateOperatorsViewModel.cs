@@ -8,6 +8,7 @@
     using NynaeveLib.ViewModel;
     using Shap.Common.SerialiseModel.ClassDetails;
     using Shap.Common.SerialiseModel.Operator;
+    using Shap.Icons.ComboBoxItems;
     using Shap.Interfaces.Io;
 
     /// <summary>
@@ -46,14 +47,14 @@
             ClassDetails details)
         {
             this.classDetails = details;
-            this.Operators = new ObservableCollection<OperatorComboBoxItemViewModel>();
+            this.Operators = new ObservableCollection<OperatorItemViewModel>();
             this.ClassOperators = new ObservableCollection<OperatorListItemViewModel>();
             OperatorDetails operatorDetails = ioControllers.Operator.Read();
 
             foreach (SingleOperator singleOperator in operatorDetails.Operators)
             {
-                OperatorComboBoxItemViewModel viewModel =
-                    new OperatorComboBoxItemViewModel(
+                OperatorItemViewModel viewModel =
+                    new OperatorItemViewModel(
                         singleOperator.Name,
                         singleOperator.IsActive);
                 this.Operators.Add(viewModel);
@@ -103,7 +104,7 @@
         /// <summary>
         /// Collection of all known operators.
         /// </summary>
-        public ObservableCollection<OperatorComboBoxItemViewModel> Operators { get; }
+        public ObservableCollection<OperatorItemViewModel> Operators { get; }
 
         /// <summary>
         /// Gets or sets the index of the currently selected operator from those assigned to the 
@@ -176,7 +177,7 @@
         /// <returns>is active state</returns>
         private bool FindActiveState(string name)
         {
-            foreach (OperatorComboBoxItemViewModel op in this.Operators)
+            foreach (OperatorItemViewModel op in this.Operators)
             {
                 if (string.Compare(op.Name, name) == 0)
                 {
@@ -225,7 +226,7 @@
                 return;
             }
 
-            OperatorComboBoxItemViewModel selectedOperator =
+            OperatorItemViewModel selectedOperator =
                 this.Operators[this.OperatorIndex];
 
             Operator newClassOperator =

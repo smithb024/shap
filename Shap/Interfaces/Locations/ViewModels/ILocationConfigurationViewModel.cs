@@ -2,6 +2,7 @@
 {
     using Helpers;
     using Icons;
+    using Shap.Icons.ComboBoxItems;
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
     using System.Windows.Input;
@@ -59,7 +60,7 @@
         /// <summary>
         /// Collection of all known operators.
         /// </summary>
-        ObservableCollection<IOperatorComboBoxItemViewModel> Operators { get; }
+        ObservableCollection<IOperatorItemViewModel> Operators { get; }
 
         /// <summary>
         /// Get the collection of image selector view models.

@@ -1,24 +1,23 @@
-﻿namespace Shap.Units.Dialog
+﻿namespace Shap.Icons.ComboBoxItems
 {
-    using NynaeveLib.ViewModel;
+    using CommunityToolkit.Mvvm.ComponentModel;
 
     /// <summary>
-    /// View model which is used to display operators on the 
-    /// <see cref="UpdateOperatorsDialog"/> combo box.
+    /// View model which supports a row in an operators combo box.
     /// </summary>
-    public class OperatorComboBoxItemViewModel : ViewModelBase, IViewModelBase
+    public class OperatorItemViewModel : ObservableRecipient, IOperatorItemViewModel
     {
         /// <summary>
-        /// Initialises a new instance of the <see cref="OperatorComboBoxItemViewModel"/> class.
+        /// Initialises a new instance of the <see cref="OperatorItemViewModel"/> class.
         /// </summary>
         /// <param name="name">The name of the operator</param>
         /// <param name="isActive">Indicates whether the operator is currently active</param>
-        public OperatorComboBoxItemViewModel(
+        public OperatorItemViewModel(
             string name,
             bool isActive)
         {
             this.Name = name;
-            this.IsActive = isActive;
+            this.IsOperatorActive = isActive;
         }
 
         /// <summary>
@@ -29,6 +28,6 @@
         /// <summary>
         /// Gets a value indicating whether the operator is active.
         /// </summary>
-        public bool IsActive { get; }
+        public bool IsOperatorActive { get; }
     }
 }

@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Shap.Units.Dialog"
+        xmlns:comboBoxItems="clr-namespace:Shap.Icons.ComboBoxItems"
         mc:Ignorable="d"
         Background="{StaticResource StdBackground}"
         Name="UpdateOperators"
@@ -37,7 +38,7 @@
                 </ComboBox.ItemContainerStyle>
                 <ComboBox.ItemTemplate>
                     <DataTemplate>
-                        <local:OperatorComboBoxItem />
+                        <comboBoxItems:OperatorItem />
                     </DataTemplate>
                 </ComboBox.ItemTemplate>
             </ComboBox>

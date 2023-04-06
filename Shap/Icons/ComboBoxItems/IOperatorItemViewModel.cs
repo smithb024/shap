@@ -1,9 +1,9 @@
-﻿namespace Shap.Interfaces.Locations.ViewModels.Icons
+﻿/// <summary>
+/// Interface which display operators in a combo box.
+/// </summary>
+namespace Shap.Icons.ComboBoxItems
 {
-    /// <summary>
-    /// Interface which display operators in a combo box.
-    /// </summary>
-    public interface IOperatorComboBoxItemViewModel
+    public interface IOperatorItemViewModel
     {
         /// <summary>
         /// Gets the name of the operator.

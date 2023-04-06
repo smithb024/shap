@@ -237,6 +237,11 @@
     <Compile Include="Config\PopularStnConfigViewModel.cs" />
     <Compile Include="Config\PopularStnIOController.cs" />
     <Compile Include="Config\XmlOperatorIoController.cs" />
+    <Compile Include="Icons\ComboBoxItems\IOperatorItemViewModel.cs" />
+    <Compile Include="Icons\ComboBoxItems\OperatorItem.xaml.cs">
+      <DependentUpon>OperatorItem.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Icons\ComboBoxItems\OperatorItemViewModel.cs" />
     <Compile Include="Icons\DayIcon.xaml.cs">
       <DependentUpon>DayIcon.xaml</DependentUpon>
     </Compile>
@@ -273,7 +278,6 @@
     <Compile Include="Interfaces\Locations\Model\ILocationManager.cs" />
     <Compile Include="Interfaces\Locations\ViewModels\Helpers\ILocationImageSelectorViewModel.cs" />
     <Compile Include="Interfaces\Locations\ViewModels\IAlphabeticalNavigationViewModel.cs" />
-    <Compile Include="Interfaces\Locations\ViewModels\Icons\IOperatorComboBoxItemViewModel.cs" />
     <Compile Include="Interfaces\Locations\ViewModels\Icons\ISelectorRowViewModel.cs" />
     <Compile Include="Interfaces\Locations\ViewModels\IDetailsViewModel.cs" />
     <Compile Include="Interfaces\Locations\ViewModels\IDirectNavigationViewModel.cs" />
@@ -311,7 +315,6 @@
     <Compile Include="Locations\ViewModels\AlphabeticalNavigationViewModel.cs" />
     <Compile Include="Locations\ViewModels\DirectNavigationViewModel.cs" />
     <Compile Include="Locations\ViewModels\Helpers\LocationImageSelectorViewModel.cs" />
-    <Compile Include="Locations\ViewModels\Icons\OperatorComboBoxItemViewModel.cs" />
     <Compile Include="Locations\ViewModels\Icons\SelectorRowViewModel.cs" />
     <Compile Include="Locations\ViewModels\RefreshViewModel.cs" />
     <Compile Include="Locations\Views\AlphabeticalNavigationView.xaml.cs">
@@ -322,9 +325,6 @@
     </Compile>
     <Compile Include="Locations\Views\Icons\LocationConfigImageSelector.xaml.cs">
       <DependentUpon>LocationConfigImageSelector.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Locations\Views\Icons\OperatorComboBoxItem.xaml.cs">
-      <DependentUpon>OperatorComboBoxItem.xaml</DependentUpon>
     </Compile>
     <Compile Include="Locations\Views\Icons\SelectorRowIcon.xaml.cs">
       <DependentUpon>SelectorRowIcon.xaml</DependentUpon>
@@ -404,11 +404,7 @@
     <Compile Include="Units\ClassFrontPage.xaml.cs">
       <DependentUpon>ClassFrontPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Units\Dialog\OperatorComboBoxItem.xaml.cs">
-      <DependentUpon>OperatorComboBoxItem.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Units\Dialog\OperatorListItemViewModel.cs" />
-    <Compile Include="Units\Dialog\OperatorComboBoxItemViewModel.cs" />
     <Compile Include="Units\Dialog\OperatorListViewItem.xaml.cs">
       <DependentUpon>OperatorListViewItem.xaml</DependentUpon>
     </Compile>
@@ -562,6 +558,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Icons\ComboBoxItems\OperatorItem.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Icons\DayIcon.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -595,10 +595,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Locations\Views\Icons\LocationConfigImageSelector.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Locations\Views\Icons\OperatorComboBoxItem.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -727,10 +723,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Units\Dialog\NewSubClassDialog.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Units\Dialog\OperatorComboBoxItem.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
