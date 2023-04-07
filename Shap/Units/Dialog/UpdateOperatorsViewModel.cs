@@ -9,6 +9,7 @@
     using Shap.Common.SerialiseModel.ClassDetails;
     using Shap.Common.SerialiseModel.Operator;
     using Shap.Icons.ComboBoxItems;
+    using Shap.Icons.ListViewItems;
     using Shap.Interfaces.Io;
 
     /// <summary>
@@ -268,7 +269,7 @@
         {
             if (this.IsOperatorIndexValid())
             {
-                this.isContemporary = this.ClassOperators[this.ClassOperatorIndex].IsContemporary;
+                this.isContemporary = this.ClassOperators[this.ClassOperatorIndex].IsOperatorContemporary;
                 this.RaisePropertyChangedEvent(nameof(this.IsContemporary));
             }
         }

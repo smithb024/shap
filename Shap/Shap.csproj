@@ -253,6 +253,11 @@
     <Compile Include="Icons\LetterIcon.xaml.cs">
       <DependentUpon>LetterIcon.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Icons\ListViewItems\IOperatorListItemViewModel.cs" />
+    <Compile Include="Icons\ListViewItems\OperatorListItemViewModel.cs" />
+    <Compile Include="Icons\ListViewItems\OperatorListViewItem.xaml.cs">
+      <DependentUpon>OperatorListViewItem.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Icons\MonthBar.xaml.cs">
       <DependentUpon>MonthBar.xaml</DependentUpon>
     </Compile>
@@ -403,10 +408,6 @@
     </Compile>
     <Compile Include="Units\ClassFrontPage.xaml.cs">
       <DependentUpon>ClassFrontPage.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Units\Dialog\OperatorListItemViewModel.cs" />
-    <Compile Include="Units\Dialog\OperatorListViewItem.xaml.cs">
-      <DependentUpon>OperatorListViewItem.xaml</DependentUpon>
     </Compile>
     <Compile Include="Units\Dialog\UpdateOperatorsDialog.xaml.cs">
       <DependentUpon>UpdateOperatorsDialog.xaml</DependentUpon>
@@ -574,6 +575,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Icons\ListViewItems\OperatorListViewItem.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Icons\MonthBar.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -723,10 +728,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Units\Dialog\NewSubClassDialog.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Units\Dialog\OperatorListViewItem.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

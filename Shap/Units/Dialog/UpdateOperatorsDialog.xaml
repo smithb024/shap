@@ -4,7 +4,8 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Shap.Units.Dialog"
-        xmlns:comboBoxItems="clr-namespace:Shap.Icons.ComboBoxItems"
+        xmlns:comboBoxItems="clr-namespace:Shap.Icons.ComboBoxItems" 
+        xmlns:listViewItems="clr-namespace:Shap.Icons.ListViewItems"
         mc:Ignorable="d"
         Background="{StaticResource StdBackground}"
         Name="UpdateOperators"
@@ -72,7 +73,7 @@
                 </ListBox.ItemContainerStyle>
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
-                        <local:OperatorListViewItem />
+                        <listViewItems:OperatorListViewItem />
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
             </ListView>
