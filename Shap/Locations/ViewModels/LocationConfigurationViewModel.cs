@@ -104,6 +104,7 @@
 
             this.Operators = new ObservableCollection<IOperatorItemViewModel>();
             OperatorDetails operatorDetails = ioControllers.Operator.Read();
+            this.LocationOperators = new ObservableCollection<IOperatorListItemViewModel>();
 
             foreach (SingleOperator singleOperator in operatorDetails.Operators)
             {
@@ -220,6 +221,7 @@
 
             set => this.SetProperty(ref this.operatorsIndex, value);
         }
+
         /// <summary>
         /// Gets or sets the index of the currently selected operator from those assigned to the 
         /// current location.
