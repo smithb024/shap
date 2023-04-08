@@ -5,12 +5,12 @@
     /// <summary>
     /// Class used to serialise and deserialise a location's operator.
     /// </summary>
-    public class LocationOperators
+    public class LocationOperator
     {
         /// <summary>
-        /// Initialises a new instance of the <see cref="LocationOperators"/> class.
+        /// Initialises a new instance of the <see cref="LocationOperator"/> class.
         /// </summary> 
-        public LocationOperators()
+        public LocationOperator()
         {
         }
 

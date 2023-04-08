@@ -4,19 +4,21 @@
     using CommunityToolkit.Mvvm.Messaging;
     using Icons;
     using Shap.Common.Commands;
+    using Shap.Common.SerialiseModel.ClassDetails;
     using Shap.Common.SerialiseModel.Location;
     using Shap.Common.SerialiseModel.Operator;
     using Shap.Icons.ComboBoxItems;
+    using Shap.Icons.ListViewItems;
     using Shap.Interfaces.Io;
     using Shap.Interfaces.Locations.ViewModels;
     using Shap.Interfaces.Locations.ViewModels.Helpers;
-    using Shap.Interfaces.Locations.ViewModels.Icons;
     using Shap.Locations.Messages;
     using Shap.Locations.ViewModels.Helpers;
     using Shap.Types.Enum;
     using System;
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
+    using System.Linq;
     using System.Windows.Input;
 
     public class LocationConfigurationViewModel : ObservableRecipient, ILocationConfigurationViewModel
@@ -62,6 +64,17 @@
         private int regionIndex;
 
         /// <summary>
+        /// The index of the currently selected operator on the combo box.
+        /// </summary>
+        private int operatorsIndex;
+
+        /// <summary>
+        /// The index of the currently selected operator from those assigned to the current 
+        /// location.
+        /// </summary>
+        private int locationOperatorsIndex;
+
+        /// <summary>
         /// The currently loaded location.
         /// </summary>
         private LocationDetails currentLocation;
@@ -77,6 +90,7 @@
 
             this.SaveCmd = new CommonCommand(this.Save, () => true);
             this.CancelCmd = new CommonCommand(this.Cancel, () => true);
+            this.AddOperatorsCmd = new CommonCommand(this.AddOperator, () => true);
             this.Image =
                 new LocationImageSelectorViewModel(
                     ioControllers,
@@ -197,6 +211,45 @@
         /// Collection of all known operators.
         /// </summary>
         public ObservableCollection<IOperatorItemViewModel> Operators { get; }
+        /// <summary>
+        /// Gets or sets the index of the currently selected operator on the combo box.
+        /// </summary>
+        public int OperatorIndex
+        {
+            get => this.operatorsIndex;
+
+            set => this.SetProperty(ref this.operatorsIndex, value);
+        }
+        /// <summary>
+        /// Gets or sets the index of the currently selected operator from those assigned to the 
+        /// current location.
+        /// </summary>
+        public int LocationOperatorIndex
+        {
+            get => this.locationOperatorsIndex;
+
+            set
+            {
+                if (this.locationOperatorsIndex == value)
+                {
+                    return;
+                }
+
+                this.locationOperatorsIndex = value;
+                this.OnPropertyChanged(nameof(this.LocationOperatorIndex));
+                //this.ReassessIsContemporary();
+            }
+        }
+
+        /// <summary>
+        /// Collection of all operators assigned to this location.
+        /// </summary>
+        public ObservableCollection<IOperatorListItemViewModel> LocationOperators { get; }
+
+        /// <summary>
+        /// Gets a command which is used to add an operator to the location.
+        /// </summary>
+        public ICommand AddOperatorsCmd { get; }
 
         /// <summary>
         /// Get the image selector view models.
@@ -279,6 +332,49 @@
         }
 
         /// <summary>
+        /// Add an operator to the location
+        /// </summary>
+        private void AddOperator()
+        {
+            bool? isAlreadyAssigned = this.IsAlreadyAssigned();
+
+            if (isAlreadyAssigned == null ||
+                isAlreadyAssigned == true)
+            {
+                return;
+            }
+
+            IOperatorItemViewModel selectedOperator =
+                this.Operators[this.OperatorIndex];
+
+            LocationOperator newLocationOperator =
+                new LocationOperator()
+                {
+                    Name = selectedOperator.Name,
+                    IsContemporary = true
+                };
+            this.currentLocation.Operators.Add(newLocationOperator);
+            this.currentLocation.Operators = this.currentLocation.Operators.OrderBy(c => c.Name).ToList();
+
+            this.LocationOperators.Clear();
+
+            foreach (LocationOperator locationOperator in this.currentLocation.Operators)
+            {
+                bool isActive =
+                    this.FindActiveState(
+                        locationOperator.Name);
+
+                OperatorListItemViewModel viewModel =
+                    new OperatorListItemViewModel(
+                        locationOperator.Name,
+                        isActive,
+                        locationOperator.IsContemporary);
+
+                this.LocationOperators.Add(viewModel);
+            }
+        }
+
+        /// <summary>
         /// Save the current location.
         /// </summary>
         private void Save()
@@ -289,7 +385,6 @@
             this.currentLocation.Closed = this.Closed;
             this.currentLocation.Category = (LocationCategories)this.CategoryIndex;
             this.currentLocation.County = this.Regions[this.RegionIndex];
-
 
             this.currentLocation.Photos =
                 new List<LocationPhotos>()
@@ -313,6 +408,50 @@
             this.Clear();
             DisplayLocationMessage message = new DisplayLocationMessage(string.Empty);
             this.Messenger.Send(message);
+        }
+
+        /// <summary>
+        /// Indicate whether the currently selected operator has already been assigned to this
+        /// location. 
+        /// It returns null if operator is not valid.
+        /// </summary>
+        /// <returns>Has been assigned</returns>
+        private bool? IsAlreadyAssigned()
+        {
+            if (this.OperatorIndex >= 0 && this.OperatorIndex < this.Operators.Count)
+            {
+                foreach (IOperatorListItemViewModel op in this.LocationOperators)
+                {
+                    if (string.Compare(op.Name, this.Operators[this.OperatorIndex].Name) == 0)
+                    {
+                        return true;
+                    }
+                }
+            }
+            else
+            {
+                return null;
+            }
+
+            return false;
+        }
+
+        /// <summary>
+        /// Find the operator with a given name and return its active state.
+        /// </summary>
+        /// <param name="name">name to find</param>
+        /// <returns>is active state</returns>
+        private bool FindActiveState(string name)
+        {
+            foreach (OperatorItemViewModel op in this.Operators)
+            {
+                if (string.Compare(op.Name, name) == 0)
+                {
+                    return op.IsOperatorActive;
+                }
+            }
+
+            return false;
         }
     }
 }

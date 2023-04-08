@@ -9,7 +9,7 @@
     public class LocationYear
     {
         /// <summary>
-        /// Initialises a new instance of the <see cref="LocationOperators"/> class.
+        /// Initialises a new instance of the <see cref="LocationOperator"/> class.
         /// </summary> 
         public LocationYear()
         {

@@ -3,6 +3,7 @@
     using Helpers;
     using Icons;
     using Shap.Icons.ComboBoxItems;
+    using Shap.Icons.ListViewItems;
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
     using System.Windows.Input;
@@ -61,6 +62,27 @@
         /// Collection of all known operators.
         /// </summary>
         ObservableCollection<IOperatorItemViewModel> Operators { get; }
+
+        /// <summary>
+        /// Gets or sets the index of the currently selected operator on the combo box.
+        /// </summary>
+        int OperatorIndex { get; set; }
+
+        /// <summary>
+        /// Gets a command which is used to add an operator to the location.
+        /// </summary>
+        ICommand AddOperatorsCmd { get; }
+
+        /// <summary>
+        /// Gets or sets the index of the currently selected operator from those assigned to the 
+        /// current location.
+        /// </summary>
+        int LocationOperatorIndex { get; set; }
+
+        /// <summary>
+        /// Collection of all known operators assigned to the current location.
+        /// </summary>
+        ObservableCollection<IOperatorListItemViewModel> LocationOperators { get; }
 
         /// <summary>
         /// Get the collection of image selector view models.

@@ -80,7 +80,7 @@
         /// Gets or sets the collection of operators.
         /// </summary>
         [XmlElement("Operator")]
-        public List<LocationOperators> Operators { get; set; }
+        public List<LocationOperator> Operators { get; set; }
 
         /// <summary>
         /// Gets or sets the collection of photos.

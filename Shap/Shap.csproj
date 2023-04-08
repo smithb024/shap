@@ -195,7 +195,7 @@
     <Compile Include="Common\SerialiseModel\Location\LocationDetails.cs" />
     <Compile Include="Common\SerialiseModel\Location\LocationClass.cs" />
     <Compile Include="Common\SerialiseModel\Location\LocationYear.cs" />
-    <Compile Include="Common\SerialiseModel\Location\LocationOperators.cs" />
+    <Compile Include="Common\SerialiseModel\Location\LocationOperator.cs" />
     <Compile Include="Common\SerialiseModel\Location\LocationPhotos.cs" />
     <Compile Include="Common\SerialiseModel\Location\Trip.cs" />
     <Compile Include="Common\SerialiseModel\Operator\OperatorDetails.cs" />

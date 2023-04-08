@@ -118,7 +118,7 @@
                     Style="{StaticResource ComboBoxStyle}"
                     ItemsSource="{Binding Path=Operators}" 
                     IsEditable="False"
-                    SelectedIndex="{Binding OperatorIndex}">
+                    SelectedIndex="{Binding Path=sOperatorIndex}">
                     <ComboBox.ItemContainerStyle>
                         <Style TargetType="ComboBoxItem">
                             <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
@@ -137,8 +137,9 @@
                     Style="{StaticResource StdButtonStyle}"
                     Height="20"
                     Margin="2"
-                    Command="{Binding AddOperatorsCmd}"/>
+                    Command="{Binding Path=AddOperatorsCmd}"/>
             </Grid>
+            
             <Button Content="Save"
                     Style="{StaticResource StdButtonStyle}"
                     Height="20"

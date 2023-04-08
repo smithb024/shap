@@ -31,7 +31,7 @@
                 Style="{StaticResource ComboBoxStyle}"
                 ItemsSource="{Binding Path=Operators}" 
                 IsEditable="False"
-                SelectedIndex="{Binding OperatorIndex}">
+                SelectedIndex="{Binding Path=OperatorIndex}">
                 <ComboBox.ItemContainerStyle>
                     <Style TargetType="ComboBoxItem">
                         <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
