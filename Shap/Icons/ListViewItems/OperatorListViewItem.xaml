@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
              xmlns:shapConverter="clr-namespace:Shap.Common.Converters"
              xmlns:icons="clr-namespace:Shap.Icons"
              xmlns:local="clr-namespace:Shap.Icons.ListViewItems"
@@ -14,31 +15,36 @@
     </UserControl.Resources>
 
     <Grid>
-        <Grid>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="4*"/>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="4*"/>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
 
-            <TextBlock 
-                Grid.Column="0"
-                Text="{Binding Path=Name}"
-                Style="{StaticResource StdTextBlockStyle}"/>
-            <icons:Led 
-                Grid.Column="1" 
-                Height="15"
-                Width="15"
-                Margin="20, 0, 0, 0"
-                HorizontalAlignment="Center"
-                LedColour="{Binding Path=IsOperatorContemporary, Converter={StaticResource activeConverter}}"/>
-            <icons:Led 
-                Grid.Column="2" 
-                Height="15"
-                Width="15"
-                Margin="20, 0, 0, 0"
-                HorizontalAlignment="Center"
-                LedColour="{Binding Path=IsOperatorActive, Converter={StaticResource activeConverter}}"/>
-        </Grid>
+        <TextBlock 
+            Grid.Column="0"
+            Text="{Binding Path=Name}"
+            Style="{StaticResource StdTextBlockStyle}"/>
+        <icons:Led 
+            Grid.Column="1" 
+            Height="15"
+            Width="15"
+            Margin="20, 0, 0, 0"
+            HorizontalAlignment="Center"
+            LedColour="{Binding Path=IsOperatorContemporary, Converter={StaticResource activeConverter}}"/>
+        <icons:Led 
+            Grid.Column="2" 
+            Height="15"
+            Width="15"
+            Margin="20, 0, 0, 0"
+            HorizontalAlignment="Center"
+            LedColour="{Binding Path=IsOperatorActive, Converter={StaticResource activeConverter}}"/>
+
+        <i:Interaction.Triggers>
+            <i:EventTrigger EventName="MouseLeftButtonDown">
+                <i:InvokeCommandAction Command="{Binding OnLeftClick}"/>
+            </i:EventTrigger>
+        </i:Interaction.Triggers>
+
     </Grid>
 </UserControl>

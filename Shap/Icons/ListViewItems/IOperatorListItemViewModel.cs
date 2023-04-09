@@ -1,5 +1,7 @@
 ﻿namespace Shap.Icons.ListViewItems
 {
+    using System.Windows.Input;
+
     /// <summary>
     /// Interface for a view model which is used to display an individual operator on a list view.
     /// </summary>
@@ -19,6 +21,11 @@
         /// Gets a value indicating whether the operator is currently active for the class.
         /// </summary>
         bool IsOperatorContemporary { get; }
+
+        /// <summary>
+        /// Left mouse click action.
+        /// </summary>
+        ICommand OnLeftClick { get; }
 
         /// <summary>
         /// Sets a new state for the <see cref="IsContemporary"/> property.
