@@ -308,6 +308,24 @@
                 }
             }
 
+            this.LocationOperators.Clear();
+            if (this.currentLocation.Operators.Count > 0)
+            {
+                foreach(LocationOperator modelOperator in this.currentLocation.Operators)
+                {
+                    bool isOperatorActive =
+                        this.FindActiveState(
+                            modelOperator.Name);
+                    IOperatorListItemViewModel viewModel =
+                        new OperatorListItemViewModel(
+                            modelOperator.Name,
+                            isOperatorActive,
+                            modelOperator.IsContemporary);
+
+                    this.LocationOperators.Add(viewModel);
+                }
+            }
+
             if (this.currentLocation.Photos.Count > 0)
             {
                 this.Image.SetImage(this.currentLocation.Photos[0].Path);
