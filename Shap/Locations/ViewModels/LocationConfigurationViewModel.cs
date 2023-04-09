@@ -334,7 +334,8 @@
         }
 
         /// <summary>
-        /// Add an operator to the location
+        /// Add an operator to the location. UI only. Nothing will happen if the operator
+        /// is already present.
         /// </summary>
         private void AddOperator()
         {
@@ -346,34 +347,15 @@
                 return;
             }
 
-            IOperatorItemViewModel selectedOperator =
-                this.Operators[this.OperatorIndex];
+            IOperatorItemViewModel selectedOperator = this.Operators[this.OperatorIndex];
 
-            LocationOperator newLocationOperator =
-                new LocationOperator()
-                {
-                    Name = selectedOperator.Name,
-                    IsContemporary = true
-                };
-            this.currentLocation.Operators.Add(newLocationOperator);
-            this.currentLocation.Operators = this.currentLocation.Operators.OrderBy(c => c.Name).ToList();
+            IOperatorListItemViewModel viewModel =
+                new OperatorListItemViewModel(
+                    selectedOperator.Name,
+                    selectedOperator.IsOperatorActive,
+                    true);
 
-            this.LocationOperators.Clear();
-
-            foreach (LocationOperator locationOperator in this.currentLocation.Operators)
-            {
-                bool isActive =
-                    this.FindActiveState(
-                        locationOperator.Name);
-
-                OperatorListItemViewModel viewModel =
-                    new OperatorListItemViewModel(
-                        locationOperator.Name,
-                        isActive,
-                        locationOperator.IsContemporary);
-
-                this.LocationOperators.Add(viewModel);
-            }
+            this.LocationOperators.Add(viewModel);
         }
 
         /// <summary>
@@ -388,6 +370,7 @@
             this.currentLocation.Category = (LocationCategories)this.CategoryIndex;
             this.currentLocation.County = this.Regions[this.RegionIndex];
 
+            // Add photo
             this.currentLocation.Photos =
                 new List<LocationPhotos>()
                 {
@@ -397,6 +380,24 @@
                     }
                 };
 
+            // Add operators
+            this.currentLocation.Operators.Clear();
+
+            foreach (IOperatorListItemViewModel locationOperator in this.LocationOperators)
+            {
+                LocationOperator newOperator =
+                    new LocationOperator()
+                    {
+                        Name = locationOperator.Name,
+                        IsContemporary = locationOperator.IsOperatorContemporary
+                    };
+
+                this.currentLocation.Operators.Add(newOperator);
+            }
+
+            this.currentLocation.Operators = this.currentLocation.Operators.OrderBy(c => c.Name).ToList();
+
+            // Save
             this.ioControllers.Location.Write(
                 this.currentLocation,
                 this.Name);
