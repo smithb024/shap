@@ -51,16 +51,6 @@
         public ICommand OnLeftClick { get; }
 
         /// <summary>
-        /// Sets a new state for the <see cref="IsContemporary"/> property.
-        /// </summary>
-        /// <param name="isContemporary">new value</param>
-        public void SetIsContemporary(bool isContemporary)
-        {
-            this.IsOperatorContemporary = isContemporary;
-            this.OnPropertyChanged(nameof(this.IsOperatorContemporary));
-        }
-
-        /// <summary>
         /// Left mouse click, reverse <see cref="IsOperatorContemporary"/>.
         /// </summary>
         private void LeftClickAction()

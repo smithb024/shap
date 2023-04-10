@@ -26,11 +26,5 @@
         /// Left mouse click action.
         /// </summary>
         ICommand OnLeftClick { get; }
-
-        /// <summary>
-        /// Sets a new state for the <see cref="IsContemporary"/> property.
-        /// </summary>
-        /// <param name="isContemporary">new value</param>
-        void SetIsContemporary(bool isContemporary);
     }
 }
