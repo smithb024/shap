@@ -1,12 +1,7 @@
 ﻿namespace Shap.Common.SerialiseModel.Location
 {
-    using Shap.Common.SerialiseModel.Family;
     using Shap.Types.Enum;
-    using System;
     using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
-    using System.Threading.Tasks;
     using System.Xml.Serialization;
 
     /// <summary>
@@ -80,7 +75,7 @@
         /// Gets or sets the collection of operators.
         /// </summary>
         [XmlElement("Operator")]
-        public List<LocationOperators> Operators { get; set; }
+        public List<LocationOperator> Operators { get; set; }
 
         /// <summary>
         /// Gets or sets the collection of photos.

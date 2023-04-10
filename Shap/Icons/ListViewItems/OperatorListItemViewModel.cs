@@ -1,12 +1,13 @@
-﻿namespace Shap.Units.Dialog
+﻿namespace Shap.Icons.ListViewItems
 {
-    using NynaeveLib.ViewModel;
+    using CommunityToolkit.Mvvm.ComponentModel;
+    using NynaeveLib.Commands;
+    using System.Windows.Input;
 
     /// <summary>
-    /// View model which is used to display operators on the 
-    /// <see cref="UpdateOperatorsDialog"/> combo box.
+    ///  A view model which is used to display an individual operator on a list view.
     /// </summary>
-    public class OperatorListItemViewModel : ViewModelBase, IViewModelBase
+    public class OperatorListItemViewModel : ObservableRecipient, IOperatorListItemViewModel
     {
         /// <summary>
         /// Initialises a new instance of the <see cref="OperatorComboBoxItemViewModel"/> class.
@@ -22,8 +23,11 @@
             bool isContemporary)
         {
             this.Name = name;
-            this.IsActive = isActive;
-            this.IsContemporary = isContemporary;
+            this.IsOperatorActive = isActive;
+            this.IsOperatorContemporary = isContemporary;
+            this.OnLeftClick =
+                new CommonCommand(
+                    this.LeftClickAction);
         }
 
         /// <summary>
@@ -34,21 +38,25 @@
         /// <summary>
         /// Gets a value indicating whether the operator is active.
         /// </summary>
-        public bool IsActive { get; }
+        public bool IsOperatorActive { get; }
 
         /// <summary>
         /// Gets a value indicating whether the operator is currently active for the class.
         /// </summary>
-        public bool IsContemporary { get; private set; }
+        public bool IsOperatorContemporary { get; private set; }
 
         /// <summary>
-        /// Sets a new state for the <see cref="IsContemporary"/> property.
+        /// Left mouse click action.
         /// </summary>
-        /// <param name="isContemporary">new value</param>
-        public void SetIsContemporary(bool isContemporary)
+        public ICommand OnLeftClick { get; }
+
+        /// <summary>
+        /// Left mouse click, reverse <see cref="IsOperatorContemporary"/>.
+        /// </summary>
+        private void LeftClickAction()
         {
-            this.IsContemporary = isContemporary;
-            this.RaisePropertyChangedEvent(nameof(this.IsContemporary));
+            this.IsOperatorContemporary = !this.IsOperatorContemporary;
+            this.OnPropertyChanged(nameof(this.IsOperatorContemporary));
         }
     }
 }

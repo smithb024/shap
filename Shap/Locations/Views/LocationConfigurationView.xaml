@@ -3,7 +3,9 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:Shap.Locations" xmlns:icons="clr-namespace:Shap.Locations.Views.Icons"
+             xmlns:icons="clr-namespace:Shap.Locations.Views.Icons" 
+             xmlns:comboBoxItems="clr-namespace:Shap.Icons.ComboBoxItems"
+             xmlns:listViewItems="clr-namespace:Shap.Icons.ListViewItems"
              mc:Ignorable="d" 
              Width="550"
              d:DesignHeight="450" d:DesignWidth="800">
@@ -105,6 +107,57 @@
                           ItemsSource="{Binding Path=Regions}"
                           Style="{StaticResource ComboBoxStyle}"/>
             </Grid>
+            <Grid Grid.Row="0"
+              Margin="5">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="3*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <ComboBox
+                    Grid.Column="0"
+                    Style="{StaticResource ComboBoxStyle}"
+                    ItemsSource="{Binding Path=Operators}" 
+                    IsEditable="False"
+                    SelectedIndex="{Binding Path=OperatorIndex}">
+                    <ComboBox.ItemContainerStyle>
+                        <Style TargetType="ComboBoxItem">
+                            <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                        </Style>
+                    </ComboBox.ItemContainerStyle>
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <comboBoxItems:OperatorItem />
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
+
+                <Button 
+                    Content="Add"
+                    Grid.Column="1"
+                    Style="{StaticResource StdButtonStyle}"
+                    Height="20"
+                    Margin="2"
+                    Command="{Binding Path=AddOperatorsCmd}"/>
+            </Grid>
+            
+            <ListView 
+                Margin="5"
+                ItemsSource="{Binding Path=LocationOperators}"
+                SelectedIndex="{Binding Path=LocationOperatorIndex}"
+                Style="{StaticResource StdListViewStyle}">
+                <ListBox.ItemContainerStyle>
+                    <Style TargetType="ListBoxItem">
+                        <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                    </Style>
+                </ListBox.ItemContainerStyle>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <listViewItems:OperatorListViewItem />
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ListView>
+            
             <Button Content="Save"
                     Style="{StaticResource StdButtonStyle}"
                     Height="20"

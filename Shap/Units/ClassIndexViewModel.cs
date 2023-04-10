@@ -7,6 +7,7 @@
     using NynaeveLib.ViewModel;
     using Shap.Common.SerialiseModel.Family;
     using Shap.Common.SerialiseModel.Operator;
+    using Shap.Icons.ComboBoxItems;
     using Shap.Interfaces.Io;
     using Shap.Units.Dialog;
     using Stats;
@@ -78,12 +79,12 @@
             }
 
             OperatorDetails serialisedOperators = ioControllers.Operator.Read();
-            OperatorComboBoxItemViewModel empty =
-                new OperatorComboBoxItemViewModel(
+            OperatorItemViewModel empty =
+                new OperatorItemViewModel(
                     string.Empty,
                     true);
             this.Operators =
-                new ObservableCollection<OperatorComboBoxItemViewModel>
+                new ObservableCollection<OperatorItemViewModel>
                 {
                     empty
                 };
@@ -92,8 +93,8 @@
             {
                 foreach(SingleOperator singleOperator in serialisedOperators.Operators)
                 {
-                    OperatorComboBoxItemViewModel comboBoxItem =
-                        new OperatorComboBoxItemViewModel(
+                    OperatorItemViewModel comboBoxItem =
+                        new OperatorItemViewModel(
                             singleOperator.Name,
                             singleOperator.IsActive);
                     this.Operators.Add(comboBoxItem);
@@ -162,7 +163,7 @@
         /// <summary>
         /// Gets the list of operators which can be used as a filter.
         /// </summary>
-        public ObservableCollection<OperatorComboBoxItemViewModel> Operators { get; }
+        public ObservableCollection<OperatorItemViewModel> Operators { get; }
 
         /// <summary>
         /// Gets or sets a value indicating whether the class is in configuration mode or not.

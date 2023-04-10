@@ -8,6 +8,8 @@
     using NynaeveLib.ViewModel;
     using Shap.Common.SerialiseModel.ClassDetails;
     using Shap.Common.SerialiseModel.Operator;
+    using Shap.Icons.ComboBoxItems;
+    using Shap.Icons.ListViewItems;
     using Shap.Interfaces.Io;
 
     /// <summary>
@@ -31,12 +33,6 @@
         private int classOperatorsIndex;
 
         /// <summary>
-        /// Indicates whether the currently selected class operator is a contemporary operator or 
-        /// not.
-        /// </summary>
-        private bool isContemporary;
-
-        /// <summary>
         /// Initialises a new instance of the <see cref="UpdateOperatorsViewModel"/> class.
         /// </summary>
         /// <param name="ioControllers">IO controllers</param>
@@ -46,14 +42,14 @@
             ClassDetails details)
         {
             this.classDetails = details;
-            this.Operators = new ObservableCollection<OperatorComboBoxItemViewModel>();
+            this.Operators = new ObservableCollection<OperatorItemViewModel>();
             this.ClassOperators = new ObservableCollection<OperatorListItemViewModel>();
             OperatorDetails operatorDetails = ioControllers.Operator.Read();
 
             foreach (SingleOperator singleOperator in operatorDetails.Operators)
             {
-                OperatorComboBoxItemViewModel viewModel =
-                    new OperatorComboBoxItemViewModel(
+                OperatorItemViewModel viewModel =
+                    new OperatorItemViewModel(
                         singleOperator.Name,
                         singleOperator.IsActive);
                 this.Operators.Add(viewModel);
@@ -103,7 +99,7 @@
         /// <summary>
         /// Collection of all known operators.
         /// </summary>
-        public ObservableCollection<OperatorComboBoxItemViewModel> Operators { get; }
+        public ObservableCollection<OperatorItemViewModel> Operators { get; }
 
         /// <summary>
         /// Gets or sets the index of the currently selected operator from those assigned to the 
@@ -125,7 +121,6 @@
 
                 this.classOperatorsIndex = value;
                 this.RaisePropertyChangedEvent(nameof(this.ClassOperatorIndex));
-                this.ReassessIsContemporary();
             }
         }
 
@@ -134,35 +129,10 @@
         /// </summary>
         public ObservableCollection<OperatorListItemViewModel> ClassOperators { get; }
 
-
         /// <summary>
         /// Ok command.
         /// </summary>
         public ICommand AddCmd { get; private set; }
-
-        /// <summary>
-        /// Gets or sets the index of the currently selected operator from those assigned to the 
-        /// current class.
-        /// </summary>
-        public bool IsContemporary
-        {
-            get
-            {
-                return this.isContemporary;
-            }
-
-            set
-            {
-                if (this.isContemporary == value)
-                {
-                    return;
-                }
-
-                this.isContemporary = value;
-                this.RaisePropertyChangedEvent(nameof(this.IsContemporary));
-                this.SetConfigurationIsContemporary();
-            }
-        }
 
         /// <summary>
         /// Ok command.
@@ -176,7 +146,7 @@
         /// <returns>is active state</returns>
         private bool FindActiveState(string name)
         {
-            foreach (OperatorComboBoxItemViewModel op in this.Operators)
+            foreach (OperatorItemViewModel op in this.Operators)
             {
                 if (string.Compare(op.Name, name) == 0)
                 {
@@ -225,83 +195,15 @@
                 return;
             }
 
-            OperatorComboBoxItemViewModel selectedOperator =
-                this.Operators[this.OperatorIndex];
+            OperatorItemViewModel selectedOperator = this.Operators[this.OperatorIndex];
 
-            Operator newClassOperator =
-                new Operator()
-                {
-                    Name = selectedOperator.Name,
-                    IsContemporary = true
-                };
-            this.classDetails.Operators.Add(newClassOperator);
-            this.classDetails.Operators = this.classDetails.Operators.OrderBy(c => c.Name).ToList();
+            OperatorListItemViewModel viewModel =
+                new OperatorListItemViewModel(
+                    selectedOperator.Name,
+                    selectedOperator.IsActive,
+                    true);
 
-            this.ClassOperators.Clear();
-
-            foreach (Operator classOperator in this.classDetails.Operators)
-            {
-                bool isActive =
-                    this.FindActiveState(
-                        classOperator.Name);
-
-                OperatorListItemViewModel viewModel =
-                    new OperatorListItemViewModel(
-                        classOperator.Name,
-                        isActive,
-                        classOperator.IsContemporary);
-
-                this.ClassOperators.Add(viewModel);
-            }
-        }
-
-        /// <summary>
-        /// Set the <see cref="IsContemporary"/> property based on the currently selected 
-        /// <see cref="ClassOperators"/> object. This bypasses the property setter because the
-        /// property setter is used to handle user input.
-        /// </summary>
-        /// <remarks>
-        /// Ignore the call if <see cref="ClassOperatorIndex"/> is not valid.
-        /// </remarks>
-        private void ReassessIsContemporary()
-        {
-            if (this.IsOperatorIndexValid())
-            {
-                this.isContemporary = this.ClassOperators[this.ClassOperatorIndex].IsContemporary;
-                this.RaisePropertyChangedEvent(nameof(this.IsContemporary));
-            }
-        }
-
-        /// <summary>
-        /// Set the <see cref="IsContemporary"/> property based on the currently selected 
-        /// <see cref="ClassOperators"/> object. This bypasses the property setter because the
-        /// property setter is used to handle user input.
-        /// </summary>
-        /// <remarks>
-        /// Ignore the call if <see cref="ClassOperatorIndex"/> is not valid.
-        /// </remarks>
-        private void SetConfigurationIsContemporary()
-        {
-            if (this.IsOperatorIndexValid())
-            {
-                this.ClassOperators[this.ClassOperatorIndex].SetIsContemporary(
-                    this.IsContemporary);
-                this.classDetails.Operators[this.ClassOperatorIndex].IsContemporary =
-                    this.IsContemporary;
-            }
-        }
-
-        /// <summary>
-        /// Indicates whether the <see cref="ClassOperatorIndex"/> value is valid.
-        /// </summary>
-        /// <returns>validity flag</returns>
-        private bool IsOperatorIndexValid()
-        {
-            bool isValid =
-            this.ClassOperatorIndex >= 0 &&
-                this.ClassOperatorIndex < this.ClassOperators.Count;
-
-            return isValid;
+            this.ClassOperators.Add(viewModel);
         }
 
         /// <summary>
@@ -309,6 +211,22 @@
         /// </summary>
         private void Okay(ICloseable window)
         {
+            this.classDetails.Operators.Clear();
+
+            foreach (IOperatorListItemViewModel locationOperator in this.ClassOperators)
+            {
+                Operator newOperator =
+                    new Operator()
+                    {
+                        Name = locationOperator.Name,
+                        IsContemporary = locationOperator.IsOperatorContemporary
+                    };
+
+                this.classDetails.Operators.Add(newOperator);
+            }
+
+            this.classDetails.Operators = this.classDetails.Operators.OrderBy(c => c.Name).ToList();
+
             window?.CloseObject();
         }
     }

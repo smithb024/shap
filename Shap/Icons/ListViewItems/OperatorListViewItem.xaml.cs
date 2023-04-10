@@ -1,4 +1,4 @@
-﻿namespace Shap.Units.Dialog
+﻿namespace Shap.Icons.ListViewItems
 {
     using System.Windows.Controls;
 
@@ -8,7 +8,7 @@
     public partial class OperatorListViewItem : UserControl
     {
         /// <summary>
-        /// Initialises a new instance of the <see cref="OperatorListViewItem"/> class.
+        /// Initialises a new instance of the <see cref="OperatorListItemViewModel"/> class.
         /// </summary>
         public OperatorListViewItem()
         {

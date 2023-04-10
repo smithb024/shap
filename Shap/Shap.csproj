@@ -195,7 +195,7 @@
     <Compile Include="Common\SerialiseModel\Location\LocationDetails.cs" />
     <Compile Include="Common\SerialiseModel\Location\LocationClass.cs" />
     <Compile Include="Common\SerialiseModel\Location\LocationYear.cs" />
-    <Compile Include="Common\SerialiseModel\Location\LocationOperators.cs" />
+    <Compile Include="Common\SerialiseModel\Location\LocationOperator.cs" />
     <Compile Include="Common\SerialiseModel\Location\LocationPhotos.cs" />
     <Compile Include="Common\SerialiseModel\Location\Trip.cs" />
     <Compile Include="Common\SerialiseModel\Operator\OperatorDetails.cs" />
@@ -237,6 +237,11 @@
     <Compile Include="Config\PopularStnConfigViewModel.cs" />
     <Compile Include="Config\PopularStnIOController.cs" />
     <Compile Include="Config\XmlOperatorIoController.cs" />
+    <Compile Include="Icons\ComboBoxItems\IOperatorItemViewModel.cs" />
+    <Compile Include="Icons\ComboBoxItems\OperatorItem.xaml.cs">
+      <DependentUpon>OperatorItem.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Icons\ComboBoxItems\OperatorItemViewModel.cs" />
     <Compile Include="Icons\DayIcon.xaml.cs">
       <DependentUpon>DayIcon.xaml</DependentUpon>
     </Compile>
@@ -247,6 +252,11 @@
     </Compile>
     <Compile Include="Icons\LetterIcon.xaml.cs">
       <DependentUpon>LetterIcon.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Icons\ListViewItems\IOperatorListItemViewModel.cs" />
+    <Compile Include="Icons\ListViewItems\OperatorListItemViewModel.cs" />
+    <Compile Include="Icons\ListViewItems\OperatorListViewItem.xaml.cs">
+      <DependentUpon>OperatorListViewItem.xaml</DependentUpon>
     </Compile>
     <Compile Include="Icons\MonthBar.xaml.cs">
       <DependentUpon>MonthBar.xaml</DependentUpon>
@@ -399,14 +409,6 @@
     <Compile Include="Units\ClassFrontPage.xaml.cs">
       <DependentUpon>ClassFrontPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Units\Dialog\OperatorComboBoxItem.xaml.cs">
-      <DependentUpon>OperatorComboBoxItem.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Units\Dialog\OperatorListItemViewModel.cs" />
-    <Compile Include="Units\Dialog\OperatorComboBoxItemViewModel.cs" />
-    <Compile Include="Units\Dialog\OperatorListViewItem.xaml.cs">
-      <DependentUpon>OperatorListViewItem.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Units\Dialog\UpdateOperatorsDialog.xaml.cs">
       <DependentUpon>UpdateOperatorsDialog.xaml</DependentUpon>
     </Compile>
@@ -557,6 +559,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Icons\ComboBoxItems\OperatorItem.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Icons\DayIcon.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -566,6 +572,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Icons\LetterIcon.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Icons\ListViewItems\OperatorListViewItem.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -718,14 +728,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Units\Dialog\NewSubClassDialog.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Units\Dialog\OperatorComboBoxItem.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Units\Dialog\OperatorListViewItem.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

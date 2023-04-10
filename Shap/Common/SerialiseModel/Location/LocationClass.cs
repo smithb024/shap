@@ -1,6 +1,5 @@
 ﻿namespace Shap.Common.SerialiseModel.Location
 {
-    using Shap.Types.Enum;
     using System.Xml.Serialization;
 
     /// <summary>
