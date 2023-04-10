@@ -1,12 +1,7 @@
 ﻿namespace Shap.Common.SerialiseModel.Location
 {
-    using Shap.Common.SerialiseModel.Family;
     using Shap.Types.Enum;
-    using System;
     using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
-    using System.Threading.Tasks;
     using System.Xml.Serialization;
 
     /// <summary>
