@@ -87,8 +87,7 @@
             this.Navigation = alphabeticalViewModel;
             this.Selector = locationSelectorViewModel;
 
-            this.locationViewModel =
-                new LocationViewModel();
+            this.locationViewModel = new LocationViewModel();
             this.locationConfigurationViewModel = 
                 new LocationConfigurationViewModel(
                     ioControllers);
@@ -106,7 +105,8 @@
         /// <summary>
         /// Gets or sets a value indicating whether the locations are being configured.
         /// </summary>
-        public bool IsConfigurationMode {
+        public bool IsConfigurationMode 
+        {
             get => this.isConfigurationMode;
             set
             {

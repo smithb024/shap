@@ -2,9 +2,7 @@
 {
     using CommunityToolkit.Mvvm.ComponentModel;
     using CommunityToolkit.Mvvm.Messaging;
-    using Icons;
     using Shap.Common.Commands;
-    using Shap.Common.SerialiseModel.ClassDetails;
     using Shap.Common.SerialiseModel.Location;
     using Shap.Common.SerialiseModel.Operator;
     using Shap.Icons.ComboBoxItems;
