@@ -12,6 +12,7 @@
     using Shap.Interfaces.Io;
     using Shap.Interfaces.Locations.ViewModels;
     using Shap.Locations.Messages;
+    using Shap.Types.Enum;
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
 
@@ -140,9 +141,11 @@
             this.Opened = currentLocation.Opened;
             this.Closed = currentLocation.Closed;
             this.Region = currentLocation.County;
-            this.Category = currentLocation.Category.ToString();
             this.TotalFrom = currentLocation.TotalFrom.ToString();
             this.TotalTo = currentLocation.TotalTo.ToString();
+
+            this.Category =
+                $"{currentLocation.Category} - {LocationCategoriesConverter.Convert(currentLocation.Category)}";
 
             if (currentLocation.Photos == null ||
                 currentLocation.Photos.Count < 1 ||
