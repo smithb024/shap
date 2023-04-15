@@ -4,12 +4,16 @@
     using CommunityToolkit.Mvvm.Messaging;
     using Shap.Common;
     using Shap.Common.SerialiseModel.Location;
+    using Shap.Common.SerialiseModel.Operator;
     using Shap.Common.ViewModel;
+    using Shap.Icons.ComboBoxItems;
+    using Shap.Icons.ListViewItems;
     using Shap.Interfaces.Common.ViewModels;
     using Shap.Interfaces.Io;
     using Shap.Interfaces.Locations.ViewModels;
     using Shap.Locations.Messages;
     using System.Collections.Generic;
+    using System.Collections.ObjectModel;
 
     /// <summary>
     /// The view model which is used to display a location on a view.
@@ -22,6 +26,11 @@
         private IIoControllers ioControllers;
 
         /// <summary>
+        /// The list of all known operators.
+        /// </summary>
+        private List<SingleOperator> operators;
+
+        /// <summary>
         /// Initialises a new instance of the <see cref="LocationViewModel"/> class.
         /// </summary>
         /// <param name="ioControllers">
@@ -31,8 +40,12 @@
             IIoControllers ioControllers)
         {
             this.ioControllers = ioControllers;
-            this.ClassCounters = new List<ITravelCounterViewModel>();
-            this.YearCounters= new List<ITravelCounterViewModel>();
+            this.ClassCounters = new ObservableCollection<ITravelCounterViewModel>();
+            this.YearCounters= new ObservableCollection<ITravelCounterViewModel>();
+            this.LocationOperators = new ObservableCollection<IOperatorListItemViewModel>();
+
+            OperatorDetails operatorDetails = ioControllers.Operator.Read();
+            this.operators = operatorDetails.Operators;
 
             this.Messenger.Register<DisplayLocationMessage>(
                 this,
@@ -92,12 +105,17 @@
         /// <summary>
         /// Gets the counters for all years.
         /// </summary>
-        public List<ITravelCounterViewModel> YearCounters { get; }
+        public ObservableCollection<ITravelCounterViewModel> YearCounters { get; }
 
         /// <summary>
         /// Gets the counters for all classes.
         /// </summary>
-        public List<ITravelCounterViewModel> ClassCounters { get; }
+        public ObservableCollection<ITravelCounterViewModel> ClassCounters { get; }
+
+        /// <summary>
+        /// Collection of all known operators assigned to the current location.
+        /// </summary>
+        public ObservableCollection<IOperatorListItemViewModel> LocationOperators { get; }
 
         /// <summary>
         /// Load a new location into the view model.
@@ -166,6 +184,25 @@
                 this.ClassCounters.Add(counter);
             }
 
+            this.LocationOperators.Clear();
+
+            if (currentLocation.Operators.Count > 0)
+            {
+                foreach (LocationOperator modelOperator in currentLocation.Operators)
+                {
+                    bool isOperatorActive =
+                        this.FindActiveState(
+                            modelOperator.Name);
+                    IOperatorListItemViewModel viewModel =
+                        new OperatorListItemReadOnlyViewModel(
+                            modelOperator.Name,
+                            isOperatorActive,
+                            modelOperator.IsContemporary);
+
+                    this.LocationOperators.Add(viewModel);
+                }
+            }
+
             this.OnPropertyChanged(nameof(this.Name));
             this.OnPropertyChanged(nameof(this.Code));
             this.OnPropertyChanged(nameof(this.Size));
@@ -178,6 +215,25 @@
             this.OnPropertyChanged(nameof(this.PhotoPath));
             this.OnPropertyChanged(nameof(this.YearCounters));
             this.OnPropertyChanged(nameof(this.ClassCounters));
+            this.OnPropertyChanged(nameof(this.LocationOperators));
+        }
+
+        /// <summary>
+        /// Find the operator with a given name and return its active state.
+        /// </summary>
+        /// <param name="name">name to find</param>
+        /// <returns>is active state</returns>
+        private bool FindActiveState(string name)
+        {
+            foreach (SingleOperator op in this.operators)
+            {
+                if (string.Compare(op.Name, name) == 0)
+                {
+                    return op.IsActive;
+                }
+            }
+
+            return false;
         }
     }
 }

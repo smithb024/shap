@@ -1,5 +1,7 @@
-﻿using Shap.Interfaces.Common.ViewModels;
+﻿using Shap.Icons.ListViewItems;
+using Shap.Interfaces.Common.ViewModels;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 
 namespace Shap.Interfaces.Locations.ViewModels
 {
@@ -61,11 +63,16 @@ namespace Shap.Interfaces.Locations.ViewModels
         /// <summary>
         /// Gets the counters for all years.
         /// </summary>
-        List<ITravelCounterViewModel> YearCounters { get; }
+        ObservableCollection<ITravelCounterViewModel> YearCounters { get; }
 
         /// <summary>
         /// Gets the counters for all classes.
         /// </summary>
-        List<ITravelCounterViewModel> ClassCounters { get; }
+        ObservableCollection<ITravelCounterViewModel> ClassCounters { get; }
+
+        /// <summary>
+        /// Collection of all known operators assigned to the current location.
+        /// </summary>
+        ObservableCollection<IOperatorListItemViewModel> LocationOperators { get; }
     }
 }

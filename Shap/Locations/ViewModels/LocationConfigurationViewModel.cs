@@ -210,6 +210,7 @@
         /// Collection of all known operators.
         /// </summary>
         public ObservableCollection<IOperatorItemViewModel> Operators { get; }
+
         /// <summary>
         /// Gets or sets the index of the currently selected operator on the combo box.
         /// </summary>

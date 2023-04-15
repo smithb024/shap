@@ -258,6 +258,7 @@
       <DependentUpon>LetterIcon.xaml</DependentUpon>
     </Compile>
     <Compile Include="Icons\ListViewItems\IOperatorListItemViewModel.cs" />
+    <Compile Include="Icons\ListViewItems\OperatorListItemReadOnlyViewModel.cs" />
     <Compile Include="Icons\ListViewItems\OperatorListItemViewModel.cs" />
     <Compile Include="Icons\ListViewItems\OperatorListViewItem.xaml.cs">
       <DependentUpon>OperatorListViewItem.xaml</DependentUpon>
