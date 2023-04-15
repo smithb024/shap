@@ -4,9 +4,12 @@
     using CommunityToolkit.Mvvm.Messaging;
     using Shap.Common;
     using Shap.Common.SerialiseModel.Location;
+    using Shap.Common.ViewModel;
+    using Shap.Interfaces.Common.ViewModels;
     using Shap.Interfaces.Io;
     using Shap.Interfaces.Locations.ViewModels;
     using Shap.Locations.Messages;
+    using System.Collections.Generic;
 
     /// <summary>
     /// The view model which is used to display a location on a view.
@@ -28,6 +31,8 @@
             IIoControllers ioControllers)
         {
             this.ioControllers = ioControllers;
+            this.ClassCounters = new List<ITravelCounterViewModel>();
+            this.YearCounters= new List<ITravelCounterViewModel>();
 
             this.Messenger.Register<DisplayLocationMessage>(
                 this,
@@ -85,6 +90,16 @@
         public string PhotoPath { get; private set; }
 
         /// <summary>
+        /// Gets the counters for all years.
+        /// </summary>
+        public List<ITravelCounterViewModel> YearCounters { get; }
+
+        /// <summary>
+        /// Gets the counters for all classes.
+        /// </summary>
+        public List<ITravelCounterViewModel> ClassCounters { get; }
+
+        /// <summary>
         /// Load a new location into the view model.
         /// </summary>
         /// <param name="message">
@@ -127,6 +142,30 @@
 
             }
 
+            this.YearCounters.Clear();
+
+            foreach(LocationYear year in currentLocation.Years)
+            {
+                ITravelCounterViewModel counter =
+                    new TravelCounterViewModel(
+                        year.Year.ToString(),
+                        year.TotalFrom.ToString(),
+                        year.TotalTo.ToString());
+                this.YearCounters.Add(counter);
+            }
+
+            this.ClassCounters.Clear();
+
+            foreach (LocationClass thisClass in currentLocation.Classes)
+            {
+                ITravelCounterViewModel counter =
+                    new TravelCounterViewModel(
+                        thisClass.Name,
+                        thisClass.TotalFrom.ToString(),
+                        thisClass.TotalTo.ToString());
+                this.ClassCounters.Add(counter);
+            }
+
             this.OnPropertyChanged(nameof(this.Name));
             this.OnPropertyChanged(nameof(this.Code));
             this.OnPropertyChanged(nameof(this.Size));
@@ -137,6 +176,8 @@
             this.OnPropertyChanged(nameof(this.TotalFrom));
             this.OnPropertyChanged(nameof(this.TotalTo));
             this.OnPropertyChanged(nameof(this.PhotoPath));
+            this.OnPropertyChanged(nameof(this.YearCounters));
+            this.OnPropertyChanged(nameof(this.ClassCounters));
         }
     }
 }

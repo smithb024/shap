@@ -1,4 +1,7 @@
-﻿namespace Shap.Interfaces.Locations.ViewModels
+﻿using Shap.Interfaces.Common.ViewModels;
+using System.Collections.Generic;
+
+namespace Shap.Interfaces.Locations.ViewModels
 {
     /// <summary>
     /// Interface which supports the view model which displays a location on a view.
@@ -54,5 +57,15 @@
         /// Gets the collection of photos.
         /// </summary>
         string PhotoPath { get; }
+
+        /// <summary>
+        /// Gets the counters for all years.
+        /// </summary>
+        List<ITravelCounterViewModel> YearCounters { get; }
+
+        /// <summary>
+        /// Gets the counters for all classes.
+        /// </summary>
+        List<ITravelCounterViewModel> ClassCounters { get; }
     }
 }
