@@ -31,9 +31,9 @@
         string Closed { get; }
 
         /// <summary>
-        /// Gets the location of the location.
+        /// Gets the region where the location is located.
         /// </summary>
-        string County { get; }
+        string Region { get; }
 
         /// <summary>
         /// Gets the type of the location.
@@ -53,6 +53,6 @@
         /// <summary>
         /// Gets the collection of photos.
         /// </summary>
-        string Photo { get; }
+        string PhotoPath { get; }
     }
 }

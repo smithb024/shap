@@ -202,6 +202,10 @@
     <Compile Include="Common\SerialiseModel\Operator\SingleOperator.cs" />
     <Compile Include="Common\ViewModel\LocationCounterManagerViewModel.cs" />
     <Compile Include="Common\ViewModel\LocationCounterViewModel.cs" />
+    <Compile Include="Common\ViewModel\TravelCounterViewModel.cs" />
+    <Compile Include="Common\Views\TravelCounterView.xaml.cs">
+      <DependentUpon>TravelCounterView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Config\ConfigJobType.cs" />
     <Compile Include="Config\ConfigViewModel.cs" />
     <Compile Include="Config\ConfigWindow.xaml.cs">
@@ -261,6 +265,7 @@
     <Compile Include="Icons\MonthBar.xaml.cs">
       <DependentUpon>MonthBar.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Interfaces\Common\ViewModels\ITravelCounterViewModel.cs" />
     <Compile Include="Interfaces\IMainWindowViewModel.cs" />
     <Compile Include="Input\DayViewModel.cs" />
     <Compile Include="Input\Factories\DailyInputFactory.cs" />
@@ -524,6 +529,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Analysis\Windows\ResultsPresentation\TotalsCounterResults.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Common\Views\TravelCounterView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

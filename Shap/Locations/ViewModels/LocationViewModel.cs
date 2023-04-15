@@ -60,9 +60,9 @@
         public string Closed { get; private set; }
 
         /// <summary>
-        /// Gets the location of the location.
+        /// Gets the region where the location is located.
         /// </summary>
-        public string County { get; private set; }
+        public string Region { get; private set; }
 
         /// <summary>
         /// Gets the type of the location.
@@ -80,9 +80,9 @@
         public string TotalTo { get; private set; }
 
         /// <summary>
-        /// Gets the collection of photos.
+        /// Gets path to the location photo.
         /// </summary>
-        public string Photo { get; private set; }
+        public string PhotoPath { get; private set; }
 
         /// <summary>
         /// Load a new location into the view model.
@@ -106,7 +106,7 @@
             this.Size = currentLocation.Size;
             this.Opened = currentLocation.Opened;
             this.Closed = currentLocation.Closed;
-            this.County = currentLocation.County;
+            this.Region = currentLocation.County;
             this.Category = currentLocation.Category.ToString();
             this.TotalFrom = currentLocation.TotalFrom.ToString();
             this.TotalTo = currentLocation.TotalTo.ToString();
@@ -115,11 +115,11 @@
                 currentLocation.Photos.Count < 1 ||
                 string.IsNullOrEmpty(currentLocation.Photos[0].Path))
             {
-                this.Photo = string.Empty;
+                this.PhotoPath = string.Empty;
             }
             else
             {
-                this.Photo =
+                this.PhotoPath =
                         BasePathReader.GetBasePathUri() +
                         StaticResources.locImgPath +
                         currentLocation.Photos[0].Path +
@@ -132,11 +132,11 @@
             this.OnPropertyChanged(nameof(this.Size));
             this.OnPropertyChanged(nameof(this.Opened));
             this.OnPropertyChanged(nameof(this.Closed));
-            this.OnPropertyChanged(nameof(this.County));
+            this.OnPropertyChanged(nameof(this.Region));
             this.OnPropertyChanged(nameof(this.Category));
             this.OnPropertyChanged(nameof(this.TotalFrom));
             this.OnPropertyChanged(nameof(this.TotalTo));
-            this.OnPropertyChanged(nameof(this.Photo));
+            this.OnPropertyChanged(nameof(this.PhotoPath));
         }
     }
 }

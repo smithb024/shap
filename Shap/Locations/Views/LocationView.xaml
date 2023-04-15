@@ -8,6 +8,121 @@
              Width="600"
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
-            
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="250"/>
+        </Grid.ColumnDefinitions>
+
+        <StackPanel Grid.Column="0">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Text="Name"
+                           Grid.Column="0"
+                           Style="{StaticResource StdTextBlockStyle}"/>
+                <TextBlock Text="{Binding Path=Name}"
+                           Grid.Column="1"
+                           Style="{StaticResource StdTextBlockStyle}"/>
+            </Grid>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Text="Code"
+                           Grid.Column="0"
+                           Style="{StaticResource StdTextBlockStyle}"/>
+                <TextBlock Text="{Binding Path=Code}"
+                           Grid.Column="1"
+                           Style="{StaticResource StdTextBlockStyle}"/>
+            </Grid>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Text="Size"
+                           Grid.Column="0"
+                           Style="{StaticResource StdTextBlockStyle}"/>
+                <TextBlock Text="{Binding Path=Size}"
+                           Grid.Column="1"
+                           Style="{StaticResource StdTextBlockStyle}"/>
+            </Grid>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Text="Opened"
+                           Grid.Column="0"
+                           Style="{StaticResource StdTextBlockStyle}"/>
+                <TextBlock Text="{Binding Path=Opened}"
+                           Grid.Column="1"
+                           Style="{StaticResource StdTextBlockStyle}"/>
+            </Grid>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Text="Closed"
+                           Grid.Column="0"
+                           Style="{StaticResource StdTextBlockStyle}"/>
+                <TextBlock Text="{Binding Path=Closed}"
+                           Grid.Column="1"
+                           Style="{StaticResource StdTextBlockStyle}"/>
+            </Grid>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Text="Category"
+                           Grid.Column="0"
+                           Style="{StaticResource StdTextBlockStyle}"/>
+                <TextBlock Text="{Binding Path=Category}"
+                           Grid.Column="1"
+                           Style="{StaticResource StdTextBlockStyle}"/>
+            </Grid>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Text="Region"
+                           Grid.Column="0"
+                           Style="{StaticResource StdTextBlockStyle}"/>
+                <TextBlock Text="{Binding Path=Region}"
+                           Grid.Column="1"
+                           Style="{StaticResource StdTextBlockStyle}"/>
+            </Grid>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Text="From"
+                           Grid.Column="0"
+                           Style="{StaticResource StdTextBlockStyle}"/>
+                <TextBlock Text="{Binding Path=TotalFrom}"
+                           Grid.Column="1"
+                           Style="{StaticResource StdTextBlockStyle}"/>
+                <TextBlock Text="To"
+                           Grid.Column="2"
+                           Style="{StaticResource StdTextBlockStyle}"/>
+                <TextBlock Text="{Binding Path=TotalTo}"
+                           Grid.Column="3"
+                           Style="{StaticResource StdTextBlockStyle}"/>
+            </Grid>
+        </StackPanel>
+
+        <Image Grid.Column="1"
+           Height="150"
+           Width="250" 
+           Source="{Binding Path=PhotoPath}"/>
     </Grid>
 </UserControl>
