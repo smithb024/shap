@@ -237,7 +237,6 @@
 
                 this.locationOperatorsIndex = value;
                 this.OnPropertyChanged(nameof(this.LocationOperatorIndex));
-                //this.ReassessIsContemporary();
             }
         }
 

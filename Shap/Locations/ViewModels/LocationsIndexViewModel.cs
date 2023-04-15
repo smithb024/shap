@@ -87,7 +87,9 @@
             this.Navigation = alphabeticalViewModel;
             this.Selector = locationSelectorViewModel;
 
-            this.locationViewModel = new LocationViewModel();
+            this.locationViewModel = 
+                new LocationViewModel(
+                    ioControllers);
             this.locationConfigurationViewModel = 
                 new LocationConfigurationViewModel(
                     ioControllers);
