@@ -6,9 +6,9 @@
     using Interfaces.Stats;
     using Shap.Common.Commands;
     using Factories;
+    using Shap.Interfaces.Common.ViewModels;
     using Shap.Interfaces.Types;
     using Shap.Interfaces.Units;
-    using Shap.Interfaces.ViewModels;
     using Shap.Types;
     using Shap.Types.Factories;
     using Shap.Units.IO;

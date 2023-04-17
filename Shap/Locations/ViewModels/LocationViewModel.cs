@@ -6,7 +6,6 @@
     using Shap.Common.SerialiseModel.Location;
     using Shap.Common.SerialiseModel.Operator;
     using Shap.Common.ViewModel;
-    using Shap.Icons.ComboBoxItems;
     using Shap.Icons.ListViewItems;
     using Shap.Interfaces.Common.ViewModels;
     using Shap.Interfaces.Io;

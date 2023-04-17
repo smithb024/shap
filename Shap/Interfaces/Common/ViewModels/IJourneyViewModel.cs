@@ -1,15 +1,15 @@
-﻿namespace Shap.Interfaces.ViewModels
+﻿namespace Shap.Interfaces.Common.ViewModels
 {
     using NynaeveLib.Types;
 
     using Shap.Types.Enum;
     using Types;
-    using NynaeveLib.ViewModel;
+    using System.ComponentModel;
 
     /// <summary>
     /// Interface describing the view model a journey when it is being input
     /// </summary>
-    public interface IJourneyViewModel : IViewModelBase
+    public interface IJourneyViewModel : INotifyPropertyChanged
     {
         /// <summary>
         /// Gets the Jny Identifier

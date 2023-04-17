@@ -311,7 +311,7 @@
     <Compile Include="Interfaces\Units\IClassConfigViewModel.cs" />
     <Compile Include="Interfaces\Units\ISubClassViewModel.cs" />
     <Compile Include="Interfaces\Units\IUnitViewModel.cs" />
-    <Compile Include="Interfaces\ViewModels\IJourneyViewModel.cs" />
+    <Compile Include="Interfaces\Common\ViewModels\IJourneyViewModel.cs" />
     <Compile Include="IocFactory.cs" />
     <Compile Include="Io\IoControllers.cs" />
     <Compile Include="Locations\IO\LocationIoController.cs" />
@@ -403,7 +403,7 @@
     <Compile Include="Types\VehicleDetailsViewModel.cs" />
     <Compile Include="Types\VehicleNumberTypeViewModel.cs" />
     <Compile Include="Types\VehicleServiceType.cs" />
-    <Compile Include="Types\ViewModels\JourneyViewModel.cs" />
+    <Compile Include="Common\ViewModel\JourneyViewModel.cs" />
     <Compile Include="Units\ClassConfigImageSelector.xaml.cs">
       <DependentUpon>ClassConfigImageSelector.xaml</DependentUpon>
     </Compile>
@@ -825,6 +825,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Input\Stats\" />
+    <Folder Include="Interfaces\ViewModels\" />
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />

@@ -2,9 +2,9 @@
 {
     using System.Collections.Generic;
     using Interfaces.Stats;
+    using Shap.Common.ViewModel;
+    using Shap.Interfaces.Common.ViewModels;
     using Shap.Interfaces.Types;
-    using Shap.Interfaces.ViewModels;
-    using Shap.Types.ViewModels;
 
     /// <summary>
     /// Factory class created to transfer between the classes <see cref="IJourneyDetailsType"/> and

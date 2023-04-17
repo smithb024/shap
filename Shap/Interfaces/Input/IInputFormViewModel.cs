@@ -2,7 +2,7 @@
 {
     using NynaeveLib.Types;
     using Shap.Input;
-    using Shap.Interfaces.ViewModels;
+    using Shap.Interfaces.Common.ViewModels;
     using System;
     using System.Collections.ObjectModel;
     using System.Windows.Input;

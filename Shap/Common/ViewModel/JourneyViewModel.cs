@@ -1,14 +1,15 @@
-﻿namespace Shap.Types.ViewModels
+﻿namespace Shap.Common.ViewModel
 {
     using System;
 
-    using Enum;
+    using Interfaces.Common.ViewModels;
     using Interfaces.Stats;
     using Interfaces.Types;
-    using Interfaces.ViewModels;
 
     using NynaeveLib.Types;
     using NynaeveLib.ViewModel;
+    using Shap.Types;
+    using Shap.Types.Enum;
     using Stats;
 
     /// <summary>
