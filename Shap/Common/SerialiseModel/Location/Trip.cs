@@ -1,10 +1,6 @@
 ﻿namespace Shap.Common.SerialiseModel.Location
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
-    using System.Threading.Tasks;
+    using NynaeveLib.Types;
     using System.Xml.Serialization;
 
     /// <summary>
@@ -18,6 +14,30 @@
         public Trip()
         {
         }
+
+        /// <summary>
+        /// Gets or sets the first unit.
+        /// </summary>
+        [XmlAttribute("dd")]
+        public int Day { get; set; }
+
+        /// <summary>
+        /// Gets or sets the first unit.
+        /// </summary>
+        [XmlAttribute("MM")]
+        public int Month { get; set; }
+
+        /// <summary>
+        /// Gets or sets the first unit.
+        /// </summary>
+        [XmlAttribute("YY")]
+        public int Year { get; set; }
+
+        /// <summary>
+        /// Gets or sets the first unit.
+        /// </summary>
+        [XmlAttribute("Id")]
+        public string Id { get; set; }
 
         /// <summary>
         /// Gets or sets the first unit.

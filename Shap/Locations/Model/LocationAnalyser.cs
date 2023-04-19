@@ -273,6 +273,10 @@
             Trip trip = 
                 new Trip()
                 {
+                    Day = journey.JnyId.Date.Day,
+                    Month = journey.JnyId.Date.Month,
+                    Year = journey.JnyId.Date.Year,
+                    Id = journey.JnyId.JnyNumber,
                     Unit1 = journey.Units[0],
                     Unit2 = journey.Units.Count >= 2 ? journey.Units[1] : string.Empty,
                     Unit3 = journey.Units.Count >= 3 ? journey.Units[2] : string.Empty,
