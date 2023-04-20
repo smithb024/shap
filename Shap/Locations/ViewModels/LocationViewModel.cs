@@ -30,6 +30,11 @@
         private IIoControllers ioControllers;
 
         /// <summary>
+        /// The first example manager.
+        /// </summary>
+        private IFirstExampleManager firstExampleManager;
+
+        /// <summary>
         /// The list of all known operators.
         /// </summary>
         private List<SingleOperator> operators;
@@ -40,8 +45,12 @@
         /// <param name="ioControllers">
         /// IO controller manager object.
         /// </param>
+        /// <param name="firstExampleManager">
+        /// The first example manager.
+        /// </param>
         public LocationViewModel(
-            IIoControllers ioControllers)
+            IIoControllers ioControllers,
+            IFirstExampleManager firstExampleManager)
         {
             this.ioControllers = ioControllers;
             this.ClassCounters = new ObservableCollection<ITravelCounterViewModel>();
@@ -233,7 +242,7 @@
                             modelTrip.Distance);
                     IJourneyViewModel journey =
                         new JourneyViewModel(
-                            fem,
+                            this.firstExampleManager,
                             string.Empty,
                             modelTrip.Id,
                             modelTrip.From,

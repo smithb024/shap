@@ -6,6 +6,7 @@
     using Shap.Interfaces.Io;
     using Shap.Interfaces.Locations.Model;
     using Shap.Interfaces.Locations.ViewModels;
+    using Shap.Interfaces.Stats;
     using Shap.Locations.Messages;
     using System.Windows.Input;
 
@@ -50,10 +51,14 @@
         /// <param name="locationManager">The location manager</param>
         /// <param name="locationAnalyser">The location analyser</param>
         /// <param name="ioControllers">The IO Controller manager object</param>
+        /// <param name="firstExampleManager">
+        /// The first example manager.
+        /// </param>
         public LocationsIndexViewModel(
             ILocationManager locationManager,
             ILocationAnalyser locationAnalyser,
-            IIoControllers ioControllers)
+            IIoControllers ioControllers,
+            IFirstExampleManager firstExampleManager)
         {
             this.locationManager = locationManager;
             this.locationAnalyser = locationAnalyser;
@@ -89,7 +94,8 @@
 
             this.locationViewModel = 
                 new LocationViewModel(
-                    ioControllers);
+                    ioControllers,
+                    firstExampleManager);
             this.locationConfigurationViewModel = 
                 new LocationConfigurationViewModel(
                     ioControllers);
