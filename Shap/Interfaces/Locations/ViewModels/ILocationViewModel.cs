@@ -71,8 +71,13 @@ namespace Shap.Interfaces.Locations.ViewModels
         ObservableCollection<ITravelCounterViewModel> ClassCounters { get; }
 
         /// <summary>
-        /// Collection of all known operators assigned to the current location.
+        /// Gets the collection of all known operators assigned to the current location.
         /// </summary>
         ObservableCollection<IOperatorListItemViewModel> LocationOperators { get; }
+
+        /// <summary>
+        /// Gets the collection of the latest journeys.
+        /// </summary>
+        ObservableCollection<IJourneyViewModel> Journeys { get; }
     }
 }

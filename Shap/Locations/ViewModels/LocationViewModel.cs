@@ -2,6 +2,7 @@
 {
     using CommunityToolkit.Mvvm.ComponentModel;
     using CommunityToolkit.Mvvm.Messaging;
+    using NynaeveLib.Types;
     using Shap.Common;
     using Shap.Common.SerialiseModel.Location;
     using Shap.Common.SerialiseModel.Operator;
@@ -10,8 +11,11 @@
     using Shap.Interfaces.Common.ViewModels;
     using Shap.Interfaces.Io;
     using Shap.Interfaces.Locations.ViewModels;
+    using Shap.Interfaces.Stats;
     using Shap.Locations.Messages;
+    using Shap.Stats;
     using Shap.Types.Enum;
+    using System;
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
 
@@ -43,6 +47,7 @@
             this.ClassCounters = new ObservableCollection<ITravelCounterViewModel>();
             this.YearCounters= new ObservableCollection<ITravelCounterViewModel>();
             this.LocationOperators = new ObservableCollection<IOperatorListItemViewModel>();
+            this.Journeys = new ObservableCollection<IJourneyViewModel>();
 
             OperatorDetails operatorDetails = ioControllers.Operator.Read();
             this.operators = operatorDetails.Operators;
@@ -116,6 +121,11 @@
         /// Collection of all known operators assigned to the current location.
         /// </summary>
         public ObservableCollection<IOperatorListItemViewModel> LocationOperators { get; }
+
+        /// <summary>
+        /// Gets the collection of the latest journeys.
+        /// </summary>
+        public ObservableCollection<IJourneyViewModel> Journeys { get; }
 
         /// <summary>
         /// Load a new location into the view model.
@@ -205,6 +215,41 @@
                 }
             }
 
+            this.Journeys.Clear();
+
+            if (currentLocation.Trips.Count > 0)
+            {
+                IFirstExampleManager fem = new FirstExampleManager();
+
+                foreach (Trip modelTrip in currentLocation.Trips)
+                {
+                    DateTime date =
+                        new DateTime(
+                            modelTrip.Year,
+                            modelTrip.Month,
+                            modelTrip.Day);
+                    MilesChains distance =
+                        new MilesChains(
+                            modelTrip.Distance);
+                    IJourneyViewModel journey =
+                        new JourneyViewModel(
+                            fem,
+                            string.Empty,
+                            modelTrip.Id,
+                            modelTrip.From,
+                            modelTrip.To,
+                            modelTrip.Route,
+                            date,
+                            distance,
+                            modelTrip.Unit1,
+                            modelTrip.Unit2,
+                            modelTrip.Unit3,
+                            modelTrip.Unit4);
+
+                    this.Journeys.Add(journey);
+                }
+            }
+
             this.OnPropertyChanged(nameof(this.Name));
             this.OnPropertyChanged(nameof(this.Code));
             this.OnPropertyChanged(nameof(this.Size));
@@ -218,6 +263,7 @@
             this.OnPropertyChanged(nameof(this.YearCounters));
             this.OnPropertyChanged(nameof(this.ClassCounters));
             this.OnPropertyChanged(nameof(this.LocationOperators));
+            this.OnPropertyChanged(nameof(this.Journeys));
         }
 
         /// <summary>
