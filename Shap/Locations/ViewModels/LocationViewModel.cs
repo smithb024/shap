@@ -53,6 +53,7 @@
             IFirstExampleManager firstExampleManager)
         {
             this.ioControllers = ioControllers;
+            this.firstExampleManager = firstExampleManager;
             this.ClassCounters = new ObservableCollection<ITravelCounterViewModel>();
             this.YearCounters= new ObservableCollection<ITravelCounterViewModel>();
             this.LocationOperators = new ObservableCollection<IOperatorListItemViewModel>();
@@ -228,8 +229,6 @@
 
             if (currentLocation.Trips.Count > 0)
             {
-                IFirstExampleManager fem = new FirstExampleManager();
-
                 foreach (Trip modelTrip in currentLocation.Trips)
                 {
                     DateTime date =
@@ -254,6 +253,7 @@
                             modelTrip.Unit2,
                             modelTrip.Unit3,
                             modelTrip.Unit4);
+                    journey.CalculateStates();
 
                     this.Journeys.Add(journey);
                 }
