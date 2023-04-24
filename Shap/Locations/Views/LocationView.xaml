@@ -23,23 +23,21 @@
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
+        <TextBlock 
+            Grid.Row="0"
+            Grid.Column="0"
+            Grid.ColumnSpan="2"
+            Text="{Binding Path=Name}"
+            FontSize="20"
+            HorizontalAlignment="Center"
+            Style="{StaticResource StdTextBlockStyle}"/>
+
         <StackPanel Grid.Column="0"
-                    Grid.Row="0">
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
-                <TextBlock Text="Name"
-                           Grid.Column="0"
-                           Style="{StaticResource StdTextBlockStyle}"/>
-                <TextBlock Text="{Binding Path=Name}"
-                           Grid.Column="1"
-                           Style="{StaticResource StdTextBlockStyle}"/>
-            </Grid>
+                    Grid.Row="1">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
@@ -169,7 +167,7 @@
         </StackPanel>
 
         <StackPanel Grid.Column="1"
-                    Grid.Row="0">
+                    Grid.Row="1">
             <Image 
                 Height="150"
                 Width="250" 
@@ -196,7 +194,7 @@
 
 
         <ListBox 
-            Grid.Row="1"
+            Grid.Row="2"
             Grid.Column="0"
             Grid.ColumnSpan="2"
             ItemsSource="{Binding Journeys}"
