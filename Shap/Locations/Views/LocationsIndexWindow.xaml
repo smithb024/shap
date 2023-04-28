@@ -9,7 +9,7 @@
         Title="LocationsIndexWindow" 
         Background="{StaticResource StdBackground}"
         SizeToContent="Width"
-        Height="450" 
+        Height="800" 
         Width="800">
 
     <Window.Resources>
@@ -88,6 +88,7 @@
 
         <ContentControl 
             Grid.Column="1"
+            Margin="5,0,0,0"
             Content="{Binding Path=LocationDetails}"/>
     </Grid>
 </Window>

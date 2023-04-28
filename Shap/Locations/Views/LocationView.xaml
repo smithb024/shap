@@ -15,7 +15,7 @@
     <UserControl.Resources>
         <shapConverter:ServiceTypeBrushConverter x:Key="serviceTypeBrushConverter"/>
     </UserControl.Resources>
-    
+
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
@@ -29,6 +29,7 @@
         </Grid.RowDefinitions>
 
         <TextBlock 
+            Margin="0,0,0,5"
             Grid.Row="0"
             Grid.Column="0"
             Grid.ColumnSpan="2"
@@ -37,52 +38,58 @@
             HorizontalAlignment="Center"
             Style="{StaticResource StdTextBlockStyle}"/>
 
-        <StackPanel Grid.Column="0"
-                    Grid.Row="1">
+        <StackPanel >
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
-                <TextBlock Text="Code"
-                           Grid.Column="0"
-                           Style="{StaticResource StdTextBlockStyle}"/>
-                <TextBlock Text="{Binding Path=Code}"
-                           Grid.Column="1"
-                           Style="{StaticResource StdTextBlockStyle}"/>
+                <TextBlock 
+                        Text="Code"
+                        Grid.Column="0"
+                        Style="{StaticResource StdTextBlockStyle}"/>
+                <TextBlock 
+                        Text="{Binding Path=Code}"
+                        Grid.Column="1"
+                        Style="{StaticResource StdTextBlockStyle}"/>
             </Grid>
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
-                <TextBlock Text="Size"
-                           Grid.Column="0"
-                           Style="{StaticResource StdTextBlockStyle}"/>
-                <TextBlock Text="{Binding Path=Size}"
-                           Grid.Column="1"
-                           Style="{StaticResource StdTextBlockStyle}"/>
+                <TextBlock 
+                        Text="Size"
+                        Grid.Column="0"
+                        Style="{StaticResource StdTextBlockStyle}"/>
+                <TextBlock 
+                        Text="{Binding Path=Size}"
+                        Grid.Column="1"
+                        Style="{StaticResource StdTextBlockStyle}"/>
             </Grid>
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
-                <TextBlock Text="Opened"
-                           Grid.Column="0"
-                           Style="{StaticResource StdTextBlockStyle}"/>
-                <TextBlock Text="{Binding Path=Opened}"
-                           Grid.Column="1"
-                           Style="{StaticResource StdTextBlockStyle}"/>
+                <TextBlock 
+                        Text="Opened"
+                        Grid.Column="0"
+                        Style="{StaticResource StdTextBlockStyle}"/>
+                <TextBlock 
+                        Text="{Binding Path=Opened}"
+                        Grid.Column="1"
+                        Style="{StaticResource StdTextBlockStyle}"/>
             </Grid>
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
-                <TextBlock Text="Closed"
-                           Grid.Column="0"
-                           Style="{StaticResource StdTextBlockStyle}"/>
+                <TextBlock 
+                        Text="Closed"
+                        Grid.Column="0"
+                        Style="{StaticResource StdTextBlockStyle}"/>
                 <TextBlock Text="{Binding Path=Closed}"
                            Grid.Column="1"
                            Style="{StaticResource StdTextBlockStyle}"/>
@@ -136,7 +143,7 @@
                 Margin="5"
                 ItemsSource="{Binding Path=LocationOperators}"
                 Style="{StaticResource StdListViewStyle}">
-                <ListBox.ItemContainerStyle>
+                                <ListBox.ItemContainerStyle>
                     <Style TargetType="ListBoxItem">
                         <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
                     </Style>
@@ -157,57 +164,79 @@
                 Source="{Binding Path=PhotoPath}"/>
         </StackPanel>
 
-        <StackPanel 
-                Grid.Column="0"
-                Grid.Row="2">
-        <ScrollViewer 
-                VerticalScrollBarVisibility="Auto"
-                VerticalAlignment="Stretch"
-                VerticalContentAlignment="Stretch">
-            <ItemsControl ItemsSource="{Binding Path=YearCounters}">
-                <ItemsControl.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <StackPanel Orientation="Vertical"/>
-                    </ItemsPanelTemplate>
-                </ItemsControl.ItemsPanel>
-                <ItemsControl.ItemTemplate>
-                    <DataTemplate>
-                        <icons:TravelCounterView/>
-                    </DataTemplate>
-                </ItemsControl.ItemTemplate>
-            </ItemsControl>
-        </ScrollViewer>
-        </StackPanel>
+        <Border 
+            Margin="0,5,0,0"
+            Grid.Column="0"
+            Grid.Row="2"
+            BorderThickness="0,1,0,0"
+            BorderBrush="{StaticResource StdForeground}">
+            <StackPanel >
+                <TextBlock 
+                    Margin="5"
+                    Text="By Year"
+                    Style="{StaticResource StdTextBlockStyle}"/>
+                <ScrollViewer 
+                    MaxHeight="100"
+                    VerticalScrollBarVisibility="Auto"
+                    VerticalAlignment="Stretch"
+                    VerticalContentAlignment="Stretch">
+                    <ItemsControl ItemsSource="{Binding Path=YearCounters}">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <StackPanel Orientation="Vertical"/>
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <icons:TravelCounterView/>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </ScrollViewer>
+            </StackPanel>
+        </Border>
 
-        <StackPanel 
-                Grid.Column="1"
-                Grid.Row="2">
-            <ScrollViewer 
-                VerticalScrollBarVisibility="Auto"
-                VerticalAlignment="Stretch"
-                VerticalContentAlignment="Stretch">
-                <ItemsControl ItemsSource="{Binding Path=ClassCounters}">
-                    <ItemsControl.ItemsPanel>
-                        <ItemsPanelTemplate>
-                            <StackPanel Orientation="Vertical"/>
-                        </ItemsPanelTemplate>
-                    </ItemsControl.ItemsPanel>
-                    <ItemsControl.ItemTemplate>
-                        <DataTemplate>
-                            <icons:TravelCounterView/>
-                        </DataTemplate>
-                    </ItemsControl.ItemTemplate>
-                </ItemsControl>
-            </ScrollViewer>
-        </StackPanel>
+        <Border 
+            Margin="0,5,0,0"
+            Grid.Column="1"
+            Grid.Row="2"
+            BorderThickness="0,1,0,0"
+            BorderBrush="{StaticResource StdForeground}">
+            <StackPanel>
+                <TextBlock 
+                    Margin="5"
+                    Text="By Type"
+                    Style="{StaticResource StdTextBlockStyle}"/>
+                <ScrollViewer 
+                    MaxHeight="100"
+                    VerticalScrollBarVisibility="Auto"
+                    VerticalAlignment="Stretch"
+                    VerticalContentAlignment="Stretch">
+                    <ItemsControl ItemsSource="{Binding Path=ClassCounters}">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <StackPanel Orientation="Vertical"/>
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <icons:TravelCounterView/>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </ScrollViewer>
+            </StackPanel>
+        </Border>
 
         <ListBox 
+            Margin="0,5,0,0"
             Grid.Row="3"
             Grid.Column="0"
             Grid.ColumnSpan="2"
             ItemsSource="{Binding Journeys}"
             HorizontalContentAlignment="Stretch"
-            BorderThickness="0"
+            BorderThickness="0,1,0,0"
+            BorderBrush="{StaticResource StdForeground}"
             Background="{Binding Status, Converter={StaticResource serviceTypeBrushConverter}}">
             <ListBox.ItemTemplate>
                 <DataTemplate>
