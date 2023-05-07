@@ -105,12 +105,12 @@
         /// <summary>
         /// Gets number from.
         /// </summary>
-        public string TotalFrom { get; private set; }
+        public int TotalFrom { get; private set; }
 
         /// <summary>
         /// Gets the number to.
         /// </summary>
-        public string TotalTo { get; private set; }
+        public int TotalTo { get; private set; }
 
         /// <summary>
         /// Gets path to the location photo.
@@ -160,8 +160,8 @@
             this.Opened = currentLocation.Opened;
             this.Closed = currentLocation.Closed;
             this.Region = currentLocation.County;
-            this.TotalFrom = currentLocation.TotalFrom.ToString();
-            this.TotalTo = currentLocation.TotalTo.ToString();
+            this.TotalFrom = currentLocation.TotalFrom;
+            this.TotalTo = currentLocation.TotalTo;
 
             this.Category =
                 $"{currentLocation.Category} - {LocationCategoriesConverter.Convert(currentLocation.Category)}";
@@ -189,8 +189,8 @@
                 ITravelCounterViewModel counter =
                     new TravelCounterViewModel(
                         year.Year.ToString(),
-                        year.TotalFrom.ToString(),
-                        year.TotalTo.ToString());
+                        year.TotalFrom,
+                        year.TotalTo);
                 this.YearCounters.Add(counter);
             }
 
@@ -201,8 +201,8 @@
                 ITravelCounterViewModel counter =
                     new TravelCounterViewModel(
                         thisClass.Name,
-                        thisClass.TotalFrom.ToString(),
-                        thisClass.TotalTo.ToString());
+                        thisClass.TotalFrom,
+                        thisClass.TotalTo);
                 this.ClassCounters.Add(counter);
             }
 

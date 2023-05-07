@@ -4,8 +4,14 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Shap.Common.Views"
-             mc:Ignorable="d" 
+                xmlns:counterConverters="clr-namespace:Shap.Common.Converters.Counters"
+          mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
+
+    <UserControl.Resources>
+        <counterConverters:YearTotalsBrushConverter x:Key="TotalsConverter"/>
+    </UserControl.Resources>
+    
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="4*"/>
@@ -20,16 +26,27 @@
                    Style="{StaticResource StdTextBlockStyle}"/>
         <TextBlock Text="From"
                    Grid.Column="1"
+                   HorizontalAlignment="Right"
                    Style="{StaticResource StdTextBlockStyle}"/>
-        <TextBlock Text="{Binding Path=From}"
-                   Grid.Column="2"
-                   Style="{StaticResource StdTextBlockStyle}"/>
+        <Grid Grid.Column="2"
+              Margin="5,0"
+              Background="{Binding Path=From, Converter={StaticResource TotalsConverter}}">
+            <TextBlock 
+                Text="{Binding Path=From}"
+                HorizontalAlignment="Center"
+                Style="{StaticResource StdTextBlockStyle}"/>
+        </Grid>
         <TextBlock Text="To"
                    Grid.Column="3"
+                   HorizontalAlignment="Right"
                    Style="{StaticResource StdTextBlockStyle}"/>
-        <TextBlock Text="{Binding Path=To}"
-                   Grid.Column="4"
-                   Style="{StaticResource StdTextBlockStyle}"/>
-
+        <Grid Grid.Column="4"
+              Margin="5,0"
+              Background="{Binding Path=To, Converter={StaticResource TotalsConverter}}">
+            <TextBlock 
+                Text="{Binding Path=To}"
+                HorizontalAlignment="Center"
+                Style="{StaticResource StdTextBlockStyle}"/>
+        </Grid>
     </Grid>
 </UserControl>

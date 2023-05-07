@@ -6,6 +6,7 @@
              xmlns:icons="clr-namespace:Shap.Common.Views"
              xmlns:listViewItems="clr-namespace:Shap.Icons.ListViewItems"
              xmlns:shapConverter="clr-namespace:Shap.Common.Converters"
+             xmlns:counterConverters="clr-namespace:Shap.Common.Converters.Counters"
              xmlns:vdw="clr-namespace:Shap.Units.VDW"
              mc:Ignorable="d" 
              Width="600"
@@ -13,6 +14,7 @@
 
     <UserControl.Resources>
         <shapConverter:ServiceTypeBrushConverter x:Key="serviceTypeBrushConverter"/>
+        <counterConverters:TotalsBrushConverter x:Key="TotalsConverter"/>
     </UserControl.Resources>
 
     <Grid>
@@ -129,22 +131,30 @@
                 <TextBlock Text="From"
                            Grid.Column="0"
                            Style="{StaticResource StdTextBlockStyle}"/>
-                <TextBlock Text="{Binding Path=TotalFrom}"
-                           Grid.Column="1"
-                           Style="{StaticResource StdTextBlockStyle}"/>
+                <Grid Grid.Column="1"
+                      Margin="5,0"
+                      Background="{Binding Path=TotalFrom, Converter={StaticResource TotalsConverter}}">
+                    <TextBlock Text="{Binding Path=TotalFrom}"
+                               HorizontalAlignment="Center"
+                               Style="{StaticResource StdTextBlockStyle}"/>
+                </Grid>
                 <TextBlock Text="To"
                            Grid.Column="2"
                            Style="{StaticResource StdTextBlockStyle}"/>
-                <TextBlock Text="{Binding Path=TotalTo}"
-                           Grid.Column="3"
-                           Style="{StaticResource StdTextBlockStyle}"/>
+                <Grid Grid.Column="3"
+                      Margin="5,0"
+                      Background="{Binding Path=TotalTo, Converter={StaticResource TotalsConverter}}">
+                    <TextBlock Text="{Binding Path=TotalTo}"
+                               HorizontalAlignment="Center"
+                               Style="{StaticResource StdTextBlockStyle}"/>
+                </Grid>
             </Grid>
 
             <ListView 
                 Margin="5"
                 ItemsSource="{Binding Path=LocationOperators}"
                 Style="{StaticResource StdListViewStyle}">
-                                <ListBox.ItemContainerStyle>
+                <ListBox.ItemContainerStyle>
                     <Style TargetType="ListBoxItem">
                         <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
                     </Style>

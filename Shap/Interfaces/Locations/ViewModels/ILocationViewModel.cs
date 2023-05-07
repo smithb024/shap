@@ -48,12 +48,12 @@ namespace Shap.Interfaces.Locations.ViewModels
         /// <summary>
         /// Gets number from.
         /// </summary>
-        string TotalFrom { get; }
+        int TotalFrom { get; }
 
         /// <summary>
         /// Gets the number to.
         /// </summary>
-        string TotalTo { get; }
+        int TotalTo { get; }
 
         /// <summary>
         /// Gets the collection of photos.

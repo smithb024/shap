@@ -13,11 +13,11 @@
         /// <summary>
         /// Gets the number of times from.
         /// </summary>
-        string From { get; }
+        int From { get; }
 
         /// <summary>
         /// Gets the number of times to.
         /// </summary>
-        string To { get; }
+        int To { get; }
     }
 }

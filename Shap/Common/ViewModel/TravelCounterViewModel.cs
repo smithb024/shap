@@ -15,8 +15,8 @@
         /// <param name="to">the number of times to the component</param>
         public TravelCounterViewModel(
             string name,
-            string from,
-            string to)
+            int from,
+            int to)
         {
             this.Name = name;
             this.From = from;
@@ -31,11 +31,11 @@
         /// <summary>
         /// Gets the number of times from.
         /// </summary>
-        public string From { get; }
+        public int From { get; }
 
         /// <summary>
         /// Gets the number of times to.
         /// </summary>
-        public string To { get; }
+        public int To { get; }
     }
 }
