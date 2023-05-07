@@ -109,10 +109,10 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Analysis\Converters\YearTotalsBrushConverter.cs" />
-    <Compile Include="Analysis\Converters\MonthTotalsBrushConverter.cs" />
-    <Compile Include="Analysis\Converters\TotalsBrushConverter.cs" />
-    <Compile Include="Analysis\Converters\LocationBrushConverter.cs" />
+    <Compile Include="Common\Converters\Counters\YearTotalsBrushConverter.cs" />
+    <Compile Include="Common\Converters\Counters\MonthTotalsBrushConverter.cs" />
+    <Compile Include="Common\Converters\Counters\TotalsBrushConverter.cs" />
+    <Compile Include="Common\Converters\Counters\LocationBrushConverter.cs" />
     <Compile Include="Analysis\ViewModels\AnalysisViewModel.cs" />
     <Compile Include="Analysis\ViewModels\ClassAnalysisViewModel.cs" />
     <Compile Include="Analysis\ClassReportFactory.cs" />

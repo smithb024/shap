@@ -1,10 +1,14 @@
-﻿namespace Shap.Analysis.Converters
+﻿namespace Shap.Common.Converters.Counters
 {
     using System;
     using System.Globalization;
     using System.Windows.Data;
     using System.Windows.Media;
 
+    /// <summary>
+    /// Converter which is used to paint the background of a counter.
+    /// This counter is used for locations. 
+    /// </summary>
     public class LocationBrushConverter : IMultiValueConverter
     {
         static Color Lots = Colors.Blue;

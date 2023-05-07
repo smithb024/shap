@@ -1,11 +1,11 @@
-﻿namespace Shap.Analysis.Converters
+﻿namespace Shap.Common.Converters.Counters
 {
     using System;
     using System.Globalization;
     using System.Windows.Data;
     using System.Windows.Media;
 
-    public class YearTotalsBrushConverter : IValueConverter
+    public class MonthTotalsBrushConverter : IValueConverter
     {
         static Color Lots = Colors.Blue;
         static Color Many = Colors.RoyalBlue;
@@ -46,7 +46,7 @@
 
         private Color GetColour(int count)
         {
-            if (count >= 50)
+            if (count >= 20)
             {
                 return Lots;
             }

@@ -1,4 +1,4 @@
-﻿namespace Shap.Analysis.Converters
+﻿namespace Shap.Common.Converters.Counters
 {
     using System;
     using System.Globalization;
