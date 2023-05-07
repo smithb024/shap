@@ -109,6 +109,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Common\Converters\Counters\CounterColours.cs" />
     <Compile Include="Common\Converters\Counters\YearTotalsBrushConverter.cs" />
     <Compile Include="Common\Converters\Counters\MonthTotalsBrushConverter.cs" />
     <Compile Include="Common\Converters\Counters\TotalsBrushConverter.cs" />

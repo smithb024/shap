@@ -5,14 +5,20 @@
     using System.Windows.Data;
     using System.Windows.Media;
 
+    /// <summary>
+    /// Converter which is used to paint the background of a counter.
+    /// It is used to highlight a total count. 
+    /// </summary>
     public class TotalsBrushConverter : IValueConverter
     {
-        static Color Lots = Colors.Blue;
-        static Color Many = Colors.RoyalBlue;
-        static Color Some = Colors.DodgerBlue;
-        static Color Few = Colors.MediumSlateBlue;
-        static Color One = Colors.LightSlateGray;
-
+        /// <summary>
+        /// Convert from a <see cref="int"/> to a <see cref="SolidColorBrush"/>
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="targetType"></param>
+        /// <param name="parameter"></param>
+        /// <param name="culture"></param>
+        /// <returns></returns>
         public object Convert(
             object value,
             Type targetType,
@@ -39,36 +45,54 @@
             return new SolidColorBrush(brushColour);
         }
 
-        public object ConvertBack(object value, Type targetTypes, object parameter, CultureInfo culture)
+        /// <summary>
+        /// Method not used.
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="targetTypes"></param>
+        /// <param name="parameter"></param>
+        /// <param name="culture"></param>
+        /// <returns></returns>
+        /// <exception cref="NotImplementedException"></exception>
+        public object ConvertBack(
+            object value,
+            Type targetTypes,
+            object parameter,
+            CultureInfo culture)
         {
             throw new NotImplementedException();
         }
 
+        /// <summary>
+        /// Decide on colour based on total count.
+        /// </summary>
+        /// <param name="count"></param>
+        /// <returns></returns>
         private Color GetColour(int count)
         {
             if (count >= 1000)
             {
-                return Lots;
+                return CounterColours.Lots;
             }
 
             if (count >= 500)
             {
-                return Many;
+                return CounterColours.Many;
             }
 
             if (count >= 100)
             {
-                return Some;
+                return CounterColours.Some;
             }
 
             if (count >= 50)
             {
-                return Few;
+                return CounterColours.Few;
             }
 
             if (count >= 1)
             {
-                return One;
+                return CounterColours.One;
             }
 
             return Colors.Transparent;
