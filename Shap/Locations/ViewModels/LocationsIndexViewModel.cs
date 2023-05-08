@@ -16,6 +16,11 @@
     public class LocationsIndexViewModel : ObservableRecipient, ILocationsIndexViewModel
     {
         /// <summary>
+        /// The IO Controllers for the application.
+        /// </summary>
+        private IIoControllers ioControllers;
+
+        /// <summary>
         /// The location manager.
         /// </summary>
         private readonly ILocationManager locationManager;
@@ -62,6 +67,7 @@
         {
             this.locationManager = locationManager;
             this.locationAnalyser = locationAnalyser;
+            this.ioControllers = ioControllers;
             this.isConfigurationMode = false;
 
             this.selectedNatigation = NavigationType.Alphabetical;
@@ -86,6 +92,7 @@
                 new AlphabeticalNavigationViewModel();
             ISelectorViewModel locationSelectorViewModel =
               new LocationsSelectorViewModel(
+                  this.ioControllers,
                   this.locationManager,
                   this.locationAnalyser);
 
@@ -198,6 +205,7 @@
                 new AlphabeticalNavigationViewModel();
             ISelectorViewModel locationSelectorViewModel =
                 new LocationsSelectorViewModel(
+                    this.ioControllers,
                     this.locationManager,
                     this.locationAnalyser);
 
@@ -222,6 +230,7 @@
                 new DirectNavigationViewModel();
             ISelectorViewModel locationSelectorViewModel =
                 new LocationsSelectorViewModel(
+                    this.ioControllers,
                     this.locationManager,
                     this.locationAnalyser);
 
@@ -246,6 +255,7 @@
                 new DirectNavigationViewModel();
             ISelectorViewModel locationSelectorViewModel =
                 new LocationsSelectorViewModel(
+                    this.ioControllers,
                     this.locationManager,
                     this.locationAnalyser);
 

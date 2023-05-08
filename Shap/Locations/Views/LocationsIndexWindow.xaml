@@ -19,7 +19,7 @@
         <DataTemplate x:Name="DirectNavigationTemplate" DataType="{x:Type viewModels:DirectNavigationViewModel}">
             <local:DirectNavigationView DataContext="{Binding}"/>
         </DataTemplate>
-        <DataTemplate x:Name="LocationsSelectoTemplate" DataType="{x:Type viewModels:LocationsSelectorViewModel}">
+        <DataTemplate x:Name="LocationsSelectorTemplate" DataType="{x:Type viewModels:LocationsSelectorViewModel}">
             <local:LocationsSelectorView DataContext="{Binding}"/>
         </DataTemplate>
         <DataTemplate x:Name="LinesSelectorTemplate" DataType="{x:Type viewModels:LinesSelectorViewModel}">

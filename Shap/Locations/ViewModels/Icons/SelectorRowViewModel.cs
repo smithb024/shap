@@ -1,10 +1,13 @@
 ﻿namespace Shap.Locations.ViewModels.Icons
 {
+    using System.Windows.Forms;
     using System.Windows.Input;
     using Common.Commands;
     using CommunityToolkit.Mvvm.ComponentModel;
     using CommunityToolkit.Mvvm.Messaging;
     using Interfaces.Locations.ViewModels.Icons;
+    using Shap.Common.SerialiseModel.Location;
+    using Shap.Interfaces.Io;
     using Shap.Locations.Messages;
 
     /// <summary>
@@ -17,21 +20,48 @@
     public class SelectorRowViewModel : ObservableRecipient, ISelectorRowViewModel
     {
         /// <summary>
+        /// The IO Controllers for the application.
+        /// </summary>
+        private IIoControllers ioControllers;
+
+        /// <summary>
         /// Initialises a new instance of the <see cref="SelectorRowViewModel"/> class.
         /// </summary>
+        /// <param name="ioControllers">
+        /// IO controller manager object.
+        /// </param>
         /// <param name="name">
         /// The location name.
         /// </param>
-        public SelectorRowViewModel(string name)
+        public SelectorRowViewModel(
+            IIoControllers ioControllers,
+            string name)
         {
+            this.ioControllers = ioControllers;
             this.Name = name;
             this.SelectLocationCmd = new CommonCommand(this.SelectLocation);
+
+            LocationDetails currentLocation =
+                this.ioControllers.Location.Read(
+                    name);
+            this.TotalFrom = currentLocation.TotalFrom;
+            this.TotalTo = currentLocation.TotalTo;
         }
 
         /// <summary>
         /// Gets the name of the current locaation.
         /// </summary>
         public string Name { get; }
+
+        /// <summary>
+        /// Gets number from.
+        /// </summary>
+        public int TotalFrom { get; }
+
+        /// <summary>
+        /// Gets the number to.
+        /// </summary>
+        public int TotalTo { get; }
 
         /// <summary>
         /// Select the location for display on the location view.
