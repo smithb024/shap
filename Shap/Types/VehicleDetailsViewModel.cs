@@ -8,8 +8,8 @@
     using NynaeveLib.ViewModel;
 
     using Common.ViewModel;
+    using Shap.Interfaces.Common.ViewModels;
     using Shap.Interfaces.Types;
-    using Shap.Interfaces.ViewModels;
     using Shap.Types.Factories;
     using Shap.Units.IO;
 

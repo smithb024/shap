@@ -109,10 +109,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Analysis\Converters\YearTotalsBrushConverter.cs" />
-    <Compile Include="Analysis\Converters\MonthTotalsBrushConverter.cs" />
-    <Compile Include="Analysis\Converters\TotalsBrushConverter.cs" />
-    <Compile Include="Analysis\Converters\LocationBrushConverter.cs" />
+    <Compile Include="Common\Converters\Counters\CounterColours.cs" />
+    <Compile Include="Common\Converters\Counters\YearTotalsBrushConverter.cs" />
+    <Compile Include="Common\Converters\Counters\MonthTotalsBrushConverter.cs" />
+    <Compile Include="Common\Converters\Counters\TotalsBrushConverter.cs" />
+    <Compile Include="Common\Converters\Counters\LocationBrushConverter.cs" />
     <Compile Include="Analysis\ViewModels\AnalysisViewModel.cs" />
     <Compile Include="Analysis\ViewModels\ClassAnalysisViewModel.cs" />
     <Compile Include="Analysis\ClassReportFactory.cs" />
@@ -202,6 +203,10 @@
     <Compile Include="Common\SerialiseModel\Operator\SingleOperator.cs" />
     <Compile Include="Common\ViewModel\LocationCounterManagerViewModel.cs" />
     <Compile Include="Common\ViewModel\LocationCounterViewModel.cs" />
+    <Compile Include="Common\ViewModel\TravelCounterViewModel.cs" />
+    <Compile Include="Common\Views\TravelCounterView.xaml.cs">
+      <DependentUpon>TravelCounterView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Config\ConfigJobType.cs" />
     <Compile Include="Config\ConfigViewModel.cs" />
     <Compile Include="Config\ConfigWindow.xaml.cs">
@@ -254,6 +259,7 @@
       <DependentUpon>LetterIcon.xaml</DependentUpon>
     </Compile>
     <Compile Include="Icons\ListViewItems\IOperatorListItemViewModel.cs" />
+    <Compile Include="Icons\ListViewItems\OperatorListItemReadOnlyViewModel.cs" />
     <Compile Include="Icons\ListViewItems\OperatorListItemViewModel.cs" />
     <Compile Include="Icons\ListViewItems\OperatorListViewItem.xaml.cs">
       <DependentUpon>OperatorListViewItem.xaml</DependentUpon>
@@ -261,6 +267,7 @@
     <Compile Include="Icons\MonthBar.xaml.cs">
       <DependentUpon>MonthBar.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Interfaces\Common\ViewModels\ITravelCounterViewModel.cs" />
     <Compile Include="Interfaces\IMainWindowViewModel.cs" />
     <Compile Include="Input\DayViewModel.cs" />
     <Compile Include="Input\Factories\DailyInputFactory.cs" />
@@ -305,7 +312,7 @@
     <Compile Include="Interfaces\Units\IClassConfigViewModel.cs" />
     <Compile Include="Interfaces\Units\ISubClassViewModel.cs" />
     <Compile Include="Interfaces\Units\IUnitViewModel.cs" />
-    <Compile Include="Interfaces\ViewModels\IJourneyViewModel.cs" />
+    <Compile Include="Interfaces\Common\ViewModels\IJourneyViewModel.cs" />
     <Compile Include="IocFactory.cs" />
     <Compile Include="Io\IoControllers.cs" />
     <Compile Include="Locations\IO\LocationIoController.cs" />
@@ -397,7 +404,7 @@
     <Compile Include="Types\VehicleDetailsViewModel.cs" />
     <Compile Include="Types\VehicleNumberTypeViewModel.cs" />
     <Compile Include="Types\VehicleServiceType.cs" />
-    <Compile Include="Types\ViewModels\JourneyViewModel.cs" />
+    <Compile Include="Common\ViewModel\JourneyViewModel.cs" />
     <Compile Include="Units\ClassConfigImageSelector.xaml.cs">
       <DependentUpon>ClassConfigImageSelector.xaml</DependentUpon>
     </Compile>
@@ -524,6 +531,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Analysis\Windows\ResultsPresentation\TotalsCounterResults.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Common\Views\TravelCounterView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -815,6 +826,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Input\Stats\" />
+    <Folder Include="Interfaces\ViewModels\" />
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />

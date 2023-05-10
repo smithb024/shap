@@ -2,13 +2,13 @@
 {
     using CommunityToolkit.Mvvm.ComponentModel;
     using CommunityToolkit.Mvvm.Messaging;
+    using Shap.Interfaces.Io;
     using Shap.Interfaces.Locations.Model;
     using Shap.Interfaces.Locations.ViewModels;
     using Shap.Interfaces.Locations.ViewModels.Icons;
     using Shap.Locations.Messages;
     using Shap.Locations.ViewModels.Icons;
     using Shap.Messages;
-    using Shap.StationDetails;
     using System;
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
@@ -21,6 +21,11 @@
     /// </remarks>
     public class LocationsSelectorViewModel : ObservableRecipient, ILocationSelectorViewModel
     {
+        /// <summary>
+        /// The IO Controllers for the application.
+        /// </summary>
+        private IIoControllers ioControllers;
+
         /// <summary>
         /// The location manager.
         /// </summary>
@@ -44,6 +49,9 @@
         /// <summary>
         /// Initialise a new instance of the <see cref="LocationsSelectorViewModel"/> class.
         /// </summary>
+        /// <param name="ioControllers">
+        /// IO controller manager object.
+        /// </param>
         /// <param name="locationManager">
         /// The instance of the location manager.
         /// </param>
@@ -51,10 +59,12 @@
         /// The instance of the location analyser.
         /// </param>
         public LocationsSelectorViewModel(
+            IIoControllers ioControllers,
             ILocationManager locationManager,
             ILocationAnalyser locationAnalyser)
         {
             this.Locations = new ObservableCollection<ISelectorRowViewModel>();
+            this.ioControllers = ioControllers;
             this.locationManager = locationManager;
             this.locationAnalyser = locationAnalyser;
 
@@ -187,6 +197,7 @@
                             {
                                 ISelectorRowViewModel row =
                                     new SelectorRowViewModel(
+                                        this.ioControllers,
                                         location);
                                 this.Locations.Add(row);
                             }

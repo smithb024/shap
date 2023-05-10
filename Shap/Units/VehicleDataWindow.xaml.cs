@@ -5,7 +5,7 @@
     using System.Windows;
     using System.Windows.Forms.DataVisualization.Charting;
     using NynaeveLib.Types;
-    using Shap.Interfaces.ViewModels;
+    using Shap.Interfaces.Common.ViewModels;
     using Shap.Styles;
 
     /// <summary>

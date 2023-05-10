@@ -10,17 +10,17 @@
     using Factories;
 
     using Shap.Common.Commands;
+    using Shap.Interfaces.Common.ViewModels;
     using Shap.Interfaces.Input;
     using Shap.Interfaces.Stats;
     using Shap.Interfaces.Types;
-    using Shap.Interfaces.ViewModels;
     using Shap.Messages;
     using Shap.StationDetails;
     using Shap.Types;
     using Shap.Types.Factories;
-    using Shap.Types.ViewModels;
     using NynaeveLib.Logger;
     using NynaeveLib.Types;
+    using Shap.Common.ViewModel;
 
     /// <summary>
     /// Main form for inputting data.

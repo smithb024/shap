@@ -4,7 +4,7 @@
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
 
-    using Interfaces.ViewModels;
+    using Interfaces.Common.ViewModels;
     using NynaeveLib.Logger;
     using NynaeveLib.ViewModel;
     using Shap.Interfaces.Units;

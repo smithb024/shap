@@ -6,6 +6,7 @@
     using Shap.Interfaces.Io;
     using Shap.Interfaces.Locations.Model;
     using Shap.Interfaces.Locations.ViewModels;
+    using Shap.Interfaces.Stats;
     using Shap.Locations.Messages;
     using System.Windows.Input;
 
@@ -14,6 +15,11 @@
     /// </summary>
     public class LocationsIndexViewModel : ObservableRecipient, ILocationsIndexViewModel
     {
+        /// <summary>
+        /// The IO Controllers for the application.
+        /// </summary>
+        private IIoControllers ioControllers;
+
         /// <summary>
         /// The location manager.
         /// </summary>
@@ -50,13 +56,18 @@
         /// <param name="locationManager">The location manager</param>
         /// <param name="locationAnalyser">The location analyser</param>
         /// <param name="ioControllers">The IO Controller manager object</param>
+        /// <param name="firstExampleManager">
+        /// The first example manager.
+        /// </param>
         public LocationsIndexViewModel(
             ILocationManager locationManager,
             ILocationAnalyser locationAnalyser,
-            IIoControllers ioControllers)
+            IIoControllers ioControllers,
+            IFirstExampleManager firstExampleManager)
         {
             this.locationManager = locationManager;
             this.locationAnalyser = locationAnalyser;
+            this.ioControllers = ioControllers;
             this.isConfigurationMode = false;
 
             this.selectedNatigation = NavigationType.Alphabetical;
@@ -81,14 +92,17 @@
                 new AlphabeticalNavigationViewModel();
             ISelectorViewModel locationSelectorViewModel =
               new LocationsSelectorViewModel(
+                  this.ioControllers,
                   this.locationManager,
                   this.locationAnalyser);
 
             this.Navigation = alphabeticalViewModel;
             this.Selector = locationSelectorViewModel;
 
-            this.locationViewModel =
-                new LocationViewModel();
+            this.locationViewModel = 
+                new LocationViewModel(
+                    ioControllers,
+                    firstExampleManager);
             this.locationConfigurationViewModel = 
                 new LocationConfigurationViewModel(
                     ioControllers);
@@ -106,7 +120,8 @@
         /// <summary>
         /// Gets or sets a value indicating whether the locations are being configured.
         /// </summary>
-        public bool IsConfigurationMode {
+        public bool IsConfigurationMode 
+        {
             get => this.isConfigurationMode;
             set
             {
@@ -190,6 +205,7 @@
                 new AlphabeticalNavigationViewModel();
             ISelectorViewModel locationSelectorViewModel =
                 new LocationsSelectorViewModel(
+                    this.ioControllers,
                     this.locationManager,
                     this.locationAnalyser);
 
@@ -214,6 +230,7 @@
                 new DirectNavigationViewModel();
             ISelectorViewModel locationSelectorViewModel =
                 new LocationsSelectorViewModel(
+                    this.ioControllers,
                     this.locationManager,
                     this.locationAnalyser);
 
@@ -238,6 +255,7 @@
                 new DirectNavigationViewModel();
             ISelectorViewModel locationSelectorViewModel =
                 new LocationsSelectorViewModel(
+                    this.ioControllers,
                     this.locationManager,
                     this.locationAnalyser);
 

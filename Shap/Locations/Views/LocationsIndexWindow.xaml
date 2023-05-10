@@ -9,7 +9,7 @@
         Title="LocationsIndexWindow" 
         Background="{StaticResource StdBackground}"
         SizeToContent="Width"
-        Height="450" 
+        Height="800" 
         Width="800">
 
     <Window.Resources>
@@ -19,7 +19,7 @@
         <DataTemplate x:Name="DirectNavigationTemplate" DataType="{x:Type viewModels:DirectNavigationViewModel}">
             <local:DirectNavigationView DataContext="{Binding}"/>
         </DataTemplate>
-        <DataTemplate x:Name="LocationsSelectoTemplate" DataType="{x:Type viewModels:LocationsSelectorViewModel}">
+        <DataTemplate x:Name="LocationsSelectorTemplate" DataType="{x:Type viewModels:LocationsSelectorViewModel}">
             <local:LocationsSelectorView DataContext="{Binding}"/>
         </DataTemplate>
         <DataTemplate x:Name="LinesSelectorTemplate" DataType="{x:Type viewModels:LinesSelectorViewModel}">
@@ -88,6 +88,7 @@
 
         <ContentControl 
             Grid.Column="1"
+            Margin="5,0,0,0"
             Content="{Binding Path=LocationDetails}"/>
     </Grid>
 </Window>

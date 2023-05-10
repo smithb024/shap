@@ -1,18 +1,24 @@
-﻿namespace Shap.Analysis.Converters
+﻿namespace Shap.Common.Converters.Counters
 {
     using System;
     using System.Globalization;
     using System.Windows.Data;
     using System.Windows.Media;
 
+    /// <summary>
+    /// Converter which is used to paint the background of a counter.
+    /// It is used to highlight the location count. 
+    /// </summary>
     public class LocationBrushConverter : IMultiValueConverter
     {
-        static Color Lots = Colors.Blue;
-        static Color Many = Colors.RoyalBlue;
-        static Color Some = Colors.DodgerBlue;
-        static Color Few = Colors.MediumSlateBlue;
-        static Color One = Colors.LightSlateGray;
-
+        /// <summary>
+        /// Convert from a <see cref="int"/> to a <see cref="SolidColorBrush"/>
+        /// </summary>
+        /// <param name="values"></param>
+        /// <param name="targetType"></param>
+        /// <param name="parameter"></param>
+        /// <param name="culture"></param>
+        /// <returns></returns>
         public object Convert(
             object[] values,
             Type targetType,
@@ -47,66 +53,89 @@
             return new SolidColorBrush(brushColour);
         }
 
-        public object[] ConvertBack(object value, Type[] targetTypes, object parameter, CultureInfo culture)
+        /// <summary>
+        /// Method not used.
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="targetTypes"></param>
+        /// <param name="parameter"></param>
+        /// <param name="culture"></param>
+        /// <returns></returns>
+        /// <exception cref="NotImplementedException"></exception>
+        public object[] ConvertBack(
+            object value,
+            Type[] targetTypes,
+            object parameter, 
+            CultureInfo culture)
         {
             throw new NotImplementedException();
         }
 
+        /// <summary>
+        /// Decide on colour based on count over a single year.
+        /// </summary>
+        /// <param name="count">count to convert</param>
+        /// <returns>background colour</returns>
         private Color GetSingleYearColours(int count)
         {
             if (count >= 50)
             {
-                return Lots;
+                return CounterColours.Lots;
             }
 
             if (count >= 10)
             {
-                return Many;
+                return CounterColours.Many;
             }
 
             if (count >= 5)
             {
-                return Some;
+                return CounterColours.Some;
             }
 
             if (count >= 2)
             {
-                return Few;
+                return CounterColours.Few;
             }
 
             if (count >= 1)
             {
-                return One;
+                return CounterColours.One;
             }
 
             return Colors.Transparent;
         }
 
+        /// <summary>
+        /// Decide on colour based on count over many years.
+        /// </summary>
+        /// <param name="count">count to convert</param>
+        /// <returns>background colour</returns>
         private Color GetMultiYearColours(int count)
         {
             if (count >= 500)
             {
-                return Lots;
+                return CounterColours.Lots;
             }
 
             if (count >= 100)
             {
-                return Many;
+                return CounterColours.Many;
             }
 
             if (count >= 50)
             {
-                return Some;
+                return CounterColours.Some;
             }
 
             if (count >= 10)
             {
-                return Few;
+                return CounterColours.Few;
             }
 
             if (count >= 1)
             {
-                return One;
+                return CounterColours.One;
             }
 
             return Colors.Transparent;

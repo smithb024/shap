@@ -13,6 +13,16 @@
         string Name { get; }
 
         /// <summary>
+        /// Gets number from.
+        /// </summary>
+        int TotalFrom { get; }
+
+        /// <summary>
+        /// Gets the number to.
+        /// </summary>
+        int TotalTo { get; }
+
+        /// <summary>
         /// Select the location for display on the location view.
         /// </summary>
         ICommand SelectLocationCmd { get; }

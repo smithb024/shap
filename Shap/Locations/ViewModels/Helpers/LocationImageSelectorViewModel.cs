@@ -120,10 +120,11 @@
                     return string.Empty;
                 }
 
-                string returnString = BasePathReader.GetBasePathUri() +
-              StaticResources.locImgPath +
-              this.LocationImageList[this.LocationImageListIndex] +
-              ".jpg";
+                string returnString =
+                    BasePathReader.GetBasePathUri() +
+                    StaticResources.locImgPath +
+                    this.LocationImageList[this.LocationImageListIndex] +
+                    ".jpg";
 
                 return returnString;
             }

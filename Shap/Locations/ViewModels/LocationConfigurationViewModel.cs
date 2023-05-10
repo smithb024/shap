@@ -2,9 +2,7 @@
 {
     using CommunityToolkit.Mvvm.ComponentModel;
     using CommunityToolkit.Mvvm.Messaging;
-    using Icons;
     using Shap.Common.Commands;
-    using Shap.Common.SerialiseModel.ClassDetails;
     using Shap.Common.SerialiseModel.Location;
     using Shap.Common.SerialiseModel.Operator;
     using Shap.Icons.ComboBoxItems;
@@ -212,6 +210,7 @@
         /// Collection of all known operators.
         /// </summary>
         public ObservableCollection<IOperatorItemViewModel> Operators { get; }
+
         /// <summary>
         /// Gets or sets the index of the currently selected operator on the combo box.
         /// </summary>
@@ -239,7 +238,6 @@
 
                 this.locationOperatorsIndex = value;
                 this.OnPropertyChanged(nameof(this.LocationOperatorIndex));
-                //this.ReassessIsContemporary();
             }
         }
 
