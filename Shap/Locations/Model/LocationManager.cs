@@ -84,11 +84,23 @@
             {
                 if (!this.controllers.Location.DoesFileExist(location))
                 {
+                    LocationPhotos photo =
+                        new LocationPhotos()
+                        {
+                            Path = "default"
+                        };
+                    List<LocationPhotos> photos =
+                        new List<LocationPhotos>()
+                        {
+                            photo
+                        };
+
                     LocationDetails locationDetails =
                         new LocationDetails()
                         {
                             Name = location,
-                            Category = Types.Enum.LocationCategories.ND
+                            Category = Types.Enum.LocationCategories.ND,
+                            Photos = photos
                         };
 
                     this.controllers.Location.Write(
