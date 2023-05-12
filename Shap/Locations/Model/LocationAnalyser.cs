@@ -334,6 +334,11 @@
             List<LocationClass> locationClasses,
             List<GroupsType> types)
         {
+            if (string.IsNullOrEmpty(unitId))
+            {
+                return string.Empty;
+            }
+
             // For each unit:
             // Determine the type. 
             // If this is the first of the type in the entry (return if not the first of the type):
