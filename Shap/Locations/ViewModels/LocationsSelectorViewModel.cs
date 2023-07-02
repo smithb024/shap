@@ -3,6 +3,7 @@
     using CommunityToolkit.Mvvm.ComponentModel;
     using CommunityToolkit.Mvvm.Messaging;
     using Enums;
+    using Shap.Common.SerialiseModel.Location;
     using Shap.Interfaces.Io;
     using Shap.Interfaces.Locations.Model;
     using Shap.Interfaces.Locations.ViewModels;
@@ -13,6 +14,7 @@
     using System;
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
+    using System.Windows.Forms;
 
     /// <summary>
     /// View model which supports the locations selector view.
@@ -70,19 +72,19 @@
             this.locationAnalyser = locationAnalyser;
 
             this.Messenger.Register<NewLocationAddedMessage>(
-                this, 
+                this,
                 (r, message) => this.OnLocationAddedMessageReceived(message));
             this.Messenger.Register<AlphaSelectorMessage>(
                 this,
                 (r, message) => this.NewAlphaCharacterSelected(message));
             this.Messenger.Register<OperatorSelectorMessage>(
                 this,
-                (r, message) => this.NewOperatorCharacterSelected(message));
+                (r, message) => this.NewOperatorSelected(message));
             this.Messenger.Register<RegionSelectorMessage>(
                 this,
-                (r, message) => this.NewRegionCharacterSelected(message));
+                (r, message) => this.NewRegionSelected(message));
             this.Messenger.Register<RequestLocationsRefreshMessage>(
-                this, 
+                this,
                 (r, message) => this.OnRequestLocationsRefreshMessage(message));
 
         }
@@ -142,7 +144,7 @@
         /// <param name="message">
         /// The <see cref="OperatorSelectorMessage"/> message.
         /// </param>
-        public void NewOperatorCharacterSelected(OperatorSelectorMessage message)
+        public void NewOperatorSelected(OperatorSelectorMessage message)
         {
             this.type = SelectorType.Operator;
             this.searchCriteria = message.Operator;
@@ -155,7 +157,7 @@
         /// <param name="message">
         /// The <see cref="RegionSelectorMessage"/> message.
         /// </param>
-        public void NewRegionCharacterSelected(RegionSelectorMessage message)
+        public void NewRegionSelected(RegionSelectorMessage message)
         {
             this.type = SelectorType.Region;
             this.searchCriteria = message.Region;
@@ -172,7 +174,7 @@
         {
             List<string> locations = new List<string>();
 
-            foreach(ISelectorRowViewModel selector in this.Locations)
+            foreach (ISelectorRowViewModel selector in this.Locations)
             {
                 locations.Add(selector.Name);
             }
@@ -194,7 +196,7 @@
                     {
                         foreach (string location in allLocations)
                         {
-                            if (string.Equals(location.Substring(0,1), this.searchCriteria))
+                            if (string.Equals(location.Substring(0, 1), this.searchCriteria))
                             {
                                 ISelectorRowViewModel row =
                                     new SelectorRowViewModel(
@@ -203,6 +205,7 @@
                                 this.Locations.Add(row);
                             }
                         }
+
                         break;
                     }
                 case SelectorType.Operator:
@@ -212,6 +215,20 @@
 
                 case SelectorType.Region:
                     {
+                        foreach (string location in allLocations)
+                        {
+                            LocationDetails details =
+                                this.ioControllers.Location.Read(
+                                    location);
+                            if (string.Equals(details.County, this.searchCriteria))
+                            {
+                                ISelectorRowViewModel row =
+                                    new SelectorRowViewModel(
+                                        this.ioControllers,
+                                        location);
+                                this.Locations.Add(row);
+                            }
+                        }
                         break;
                     }
             }

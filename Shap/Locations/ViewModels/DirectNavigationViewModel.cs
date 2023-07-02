@@ -1,10 +1,11 @@
 ﻿namespace Shap.Locations.ViewModels
 {
     using CommunityToolkit.Mvvm.ComponentModel;
-    using Shap.Icon;
+    using CommunityToolkit.Mvvm.Messaging;
     using Shap.Interfaces.Io;
     using Shap.Interfaces.Locations.ViewModels;
     using Shap.Locations.Enums;
+    using Shap.Locations.Messages;
     using System;
     using System.Collections.Generic;
 
@@ -20,6 +21,11 @@
         private int index;
 
         /// <summary>
+        /// The type of object being displayed.
+        /// </summary>
+        private SelectorType type;
+
+        /// <summary>
         /// Initialises a new instance of the <see cref="DirectNavigationViewModel"/> class.
         /// </summary>
         /// <param name="ioControllers">The IO Controller manager object</param>
@@ -28,6 +34,8 @@
             IIoControllers ioControllers,
             SelectorType type)
         {
+            this.type = type;
+
             switch (type)
             {
                 case SelectorType.Operator:
@@ -62,6 +70,7 @@
                 {
                     this.index = value;
                     this.OnPropertyChanged(nameof(this.SearchCriteriaIndex));
+                    this.SendDisplayRequest();
                 }
             }
         }
@@ -90,6 +99,38 @@
             if (disposing)
             {
             }
+        }
+
+        /// <summary>
+        /// Send a request to display a new set of locations.
+        /// </summary>
+        private void SendDisplayRequest()
+        {
+            if (this.SearchCriteriaIndex < 0 ||
+                this.SearchCriteriaIndex >= this.SearchCriteria.Count)
+            {
+                return;
+            }
+
+            switch (this.type)
+            {
+                case SelectorType.Operator:
+                    break;
+
+                case SelectorType.Region:
+                    RegionSelectorMessage regionMessage =
+                        new RegionSelectorMessage(
+                            this.SearchCriteria[this.SearchCriteriaIndex]);
+                    this.Messenger.Send(regionMessage);
+                    break;
+
+                case SelectorType.Lines:
+                    break;
+
+                default:
+                    return;
+            }
+
         }
     }
 }
