@@ -2,6 +2,7 @@
 {
     using CommunityToolkit.Mvvm.ComponentModel;
     using CommunityToolkit.Mvvm.Messaging;
+    using Enums;
     using Shap.Interfaces.Io;
     using Shap.Interfaces.Locations.Model;
     using Shap.Interfaces.Locations.ViewModels;
@@ -216,16 +217,6 @@
             }
 
             this.OnPropertyChanged(nameof(this.Locations));
-        }
-
-        /// <summary>
-        /// Enumeration which defines how the locations are displayed.
-        /// </summary>
-        private enum SelectorType
-        {
-            Alphabetical,
-            Operator,
-            Region
         }
     }
 }

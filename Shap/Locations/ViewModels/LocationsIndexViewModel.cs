@@ -7,6 +7,7 @@
     using Shap.Interfaces.Locations.Model;
     using Shap.Interfaces.Locations.ViewModels;
     using Shap.Interfaces.Stats;
+    using Shap.Locations.Enums;
     using Shap.Locations.Messages;
     using System.Windows.Input;
 
@@ -227,7 +228,9 @@
             this.selectedNatigation = NavigationType.Operators;
 
             IDirectNavigationViewModel operatorsViewModel =
-                new DirectNavigationViewModel();
+                new DirectNavigationViewModel(
+                    ioControllers,
+                    SelectorType.Operator);
             ISelectorViewModel locationSelectorViewModel =
                 new LocationsSelectorViewModel(
                     this.ioControllers,
@@ -252,7 +255,9 @@
             this.selectedNatigation = NavigationType.Regions;
 
             IDirectNavigationViewModel regionsViewModel =
-                new DirectNavigationViewModel();
+                new DirectNavigationViewModel(
+                    ioControllers,
+                    SelectorType.Region);
             ISelectorViewModel locationSelectorViewModel =
                 new LocationsSelectorViewModel(
                     this.ioControllers,
@@ -274,7 +279,9 @@
             this.selectedNatigation = NavigationType.Lines;
 
             IDirectNavigationViewModel linesViewModel =
-                new DirectNavigationViewModel();
+                new DirectNavigationViewModel(
+                    ioControllers,
+                    SelectorType.Lines);
             ILinesSelectorViewModel linesSelectorViewModel =
                 new LinesSelectorViewModel();
 

@@ -315,6 +315,7 @@
     <Compile Include="Interfaces\Common\ViewModels\IJourneyViewModel.cs" />
     <Compile Include="IocFactory.cs" />
     <Compile Include="Io\IoControllers.cs" />
+    <Compile Include="Locations\Enums\SelectorType.cs" />
     <Compile Include="Locations\IO\LocationIoController.cs" />
     <Compile Include="Locations\Messages\ConfigurationModeMessage.cs" />
     <Compile Include="Locations\Messages\DisplayLocationMessage.cs" />
