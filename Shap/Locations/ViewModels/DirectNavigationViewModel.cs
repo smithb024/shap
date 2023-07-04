@@ -2,12 +2,16 @@
 {
     using CommunityToolkit.Mvvm.ComponentModel;
     using CommunityToolkit.Mvvm.Messaging;
+    using Shap.Common.SerialiseModel.Operator;
+    using Shap.Icons.ComboBoxItems;
+    using Shap.Icons.ListViewItems;
     using Shap.Interfaces.Io;
     using Shap.Interfaces.Locations.ViewModels;
     using Shap.Locations.Enums;
     using Shap.Locations.Messages;
     using System;
     using System.Collections.Generic;
+    using System.Collections.ObjectModel;
 
     /// <summary>
     /// A view model which supports location navigation. This view model supports a combo box from 
@@ -39,7 +43,14 @@
             switch (type)
             {
                 case SelectorType.Operator:
+                    OperatorDetails operatorDetails = ioControllers.Operator.Read();
                     this.SearchCriteria = new List<string>();
+
+                    foreach (SingleOperator singleOperator in operatorDetails.Operators)
+                    {
+                        this.SearchCriteria.Add(singleOperator.Name);
+                    }
+
                     break;
 
                 case SelectorType.Region:
@@ -115,6 +126,10 @@
             switch (this.type)
             {
                 case SelectorType.Operator:
+                    OperatorSelectorMessage operatorMessage =
+                        new OperatorSelectorMessage(
+                            this.SearchCriteria[this.SearchCriteriaIndex]);
+                    this.Messenger.Send(operatorMessage);
                     break;
 
                 case SelectorType.Region:
