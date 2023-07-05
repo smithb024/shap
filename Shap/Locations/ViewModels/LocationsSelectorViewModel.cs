@@ -208,8 +208,29 @@
 
                         break;
                     }
+
                 case SelectorType.Operator:
                     {
+                        foreach (string location in allLocations)
+                        {
+                            LocationDetails details =
+                                this.ioControllers.Location.Read(
+                                    location);
+
+                            foreach (LocationOperator locationOperator in details.Operators)
+                            {
+                                if (string.Equals(locationOperator.Name, this.searchCriteria))
+                                {
+                                    ISelectorRowViewModel row =
+                                        new SelectorRowViewModel(
+                                            this.ioControllers,
+                                            location);
+                                    this.Locations.Add(row);
+                                    break;
+                                }
+                            }
+                        }
+
                         break;
                     }
 
@@ -220,6 +241,7 @@
                             LocationDetails details =
                                 this.ioControllers.Location.Read(
                                     location);
+
                             if (string.Equals(details.County, this.searchCriteria))
                             {
                                 ISelectorRowViewModel row =
@@ -229,6 +251,7 @@
                                 this.Locations.Add(row);
                             }
                         }
+
                         break;
                     }
             }
