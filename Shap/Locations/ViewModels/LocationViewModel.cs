@@ -18,6 +18,7 @@
     using System;
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
+    using System.Linq;
 
     /// <summary>
     /// The view model which is used to display a location on a view.
@@ -196,6 +197,8 @@
 
             this.ClassCounters.Clear();
 
+            // Ensure that Class Counters is alphabetical.
+            List<ITravelCounterViewModel> travelCounterViewModels = new List<ITravelCounterViewModel>();
             foreach (LocationClass thisClass in currentLocation.Classes)
             {
                 ITravelCounterViewModel counter =
@@ -203,7 +206,13 @@
                         thisClass.Name,
                         thisClass.TotalFrom,
                         thisClass.TotalTo);
-                this.ClassCounters.Add(counter);
+                travelCounterViewModels.Add(counter);
+            }
+
+            travelCounterViewModels = travelCounterViewModels.OrderBy(c => c.Name).ToList();
+            foreach (ITravelCounterViewModel travelCounterViewModel in travelCounterViewModels)
+            {
+                this.ClassCounters.Add(travelCounterViewModel);
             }
 
             this.LocationOperators.Clear();
