@@ -14,13 +14,15 @@
     using System;
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
-    using System.Windows.Forms;
 
     /// <summary>
     /// View model which supports the locations selector view.
     /// </summary>
     /// <remarks>
     /// This view allows locations to be chosen for display on the locations view.
+    /// This view contains a list of locations which are grouped according to a chosen filter 
+    /// (alphabetical/geographical/operator). It is used to select the location for display on
+    /// the main/configuration part of the window.
     /// </remarks>
     public class LocationsSelectorViewModel : ObservableRecipient, ILocationSelectorViewModel
     {

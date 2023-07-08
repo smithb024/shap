@@ -4,12 +4,31 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Shap.Locations"
+             xmlns:icons="clr-namespace:Shap.Locations.Views.Icons"
              mc:Ignorable="d" 
              Width="100"
              Height="100"
-             Background="DarkBlue"
+             SnapsToDevicePixels="True"
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
-            
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <icons:MapCell
+            DataContext="{Binding Path=MapCellViewModel1}"
+            Grid.Row="0"/>
+        <icons:MapCell
+            DataContext="{Binding Path=MapCellViewModel2}"
+            Grid.Row="1"/>
+        <icons:MapCell
+            DataContext="{Binding Path=MapCellViewModel3}"
+            Grid.Row="2"/>
+        <icons:MapCell
+            DataContext="{Binding Path=MapCellViewModel4}"
+            Grid.Row="3"/>
     </Grid>
 </UserControl>
