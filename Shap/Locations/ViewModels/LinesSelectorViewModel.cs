@@ -18,16 +18,18 @@
     {
         public LinesSelectorViewModel()
         {
-            this.MapCellViewModel1 = new MapCellViewModel(true, false);
-            this.MapCellViewModel2 = new MapCellViewModel(false, true);
-            this.MapCellViewModel3 = new MapCellViewModel(false, false);
-            this.MapCellViewModel4 = new MapCellViewModel(true, true);
+            this.MapCellViewModel1 = new MapCellViewModel("b", true);
+            this.MapCellViewModel2 = new MapCellViewModel("i", false);
+            this.MapCellViewModel3 = new MapCellViewModel("n", false);
+            this.MapCellViewModel4 = new MapCellViewModel("a", true);
+            this.MapCellViewModel5 = new MapCellViewModel("f", false);
         }
 
         public IMapCellViewModel MapCellViewModel1 { get; }
         public IMapCellViewModel MapCellViewModel2 { get; }
         public IMapCellViewModel MapCellViewModel3 { get; }
         public IMapCellViewModel MapCellViewModel4 { get; }
+        public IMapCellViewModel MapCellViewModel5 { get; }
 
         /// <summary>
         /// Dispose this object.

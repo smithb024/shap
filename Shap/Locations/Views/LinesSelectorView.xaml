@@ -16,6 +16,7 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
         <icons:MapCell
@@ -30,5 +31,8 @@
         <icons:MapCell
             DataContext="{Binding Path=MapCellViewModel4}"
             Grid.Row="3"/>
+        <icons:MapCell
+            DataContext="{Binding Path=MapCellViewModel5}"
+            Grid.Row="4"/>
     </Grid>
 </UserControl>

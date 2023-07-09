@@ -11,19 +11,79 @@
         /// <summary>
         /// Initialises a new instance of the <see cref="MapCellViewModel"/> class.
         /// </summary>
-        /// <param name="isLineLayer"></param>
+        /// <param name="lineLayerCode">
+        /// Indicates which icon to use for the line layer.
+        /// </param>
         /// <param name="isLocationLayer"></param>
         public MapCellViewModel(
-            bool isLineLayer,
+            string lineLayerCode,
             bool isLocationLayer) 
         {
-            if (isLineLayer)
+            switch (lineLayerCode)
             {
-                this.LineLayer = "/Icons/Map/straight.png";
-            }
-            else
-            {
-                this.LineLayer = string.Empty;
+                case "a":
+                    this.LineLayer = "/Icons/Map/straight.png";
+                    break;
+                case "b":
+                    this.LineLayer = "/Icons/Map/blocks.png";
+                    break;
+                case "f":
+                    this.LineLayer = "/Icons/Map/finish.png";
+                    break;
+                case "h":
+                    this.LineLayer = "/Icons/Map/horizontal.png";
+                    break;
+                case "i":
+                    this.LineLayer = "/Icons/Map/turnOutRight.png";
+                    break;
+                case "j":
+                    this.LineLayer = "/Icons/Map/turnOutLeft.png";
+                    break;
+                case "k":
+                    this.LineLayer = "/Icons/Map/turnInLeft.png";
+                    break;
+                case "l":
+                    this.LineLayer = "/Icons/Map/turnInRight.png";
+                    break;
+                case "m":
+                    this.LineLayer = "/Icons/Map/turnOutBoth.png";
+                    break;
+                case "n":
+                    this.LineLayer = "/Icons/Map/turnInBoth.png";
+                    break;
+                case "o":
+                    this.LineLayer = "/Icons/Map/terminateRight.png";
+                    break;
+                case "p":
+                    this.LineLayer = "/Icons/Map/terminateLeft.png";
+                    break;
+                case "s":
+                    this.LineLayer = "/Icons/Map/start.png";
+                    break;
+                case "t":
+                    this.LineLayer = "/Icons/Map/terminate.png";
+                    break;
+                case "u":
+                    this.LineLayer = "/Icons/Map/bridgeOver.png";
+                    break;
+                case "v":
+                    this.LineLayer = "/Icons/Map/bridgeUnder.png";
+                    break;
+                case "w":
+                    this.LineLayer = "/Icons/Map/goRight.png";
+                    break;
+                case "x":
+                    this.LineLayer = "/Icons/Map/goLeft.png";
+                    break;
+                case "y":
+                    this.LineLayer = "/Icons/Map/fromLeft.png";
+                    break;
+                case "z":
+                    this.LineLayer = "/Icons/Map/fromRight.png";
+                    break;
+                default:
+                    this.LineLayer = string.Empty;
+                    break;
             }
 
             if (isLocationLayer)
