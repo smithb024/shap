@@ -871,6 +871,15 @@
     <Resource Include="Icons\Map\turnOutLeft.png" />
     <Resource Include="Icons\Map\turnOutRight.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\Map\locA.png" />
+    <Resource Include="Icons\Map\locB.png" />
+    <Resource Include="Icons\Map\locC1.png" />
+    <Resource Include="Icons\Map\locC2.png" />
+    <Resource Include="Icons\Map\locD.png" />
+    <Resource Include="Icons\Map\locE.png" />
+    <Resource Include="Icons\Map\locF.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\CommunityToolkit.Mvvm.8.1.0\build\netstandard2.0\CommunityToolkit.Mvvm.targets" Condition="Exists('..\packages\CommunityToolkit.Mvvm.8.1.0\build\netstandard2.0\CommunityToolkit.Mvvm.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

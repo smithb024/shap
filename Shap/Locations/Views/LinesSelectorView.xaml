@@ -7,11 +7,16 @@
              xmlns:icons="clr-namespace:Shap.Locations.Views.Icons"
              mc:Ignorable="d" 
              Width="100"
-             Height="100"
              SnapsToDevicePixels="True"
              d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
         <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
@@ -34,5 +39,23 @@
         <icons:MapCell
             DataContext="{Binding Path=MapCellViewModel5}"
             Grid.Row="4"/>
+        <icons:MapCell
+            DataContext="{Binding Path=MapCellViewModel6}"
+            Grid.Row="5"/>
+        <icons:MapCell
+            DataContext="{Binding Path=MapCellViewModel7}"
+            Grid.Row="6"/>
+        <icons:MapCell
+            DataContext="{Binding Path=MapCellViewModel8}"
+            Grid.Row="7"/>
+        <icons:MapCell
+            DataContext="{Binding Path=MapCellViewModel9}"
+            Grid.Row="8"/>
+        <icons:MapCell
+            DataContext="{Binding Path=MapCellViewModel10}"
+            Grid.Row="9"/>
+        <icons:MapCell
+            DataContext="{Binding Path=MapCellViewModel11}"
+            Grid.Row="10"/>
     </Grid>
 </UserControl>

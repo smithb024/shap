@@ -2,6 +2,7 @@
 {
     using CommunityToolkit.Mvvm.ComponentModel;
     using Shap.Interfaces.Locations.ViewModels.Icons;
+    using Shap.Types.Enum;
 
     /// <summary>
     /// A view model which supports a cell icon within the lines selector view.
@@ -14,10 +15,12 @@
         /// <param name="lineLayerCode">
         /// Indicates which icon to use for the line layer.
         /// </param>
-        /// <param name="isLocationLayer"></param>
+        /// <param name="locationLayer">
+        /// Indicates which icon to use for the location layer.
+        /// </param>
         public MapCellViewModel(
             string lineLayerCode,
-            bool isLocationLayer) 
+            LocationCategories locationLayer = LocationCategories.ND) 
         {
             switch (lineLayerCode)
             {
@@ -86,13 +89,32 @@
                     break;
             }
 
-            if (isLocationLayer)
+            switch (locationLayer)
             {
-                this.LocationLayer = "/Icons/Map/circle.png";
-            }
-            else
-            {
-                this.LocationLayer = string.Empty;
+                case LocationCategories.A:
+                    this.LocationLayer = "/Icons/Map/locA.png";
+                    break;
+                case LocationCategories.B:
+                    this.LocationLayer = "/Icons/Map/locB.png";
+                    break;
+                case LocationCategories.C1:
+                    this.LocationLayer = "/Icons/Map/locC1.png";
+                    break;
+                case LocationCategories.C2:
+                    this.LocationLayer = "/Icons/Map/locC2.png";
+                    break;
+                case LocationCategories.D:
+                    this.LocationLayer = "/Icons/Map/locD.png";
+                    break;
+                case LocationCategories.E:
+                    this.LocationLayer = "/Icons/Map/locE.png";
+                    break;
+                case LocationCategories.F:
+                    this.LocationLayer = "/Icons/Map/locF.png";
+                    break;
+                default:
+                    this.LocationLayer = string.Empty;
+                    break;
             }
         }
 

@@ -5,6 +5,7 @@
     using Shap.Interfaces.Locations.ViewModels.Icons;
     using Shap.Locations.ViewModels.Icons;
     using System;
+    using Types.Enum;
 
     /// <summary>
     /// View model which supports the lines selector view.
@@ -18,11 +19,17 @@
     {
         public LinesSelectorViewModel()
         {
-            this.MapCellViewModel1 = new MapCellViewModel("b", true);
-            this.MapCellViewModel2 = new MapCellViewModel("i", false);
-            this.MapCellViewModel3 = new MapCellViewModel("n", false);
-            this.MapCellViewModel4 = new MapCellViewModel("a", true);
-            this.MapCellViewModel5 = new MapCellViewModel("f", false);
+            this.MapCellViewModel1 = new MapCellViewModel("b");
+            this.MapCellViewModel2 = new MapCellViewModel("i");
+            this.MapCellViewModel3 = new MapCellViewModel("n");
+            this.MapCellViewModel4 = new MapCellViewModel("a", LocationCategories.A);
+            this.MapCellViewModel5 = new MapCellViewModel("a", LocationCategories.B);
+            this.MapCellViewModel6 = new MapCellViewModel("a", LocationCategories.C1);
+            this.MapCellViewModel7 = new MapCellViewModel("a", LocationCategories.C2);
+            this.MapCellViewModel8 = new MapCellViewModel("a", LocationCategories.D);
+            this.MapCellViewModel9 = new MapCellViewModel("a", LocationCategories.E);
+            this.MapCellViewModel10 = new MapCellViewModel("a", LocationCategories.F);
+            this.MapCellViewModel11 = new MapCellViewModel("f");
         }
 
         public IMapCellViewModel MapCellViewModel1 { get; }
@@ -30,6 +37,12 @@
         public IMapCellViewModel MapCellViewModel3 { get; }
         public IMapCellViewModel MapCellViewModel4 { get; }
         public IMapCellViewModel MapCellViewModel5 { get; }
+        public IMapCellViewModel MapCellViewModel6 { get; }
+        public IMapCellViewModel MapCellViewModel7 { get; }
+        public IMapCellViewModel MapCellViewModel8 { get; }
+        public IMapCellViewModel MapCellViewModel9 { get; }
+        public IMapCellViewModel MapCellViewModel10 { get; }
+        public IMapCellViewModel MapCellViewModel11 { get; }
 
         /// <summary>
         /// Dispose this object.
