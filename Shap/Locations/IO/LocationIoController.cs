@@ -6,10 +6,6 @@
     using Shap.Common.SerialiseModel.Location;
     using Shap.Interfaces.Io;
     using System.Collections.Generic;
-    using NynaeveLib.Logger;
-    using Shap.Types;
-    using System.Windows.Shapes;
-    using System.Linq;
 
     /// <summary>
     /// Used to read and write to the location XML file.
@@ -38,9 +34,9 @@
                 StaticResources.locIdvlPath +
                 filename +
                 XmlExtensionLabel;
-                LocationDetails results =
-                    XmlFileIo.ReadXml<LocationDetails>(
-                        myPath);
+            LocationDetails results =
+                XmlFileIo.ReadXml<LocationDetails>(
+                    myPath);
 
             return results;
         }
@@ -136,6 +132,35 @@
             regions.Sort();
 
             return regions;
+        }
+
+        /// <summary>
+        /// Get all the lines by reading the names of all files.
+        /// </summary>
+        /// <returns>
+        /// A list of all lines.
+        /// </returns>
+        public List<string> GetLines()
+        {
+            List<string> lines = new List<string>();
+
+            string linesPath =
+               BasePathReader.GetBasePath() +
+               StaticResources.locLinesPath;
+
+            if (!Directory.Exists(linesPath))
+            {
+                return lines;
+            }
+
+            DirectoryInfo directoryInfo = new DirectoryInfo(linesPath);
+
+            foreach(FileInfo file in directoryInfo.GetFiles())
+            {
+                lines.Add(Path.GetFileNameWithoutExtension(file.Name));
+            }
+
+            return lines;
         }
     }
 }

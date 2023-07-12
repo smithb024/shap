@@ -58,7 +58,7 @@
                     break;
 
                 case SelectorType.Lines:
-                    this.SearchCriteria = new List<string>();
+                    this.SearchCriteria = ioControllers.Location.GetLines();
                     break;
 
                 default:

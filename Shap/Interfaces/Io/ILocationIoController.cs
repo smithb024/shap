@@ -44,5 +44,13 @@
         /// A list of all regions.
         /// </returns>
         List<string> GetRegions();
-  }
+
+        /// <summary>
+        /// Get all the lines by reading the names of all files.
+        /// </summary>
+        /// <returns>
+        /// A list of all lines.
+        /// </returns>
+        List<string> GetLines();
+    }
 }
