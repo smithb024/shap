@@ -33,19 +33,32 @@
         /// <param name="name">
         /// The location name.
         /// </param>
+        /// <param name="isValid">
+        /// Indicates whether this location is one which is monitored by the application
+        /// </param>
         public SelectorRowViewModel(
             IIoControllers ioControllers,
-            string name)
+            string name,
+            bool isValid = true)
         {
             this.ioControllers = ioControllers;
             this.Name = name;
+            this.IsValid = isValid;
             this.SelectLocationCmd = new CommonCommand(this.SelectLocation);
 
-            LocationDetails currentLocation =
-                this.ioControllers.Location.Read(
-                    name);
-            this.TotalFrom = currentLocation.TotalFrom;
-            this.TotalTo = currentLocation.TotalTo;
+            if (isValid)
+            {
+                LocationDetails currentLocation =
+                    this.ioControllers.Location.Read(
+                        name);
+                this.TotalFrom = currentLocation.TotalFrom;
+                this.TotalTo = currentLocation.TotalTo;
+            }
+            else
+            {
+                this.TotalFrom = 0;
+                this.TotalTo = 0;
+            }
         }
 
         /// <summary>
@@ -69,14 +82,22 @@
         public ICommand SelectLocationCmd { get; }
 
         /// <summary>
+        /// Gets a value which indicates whether this location is currently monitored by the app.
+        /// </summary>
+        public bool IsValid { get; }
+
+        /// <summary>
         /// Select this location.
         /// </summary>
         private void SelectLocation()
         {
-            DisplayLocationMessage message =
-                new DisplayLocationMessage(
-                    this.Name);
-            this.Messenger.Send(message);
+            if (this.IsValid)
+            {
+                DisplayLocationMessage message =
+                    new DisplayLocationMessage(
+                        this.Name);
+                this.Messenger.Send(message);
+            }
         }
     }
 }

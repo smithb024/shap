@@ -320,10 +320,12 @@
     <Compile Include="Locations\IO\LocationIoController.cs" />
     <Compile Include="Locations\Messages\ConfigurationModeMessage.cs" />
     <Compile Include="Locations\Messages\DisplayLocationMessage.cs" />
+    <Compile Include="Locations\Messages\LineSelectorMessage.cs" />
     <Compile Include="Locations\Messages\RegionSelectorMessage.cs" />
     <Compile Include="Locations\Messages\OperatorSelectorMessage.cs" />
     <Compile Include="Locations\Messages\AlphaSelectorMessage.cs" />
     <Compile Include="Locations\Messages\RequestLocationsRefreshMessage.cs" />
+    <Compile Include="Locations\Model\LineDetail.cs" />
     <Compile Include="Locations\Model\LocationAnalyser.cs" />
     <Compile Include="Locations\Model\LocationManager.cs" />
     <Compile Include="Locations\ViewModels\AlphabeticalNavigationViewModel.cs" />

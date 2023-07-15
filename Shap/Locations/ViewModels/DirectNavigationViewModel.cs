@@ -12,6 +12,7 @@
     using System;
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
+    using System.Windows.Forms;
 
     /// <summary>
     /// A view model which supports location navigation. This view model supports a combo box from 
@@ -140,6 +141,10 @@
                     break;
 
                 case SelectorType.Lines:
+                    LineSelectorMessage lineMessage =
+                        new LineSelectorMessage(
+                            this.SearchCriteria[this.SearchCriteriaIndex]);
+                    this.Messenger.Send(lineMessage);
                     break;
 
                 default:

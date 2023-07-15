@@ -6,6 +6,10 @@
     using Shap.Common.SerialiseModel.Location;
     using Shap.Interfaces.Io;
     using System.Collections.Generic;
+    using Shap.Locations.Model;
+    using Shap.Types;
+    using NynaeveLib.Logger;
+    using static System.Windows.Forms.VisualStyles.VisualStyleElement.ListView;
 
     /// <summary>
     /// Used to read and write to the location XML file.
@@ -161,6 +165,47 @@
             }
 
             return lines;
+        }
+
+        /// <summary>
+        /// Read the details of a specific line.
+        /// </summary>
+        /// <returns>
+        /// All details of a specific line
+        /// </returns>
+        public List<LineDetail> ReadLine(
+            string filename)
+        {
+            List<LineDetail> details = new List<LineDetail>();
+
+            string filePath =
+                BasePathReader.GetBasePath() +
+                StaticResources.locLinesPath +
+                "\\" +
+                filename +
+                TxtExtensionLabel;
+
+            if (File.Exists(filePath))
+            {
+                using (StreamReader reader = new StreamReader(filePath, false))
+                {
+                    string currentLine = string.Empty;
+                    currentLine = reader.ReadLine();
+                    while (currentLine != null)
+                    {
+                        LineDetail detail = new LineDetail(currentLine);
+                        details.Add(detail);
+
+                        currentLine = reader.ReadLine();
+                    }
+                }
+            }
+            else
+            {
+                Logger.Instance.WriteLog($"Can't find line file {filePath}.");
+            }
+
+            return details;
         }
     }
 }

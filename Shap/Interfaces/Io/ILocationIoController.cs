@@ -1,6 +1,7 @@
 ﻿namespace Shap.Interfaces.Io
 {
     using Shap.Common.SerialiseModel.Location;
+    using Shap.Locations.Model;
     using System.Collections.Generic;
 
     /// <summary>
@@ -52,5 +53,14 @@
         /// A list of all lines.
         /// </returns>
         List<string> GetLines();
+
+        /// <summary>
+        /// Read the details of a specific line.
+        /// </summary>
+        /// <returns>
+        /// All details of a specific line
+        /// </returns>
+        List<LineDetail> ReadLine(
+            string filename);
     }
 }

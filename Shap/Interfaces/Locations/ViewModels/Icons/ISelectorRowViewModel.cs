@@ -26,5 +26,10 @@
         /// Select the location for display on the location view.
         /// </summary>
         ICommand SelectLocationCmd { get; }
+
+        /// <summary>
+        /// Gets a value which indicates whether this location is currently monitored by the app.
+        /// </summary>
+        bool IsValid { get; }
     }
 }
