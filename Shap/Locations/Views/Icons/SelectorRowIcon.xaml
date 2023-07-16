@@ -22,16 +22,18 @@
 
         <Grid Grid.Column="0">
             <Label 
-               Style="{StaticResource CentreLabel}"
-               Content="{Binding Path=Name}"
-               FontSize="12"
-               Padding="0,3,0,0"
-               HorizontalAlignment="Center"/>
+                Style="{StaticResource CentreLabel}"
+                Content="{Binding Path=Name}"
+                FontSize="12"
+                Padding="0,3,0,0"
+                VerticalAlignment="Center"
+                HorizontalAlignment="Center"/>
         </Grid>
         <Grid Grid.Column="1"
               Margin="5,0"
               Background="{Binding Path=TotalFrom, Converter={StaticResource TotalsConverter}}">
             <TextBlock Text="{Binding Path=TotalFrom}"
+                       VerticalAlignment="Center"
                        HorizontalAlignment="Center"
                        Style="{StaticResource StdTextBlockStyle}"/>
         </Grid>
@@ -39,6 +41,7 @@
               Margin="5,0"
               Background="{Binding Path=TotalTo, Converter={StaticResource TotalsConverter}}">
             <TextBlock Text="{Binding Path=TotalTo}"
+                       VerticalAlignment="Center"
                        HorizontalAlignment="Center"
                        Style="{StaticResource StdTextBlockStyle}"/>
         </Grid>

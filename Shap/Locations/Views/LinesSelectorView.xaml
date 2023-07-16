@@ -3,21 +3,36 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
-             xmlns:local="clr-namespace:Shap.Locations"
              xmlns:icons="clr-namespace:Shap.Locations.Views.Icons"
              mc:Ignorable="d" 
              SnapsToDevicePixels="True"
              d:DesignHeight="450" d:DesignWidth="800">
 
-    <ScrollViewer
-            VerticalScrollBarVisibility="Auto"
-            VerticalAlignment="Stretch"
-            VerticalContentAlignment="Stretch">
+    <ScrollViewer 
+        Margin="0,5,0,0"
+        VerticalScrollBarVisibility="Auto"
+        VerticalAlignment="Stretch"
+        VerticalContentAlignment="Stretch">
         <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
+
+            <ItemsControl
+                Grid.Column="0"
+                ItemsSource="{Binding Path=Icons}">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <StackPanel Orientation="Vertical"/>
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <icons:MapCellRow/>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
 
             <ItemsControl
                 Grid.Column="1"
@@ -29,7 +44,7 @@
                 </ItemsControl.ItemsPanel>
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
-                        <icons:SelectorRowIcon/>
+                        <icons:SelectorRowIcon Height="20"/>
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
             </ItemsControl>

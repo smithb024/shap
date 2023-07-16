@@ -348,6 +348,9 @@
     <Compile Include="Locations\Views\Icons\MapCell.xaml.cs">
       <DependentUpon>MapCell.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Locations\Views\Icons\MapCellRow.xaml.cs">
+      <DependentUpon>MapCellRow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Locations\Views\Icons\SelectorRowIcon.xaml.cs">
       <DependentUpon>SelectorRowIcon.xaml</DependentUpon>
     </Compile>
@@ -625,6 +628,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Locations\Views\Icons\MapCell.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Locations\Views\Icons\MapCellRow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
