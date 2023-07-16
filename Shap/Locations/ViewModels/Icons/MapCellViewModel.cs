@@ -25,6 +25,7 @@
             switch (lineLayerCode)
             {
                 case "a":
+                case "0":
                     this.LineLayer = "/Icons/Map/straight.png";
                     break;
                 case "b":
