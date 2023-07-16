@@ -150,7 +150,10 @@
                 IMapCellRowViewModel cells =
                     new MapCellRowViewModel(
                         iconCount,
-                        detail.Codes);
+                        detail.Codes,
+                        isValid,
+                        this.ioControllers,
+                        detail.Location);
                 ISelectorRowViewModel row =
                     new SelectorRowViewModel(
                         this.ioControllers,

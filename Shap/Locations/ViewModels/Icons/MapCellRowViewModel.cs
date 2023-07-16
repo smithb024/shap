@@ -1,7 +1,10 @@
 ﻿namespace Shap.Locations.ViewModels.Icons
 {
     using CommunityToolkit.Mvvm.ComponentModel;
+    using Shap.Common.SerialiseModel.Location;
+    using Shap.Interfaces.Io;
     using Shap.Interfaces.Locations.ViewModels.Icons;
+    using Shap.Types.Enum;
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
 
@@ -19,9 +22,21 @@
         /// <param name="codes">
         /// The collection of codes which are used to create the icons. 
         /// </param>
+        /// <param name="isValid">
+        /// Indicates whether the location is monitored by the application.
+        /// </param>
+        /// <param name="controllers">
+        /// The IO controllers. Only relevant if <paramref name="isValid"/> is true.
+        /// </param>
+        /// <param name="name">
+        /// The name of the location. Only relevant if <paramref name="isValid"/> is true.
+        /// </param>
         public MapCellRowViewModel(
             int count,
-            List<string> codes)
+            List<string> codes,
+            bool isValid,
+            IIoControllers controllers,
+            string name)
         {
             this.Icons = new ObservableCollection<IMapCellViewModel>();
 
@@ -31,7 +46,24 @@
 
                 if (i < codes.Count)
                 {
-                    cell = new MapCellViewModel(codes[i]);
+                    LocationCategories category;
+
+                    if (isValid)
+                    {
+                        LocationDetails location =
+                            controllers.Location.Read(
+                                name);
+                        category = location.Category;
+                    }
+                    else
+                    {
+                        category = LocationCategories.ND;
+                    }
+
+                    cell =
+                        new MapCellViewModel(
+                            codes[i],
+                            category);
                 }
                 else
                 {
