@@ -290,6 +290,7 @@
     <Compile Include="Interfaces\Locations\Model\ILocationManager.cs" />
     <Compile Include="Interfaces\Locations\ViewModels\Helpers\ILocationImageSelectorViewModel.cs" />
     <Compile Include="Interfaces\Locations\ViewModels\IAlphabeticalNavigationViewModel.cs" />
+    <Compile Include="Interfaces\Locations\ViewModels\Icons\IMapCellRowViewModel.cs" />
     <Compile Include="Interfaces\Locations\ViewModels\Icons\IMapCellViewModel.cs" />
     <Compile Include="Interfaces\Locations\ViewModels\Icons\ISelectorRowViewModel.cs" />
     <Compile Include="Interfaces\Locations\ViewModels\IDetailsViewModel.cs" />
@@ -331,6 +332,7 @@
     <Compile Include="Locations\ViewModels\AlphabeticalNavigationViewModel.cs" />
     <Compile Include="Locations\ViewModels\DirectNavigationViewModel.cs" />
     <Compile Include="Locations\ViewModels\Helpers\LocationImageSelectorViewModel.cs" />
+    <Compile Include="Locations\ViewModels\Icons\MapCellRowViewModel.cs" />
     <Compile Include="Locations\ViewModels\Icons\MapCellViewModel.cs" />
     <Compile Include="Locations\ViewModels\Icons\SelectorRowViewModel.cs" />
     <Compile Include="Locations\ViewModels\RefreshViewModel.cs" />
