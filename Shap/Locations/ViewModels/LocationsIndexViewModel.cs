@@ -256,7 +256,7 @@
 
             IDirectNavigationViewModel regionsViewModel =
                 new DirectNavigationViewModel(
-                    ioControllers,
+                    this.ioControllers,
                     SelectorType.Region);
             ISelectorViewModel locationSelectorViewModel =
                 new LocationsSelectorViewModel(
@@ -280,10 +280,12 @@
 
             IDirectNavigationViewModel linesViewModel =
                 new DirectNavigationViewModel(
-                    ioControllers,
+                    this.ioControllers,
                     SelectorType.Lines);
             ILinesSelectorViewModel linesSelectorViewModel =
-                new LinesSelectorViewModel();
+                new LinesSelectorViewModel(
+                    this.ioControllers,
+                    this.locationAnalyser);
 
             this.Navigation?.Dispose();
             this.Selector?.Dispose();

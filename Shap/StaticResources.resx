@@ -153,6 +153,9 @@
   <data name="locImgPath" xml:space="preserve">
     <value>data\loc\img\</value>
   </data>
+  <data name="locLinesPath" xml:space="preserve">
+    <value>data\loc\lines</value>
+  </data>
   <data name="locPath" xml:space="preserve">
     <value>data\loc\</value>
   </data>

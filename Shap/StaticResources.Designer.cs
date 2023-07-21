@@ -169,6 +169,15 @@ namespace Shap {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to data\loc\lines.
+        /// </summary>
+        internal static string locLinesPath {
+            get {
+                return ResourceManager.GetString("locLinesPath", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to data\loc\.
         /// </summary>
         internal static string locPath {

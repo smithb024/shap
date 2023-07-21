@@ -91,7 +91,7 @@
             currentLocation.TotalTo = 0;
 
             // If there is a closed year, convert it to an integer. Default is 0.
-            if (currentLocation.Closed != null &&
+            if (!string.IsNullOrEmpty(currentLocation.Closed) &&
                 !int.TryParse(currentLocation.Closed, out yearClosed))
             {
                 Logger.Instance.WriteLog(

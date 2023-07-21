@@ -4,7 +4,7 @@
     using System.Collections.ObjectModel;
 
     /// <summary>
-    /// Interface which supports the location selecto view
+    /// Interface which supports the location selector view
     /// </summary>
     public interface ILocationSelectorViewModel : ISelectorViewModel
     {

@@ -6,11 +6,13 @@
              xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
              xmlns:local="clr-namespace:Shap.Locations.Views.Icons"
              xmlns:counterConverters="clr-namespace:Shap.Common.Converters.Counters"
+             xmlns:shapConverter="clr-namespace:Shap.Common.Converters"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
 
     <UserControl.Resources>
         <counterConverters:TotalsBrushConverter x:Key="TotalsConverter"/>
+        <shapConverter:BoolToVisibilityConverter x:Key="VisibilityConverter"/>
     </UserControl.Resources>
 
     <Grid Background="{StaticResource StdBackground}">
@@ -22,23 +24,28 @@
 
         <Grid Grid.Column="0">
             <Label 
-               Style="{StaticResource CentreLabel}"
-               Content="{Binding Path=Name}"
-               FontSize="12"
-               Padding="0,3,0,0"
-               HorizontalAlignment="Center"/>
+                Style="{StaticResource CentreLabel}"
+                Content="{Binding Path=Name}"
+                FontSize="12"
+                Padding="0,3,0,0"
+                VerticalAlignment="Center"
+                HorizontalAlignment="Center"/>
         </Grid>
         <Grid Grid.Column="1"
               Margin="5,0"
+              Visibility="{Binding Path=IsValid, Converter={StaticResource VisibilityConverter}}"
               Background="{Binding Path=TotalFrom, Converter={StaticResource TotalsConverter}}">
             <TextBlock Text="{Binding Path=TotalFrom}"
+                       VerticalAlignment="Center"
                        HorizontalAlignment="Center"
                        Style="{StaticResource StdTextBlockStyle}"/>
         </Grid>
         <Grid Grid.Column="2"
               Margin="5,0"
+              Visibility="{Binding Path=IsValid, Converter={StaticResource VisibilityConverter}}"
               Background="{Binding Path=TotalTo, Converter={StaticResource TotalsConverter}}">
             <TextBlock Text="{Binding Path=TotalTo}"
+                       VerticalAlignment="Center"
                        HorizontalAlignment="Center"
                        Style="{StaticResource StdTextBlockStyle}"/>
         </Grid>

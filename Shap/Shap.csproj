@@ -290,6 +290,8 @@
     <Compile Include="Interfaces\Locations\Model\ILocationManager.cs" />
     <Compile Include="Interfaces\Locations\ViewModels\Helpers\ILocationImageSelectorViewModel.cs" />
     <Compile Include="Interfaces\Locations\ViewModels\IAlphabeticalNavigationViewModel.cs" />
+    <Compile Include="Interfaces\Locations\ViewModels\Icons\IMapCellRowViewModel.cs" />
+    <Compile Include="Interfaces\Locations\ViewModels\Icons\IMapCellViewModel.cs" />
     <Compile Include="Interfaces\Locations\ViewModels\Icons\ISelectorRowViewModel.cs" />
     <Compile Include="Interfaces\Locations\ViewModels\IDetailsViewModel.cs" />
     <Compile Include="Interfaces\Locations\ViewModels\IDirectNavigationViewModel.cs" />
@@ -319,15 +321,19 @@
     <Compile Include="Locations\IO\LocationIoController.cs" />
     <Compile Include="Locations\Messages\ConfigurationModeMessage.cs" />
     <Compile Include="Locations\Messages\DisplayLocationMessage.cs" />
+    <Compile Include="Locations\Messages\LineSelectorMessage.cs" />
     <Compile Include="Locations\Messages\RegionSelectorMessage.cs" />
     <Compile Include="Locations\Messages\OperatorSelectorMessage.cs" />
     <Compile Include="Locations\Messages\AlphaSelectorMessage.cs" />
     <Compile Include="Locations\Messages\RequestLocationsRefreshMessage.cs" />
+    <Compile Include="Locations\Model\LineDetail.cs" />
     <Compile Include="Locations\Model\LocationAnalyser.cs" />
     <Compile Include="Locations\Model\LocationManager.cs" />
     <Compile Include="Locations\ViewModels\AlphabeticalNavigationViewModel.cs" />
     <Compile Include="Locations\ViewModels\DirectNavigationViewModel.cs" />
     <Compile Include="Locations\ViewModels\Helpers\LocationImageSelectorViewModel.cs" />
+    <Compile Include="Locations\ViewModels\Icons\MapCellRowViewModel.cs" />
+    <Compile Include="Locations\ViewModels\Icons\MapCellViewModel.cs" />
     <Compile Include="Locations\ViewModels\Icons\SelectorRowViewModel.cs" />
     <Compile Include="Locations\ViewModels\RefreshViewModel.cs" />
     <Compile Include="Locations\Views\AlphabeticalNavigationView.xaml.cs">
@@ -338,6 +344,12 @@
     </Compile>
     <Compile Include="Locations\Views\Icons\LocationConfigImageSelector.xaml.cs">
       <DependentUpon>LocationConfigImageSelector.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Locations\Views\Icons\MapCell.xaml.cs">
+      <DependentUpon>MapCell.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Locations\Views\Icons\MapCellRow.xaml.cs">
+      <DependentUpon>MapCellRow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Locations\Views\Icons\SelectorRowIcon.xaml.cs">
       <DependentUpon>SelectorRowIcon.xaml</DependentUpon>
@@ -615,6 +627,14 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Locations\Views\Icons\MapCell.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Locations\Views\Icons\MapCellRow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Locations\Views\Icons\SelectorRowIcon.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -834,6 +854,42 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="shap.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\Map\circle.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\Map\straight.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\Map\blocks.png" />
+    <Resource Include="Icons\Map\bridgeOver.png" />
+    <Resource Include="Icons\Map\bridgeUnder.png" />
+    <Resource Include="Icons\Map\finish.png" />
+    <Resource Include="Icons\Map\fromLeft.png" />
+    <Resource Include="Icons\Map\fromRight.png" />
+    <Resource Include="Icons\Map\goLeft.png" />
+    <Resource Include="Icons\Map\goRight.png" />
+    <Resource Include="Icons\Map\horizontal.png" />
+    <Resource Include="Icons\Map\start.png" />
+    <Resource Include="Icons\Map\terminate.png" />
+    <Resource Include="Icons\Map\terminateLeft.png" />
+    <Resource Include="Icons\Map\terminateRight.png" />
+    <Resource Include="Icons\Map\turnInBoth.png" />
+    <Resource Include="Icons\Map\turnInLeft.png" />
+    <Resource Include="Icons\Map\turnInRight.png" />
+    <Resource Include="Icons\Map\turnOutBoth.png" />
+    <Resource Include="Icons\Map\turnOutLeft.png" />
+    <Resource Include="Icons\Map\turnOutRight.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\Map\locA.png" />
+    <Resource Include="Icons\Map\locB.png" />
+    <Resource Include="Icons\Map\locC1.png" />
+    <Resource Include="Icons\Map\locC2.png" />
+    <Resource Include="Icons\Map\locD.png" />
+    <Resource Include="Icons\Map\locE.png" />
+    <Resource Include="Icons\Map\locF.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\CommunityToolkit.Mvvm.8.1.0\build\netstandard2.0\CommunityToolkit.Mvvm.targets" Condition="Exists('..\packages\CommunityToolkit.Mvvm.8.1.0\build\netstandard2.0\CommunityToolkit.Mvvm.targets')" />
