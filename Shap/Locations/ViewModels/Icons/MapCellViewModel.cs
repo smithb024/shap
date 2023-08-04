@@ -90,7 +90,9 @@
                     break;
             }
 
-            if (string.Compare(lineLayerCode, "0", System.StringComparison.CurrentCultureIgnoreCase) == 0 )
+            if (string.Compare(lineLayerCode, "0", System.StringComparison.CurrentCultureIgnoreCase) == 0 ||
+                string.Compare(lineLayerCode, "b", System.StringComparison.CurrentCultureIgnoreCase) == 0 ||
+                string.Compare(lineLayerCode, "t", System.StringComparison.CurrentCultureIgnoreCase) == 0)
             {
                 switch (locationLayer)
                 {
