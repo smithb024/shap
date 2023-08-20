@@ -6,54 +6,72 @@
              xmlns:local="clr-namespace:Shap.Config.GroupsAndClasses"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="*"/>
-        </Grid.ColumnDefinitions>
 
-        <Grid 
-            Grid.Column="0"
-            Grid.Row="0">
-            
+    <Border BorderBrush="{StaticResource StdForeground}"
+            BorderThickness="1">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="*"/>
-            </Grid.RowDefinitions>
 
-            <Button 
+            <TextBlock 
                 Grid.Column="0"
                 Grid.Row="0"
-                Content="Add Group"
-                Style="{StaticResource StdButtonStyle}"
-                Height="20"
-                Margin="2"
-                Command="{Binding AddGroupCmd}"/>
-            <Button 
-                Grid.Column="1"
-                Grid.Row="0"
-                Content="Delete"
-                Style="{StaticResource StdButtonStyle}"
-                Height="20"
-                Margin="2"
-                Command="{Binding DeleteGroupCmd}"/>
-            <TextBox 
-                Grid.Column="0"
+                Text="Class/Type Configuration"
+                Style="{StaticResource StdTextBlockStyle}"
+                FontSize="16"
+                FontWeight="Bold"/>
+
+            <StackPanel 
+                Orientation="Vertical"
                 Grid.Row="1"
-                Grid.ColumnSpan="2"
-                Text="{Binding NewGroup, UpdateSourceTrigger=PropertyChanged}"
-                Style="{StaticResource StdTextBoxStyle}"/>
-        </Grid>
+                Grid.Column="0">
+                <Grid 
+                Margin="2,5">
 
-        <ListView 
-            Grid.Column="1"
-            Grid.Row="0"
-            Style="{StaticResource StdListViewStyle}"
-            ItemsSource="{Binding Path=GroupNames}"
-            SelectedIndex="{Binding GroupIndex}"/>
-    </Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="2*"/>
+                        <ColumnDefinition Width="3*"/>
+                        <ColumnDefinition Width="50"/>
+                    </Grid.ColumnDefinitions>
+
+                    <TextBlock 
+                        Grid.Column="0"
+                        Grid.Row="0"
+                        Text="New Class Type"
+                        Style="{StaticResource StdTextBlockStyle}"/>
+                    <TextBox 
+                        Grid.Column="1"
+                        Text="{Binding NewGroup, UpdateSourceTrigger=PropertyChanged}"
+                        Style="{StaticResource StdTextBoxStyle}"/>
+                    <Button 
+                        Grid.Column="2"
+                        Content="Add"
+                        Style="{StaticResource StdButtonStyle}"
+                        Height="20"
+                        Margin="2"
+                        Command="{Binding AddGroupCmd}"/>
+                </Grid>
+
+                <ListView 
+                    Margin="2,5"
+                    Height="100"
+                    Style="{StaticResource StdListViewStyle}"
+                    ItemsSource="{Binding Path=GroupNames}"
+                    SelectedIndex="{Binding GroupIndex}"/>
+
+                <Button 
+                    Margin="2,5"
+                    Content="Delete"
+                    Style="{StaticResource StdButtonStyle}"
+                    Height="20"
+                    Command="{Binding DeleteGroupCmd}"/>
+            </StackPanel>
+        </Grid>
+    </Border>
 </UserControl>
