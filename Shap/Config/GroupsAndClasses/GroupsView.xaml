@@ -54,7 +54,7 @@
                         Style="{StaticResource StdTextBlockStyle}"/>
                     <TextBox 
                         Grid.Column="1"
-                        Text="{Binding NewGroup, UpdateSourceTrigger=PropertyChanged}"
+                        Text="{Binding Path=NewGroup, UpdateSourceTrigger=PropertyChanged}"
                         Style="{StaticResource StdTextBoxStyle}"/>
                     <Button 
                         Grid.Column="2"
@@ -62,7 +62,7 @@
                         Style="{StaticResource StdButtonStyle}"
                         Height="20"
                         Margin="2"
-                        Command="{Binding AddGroupCmd}"/>
+                        Command="{Binding Path=AddGroupCmd}"/>
                 </Grid>
 
                 <ListView 
