@@ -233,9 +233,6 @@
     <Compile Include="Config\GroupsAndClasses\GroupsView.xaml.cs">
       <DependentUpon>GroupsView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Config\GroupsAndClasses\RangesView.xaml.cs">
-      <DependentUpon>RangesView.xaml</DependentUpon>
-    </Compile>
     <Compile Include="Config\PopularStnConfigDialog.xaml.cs">
       <DependentUpon>PopularStnConfigDialog.xaml</DependentUpon>
     </Compile>
@@ -572,10 +569,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Config\GroupsAndClasses\OperatorManagerView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Config\GroupsAndClasses\RangesView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

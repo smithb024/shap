@@ -9,6 +9,7 @@
         mc:Ignorable="d"
         Background="{StaticResource StdBackground}"
         Name="GroupsConfigDialog"
+        SizeToContent="Height"
         Title="GroupsAndClassesDialog" Height="600" Width="700">
 
     <Window.Resources>
@@ -18,27 +19,26 @@
 
     <Grid Background="{StaticResource StdBackground}">
         <Grid.RowDefinitions>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <gac:GroupsView Grid.Row="0" Margin="5"/>
-        <gac:RangesView Grid.Row="1" Margin="5"/>
+        <gac:GroupsView Grid.Row="0" Margin="5,5,5,0"/>
         <gac:FamilyManagerView
-            Grid.Row="2"
-            Margin="5"
+            Grid.Row="1"
+            Margin="5,5,5,0"
             DataContext="{Binding Path=FamilyManager}"/>
         <gac:OperatorManagerView
-            Grid.Row="3"
-            Margin="5"
+            Grid.Row="2"
+            Margin="5,5,5,0"
             DataContext="{Binding Path=OperatorManager}"/>
 
         <Grid 
             Grid.Column="0"
-            Grid.Row="4">
+            Grid.Row="3"
+            Margin="3">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>

@@ -4,56 +4,162 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Shap.Config.GroupsAndClasses"
+             xmlns:commonConverters="clr-namespace:NynaeveLib.Enumerations.Converters;assembly=NynaeveLib"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
-    <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"/>
-            <ColumnDefinition Width="*"/>
-        </Grid.ColumnDefinitions>
 
-        <Grid 
-            Grid.Column="0"
-            Grid.Row="0">
-            
+    <UserControl.Resources>
+        <commonConverters:BoolToVisCollapsedVisibilityConverter x:Key="boolVisibilityConverter"/>
+        <commonConverters:BoolToVisCollapsedVisibilityConverter x:Key="invertedBoolVisibilityConverter" Inverted="True"/>
+    </UserControl.Resources>
+
+    <Border BorderBrush="{StaticResource StdForeground}"
+            BorderThickness="1">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="*"/>
-                <RowDefinition Height="*"/>
-            </Grid.RowDefinitions>
 
-            <Button 
+            <TextBlock 
                 Grid.Column="0"
                 Grid.Row="0"
-                Content="Add Group"
-                Style="{StaticResource StdButtonStyle}"
-                Height="20"
-                Margin="2"
-                Command="{Binding AddGroupCmd}"/>
-            <Button 
-                Grid.Column="1"
-                Grid.Row="0"
-                Content="Delete"
-                Style="{StaticResource StdButtonStyle}"
-                Height="20"
-                Margin="2"
-                Command="{Binding DeleteGroupCmd}"/>
-            <TextBox 
-                Grid.Column="0"
+                Margin="5,2"
+                Text="Class/Type Configuration"
+                Style="{StaticResource StdTextBlockStyle}"
+                FontSize="16"
+                FontWeight="Bold"/>
+
+            <StackPanel 
+                Orientation="Vertical"
                 Grid.Row="1"
-                Grid.ColumnSpan="2"
-                Text="{Binding NewGroup, UpdateSourceTrigger=PropertyChanged}"
-                Style="{StaticResource StdTextBoxStyle}"/>
-        </Grid>
+                Grid.Column="0">
+                <Grid 
+                    Margin="2,5">
 
-        <ListView 
-            Grid.Column="1"
-            Grid.Row="0"
-            Style="{StaticResource StdListViewStyle}"
-            ItemsSource="{Binding Path=GroupNames}"
-            SelectedIndex="{Binding GroupIndex}"/>
-    </Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="2*"/>
+                        <ColumnDefinition Width="3*"/>
+                        <ColumnDefinition Width="50"/>
+                    </Grid.ColumnDefinitions>
+
+                    <TextBlock 
+                        Grid.Column="0"
+                        Grid.Row="0"
+                        Text="New Class Type"
+                        Style="{StaticResource StdTextBlockStyle}"/>
+                    <TextBox 
+                        Grid.Column="1"
+                        Text="{Binding Path=NewGroup, UpdateSourceTrigger=PropertyChanged}"
+                        Style="{StaticResource StdTextBoxStyle}"/>
+                    <Button 
+                        Grid.Column="2"
+                        Content="Add"
+                        Style="{StaticResource StdButtonStyle}"
+                        Height="20"
+                        Margin="2"
+                        Command="{Binding Path=AddGroupCmd}"/>
+                </Grid>
+
+                <ListView 
+                    Margin="2,5"
+                    Height="100"
+                    Style="{StaticResource StdListViewStyle}"
+                    ItemsSource="{Binding Path=GroupNames}"
+                    SelectedIndex="{Binding GroupIndex}"/>
+
+                <Button 
+                    Margin="2,5"
+                    Content="Delete"
+                    Style="{StaticResource StdButtonStyle}"
+                    Height="20"
+                    Command="{Binding DeleteGroupCmd}"/>
+            </StackPanel>
+
+            <StackPanel 
+                Orientation="Vertical"
+                Grid.Row="1"
+                Grid.Column="1">
+                <Grid 
+                    Margin="2,5">
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="2*"/>
+                        <ColumnDefinition Width="3*"/>
+                        <ColumnDefinition Width="3*"/>
+                        <ColumnDefinition Width="50"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <TextBlock 
+                        Grid.Column="0"
+                        Grid.Row="0"
+                        Text="Range"
+                        Visibility="{Binding RangeIsAlphaId, Converter={StaticResource invertedBoolVisibilityConverter}}"
+                        Style="{StaticResource StdTextBlockStyle}"/>
+                    <TextBox 
+                        Grid.Column="1"
+                        Grid.Row="0"
+                        Text="{Binding RangeFrom, UpdateSourceTrigger=PropertyChanged}"
+                        Visibility="{Binding RangeIsAlphaId, Converter={StaticResource invertedBoolVisibilityConverter}}"
+                        Style="{StaticResource StdTextBoxStyle}"/>
+                    <TextBox 
+                        Grid.Column="2"
+                        Grid.Row="0"
+                        Text="{Binding RangeTo, UpdateSourceTrigger=PropertyChanged}"
+                        Visibility="{Binding RangeIsAlphaId, Converter={StaticResource invertedBoolVisibilityConverter}}"
+                        Style="{StaticResource StdTextBoxStyle}"/>
+                    <TextBlock 
+                        Grid.Column="0"
+                        Grid.Row="0"
+                        Text="Alpha Id"
+                        Visibility="{Binding RangeIsAlphaId, Converter={StaticResource boolVisibilityConverter}}"
+                        Style="{StaticResource StdTextBlockStyle}"/>
+                    <TextBox 
+                        Grid.Column="1"
+                        Grid.Row="0"
+                        Grid.ColumnSpan="2"
+                        Text="{Binding AlphaId, UpdateSourceTrigger=PropertyChanged}"
+                        Visibility="{Binding RangeIsAlphaId, Converter={StaticResource boolVisibilityConverter}}"
+                        Style="{StaticResource StdTextBoxStyle}"/>
+
+                    <Button 
+                        Grid.Column="3"
+                        Grid.Row="0"
+                        Content="Add"
+                        Style="{StaticResource StdButtonStyle}"
+                        Height="20"
+                        Margin="2"
+                        Command="{Binding AddRangeCmd}"/>
+
+                    <CheckBox 
+                        Grid.Column="1"
+                        Grid.Row="1"
+                        Content="Alpha Id"
+                        Style="{StaticResource StdCheckBoxStyle}"
+                        IsChecked="{Binding RangeIsAlphaId}"/>
+                </Grid>
+
+                <ListView 
+                    Margin="2,5"
+                    Height="84"
+                    Style="{StaticResource StdListViewStyle}"
+                    ItemsSource="{Binding Path=RangeCollection}"
+                    SelectedIndex="{Binding RangeIndex}"/>
+
+                <Button 
+                    Margin="2,5"
+                    Content="Delete"
+                    Style="{StaticResource StdButtonStyle}"
+                    Height="20"
+                    Command="{Binding DeleteRangeCmd}"/>
+            </StackPanel>
+        </Grid>
+    </Border>
 </UserControl>
