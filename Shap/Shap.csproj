@@ -376,6 +376,7 @@
     </Compile>
     <Compile Include="MainWindowViewModel.cs" />
     <Compile Include="Messages\NewLocationAddedMessage.cs" />
+    <Compile Include="Messages\RefreshGroup.cs" />
     <Compile Include="StaticResources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
