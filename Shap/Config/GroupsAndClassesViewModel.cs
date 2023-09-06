@@ -4,8 +4,9 @@
     using System.Collections.ObjectModel;
     using System.Linq;
     using System.Windows;
+    using System.Windows.Forms;
     using System.Windows.Input;
-
+    using Messages;
     using NynaeveLib.Commands;
     using NynaeveLib.DialogService.Interfaces;
     using NynaeveLib.ViewModel;
@@ -138,7 +139,7 @@
                 if (value != this.groupIndex)
                 {
                     this.groupIndex = value;
-                    RaisePropertyChangedEvent(nameof(this.GroupIndex));
+                    this.OnPropertyChanged(nameof(this.GroupIndex));
                     this.ResetRange();
                 }
             }
@@ -149,17 +150,14 @@
         /// </summary>
         public string NewGroup
         {
-            get
-            {
-                return this.newGroup;
-            }
+            get => this.newGroup;
 
             set
             {
                 if (value != this.newGroup)
                 {
                     this.newGroup = value;
-                    RaisePropertyChangedEvent(nameof(this.NewGroup));
+                    this.OnPropertyChanged(nameof(this.NewGroup));
                 }
             }
         }
@@ -182,7 +180,7 @@
             set
             {
                 this.rangeIndex = value;
-                RaisePropertyChangedEvent("RangeIndex");
+                OnPropertyChanged(nameof(this.RangeIndex));
             }
         }
 
@@ -191,15 +189,12 @@
         /// </summary>
         public string RangeFrom
         {
-            get
-            {
-                return this.newRangeFrom;
-            }
+            get => this.newRangeFrom;
 
             set
             {
                 this.newRangeFrom = value;
-                RaisePropertyChangedEvent(nameof(RangeFrom));
+                this.OnPropertyChanged(nameof(RangeFrom));
             }
         }
 
@@ -208,15 +203,12 @@
         /// </summary>
         public string RangeTo
         {
-            get
-            {
-                return this.newRangeTo;
-            }
+            get => this.newRangeTo;
 
             set
             {
                 this.newRangeTo = value;
-                RaisePropertyChangedEvent(nameof(RangeTo));
+                OnPropertyChanged(nameof(RangeTo));
             }
         }
 
@@ -225,15 +217,12 @@
         /// </summary>
         public string AlphaId
         {
-            get
-            {
-                return this.newAlphaId;
-            }
+            get => this.newAlphaId;
 
             set
             {
                 this.newAlphaId = value;
-                RaisePropertyChangedEvent(nameof(this.AlphaId));
+                this.OnPropertyChanged(nameof(this.AlphaId));
             }
         }
 
@@ -242,15 +231,12 @@
         /// </summary>
         public bool RangeIsAlphaId
         {
-            get
-            {
-                return this.insertAlphaId;
-            }
+            get => this.insertAlphaId;
 
             set
             {
                 this.insertAlphaId = value;
-                RaisePropertyChangedEvent(nameof(this.RangeIsAlphaId));
+                this.OnPropertyChanged(nameof(this.RangeIsAlphaId));
             }
         }
 
@@ -548,8 +534,11 @@
         {
             this.NewGroup = string.Empty;
             this.SetupGroupsNamesCollection();
-            this.RaisePropertyChangedEvent(nameof(this.GroupNames));
+            this.OnPropertyChanged(nameof(this.GroupNames));
             this.RefreshRanges();
+
+            RefreshGroup refreshMessage = new RefreshGroup();
+            //this.
         }
 
         /// <summary>
@@ -561,7 +550,7 @@
             this.RangeFrom = string.Empty;
             this.RangeTo = string.Empty;
             this.SetupRangesCollection();
-            this.RaisePropertyChangedEvent(nameof(this.RangeCollection));
+            this.OnPropertyChanged(nameof(this.RangeCollection));
         }
     }
 }

@@ -95,7 +95,7 @@
             set
             {
                 this.myClass = value;
-                this.RaisePropertyChangedEvent("MyClass");
+                this.OnPropertyChanged("MyClass");
             }
         }
 
@@ -109,7 +109,7 @@
             set
             {
                 this.classVersion = value;
-                this.RaisePropertyChangedEvent("Version");
+                this.OnPropertyChanged("Version");
             }
         }
 
@@ -123,7 +123,7 @@
             set
             {
                 this.year = value;
-                this.RaisePropertyChangedEvent("Year");
+                this.OnPropertyChanged("Year");
             }
         }
 
@@ -137,7 +137,7 @@
             set
             {
                 this.formation = value;
-                this.RaisePropertyChangedEvent("Formation");
+                this.OnPropertyChanged("Formation");
             }
         }
 
@@ -151,7 +151,7 @@
             private set
             {
                 this.alphaIdentifier = value;
-                this.RaisePropertyChangedEvent("AlphaIdentifier");
+                this.OnPropertyChanged("AlphaIdentifier");
             }
         }
 
@@ -165,8 +165,8 @@
             set
             {
                 this.subClassList = value;
-                this.RaisePropertyChangedEvent("SubClassList");
-                this.RaisePropertyChangedEvent("SubClassNumbers");
+                this.OnPropertyChanged("SubClassList");
+                this.OnPropertyChanged("SubClassNumbers");
             }
         }
 
@@ -195,8 +195,8 @@
             private set
             {
                 this.subClassListIndex = value;
-                this.RaisePropertyChangedEvent("SubClassListIndex");
-                this.RaisePropertyChangedEvent("SelectedSubClass");
+                this.OnPropertyChanged("SubClassListIndex");
+                this.OnPropertyChanged("SelectedSubClass");
             }
         }
 
@@ -566,7 +566,7 @@
 
         private void SubClassChanged(object sender, PropertyChangedEventArgs e)
         {
-            this.RaisePropertyChangedEvent("SubClassList");
+            this.OnPropertyChanged("SubClassList");
         }
 
     }

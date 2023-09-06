@@ -140,7 +140,7 @@
         {
             if (e.PropertyName.Equals("SubClassIndex"))
             {
-                this.RaisePropertyChangedEvent("CurrentIndex");
+                this.OnPropertyChanged("CurrentIndex");
             }
         }
 

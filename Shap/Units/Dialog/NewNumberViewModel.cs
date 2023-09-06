@@ -62,8 +62,8 @@
             set
             {
                 this.number = value;
-                this.RaisePropertyChangedEvent("Number");
-                this.RaisePropertyChangedEvent("Status");
+                this.OnPropertyChanged("Number");
+                this.OnPropertyChanged("Status");
             }
         }
 
@@ -80,8 +80,8 @@
             set
             {
                 this.upperNumber = value;
-                this.RaisePropertyChangedEvent("UpperNumber");
-                this.RaisePropertyChangedEvent("Status");
+                this.OnPropertyChanged("UpperNumber");
+                this.OnPropertyChanged("Status");
             }
         }
 

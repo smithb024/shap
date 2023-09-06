@@ -75,7 +75,7 @@
             private set
             {
                 this.formerNumbers = value;
-                this.RaisePropertyChangedEvent("FormerNumbers");
+                this.OnPropertyChanged("FormerNumbers");
             }
         }
 

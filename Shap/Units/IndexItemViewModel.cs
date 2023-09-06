@@ -138,8 +138,8 @@
             set
             {
                 this.className = value;
-                this.RaisePropertyChangedEvent(nameof(this.IndexName));
-                this.RaisePropertyChangedEvent(nameof(this.IndexImagePath));
+                this.OnPropertyChanged(nameof(this.IndexName));
+                this.OnPropertyChanged(nameof(this.IndexImagePath));
             }
         }
 
@@ -172,7 +172,7 @@
             set
             {
                 this.inConfigurationMode = value;
-                this.RaisePropertyChangedEvent("InConfigurationMode");
+                this.OnPropertyChanged("InConfigurationMode");
             }
         }
 
@@ -407,8 +407,8 @@
             }
 
 
-            this.RaisePropertyChangedEvent(nameof(this.isVisible));
-            this.RaisePropertyChangedEvent(nameof(this.IsStrikeThrough));
+            this.OnPropertyChanged(nameof(this.isVisible));
+            this.OnPropertyChanged(nameof(this.IsStrikeThrough));
         }
     }
 }

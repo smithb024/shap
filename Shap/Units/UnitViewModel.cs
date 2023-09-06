@@ -311,7 +311,7 @@
 
         private new void CompleteUpdate()
         {
-            this.RaisePropertyChangedEvent(nameof(this.DisplayUnitNumber));
+            this.OnPropertyChanged(nameof(this.DisplayUnitNumber));
 
             base.CompleteUpdate();
         }

@@ -127,7 +127,7 @@
                 }
 
                 this.familyIndex = value;
-                this.RaisePropertyChangedEvent(nameof(this.FamilyIndex));
+                this.OnPropertyChanged(nameof(this.FamilyIndex));
                 this.SetFamilyFilter();
             }
         }
@@ -155,7 +155,7 @@
                 }
 
                 this.operatorsIndex = value;
-                this.RaisePropertyChangedEvent(nameof(this.OperatorIndex));
+                this.OnPropertyChanged(nameof(this.OperatorIndex));
                 this.SetOperatorFilter();
             }
         }
@@ -178,7 +178,7 @@
             set
             {
                 this.inConfigurationMode = value;
-                this.RaisePropertyChangedEvent(nameof(this.InConfigurationMode));
+                this.OnPropertyChanged(nameof(this.InConfigurationMode));
 
                 if (this.ItemsGroup != null)
                 {

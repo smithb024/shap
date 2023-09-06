@@ -230,7 +230,7 @@
                 }
 
                 this.formation = value;
-                this.RaisePropertyChangedEvent(nameof(this.Formation));
+                this.OnPropertyChanged(nameof(this.Formation));
                 this.classFileConfiguration.Formation = value;
                 this.unsavedChanges = true;
             }
@@ -254,7 +254,7 @@
                 }
 
                 this.alphaIdentifier = value;
-                this.RaisePropertyChangedEvent(nameof(this.AlphaIdentifier));
+                this.OnPropertyChanged(nameof(this.AlphaIdentifier));
                 this.classFileConfiguration.AlphaId = value;
                 this.unsavedChanges = true;
             }
@@ -278,7 +278,7 @@
                 }
 
                 this.year = value;
-                this.RaisePropertyChangedEvent(nameof(this.Year));
+                this.OnPropertyChanged(nameof(this.Year));
                 this.classFileConfiguration.Year = value;
                 this.unsavedChanges = true;
             }
@@ -319,8 +319,8 @@
                 }
 
                 this.serviceIndex = value;
-                this.RaisePropertyChangedEvent(nameof(this.ServiceIndex));
-                this.RaisePropertyChangedEvent(nameof(this.Status));
+                this.OnPropertyChanged(nameof(this.ServiceIndex));
+                this.OnPropertyChanged(nameof(this.Status));
 
                 this.classFileConfiguration.ServiceType = this.Status;
             }
@@ -349,7 +349,7 @@
                 }
 
                 this.familyIndex = value;
-                this.RaisePropertyChangedEvent(nameof(this.FamilyIndex));
+                this.OnPropertyChanged(nameof(this.FamilyIndex));
 
                 if (this.familyIndex >= 0 && this.familyIndex < this.FamilyList.Count)
                 {
@@ -385,7 +385,7 @@
                 }
 
                 this.subClassListIndex = value;
-                this.RaisePropertyChangedEvent(nameof(this.SubClassListIndex));
+                this.OnPropertyChanged(nameof(this.SubClassListIndex));
                 this.SelectNewSubClass();
             }
         }
@@ -450,7 +450,7 @@
                 this.classFileConfiguration,
                 this.classId);
 
-            this.RaisePropertyChangedEvent(nameof(this.Version));
+            this.OnPropertyChanged(nameof(this.Version));
             this.unsavedChanges = false;
         }
 
@@ -727,8 +727,8 @@
             }
 
             this.Images.Clear();
-            this.RaisePropertyChangedEvent(nameof(this.NumbersList));
-            this.RaisePropertyChangedEvent(nameof(this.Images));
+            this.OnPropertyChanged(nameof(this.NumbersList));
+            this.OnPropertyChanged(nameof(this.Images));
 
             // Refresh
             foreach (Number number in this.classFileConfiguration.Subclasses[this.SubClassListIndex].Numbers)
@@ -751,8 +751,8 @@
                 this.Images.Add(selector);
             }
 
-            this.RaisePropertyChangedEvent(nameof(this.NumbersList));
-            this.RaisePropertyChangedEvent(nameof(this.Images));
+            this.OnPropertyChanged(nameof(this.NumbersList));
+            this.OnPropertyChanged(nameof(this.Images));
         }
 
         /// <summary>

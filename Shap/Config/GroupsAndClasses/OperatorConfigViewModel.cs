@@ -36,7 +36,7 @@
         public void ToggleActive()
         {
             this.IsActive = !this.IsActive;
-            this.RaisePropertyChangedEvent(nameof(this.IsActive));
+            this.OnPropertyChanged(nameof(this.IsActive));
         }
     }
 }

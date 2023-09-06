@@ -73,7 +73,7 @@
                 }
 
                 this.family = value;
-                this.RaisePropertyChangedEvent(nameof(this.Family));
+                this.OnPropertyChanged(nameof(this.Family));
             }
         }
 
@@ -114,7 +114,7 @@
             this.serialisedFamilies.Families.Add(newSingleFamily);
 
             this.Families.Add(this.Family);
-            this.RaisePropertyChangedEvent(nameof(this.Families));
+            this.OnPropertyChanged(nameof(this.Families));
 
             this.Family = string.Empty;
         }
