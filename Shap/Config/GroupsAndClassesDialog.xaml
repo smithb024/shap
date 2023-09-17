@@ -25,7 +25,10 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <gac:GroupsView Grid.Row="0" Margin="5,5,5,0"/>
+        <gac:GroupsView 
+            Grid.Row="0"
+            Margin="5,5,5,0"
+            DataContext="{Binding Path=GroupManager}"/>
         <gac:FamilyManagerView
             Grid.Row="1"
             Margin="5,5,5,0"
