@@ -221,6 +221,7 @@
       <DependentUpon>FamilyManagerView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Config\GroupsAndClasses\GacDecoder.cs" />
+    <Compile Include="Config\GroupsAndClasses\GroupsListMessage.cs" />
     <Compile Include="Config\GroupsAndClasses\GroupsViewModel.cs" />
     <Compile Include="Config\GroupsAndClasses\OperatorConfigViewModel.cs" />
     <Compile Include="Config\GroupsAndClasses\OperatorListViewItem.xaml.cs">
