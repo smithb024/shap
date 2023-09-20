@@ -1,7 +1,7 @@
 ﻿namespace Shap.Config.GroupsAndClasses
 {
+    using CommunityToolkit.Mvvm.Messaging;
     using NynaeveLib.Commands;
-    using NynaeveLib.DialogService.Interfaces;
     using NynaeveLib.ViewModel;
     using Shap.Interfaces.Io;
     using Shap.Messages;
@@ -10,7 +10,6 @@
     using System.Collections.ObjectModel;
     using System.Linq;
     using System.Windows.Input;
-    using System.Windows;
 
     /// <summary>
     /// View model which manages the ability to add groups.
@@ -261,6 +260,15 @@
             }
 
             this.RefreshAll();
+
+            List<string> names = new List<string>();
+            foreach(GroupsType group in this.groupsCollection)
+            {
+                names.Add(group.Name);
+            }
+
+            GroupsListMessage message = new GroupsListMessage(names);
+            Messenger.Send(message);
         }
 
         /// <summary>
@@ -489,7 +497,6 @@
             this.RefreshRanges();
 
             RefreshGroup refreshMessage = new RefreshGroup();
-            //this.
         }
 
         /// <summary>
