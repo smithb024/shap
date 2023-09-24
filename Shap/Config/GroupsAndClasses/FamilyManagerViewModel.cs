@@ -223,6 +223,12 @@
             this.MemberGroups.Add(this.Groups[this.GroupsIndex]);
             this.MemberGroups = new ObservableCollection<string>(this.MemberGroups.OrderBy(i => i));
             this.OnPropertyChanged(nameof(this.MemberGroups));
+
+            SingleClass newClass =
+                new SingleClass() {
+                    Name = this.Groups[this.GroupsIndex]
+                };
+            this.serialisedFamilies.Families[this.FamilyIndex].Classes.Add(newClass);
         }
 
         /// <summary>

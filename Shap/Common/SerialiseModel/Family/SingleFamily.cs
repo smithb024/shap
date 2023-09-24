@@ -1,5 +1,6 @@
 ﻿namespace Shap.Common.SerialiseModel.Family
 {
+    using System.Collections.Generic;
     using System.Xml.Serialization;
 
     /// <summary>
@@ -19,5 +20,11 @@
         /// </summary>
         [XmlAttribute("Name")]
         public string Name { get; set; }
+
+        /// <summary>
+        /// Gets or sets the Collection of groups/classes.
+        /// </summary>
+        [XmlElement("Classes")]
+        public List<SingleClass> Classes { get; set; }
     }
 }

@@ -192,6 +192,7 @@
     <Compile Include="Common\SerialiseModel\ClassDetails\Operator.cs" />
     <Compile Include="Common\SerialiseModel\ClassDetails\Subclass.cs" />
     <Compile Include="Common\SerialiseModel\Family\FamilyDetails.cs" />
+    <Compile Include="Common\SerialiseModel\Family\SingleClass.cs" />
     <Compile Include="Common\SerialiseModel\Family\SingleFamily.cs" />
     <Compile Include="Common\SerialiseModel\Location\LocationDetails.cs" />
     <Compile Include="Common\SerialiseModel\Location\LocationClass.cs" />
