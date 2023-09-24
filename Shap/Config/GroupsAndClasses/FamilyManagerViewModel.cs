@@ -3,7 +3,6 @@
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
     using System.Linq;
-    using System.Runtime.Remoting.Messaging;
     using System.Windows.Input;
     using CommunityToolkit.Mvvm.Messaging;
     using NynaeveLib.Commands;
@@ -31,6 +30,11 @@
         /// The deserialised family, read from the config file.
         /// </summary>
         private FamilyDetails serialisedFamilies;
+
+        /// <summary>
+        /// Gets the index of the currently selected family.
+        /// </summary>
+        private int familyIndex;
 
         /// <summary>
         /// Gets the index of the currently selected group.
@@ -111,6 +115,29 @@
         /// Collection of all known families.
         /// </summary>
         public ObservableCollection<string> Families { get; }
+
+        /// <summary>
+        /// Gets or sets the index of the currently selected family.
+        /// </summary>
+        public int FamilyIndex 
+        {
+            get
+            {
+                return this.familyIndex;
+            }
+
+            set
+            {
+                if (this.familyIndex == value)
+                {
+                    return;
+                }
+
+                this.familyIndex = value;
+                this.OnPropertyChanged(nameof(this.familyIndex));
+                this.ResetMembers();
+            }
+        }
 
         /// <summary>
         /// Gets the names of all the available groups/classes.
@@ -217,6 +244,15 @@
             }
 
             this.OnPropertyChanged(nameof(this.Groups));
+        }
+
+        /// <summary>
+        /// Set up the Group Members list to contain all members for the currently selected group/
+        /// class.
+        /// </summary>
+        private void ResetMembers()
+        {
+
         }
     }
 }

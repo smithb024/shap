@@ -61,7 +61,8 @@
                     Margin="2,5"
                     Height="100"
                     Style="{StaticResource StdListViewStyle}"
-                    ItemsSource="{Binding Path=Families}"/>
+                    ItemsSource="{Binding Path=Families}"
+                    SelectedIndex="{Binding Path=FamilyIndex}"/>
             </StackPanel>
             
             <StackPanel 
