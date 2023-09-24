@@ -82,6 +82,8 @@
                 }
             }
 
+            this.ResetMembers();
+
             this.AddFamily = new CommonCommand(this.Add, this.CanAdd);
             this.AddMember = new CommonCommand(this.AddMemberToFamily, () => true);
             this.Messenger.Register<GroupsListMessage>(
@@ -258,7 +260,12 @@
         /// </summary>
         private void ResetMembers()
         {
+            this.MemberGroups.Clear();
 
+            foreach(SingleClass familyClass in this.serialisedFamilies.Families[this.FamilyIndex].Classes)
+            {
+                this.MemberGroups.Add(familyClass.Name);
+            }
         }
     }
 }
