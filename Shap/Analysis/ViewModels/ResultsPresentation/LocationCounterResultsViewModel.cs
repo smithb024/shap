@@ -75,7 +75,7 @@
             this.Locations =
                 this.Locations.OrderBy(loc => loc.Name).ToList();
             this.UpdateIndexes();
-            this.RaisePropertyChangedEvent(nameof(this.Locations));
+            this.OnPropertyChanged(nameof(this.Locations));
         }
 
         /// <summary>
@@ -91,7 +91,7 @@
             this.Locations =
                 this.Locations.OrderByDescending(loc => loc.Total).ToList();
             this.UpdateIndexes();
-            this.RaisePropertyChangedEvent(nameof(this.Locations));
+            this.OnPropertyChanged(nameof(this.Locations));
         }
 
         /// <summary>
@@ -107,7 +107,7 @@
             this.Locations =
                 this.Locations.OrderByDescending(loc => loc.NumberFrom).ToList();
             this.UpdateIndexes();
-            this.RaisePropertyChangedEvent(nameof(this.Locations));
+            this.OnPropertyChanged(nameof(this.Locations));
         }
 
         /// <summary>
@@ -123,7 +123,7 @@
             this.Locations =
                 this.Locations.OrderByDescending(loc => loc.NumberTo).ToList();
             this.UpdateIndexes();
-            this.RaisePropertyChangedEvent(nameof(this.Locations));
+            this.OnPropertyChanged(nameof(this.Locations));
         }
 
         /// <summary>

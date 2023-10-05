@@ -62,7 +62,7 @@
         {
             this.totalsCounterResultsTable.ResetTotals(results);
             this.ResultsTable = this.totalsCounterResultsTable;
-            this.RaisePropertyChangedEvent(nameof(this.ResultsTable));
+            this.OnPropertyChanged(nameof(this.ResultsTable));
         }
 
         private void ClassSingleYearReportResults(
@@ -71,7 +71,7 @@
         {
             this.fullYearCounterResultsTable.ResetTotals(results);
             this.ResultsTable = this.fullYearCounterResultsTable;
-            this.RaisePropertyChangedEvent(nameof(this.ResultsTable));
+            this.OnPropertyChanged(nameof(this.ResultsTable));
             this.fullYearCounterResultsTable.UpdateView();
         }
 
@@ -81,7 +81,7 @@
         {
             this.locationCounterResultsTable.ResetLocations(results, false);
             this.ResultsTable = this.locationCounterResultsTable;
-            this.RaisePropertyChangedEvent(nameof(this.ResultsTable));
+            this.OnPropertyChanged(nameof(this.ResultsTable));
         }
 
         private void SingleClassSingleYearLocationReportResults(
@@ -91,7 +91,7 @@
         {
             this.locationCounterResultsTable.ResetLocations(results, true);
             this.ResultsTable = this.locationCounterResultsTable;
-            this.RaisePropertyChangedEvent(nameof(this.ResultsTable));
+            this.OnPropertyChanged(nameof(this.ResultsTable));
         }
     }
 }

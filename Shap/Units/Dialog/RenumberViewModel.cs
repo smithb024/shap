@@ -72,7 +72,7 @@
             set
             {
                 this.currentSubClassNumbersIndex = value;
-                this.RaisePropertyChangedEvent(nameof(this.NewNumbersDescriptionsList));
+                this.OnPropertyChanged(nameof(this.NewNumbersDescriptionsList));
             }
         }
 
@@ -121,7 +121,7 @@
             set
             {
                 this.newNumber = value;
-                this.RaisePropertyChangedEvent("NewNumbersDescriptionsList");
+                this.OnPropertyChanged("NewNumbersDescriptionsList");
             }
         }
 
@@ -146,8 +146,8 @@
             set
             {
                 this.totalNumberToChange = value;
-                this.RaisePropertyChangedEvent("TotalNumberToChange");
-                this.RaisePropertyChangedEvent("NewNumbersDescriptionsList");
+                this.OnPropertyChanged("TotalNumberToChange");
+                this.OnPropertyChanged("NewNumbersDescriptionsList");
             }
         }
 
@@ -210,7 +210,7 @@
             if (e.PropertyName == nameof(this.SubClassIndex))
             {
                 this.PopulateCurrentSubClassNumbers();
-                this.RaisePropertyChangedEvent(nameof(this.CurrentSubClassNumbersList));
+                this.OnPropertyChanged(nameof(this.CurrentSubClassNumbersList));
             }
         }
 

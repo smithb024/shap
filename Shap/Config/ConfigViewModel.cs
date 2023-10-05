@@ -128,7 +128,7 @@
             set
             {
                 this.status = value;
-                RaisePropertyChangedEvent(nameof(this.Status));
+                this.OnPropertyChanged(nameof(this.Status));
             }
         }
 
@@ -156,7 +156,7 @@
             set
             {
                 this.yearsIndex = value;
-                RaisePropertyChangedEvent("YearsIndex");
+                this.OnPropertyChanged("YearsIndex");
             }
         }
 
@@ -173,7 +173,7 @@
             set
             {
                 this.oldNumbersCount = value;
-                RaisePropertyChangedEvent("OldNumbersCount");
+                this.OnPropertyChanged("OldNumbersCount");
             }
         }
 
@@ -190,7 +190,7 @@
             set
             {
                 this.oldNumbersCountUpdate = value;
-                RaisePropertyChangedEvent("OldNumbersCountUpdate");
+                this.OnPropertyChanged("OldNumbersCountUpdate");
             }
         }
 

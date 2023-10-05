@@ -84,7 +84,7 @@
                 }
 
                 this.name = value;
-                this.RaisePropertyChangedEvent(nameof(this.Name));
+                this.OnPropertyChanged(nameof(this.Name));
             }
         }
 
@@ -106,7 +106,7 @@
                 }
 
                 this.operatorsIndex = value;
-                this.RaisePropertyChangedEvent(nameof(this.OperatorIndex));
+                this.OnPropertyChanged(nameof(this.OperatorIndex));
             }
         }
 
@@ -158,7 +158,7 @@
                             this.Name,
                             true);
             this.Operators.Add(newOperator);
-            this.RaisePropertyChangedEvent(nameof(this.Operators));
+            this.OnPropertyChanged(nameof(this.Operators));
 
             this.Name = string.Empty;
         }

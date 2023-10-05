@@ -95,7 +95,7 @@
             set
             {
                 this.subClassImageList = value;
-                this.RaisePropertyChangedEvent("SubClassImageList");
+                this.OnPropertyChanged("SubClassImageList");
             }
         }
 
@@ -112,7 +112,7 @@
             set
             {
                 this.imageName = value;
-                this.RaisePropertyChangedEvent("ImageName");
+                this.OnPropertyChanged("ImageName");
             }
         }
 
@@ -129,8 +129,8 @@
             private set
             {
                 this.m_numberList = value;
-                this.RaisePropertyChangedEvent("VehicleNumberList");
-                this.RaisePropertyChangedEvent("NumbersList");
+                this.OnPropertyChanged("VehicleNumberList");
+                this.OnPropertyChanged("NumbersList");
             }
         }
 
@@ -179,8 +179,8 @@
             {
                 VehicleNumberTypeViewModel localVehicleNumber = new VehicleNumberTypeViewModel(currentNumber);
                 this.VehicleNumbersList.Add(localVehicleNumber);
-                this.RaisePropertyChangedEvent("VehicleNumbersList");
-                this.RaisePropertyChangedEvent("NumbersList");
+                this.OnPropertyChanged("VehicleNumbersList");
+                this.OnPropertyChanged("NumbersList");
             }
 
             return success;
@@ -189,15 +189,15 @@
         public void AddNumber(VehicleNumberTypeViewModel newNumber)
         {
             this.VehicleNumbersList.Add(newNumber);
-            this.RaisePropertyChangedEvent("VehicleNumberList");
-            this.RaisePropertyChangedEvent("NumbersList");
+            this.OnPropertyChanged("VehicleNumberList");
+            this.OnPropertyChanged("NumbersList");
         }
 
         public void RemoveNumber(VehicleNumberTypeViewModel oldNumber)
         {
             this.VehicleNumbersList.Remove(oldNumber);
-            this.RaisePropertyChangedEvent("VehicleNumberList");
-            this.RaisePropertyChangedEvent("NumbersList");
+            this.OnPropertyChanged("VehicleNumberList");
+            this.OnPropertyChanged("NumbersList");
         }
 
         /// ---------- ---------- ---------- ---------- ---------- ----------

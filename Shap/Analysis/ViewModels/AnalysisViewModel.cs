@@ -84,16 +84,13 @@
 
         public string ReportStatus
         {
-            get
-            {
-                return this.reportStatus;
-            }
+            get => this.reportStatus;
 
             private set
             {
                 this.reportStatus = value;
 
-                RaisePropertyChangedEvent(nameof(this.ReportStatus));
+                this.OnPropertyChanged(nameof(this.ReportStatus));
             }
         }
 

@@ -46,7 +46,7 @@
             set
             {
                 this.index = value;
-                this.RaisePropertyChangedEvent(nameof(this.Index));
+                this.OnPropertyChanged(nameof(this.Index));
             }
         }
 

@@ -57,7 +57,7 @@
 
             this.Totals =
                 this.Totals.OrderBy(loc => loc.Name).ToList();
-            this.RaisePropertyChangedEvent(nameof(this.Totals));
+            this.OnPropertyChanged(nameof(this.Totals));
         }
 
         /// <summary>
@@ -72,7 +72,7 @@
 
             this.Totals =
                 this.Totals.OrderByDescending(loc => loc.Total).ToList();
-            this.RaisePropertyChangedEvent(nameof(this.Totals));
+            this.OnPropertyChanged(nameof(this.Totals));
         }
     }
 }

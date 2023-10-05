@@ -32,7 +32,7 @@
             private set
             {
                 this.items = value;
-                this.RaisePropertyChangedEvent(nameof(this.Items));
+                this.OnPropertyChanged(nameof(this.Items));
             }
         }
 

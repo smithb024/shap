@@ -81,7 +81,7 @@
             set
             {
                 this.isSelected = value;
-                RaisePropertyChangedEvent(nameof(this.IsSelected));
+                this.OnPropertyChanged(nameof(this.IsSelected));
             }
         }
 
@@ -114,7 +114,7 @@
             set
             {
                 this.dist = value;
-                RaisePropertyChangedEvent(nameof(this.Dist));
+                this.OnPropertyChanged(nameof(this.Dist));
             }
         }
 

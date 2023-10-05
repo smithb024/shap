@@ -156,7 +156,7 @@
             {
                 this.yearsIndex = value;
 
-                RaisePropertyChangedEvent("YearsIndex");
+                this.OnPropertyChanged("YearsIndex");
             }
         }
 
@@ -194,7 +194,7 @@
             {
                 this.clsIndex = value;
 
-                RaisePropertyChangedEvent("ClsIndex");
+                this.OnPropertyChanged("ClsIndex");
             }
         }
 
@@ -208,7 +208,7 @@
             set
             {
                 this.fullList = value;
-                this.RaisePropertyChangedEvent("FullList");
+                this.OnPropertyChanged("FullList");
             }
         }
 

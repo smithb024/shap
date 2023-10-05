@@ -191,12 +191,12 @@
                 this.firstExamples,
                 this.parentUnit);
 
-            this.RaisePropertyChangedEvent(nameof(this.FromState));
-            this.RaisePropertyChangedEvent(nameof(this.ToState));
-            this.RaisePropertyChangedEvent(nameof(this.UnitOneState));
-            this.RaisePropertyChangedEvent(nameof(this.UnitTwoState));
-            this.RaisePropertyChangedEvent(nameof(this.UnitThreeState));
-            this.RaisePropertyChangedEvent(nameof(this.UnitFourState));
+            this.OnPropertyChanged(nameof(this.FromState));
+            this.OnPropertyChanged(nameof(this.ToState));
+            this.OnPropertyChanged(nameof(this.UnitOneState));
+            this.OnPropertyChanged(nameof(this.UnitTwoState));
+            this.OnPropertyChanged(nameof(this.UnitThreeState));
+            this.OnPropertyChanged(nameof(this.UnitFourState));
         }
 
         /// <summary>

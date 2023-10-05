@@ -92,7 +92,7 @@
                 }
 
                 this.operatorsIndex = value;
-                this.RaisePropertyChangedEvent(nameof(this.OperatorIndex));
+                this.OnPropertyChanged(nameof(this.OperatorIndex));
             }
         }
 
@@ -120,7 +120,7 @@
                 }
 
                 this.classOperatorsIndex = value;
-                this.RaisePropertyChangedEvent(nameof(this.ClassOperatorIndex));
+                this.OnPropertyChanged(nameof(this.ClassOperatorIndex));
             }
         }
 

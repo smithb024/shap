@@ -222,7 +222,7 @@
             set
             {
                 this.m_notes = value;
-                this.RaisePropertyChangedEvent(nameof(this.Notes));
+                this.OnPropertyChanged(nameof(this.Notes));
             }
         }
 
@@ -260,8 +260,8 @@
             set
             {
                 this.serviceIndex = value;
-                this.RaisePropertyChangedEvent(nameof(ServiceIndex));
-                this.RaisePropertyChangedEvent(nameof(Status));
+                this.OnPropertyChanged(nameof(ServiceIndex));
+                this.OnPropertyChanged(nameof(Status));
             }
         }
 
@@ -330,29 +330,29 @@
         /// </summary>
         public void CompleteUpdate()
         {
-            this.RaisePropertyChangedEvent(nameof(this.UnitDistance));
-            this.RaisePropertyChangedEvent(nameof(this.UnitDistanceString));
-            this.RaisePropertyChangedEvent(nameof(this.UnitDistanceDifferenceString));
-            this.RaisePropertyChangedEvent(nameof(this.NumberOfJnys));
+            this.OnPropertyChanged(nameof(this.UnitDistance));
+            this.OnPropertyChanged(nameof(this.UnitDistanceString));
+            this.OnPropertyChanged(nameof(this.UnitDistanceDifferenceString));
+            this.OnPropertyChanged(nameof(this.NumberOfJnys));
 
-            this.RaisePropertyChangedEvent(nameof(this.JourneysList));
-            this.RaisePropertyChangedEvent(nameof(this.JourneysCutdownList));
+            this.OnPropertyChanged(nameof(this.JourneysList));
+            this.OnPropertyChanged(nameof(this.JourneysCutdownList));
 
-            this.RaisePropertyChangedEvent(nameof(this.UnitOrigDistance));
-            this.RaisePropertyChangedEvent(nameof(this.UnitOrigDistanceString));
-            this.RaisePropertyChangedEvent(nameof(this.UnitDistanceDifferenceString));
+            this.OnPropertyChanged(nameof(this.UnitOrigDistance));
+            this.OnPropertyChanged(nameof(this.UnitOrigDistanceString));
+            this.OnPropertyChanged(nameof(this.UnitDistanceDifferenceString));
 
-            this.RaisePropertyChangedEvent(nameof(this.UnitFirstDate));
-            this.RaisePropertyChangedEvent(nameof(this.UnitFirstDateString));
-            this.RaisePropertyChangedEvent(nameof(this.UnitLastDate));
-            this.RaisePropertyChangedEvent(nameof(this.UnitLastDateString));
-            this.RaisePropertyChangedEvent(nameof(this.UnitLastCheck));
-            this.RaisePropertyChangedEvent(nameof(this.UnitLastCheckString));
+            this.OnPropertyChanged(nameof(this.UnitFirstDate));
+            this.OnPropertyChanged(nameof(this.UnitFirstDateString));
+            this.OnPropertyChanged(nameof(this.UnitLastDate));
+            this.OnPropertyChanged(nameof(this.UnitLastDateString));
+            this.OnPropertyChanged(nameof(this.UnitLastCheck));
+            this.OnPropertyChanged(nameof(this.UnitLastCheckString));
 
-            this.RaisePropertyChangedEvent(nameof(this.ToLocation));
-            this.RaisePropertyChangedEvent(nameof(this.FromLocation));
+            this.OnPropertyChanged(nameof(this.ToLocation));
+            this.OnPropertyChanged(nameof(this.FromLocation));
 
-            this.RaisePropertyChangedEvent(nameof(this.Status));
+            this.OnPropertyChanged(nameof(this.Status));
         }
 
         /// <summary>
