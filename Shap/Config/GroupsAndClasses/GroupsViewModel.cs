@@ -234,10 +234,14 @@
         /// </summary>
         public ICommand DeleteRangeCmd { get; private set; }
 
+        /// <summary>
+        /// Save the <see cref="groupsCollection"/>.
+        /// </summary>
         public void Save()
         {
             this.ioControllers.Gac.SaveFile(this.groupsCollection);
         }
+
         /// <summary>
         /// Add a new group to the collection using <see cref="NewGroup"/> as the name.
         /// Auto select the new group.
@@ -407,7 +411,6 @@
         /// <returns>validity flag</returns>
         private bool IsProposedRangeValid()
         {
-            bool valid = true;
             int to;
             int from;
 
