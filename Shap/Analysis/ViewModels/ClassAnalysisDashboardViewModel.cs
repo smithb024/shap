@@ -287,10 +287,16 @@
             string description = $"Class Location Report for {this.ClsCollection[this.clsIndex]}";
             this.ProgressEvent?.Invoke($"Started {description}");
 
+            List<string> classes =
+                new List<string>
+                {
+                    this.ClsCollection[this.ClsIndex]
+                };
+
             ReportCounterManager<LocationCounter> results =
-              ClassReportFactory.RunReportForASingleClass(
+              ClassReportFactory.RunReportForClasses(
                 this.controllers,
-                this.ClsCollection[this.ClsIndex],
+                classes,
                 this.FullList);
             this.singleClassGeneralLocationReportResults.Invoke(
               results,
@@ -307,10 +313,16 @@
             string description = $"Class Location Report for {this.ClsCollection[this.clsIndex]} in {this.YearsCollection[this.YearsIndex]}";
             this.ProgressEvent?.Invoke($"Started {description}");
 
+            List<string> classes =
+                new List<string>
+                {
+                    this.ClsCollection[this.ClsIndex]
+                };
+
             ReportCounterManager<LocationCounter> results =
-              ClassReportFactory.RunReportForASingleClass(
+              ClassReportFactory.RunReportForClasses(
                 this.controllers,
-                this.ClsCollection[this.ClsIndex],
+                classes,
                 this.FullList,
                 this.YearsCollection[this.YearsIndex]);
             this.singleClassSingleYearLocationReportResults.Invoke(
