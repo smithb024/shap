@@ -8,6 +8,7 @@
     using NynaeveLib.ViewModel;
     using Shap.Common;
     using Shap.Common.Commands;
+    using Shap.Common.SerialiseModel.Family;
     using Shap.Interfaces.Io;
     using Shap.Types;
 
@@ -30,6 +31,16 @@
         /// Index of current class selected.
         /// </summary>
         private int clsIndex;
+
+        /// <summary>
+        /// The list of known classes.
+        /// </summary>
+        List<GroupsType> classList;
+
+        /// <summary>
+        /// This list of known families.
+        /// </summary>
+        List<SingleFamily> familyList;
 
         /// <summary>
         /// Value indicating whether the full list of names is displayed in the analysis or just
@@ -61,11 +72,6 @@
         /// Action used to return the results of a single class, single year location report.
         /// </summary>
         private Action<ReportCounterManager<LocationCounter>, string, string> singleClassSingleYearLocationReportResults;
-
-        /// <summary>
-        /// The list of know classes.
-        /// </summary>
-        List<GroupsType> classList;
 
         /// <summary>
         /// Initialises a new instance of the <see cref="AnalysisViewModel"/> class.
@@ -114,6 +120,7 @@
 
             this.fullList = false;
             this.useFamilies = false;
+            this.familyList = null;
         }
 
         /// <summary>
@@ -221,7 +228,7 @@
         {
             get => this.useFamilies;
 
-            set 
+            set
             {
                 if (this.useFamilies == value)
                 {
@@ -315,11 +322,43 @@
         }
 
         /// <summary>
-        /// 
+        /// Update the <see cref="ClsCollection"/> to use the collection which has been indicated
+        /// by <see cref="UseFamilies"/>.
         /// </summary>
         private void ResetLists()
         {
+            if (this.familyList == null)
+            {
+                FamilyDetails details = controllers.Family.Read();
 
+                if (details != null && details.Families != null)
+                {
+                    this.familyList = details.Families;
+                }
+                else
+                {
+                    return;
+                }
+            }
+
+            this.ClsCollection.Clear();
+
+            if (this.useFamilies)
+            {
+                foreach (SingleFamily family in this.familyList)
+                {
+                    this.ClsCollection.Add(family.Name);
+                }
+            }
+            else
+            {
+                foreach (GroupsType group in this.classList)
+                {
+                    this.ClsCollection.Add(group.Name);
+                }
+            }
+
+            this.ClsIndex = this.ClsCollection.Count >= 0 ? 0 : -1;
         }
     }
 }
