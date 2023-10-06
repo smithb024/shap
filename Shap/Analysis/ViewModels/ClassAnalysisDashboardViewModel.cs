@@ -8,16 +8,19 @@
     using NynaeveLib.ViewModel;
     using Shap.Common;
     using Shap.Common.Commands;
-    using Shap.Config;
     using Shap.Interfaces.Io;
     using Shap.Types;
-    using Windows;
 
     /// <summary>
     /// View model describing a location analysis dashboard.
     /// </summary>
     public class ClassAnalysisDashboardViewModel : ViewModelBase
     {
+        /// <summary>
+        /// IO Controllers.
+        /// </summary>
+        private readonly IIoControllers controllers;
+
         /// <summary>
         /// Index of the currently selected year.
         /// </summary>
@@ -35,9 +38,9 @@
         private bool fullList;
 
         /// <summary>
-        /// IO Controllers.
+        /// Value indicating whether to use the families, or the default classes.
         /// </summary>
-        private IIoControllers controllers;
+        private bool useFamilies;
 
         /// <summary>
         /// Action used to return the results of an all classes general report.
@@ -60,6 +63,11 @@
         private Action<ReportCounterManager<LocationCounter>, string, string> singleClassSingleYearLocationReportResults;
 
         /// <summary>
+        /// The list of know classes.
+        /// </summary>
+        List<GroupsType> classList;
+
+        /// <summary>
         /// Initialises a new instance of the <see cref="AnalysisViewModel"/> class.
         /// </summary>
         public ClassAnalysisDashboardViewModel(
@@ -78,12 +86,25 @@
 
             this.AllRunsPerClassCommand = new CommonCommand(this.GenerateAllRunsPerClassReport);
             this.ClsSingleYearReportCmd = new CommonCommand(this.GenerateClassSingleYearReport);
-            this.AllLocationsForSpecificClassReportCommand = new CommonCommand(this.GenerateAllLocationsVisitedPerClassReport);
-            this.AllLocationsForSpecificClassAndYearReportCommand = new CommonCommand(this.GenerateAllLocationsVisitedPerClassReportPerYear);
+            this.AllLocationsForSpecificClassReportCommand =
+                new CommonCommand(
+                    this.GenerateAllLocationsVisitedPerClassReport);
+            this.AllLocationsForSpecificClassAndYearReportCommand =
+                new CommonCommand(
+                    this.GenerateAllLocationsVisitedPerClassReportPerYear);
 
             if (this.YearsCollection.Count > 0)
             {
                 this.yearsIndex = this.YearsCollection.Count - 1;
+            }
+
+            // Set up ClsCollection
+            this.ClsCollection = new ObservableCollection<string>();
+            this.classList = this.controllers.Gac.LoadFile();
+
+            foreach (GroupsType group in this.classList)
+            {
+                this.ClsCollection.Add(group.Name);
             }
 
             if (this.ClsCollection.Count > 0)
@@ -92,6 +113,7 @@
             }
 
             this.fullList = false;
+            this.useFamilies = false;
         }
 
         /// <summary>
@@ -163,22 +185,7 @@
         /// <summary>
         /// Gets a collection of all registered classes.
         /// </summary>
-        public ObservableCollection<string> ClsCollection
-        {
-            get
-            {
-                ObservableCollection<string> clsCollection = new ObservableCollection<string>();
-
-                List<GroupsType> groupsList = this.controllers.Gac.LoadFile();
-
-                foreach (GroupsType group in groupsList)
-                {
-                    clsCollection.Add(group.Name);
-                }
-
-                return clsCollection;
-            }
-        }
+        public ObservableCollection<string> ClsCollection { get; set; }
 
         /// <summary>
         /// Gets or sets the index of the currently selected class.
@@ -198,17 +205,32 @@
             }
         }
 
+        /// <summary>
+        /// Gets or sets a value indicating whether to use the full list in the analysis.
+        /// </summary>
         public bool FullList
         {
-            get
-            {
-                return this.fullList;
-            }
+            get => this.fullList;
+            set => this.SetProperty(ref this.fullList, value);
+        }
 
-            set
+        /// <summary>
+        /// Gets or sets a value indicating whether to use the full list in the analysis.
+        /// </summary>
+        public bool UseFamilies
+        {
+            get => this.useFamilies;
+
+            set 
             {
-                this.fullList = value;
-                this.OnPropertyChanged("FullList");
+                if (this.useFamilies == value)
+                {
+                    return;
+                }
+
+                this.useFamilies = value;
+                this.OnPropertyChanged(nameof(this.UseFamilies));
+                this.ResetLists();
             }
         }
 
@@ -290,6 +312,14 @@
               this.ClsCollection[this.ClsIndex]);
 
             this.ProgressEvent?.Invoke($"Completed {description}");
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        private void ResetLists()
+        {
+
         }
     }
 }
