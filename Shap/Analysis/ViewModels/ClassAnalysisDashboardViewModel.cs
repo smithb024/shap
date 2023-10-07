@@ -287,11 +287,7 @@
             string description = $"Class Location Report for {this.ClsCollection[this.clsIndex]}";
             this.ProgressEvent?.Invoke($"Started {description}");
 
-            List<string> classes =
-                new List<string>
-                {
-                    this.ClsCollection[this.ClsIndex]
-                };
+            List<string> classes = this.GetClasses();
 
             ReportCounterManager<LocationCounter> results =
               ClassReportFactory.RunReportForClasses(
@@ -313,11 +309,7 @@
             string description = $"Class Location Report for {this.ClsCollection[this.clsIndex]} in {this.YearsCollection[this.YearsIndex]}";
             this.ProgressEvent?.Invoke($"Started {description}");
 
-            List<string> classes =
-                new List<string>
-                {
-                    this.ClsCollection[this.ClsIndex]
-                };
+            List<string> classes = this.GetClasses();
 
             ReportCounterManager<LocationCounter> results =
               ClassReportFactory.RunReportForClasses(
@@ -371,6 +363,31 @@
             }
 
             this.ClsIndex = this.ClsCollection.Count >= 0 ? 0 : -1;
+        }
+
+        /// <summary>
+        /// Determine which classes have been selected.
+        /// </summary>
+        /// <returns>
+        /// The selected classes.
+        /// </returns>
+        private List<string> GetClasses()
+        {
+            List<string> classes = new List<string>();
+
+            if (this.useFamilies)
+            {
+                foreach (SingleClass cls in this.familyList[this.ClsIndex].Classes)
+                {
+                    classes.Add(cls.Name);
+                }
+            }
+            else
+            {
+                classes.Add(this.ClsCollection[this.ClsIndex]);
+            }
+
+            return classes;
         }
     }
 }
