@@ -15,11 +15,6 @@
     public class GroupsAndClassesViewModel : DialogViewModelBase
     {
         /// <summary>
-        /// IO Controlelrs.
-        /// </summary>
-        private IIoControllers ioControllers;
-
-        /// <summary>
         /// Initialises a new instance of the <see cref="GroupsAndClassesViewModel"/> class.
         /// </summary>
         /// <param name="reader">
@@ -31,7 +26,6 @@
         public GroupsAndClassesViewModel(
             IIoControllers ioControllers)
         {
-            this.ioControllers = ioControllers;
             this.GroupManager =
                 new GroupsViewModel(
                     ioControllers);

@@ -3,7 +3,7 @@
     using System;
     using System.Collections.Generic;
     using System.Linq;
-
+    using System.Runtime.CompilerServices;
     using Common;
     using Input.Factories;
 
@@ -77,6 +77,134 @@
             //classTotals.WriteCSVFile(
             //  $"ClsReport_Gen_{DateTime.Now.ToString(ReportFactoryCommon.DatePattern)}.csv",
             //  "ReportBuilder: Failed to write General Cls Report.");
+        }
+
+        /// <summary>
+        /// Run a location report based on a set of classes.
+        /// </summary>
+        /// <param name="controllers">IO Controllers</param>
+        /// <param name="classes">collection of class names to run the report on</param>
+        /// <param name="fullList">full list of locations</param>
+        /// <param name="year">
+        /// Optional parameter. If set, the search is restricted to the specified year.
+        /// </param>
+        /// <returns>
+        /// The results of the report. This is a list of location with a count attached to 
+        /// each one.
+        /// </returns>
+        public static ReportCounterManager<LocationCounter> RunReportForClasses(
+          IIoControllers controllers,
+          List<string> classes,
+          bool fullList,
+          string year = "")
+        {
+            ReportCounterManager<LocationCounter> locationTotals =
+              new ReportCounterManager<LocationCounter>();
+
+            // Only continue if there are classes to report on.
+            if (classes.Count == 0)
+            {
+                return locationTotals;
+            }
+
+            // Set up paths.
+            string basePath = BasePathReader.GetBasePath();
+            string[] dirNamesArray =
+                  System.IO.Directory.GetDirectories(
+                    $"{basePath}{StaticResources.baPath}");
+
+            List<FirstExampleType> firstExampleList =
+              Stats.FirstExampleIOController.GetInstance().GetFirstExampleListLocation();
+            firstExampleList = firstExampleList.OrderBy(loc => loc.Item).ToList();
+
+            foreach (FirstExampleType location in firstExampleList)
+            {
+                locationTotals.AddNewCounter(
+                  new LocationCounter(
+                    location.Item));
+            }
+
+            // Run a report on each class one at a time.
+            foreach (string cls in classes)
+            {
+                if (string.IsNullOrEmpty(year))
+                {
+                    // Handle a specific year.
+                    // Loop through all paths.
+                    for (int directoryIndex = 0; directoryIndex < dirNamesArray.Count(); ++directoryIndex)
+                    {
+                        // get directory name from the path and convert it into it's integer value.
+                        string dirName =
+                          dirNamesArray[directoryIndex].Substring(
+                            dirNamesArray[directoryIndex].LastIndexOf('\\') + 1);
+                        ClassReportFactory.UpdateLocationsForYear(
+                          controllers,
+                          dirName,
+                          locationTotals,
+                          cls);
+                    }
+                }
+                else
+                {
+                    // Handle all years.
+                    ClassReportFactory.UpdateLocationsForYear(
+                        controllers,
+                        year,
+                        locationTotals,
+                        cls);
+                }
+            }
+
+            if (!fullList)
+            {
+                locationTotals.RemoveEmptyClasses();
+            }
+
+            return locationTotals;
+        }
+
+        /// <summary>
+        ///   Run a cls report based on the year. It counts the number of 
+        ///     each cls for each month in the given year.
+        /// </summary>
+        /// <param name="controllers">IO Controllers</param>
+        /// <param name="year">current year</param>
+        /// <param name="fullList">fullList</param>
+        /// <returns>is successful</returns>
+        public static ReportCounterManager<YearCounter> RunYearReportForAllCls(
+          IIoControllers controllers,
+          string year,
+          bool fullList)
+        {
+            ReportCounterManager<YearCounter> classTotals =
+              new ReportCounterManager<YearCounter>();
+
+            List<GroupsType> groupsList =
+              controllers.Gac.LoadFile();
+
+            foreach (GroupsType group in groupsList)
+            {
+                classTotals.AddNewCounter(new YearCounter(group.Name));
+            }
+
+            //string writeName = $"ClsReport_{year}_{DateTime.Now.ToString(ReportFactoryCommon.DatePattern)}.csv";
+            //string faultMessage = $"ReportBuilder: Failed to write Annual Cls Report for {year}.";
+
+            ClassReportFactory.UpdateClassesForYear(
+                classTotals,
+                groupsList,
+                year);
+
+            if (!fullList)
+            {
+                classTotals.RemoveEmptyClasses();
+            }
+
+            return classTotals;
+
+            //classTotals.WriteCSVFile(
+            //  writeName,
+            //  faultMessage);
         }
 
         /// <summary>
@@ -275,137 +403,7 @@
             }
         }
 
-        /// ---------- ---------- ---------- ---------- ---------- ----------
-        /// <name>runYearReportForSingleCls</name>
-        /// <date>15/09/13</date>
-        /// <summary>
-        ///   Run a report based on a cls. It counts all the locations for
-        ///     the cls across all records.
-        /// </summary>
-        /// <param name="controllers">IO Controllers</param>
-        /// <param name="cls">cls name</param>
-        /// <param name="fullList">full list of locations</param>
-        /// <returns>is successful</returns>
-        /// ---------- ---------- ---------- ---------- ---------- ----------
-        public static ReportCounterManager<LocationCounter> RunReportForASingleClass(
-          IIoControllers controllers,
-          string cls,
-          bool fullList,
-          string year = "")
-        {
-            string faultMessage;
-            string writeName;
-
-            // Set up paths.
-            string basePath =
-              BasePathReader.GetBasePath();
-
-            ReportCounterManager<LocationCounter> locationTotals =
-              new ReportCounterManager<LocationCounter>();
-
-            List<FirstExampleType> firstExampleList =
-              Stats.FirstExampleIOController.GetInstance().GetFirstExampleListLocation();
-            firstExampleList = firstExampleList.OrderBy(loc => loc.Item).ToList();
-
-            foreach (FirstExampleType location in firstExampleList)
-            {
-                locationTotals.AddNewCounter(
-                  new LocationCounter(
-                    location.Item));
-            }
-
-            if (string.IsNullOrEmpty(year))
-            {
-                //writeName = $"{cls}_Report_{DateTime.Now.ToString(ReportFactoryCommon.DatePattern)}.csv";
-                //faultMessage = "ReportBuilder: Failed to write General Cls Report.";
-
-                string[] dirNamesArray =
-                  System.IO.Directory.GetDirectories(
-                    $"{basePath}{StaticResources.baPath}");
-
-                // Loop through all paths.
-                for (int directoryIndex = 0; directoryIndex < dirNamesArray.Count(); ++directoryIndex)
-                {
-                    // get directory name from the path and convert it into it's integer value.
-                    string dirName =
-                      dirNamesArray[directoryIndex].Substring(
-                        dirNamesArray[directoryIndex].LastIndexOf('\\') + 1);
-                    ClassReportFactory.UpdateLocationsForYear(
-                      controllers,
-                      dirName,
-                      locationTotals,
-                      cls);
-                }
-            }
-            else
-            {
-                //writeName = $"{cls}_Report_{year}_{DateTime.Now.ToString(ReportFactoryCommon.DatePattern)}.csv";
-                //faultMessage = $"ReportBuilder: Failed to write Single Year {year} Cls Report.";
-
-                ClassReportFactory.UpdateLocationsForYear(
-                    controllers,
-                    year,
-                    locationTotals,
-                    cls);
-            }
-
-            if (!fullList)
-            {
-                locationTotals.RemoveEmptyClasses();
-            }
-
-            return locationTotals;
-
-            //locationTotals.WriteCSVFile(
-            //  writeName,
-            //  faultMessage);
-        }
-
-        /// <summary>
-        ///   Run a cls report based on the year. It counts the number of 
-        ///     each cls for each month in the given year.
-        /// </summary>
-        /// <param name="controllers">IO Controllers</param>
-        /// <param name="year">current year</param>
-        /// <param name="fullList">fullList</param>
-        /// <returns>is successful</returns>
-        public static ReportCounterManager<YearCounter> RunYearReportForAllCls(
-          IIoControllers controllers,
-          string year,
-          bool fullList)
-        {
-            ReportCounterManager<YearCounter> classTotals =
-              new ReportCounterManager<YearCounter>();
-
-            List<GroupsType> groupsList =
-              controllers.Gac.LoadFile();
-
-            foreach (GroupsType group in groupsList)
-            {
-                classTotals.AddNewCounter(new YearCounter(group.Name));
-            }
-
-            //string writeName = $"ClsReport_{year}_{DateTime.Now.ToString(ReportFactoryCommon.DatePattern)}.csv";
-            //string faultMessage = $"ReportBuilder: Failed to write Annual Cls Report for {year}.";
-
-            ClassReportFactory.UpdateClassesForYear(
-                classTotals,
-                groupsList,
-                year);
-
-            if (!fullList)
-            {
-                classTotals.RemoveEmptyClasses();
-            }
-
-            return classTotals;
-
-            //classTotals.WriteCSVFile(
-            //  writeName,
-            //  faultMessage);
-        }
-
-        /// <summary>
+       /// <summary>
         /// Determine the groups for the <paramref name="vehicleNumber"/> then increase
         /// the totals.
         /// </summary>

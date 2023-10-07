@@ -8,16 +8,20 @@
     using NynaeveLib.ViewModel;
     using Shap.Common;
     using Shap.Common.Commands;
-    using Shap.Config;
+    using Shap.Common.SerialiseModel.Family;
     using Shap.Interfaces.Io;
     using Shap.Types;
-    using Windows;
 
     /// <summary>
     /// View model describing a location analysis dashboard.
     /// </summary>
     public class ClassAnalysisDashboardViewModel : ViewModelBase
     {
+        /// <summary>
+        /// IO Controllers.
+        /// </summary>
+        private readonly IIoControllers controllers;
+
         /// <summary>
         /// Index of the currently selected year.
         /// </summary>
@@ -29,15 +33,25 @@
         private int clsIndex;
 
         /// <summary>
+        /// The list of known classes.
+        /// </summary>
+        List<GroupsType> classList;
+
+        /// <summary>
+        /// This list of known families.
+        /// </summary>
+        List<SingleFamily> familyList;
+
+        /// <summary>
         /// Value indicating whether the full list of names is displayed in the analysis or just
         /// relevant ones.
         /// </summary>
         private bool fullList;
 
         /// <summary>
-        /// IO Controllers.
+        /// Value indicating whether to use the families, or the default classes.
         /// </summary>
-        private IIoControllers controllers;
+        private bool useFamilies;
 
         /// <summary>
         /// Action used to return the results of an all classes general report.
@@ -78,12 +92,25 @@
 
             this.AllRunsPerClassCommand = new CommonCommand(this.GenerateAllRunsPerClassReport);
             this.ClsSingleYearReportCmd = new CommonCommand(this.GenerateClassSingleYearReport);
-            this.AllLocationsForSpecificClassReportCommand = new CommonCommand(this.GenerateAllLocationsVisitedPerClassReport);
-            this.AllLocationsForSpecificClassAndYearReportCommand = new CommonCommand(this.GenerateAllLocationsVisitedPerClassReportPerYear);
+            this.AllLocationsForSpecificClassReportCommand =
+                new CommonCommand(
+                    this.GenerateAllLocationsVisitedPerClassReport);
+            this.AllLocationsForSpecificClassAndYearReportCommand =
+                new CommonCommand(
+                    this.GenerateAllLocationsVisitedPerClassReportPerYear);
 
             if (this.YearsCollection.Count > 0)
             {
                 this.yearsIndex = this.YearsCollection.Count - 1;
+            }
+
+            // Set up ClsCollection
+            this.ClsCollection = new ObservableCollection<string>();
+            this.classList = this.controllers.Gac.LoadFile();
+
+            foreach (GroupsType group in this.classList)
+            {
+                this.ClsCollection.Add(group.Name);
             }
 
             if (this.ClsCollection.Count > 0)
@@ -92,6 +119,8 @@
             }
 
             this.fullList = false;
+            this.useFamilies = false;
+            this.familyList = null;
         }
 
         /// <summary>
@@ -163,22 +192,7 @@
         /// <summary>
         /// Gets a collection of all registered classes.
         /// </summary>
-        public ObservableCollection<string> ClsCollection
-        {
-            get
-            {
-                ObservableCollection<string> clsCollection = new ObservableCollection<string>();
-
-                List<GroupsType> groupsList = this.controllers.Gac.LoadFile();
-
-                foreach (GroupsType group in groupsList)
-                {
-                    clsCollection.Add(group.Name);
-                }
-
-                return clsCollection;
-            }
-        }
+        public ObservableCollection<string> ClsCollection { get; set; }
 
         /// <summary>
         /// Gets or sets the index of the currently selected class.
@@ -198,17 +212,32 @@
             }
         }
 
+        /// <summary>
+        /// Gets or sets a value indicating whether to use the full list in the analysis.
+        /// </summary>
         public bool FullList
         {
-            get
-            {
-                return this.fullList;
-            }
+            get => this.fullList;
+            set => this.SetProperty(ref this.fullList, value);
+        }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether to use the full list in the analysis.
+        /// </summary>
+        public bool UseFamilies
+        {
+            get => this.useFamilies;
 
             set
             {
-                this.fullList = value;
-                this.OnPropertyChanged("FullList");
+                if (this.useFamilies == value)
+                {
+                    return;
+                }
+
+                this.useFamilies = value;
+                this.OnPropertyChanged(nameof(this.UseFamilies));
+                this.ResetLists();
             }
         }
 
@@ -258,10 +287,12 @@
             string description = $"Class Location Report for {this.ClsCollection[this.clsIndex]}";
             this.ProgressEvent?.Invoke($"Started {description}");
 
+            List<string> classes = this.GetClasses();
+
             ReportCounterManager<LocationCounter> results =
-              ClassReportFactory.RunReportForASingleClass(
+              ClassReportFactory.RunReportForClasses(
                 this.controllers,
-                this.ClsCollection[this.ClsIndex],
+                classes,
                 this.FullList);
             this.singleClassGeneralLocationReportResults.Invoke(
               results,
@@ -278,10 +309,12 @@
             string description = $"Class Location Report for {this.ClsCollection[this.clsIndex]} in {this.YearsCollection[this.YearsIndex]}";
             this.ProgressEvent?.Invoke($"Started {description}");
 
+            List<string> classes = this.GetClasses();
+
             ReportCounterManager<LocationCounter> results =
-              ClassReportFactory.RunReportForASingleClass(
+              ClassReportFactory.RunReportForClasses(
                 this.controllers,
-                this.ClsCollection[this.ClsIndex],
+                classes,
                 this.FullList,
                 this.YearsCollection[this.YearsIndex]);
             this.singleClassSingleYearLocationReportResults.Invoke(
@@ -290,6 +323,71 @@
               this.ClsCollection[this.ClsIndex]);
 
             this.ProgressEvent?.Invoke($"Completed {description}");
+        }
+
+        /// <summary>
+        /// Update the <see cref="ClsCollection"/> to use the collection which has been indicated
+        /// by <see cref="UseFamilies"/>.
+        /// </summary>
+        private void ResetLists()
+        {
+            if (this.familyList == null)
+            {
+                FamilyDetails details = controllers.Family.Read();
+
+                if (details != null && details.Families != null)
+                {
+                    this.familyList = details.Families;
+                }
+                else
+                {
+                    return;
+                }
+            }
+
+            this.ClsCollection.Clear();
+
+            if (this.useFamilies)
+            {
+                foreach (SingleFamily family in this.familyList)
+                {
+                    this.ClsCollection.Add(family.Name);
+                }
+            }
+            else
+            {
+                foreach (GroupsType group in this.classList)
+                {
+                    this.ClsCollection.Add(group.Name);
+                }
+            }
+
+            this.ClsIndex = this.ClsCollection.Count >= 0 ? 0 : -1;
+        }
+
+        /// <summary>
+        /// Determine which classes have been selected.
+        /// </summary>
+        /// <returns>
+        /// The selected classes.
+        /// </returns>
+        private List<string> GetClasses()
+        {
+            List<string> classes = new List<string>();
+
+            if (this.useFamilies)
+            {
+                foreach (SingleClass cls in this.familyList[this.ClsIndex].Classes)
+                {
+                    classes.Add(cls.Name);
+                }
+            }
+            else
+            {
+                classes.Add(this.ClsCollection[this.ClsIndex]);
+            }
+
+            return classes;
         }
     }
 }
