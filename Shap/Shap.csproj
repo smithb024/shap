@@ -888,6 +888,9 @@
     <Resource Include="Icons\Map\locE.png" />
     <Resource Include="Icons\Map\locF.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\Normal_Select.cur" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\CommunityToolkit.Mvvm.8.2.1\build\netstandard2.0\CommunityToolkit.Mvvm.targets" Condition="Exists('..\packages\CommunityToolkit.Mvvm.8.2.1\build\netstandard2.0\CommunityToolkit.Mvvm.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

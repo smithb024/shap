@@ -10,6 +10,7 @@
     <UserControl.Resources>
         <shapConverter:ServiceTypeHighlightBrushConverter x:Key="serviceConverter"/>
         <shapConverter:BoolToVisibilityConverter x:Key="visibilityConverter"/>
+        <Cursor x:Key="TempCursor">../Icons/Normal_Select.cur</Cursor>
     </UserControl.Resources>
 
     <Border 
@@ -25,6 +26,7 @@
                 <Image 
                     Height="67"
                     Width="67"
+                    Cursor="{StaticResource TempCursor}"
                     Source="{Binding IndexImagePath}"/>
                 <Line  
                     X1="0" Y1="67" 
