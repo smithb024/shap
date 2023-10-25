@@ -889,12 +889,6 @@
     <Resource Include="Icons\Map\locF.png" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Icons\Normal_Select.cur" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Icons\trainCur.cur" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Icons\ConfigCursor.cur" />
     <Resource Include="Icons\StdCursor.cur" />
   </ItemGroup>

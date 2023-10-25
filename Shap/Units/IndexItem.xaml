@@ -10,7 +10,7 @@
     <UserControl.Resources>
         <shapConverter:ServiceTypeHighlightBrushConverter x:Key="serviceConverter"/>
         <shapConverter:BoolToVisibilityConverter x:Key="visibilityConverter"/>
-        <Cursor x:Key="TempCursor">../Icons/Normal_Select.cur</Cursor>
+        <Cursor x:Key="TempCursor">../Icons/ConfigCursor.cur</Cursor>
     </UserControl.Resources>
 
     <Border 
