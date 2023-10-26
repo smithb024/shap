@@ -22,12 +22,22 @@
         Visibility="{Binding Path=IsVisible, Converter={StaticResource visibilityConverter}}"
         Grid.Row="0">
 
-        <StackPanel Cursor="{StaticResource ConfigCursor}">
+        <StackPanel>
+            <StackPanel.Style>
+                <Style TargetType="StackPanel">
+                    <Setter Property="Cursor" Value="{StaticResource StandardCursor}"/>
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding Path=InConfigurationMode}" Value="true">
+                            <Setter Property="Cursor" Value="{StaticResource ConfigCursor}" />
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </StackPanel.Style>
             <Grid>
                 <Image 
                     Height="67"
                     Width="67"
-                    Source="{Binding IndexImagePath}"/>
+                    Source="{Binding Path=IndexImagePath}"/>
                 <Line  
                     X1="0" Y1="67" 
                     X2="67" Y2="0" 
@@ -37,9 +47,9 @@
             </Grid>
             <Button 
                 Grid.Row="1"
-                Content="{Binding IndexName}"
+                Content="{Binding Path=IndexName}"
                 Width="67"
-                Command="{Binding OpenWindowCmd}"
+                Command="{Binding Path=OpenWindowCmd}"
                 Style="{StaticResource StdButtonStyle}"
                 Height="20"
                 Margin="0"/>

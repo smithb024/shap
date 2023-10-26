@@ -130,10 +130,7 @@
         /// </summary>
         public string IndexName
         {
-            get
-            {
-                return this.className;
-            }
+            get => this.className;
 
             set
             {
@@ -164,10 +161,7 @@
         /// </summary>
         public bool InConfigurationMode
         {
-            get
-            {
-                return this.inConfigurationMode;
-            }
+            get => this.inConfigurationMode;
 
             set
             {
@@ -194,11 +188,7 @@
         /// <summary>
         /// Close window command.
         /// </summary>
-        public ICommand OpenWindowCmd
-        {
-            get;
-            private set;
-        }
+        public ICommand OpenWindowCmd { get; private set; }
 
         /// <summary>
         /// Show a new window, which one depends on the mode.
