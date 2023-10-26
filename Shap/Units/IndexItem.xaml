@@ -10,7 +10,8 @@
     <UserControl.Resources>
         <shapConverter:ServiceTypeHighlightBrushConverter x:Key="serviceConverter"/>
         <shapConverter:BoolToVisibilityConverter x:Key="visibilityConverter"/>
-        <Cursor x:Key="TempCursor">../Icons/ConfigCursor.cur</Cursor>
+        <Cursor x:Key="ConfigCursor">../Icons/ConfigCursor.cur</Cursor>
+        <Cursor x:Key="StandardCursor">../Icons/StdCursor.cur</Cursor>
     </UserControl.Resources>
 
     <Border 
@@ -20,8 +21,8 @@
         CornerRadius="5"
         Visibility="{Binding Path=IsVisible, Converter={StaticResource visibilityConverter}}"
         Grid.Row="0">
-        
-        <StackPanel Cursor="{StaticResource TempCursor}">
+
+        <StackPanel Cursor="{StaticResource ConfigCursor}">
             <Grid>
                 <Image 
                     Height="67"
