@@ -31,6 +31,9 @@
         <DataTemplate x:Name="LocationConfigurationTemplate" DataType="{x:Type viewModels:LocationConfigurationViewModel}">
             <local:LocationConfigurationView DataContext="{Binding}"/>
         </DataTemplate>
+
+        <Cursor x:Key="ConfigCursor">../../Icons/ConfigCursor.cur</Cursor>
+        <Cursor x:Key="StandardCursor">../../Icons/StdCursor.cur</Cursor>
     </Window.Resources>
 
     <Grid>
@@ -83,7 +86,18 @@
                 DockPanel.Dock="Top"
                 Content="{Binding Path=Navigation}"/>
 
-            <ContentControl Content="{Binding Path=Selector}"/>
+            <ContentControl Content="{Binding Path=Selector}">
+                <ContentControl.Style>
+                    <Style TargetType="ContentControl">
+                        <Setter Property="Cursor" Value="{StaticResource StandardCursor}"/>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding Path=IsConfigurationMode}" Value="true">
+                                <Setter Property="Cursor" Value="{StaticResource ConfigCursor}" />
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </ContentControl.Style>
+            </ContentControl>
         </DockPanel>
 
         <ContentControl 
