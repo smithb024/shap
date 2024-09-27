@@ -892,6 +892,12 @@
     <Resource Include="Icons\ConfigCursor.cur" />
     <Resource Include="Icons\StdCursor.cur" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\Map\triangleLeft.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\Map\triangleRight.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\CommunityToolkit.Mvvm.8.3.2\build\CommunityToolkit.Mvvm.targets" Condition="Exists('..\packages\CommunityToolkit.Mvvm.8.3.2\build\CommunityToolkit.Mvvm.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
