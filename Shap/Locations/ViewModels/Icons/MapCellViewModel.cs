@@ -31,6 +31,12 @@
                 case "b":
                     this.LineLayer = "/Icons/Map/blocks.png";
                     break;
+                case "c":
+                    this.LineLayer = "/Icons/Map/triangleLeft.png";
+                    break;
+                case "d":
+                    this.LineLayer = "/Icons/Map/triangleRight.png";
+                    break;
                 case "f":
                     this.LineLayer = "/Icons/Map/finish.png";
                     break;
