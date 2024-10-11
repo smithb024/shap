@@ -151,7 +151,8 @@
                 };
 
             this.serialisedOperators.Operators.Add(newSingleOperator);
-            this.serialisedOperators.Operators.OrderBy(o => o.Name);
+            this.serialisedOperators.Operators = 
+                this.serialisedOperators.Operators.OrderBy(o => o.Name).ToList();
 
             OperatorConfigViewModel newOperator =
                         new OperatorConfigViewModel(
