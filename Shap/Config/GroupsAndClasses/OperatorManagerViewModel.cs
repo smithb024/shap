@@ -5,6 +5,7 @@
     using System.Linq;
     using System.Windows.Input;
     using NynaeveLib.Commands;
+    using NynaeveLib.Logger;
     using NynaeveLib.ViewModel;
     using Shap.Common.SerialiseModel.Operator;
     using Shap.Interfaces.Io;
@@ -47,14 +48,7 @@
 
             if (this.serialisedOperators != null)
             {
-                foreach (SingleOperator singleOperator in this.serialisedOperators.Operators)
-                {
-                    OperatorConfigViewModel newOperator =
-                        new OperatorConfigViewModel(
-                            singleOperator.Name,
-                            singleOperator.IsActive);
-                    this.Operators.Add(newOperator);
-                }
+                this.SetupOperatorsList();
             }
             else
             {
@@ -151,13 +145,12 @@
                 };
 
             this.serialisedOperators.Operators.Add(newSingleOperator);
-            this.serialisedOperators.Operators.OrderBy(o => o.Name);
+            this.serialisedOperators.Operators = 
+                this.serialisedOperators.Operators.OrderBy(o => o.Name).ToList();
 
-            OperatorConfigViewModel newOperator =
-                        new OperatorConfigViewModel(
-                            this.Name,
-                            true);
-            this.Operators.Add(newOperator);
+            this.Operators.Clear();
+            this.SetupOperatorsList();
+
             this.OnPropertyChanged(nameof(this.Operators));
 
             this.Name = string.Empty;
@@ -212,6 +205,29 @@
                 this.OperatorIndex < this.Operators.Count;
 
             return isValid;
+        }
+
+        /// <summary>
+        /// Populate the <see cref="Operators"/> property. This assumes that the operators 
+        /// collection is empty, otherwise it'll just pile everything on top of the existing list.
+        /// </summary>
+        private void SetupOperatorsList()
+        {
+            if (this.serialisedOperators?.Operators == null ||
+                this.Operators == null)
+            {
+                Logger.Instance.WriteLog($"{this.GetType()}: Error trying to set up the operators collection");
+                return;
+            }
+
+            foreach (SingleOperator singleOperator in this.serialisedOperators.Operators)
+            {
+                OperatorConfigViewModel newOperator =
+                    new OperatorConfigViewModel(
+                        singleOperator.Name,
+                        singleOperator.IsActive);
+                this.Operators.Add(newOperator);
+            }
         }
     }
 }
