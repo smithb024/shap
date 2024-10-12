@@ -24,17 +24,44 @@
     /// </summary>
     public class MainWindowViewModel : IMainWindowViewModel
     {
+        /// <summary>
+        /// The location manager
+        /// </summary>
+        private readonly ILocationManager locationManager;
+
+        /// <summary>
+        /// The instance of the <see cref="InputForm"/>.
+        /// </summary>
         private InputForm inputWindow;
+
+        /// <summary>
+        /// The instance of the <see cref="MileageDetailsWindow"/>.
+        /// </summary>
         private MileageDetailsWindow jnyDetailsWindow;
+
+        /// <summary>
+        /// The instance of the <see cref="EditMileageWindow"/>.
+        /// </summary>
         private EditMileageWindow editMileageWindow;
 
         /// <summary>
-        /// The locations index window.
+        /// The instance of the <see cref="LocationsIndexWindow"/>.
         /// </summary>
         private LocationsIndexWindow locationsIndexWindow;
 
+        /// <summary>
+        /// The instance of the <see cref="ClassIndexWindow"/>.
+        /// </summary>
         private ClassIndexWindow classIndexWindow;
+
+        /// <summary>
+        /// The instance of the <see cref="AnalysisWindow"/>.
+        /// </summary>
         private AnalysisWindow analysisWindow;
+
+        /// <summary>
+        /// The instanceo of the <see cref="ConfigWindow"/>.
+        /// </summary>
         private ConfigWindow configWindow;
 
         /// <summary>
@@ -46,11 +73,6 @@
         /// Manager class holding collections of the first examples.
         /// </summary>
         private IFirstExampleManager firstExamples;
-
-        /// <summary>
-        /// The location manager
-        /// </summary>
-        private ILocationManager locationManager;
 
         /// <summary>
         /// Initialises a new instance of the <see cref="MainWindowViewModel"/> class.
@@ -83,16 +105,34 @@
             this.inputWindow = null;
         }
 
+        /// <summary>
+        /// Gets the command which opens the edit jny window.
+        /// </summary>
         public ICommand AddEditJnyDetailsCommand { get; private set; }
 
+        /// <summary>
+        /// Gets the command which opens the analysis window.
+        /// </summary>
         public ICommand AnalysisCommand { get; private set; }
 
+        /// <summary>
+        /// Gets the command which opens the configuration window.
+        /// </summary>
         public ICommand ConfigurationCommand { get; private set; }
 
+        /// <summary>
+        /// Gets the command which exits the app.
+        /// </summary>
         public ICommand ExitCommand { get; private set; }
 
+        /// <summary>
+        /// Gets the command which opens the log.
+        /// </summary>
         public ICommand OpenLogCommand { get; private set; }
 
+        /// <summary>
+        /// Gets the command which opens the log folder in file explorer.
+        /// </summary>
         public ICommand OpenLogFolderCommand { get; private set; }
 
         /// <summary>
@@ -105,6 +145,9 @@
         /// </summary>
         public ICommand ShowLocationIndexCommand { get; private set; }
 
+        /// <summary>
+        /// Gets the command which opens the jny details window.
+        /// </summary>
         public ICommand ShowJnyDetailsCommand { get; private set; }
 
         /// <summary>
@@ -129,7 +172,7 @@
         }
 
         /// <summary>
-        /// Form closed, set to null.
+        /// Associated view closed, set to null.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -146,11 +189,11 @@
         {
             if (this.analysisWindow == null)
             {
-                SetupWindow(
+                this.SetupWindow(
                   this.analysisWindow = new AnalysisWindow(),
                   new AnalysisViewModel(this.controllers),
-                  CloseAnalysisWindow,
-                  AnalysisWindowClosed);
+                  this.CloseAnalysisWindow,
+                  this.AnalysisWindowClosed);
             }
 
             this.analysisWindow.Focus();
@@ -183,13 +226,13 @@
         {
             if (this.configWindow == null)
             {
-                SetupWindow(
+                this.SetupWindow(
                   this.configWindow = new ConfigWindow(),
                   new ConfigViewModel(
                       this.controllers,
                       this.firstExamples),
-                  CloseConfigurationWindow,
-                  ConfigurationWindowClosed);
+                  this.CloseConfigurationWindow,
+                  this.ConfigurationWindowClosed);
             }
 
             this.configWindow.Focus();
@@ -215,24 +258,33 @@
             this.configWindow = null;
         }
 
+        /// <summary>
+        /// Exit the application
+        /// </summary>
         public void ExitProgram()
         {
             Application.Current.Shutdown();
-            //NynaeveLib.DialogService.DialogService service = new NynaeveLib.DialogService.DialogService();
-
-            //MessageBoxResult result = service.ShowDialog("TestMessage");
         }
 
+        /// <summary>
+        /// Show the log folder in file explorer.
+        /// </summary>
         public void ShowLogFolder()
         {
             Logger.Instance.OpenLogDirectory();
         }
 
+        /// <summary>
+        /// Open the log file.
+        /// </summary>
         public void ShowLog()
         {
             Logger.Instance.OpenLogFile();
         }
 
+        /// <summary>
+        /// Show the class index window.
+        /// </summary>
         public void ShowClassIndexWindow()
         {
             if (this.classIndexWindow == null)
@@ -254,7 +306,7 @@
         }
 
         /// <summary>
-        /// 
+        /// Show the location index window.
         /// </summary>
         public void ShowLocationIndexWindow()
         {
