@@ -11,6 +11,8 @@
     using Shap.Analysis.Windows;
     using Shap.Common.Commands;
     using Shap.Config;
+    using Shap.Feedback.ViewModels;
+    using Shap.Feedback.Windows;
     using Shap.Input;
     using Shap.Interfaces.Io;
     using Shap.Interfaces.Locations.Model;
@@ -65,6 +67,11 @@
         private ConfigWindow configWindow;
 
         /// <summary>
+        /// The instance of the <see cref="FeedbackWindow"/>.
+        /// </summary>
+        private FeedbackWindow feedbackWindow;
+
+        /// <summary>
         /// Collection of IO controllers
         /// </summary>
         private IIoControllers controllers;
@@ -95,6 +102,7 @@
             this.AnalysisCommand = new CommonCommand(this.ShowAnalysisWindow);
             this.ConfigurationCommand = new CommonCommand(this.ShowConfigurationWindow);
             this.ExitCommand = new CommonCommand(this.ExitProgram);
+            this.OpenFeedbackCommand = new CommonCommand(this.ShowFeedbackCommand);
             this.OpenLogCommand = new CommonCommand(this.ShowLog);
             this.OpenLogFolderCommand = new CommonCommand(this.ShowLogFolder);
             this.ShowClassIndexCommand = new CommonCommand(this.ShowClassIndexWindow);
@@ -124,6 +132,11 @@
         /// Gets the command which exits the app.
         /// </summary>
         public ICommand ExitCommand { get; private set; }
+
+        /// <summary>
+        /// Gets the command which opens the feedback window.
+        /// </summary>
+        public ICommand OpenFeedbackCommand { get; private set; }
 
         /// <summary>
         /// Gets the command which opens the log.
@@ -298,8 +311,8 @@
                 this.SetupWindow(
                   this.classIndexWindow,
                   classIndexViewModel,
-                  CloseClassIndexWindow,
-                  ClassIndexWindowClosed);
+                  this.CloseClassIndexWindow,
+                  this.ClassIndexWindowClosed);
             }
 
             this.classIndexWindow.Focus();
@@ -407,6 +420,46 @@
         }
 
         /// <summary>
+        /// Show the feedback window. Create a new one if it doesn't exist.
+        /// </summary>
+        public void ShowFeedbackCommand()
+        {
+            if (this.feedbackWindow == null)
+            {
+                FeedbackViewModel viewModel = new FeedbackViewModel();
+                this.feedbackWindow = new FeedbackWindow();
+
+                this.SetupWindow(
+                  this.feedbackWindow,
+                  viewModel,
+                  this.CloseFeedbackWindow,
+                  this.FeedbackWindowClosed);
+            }
+
+            this.feedbackWindow.Focus();
+        }
+
+        /// <summary>
+        /// close the feedback window.
+        /// </summary>
+        /// <param name="sender">The sender</param>
+        /// <param name="e">Event arguments</param>
+        public void CloseFeedbackWindow(object sender, EventArgs e)
+        {
+            this.feedbackWindow.Close();
+        }
+
+        /// <summary>
+        /// Feedback window closed, set to null.
+        /// </summary>
+        /// <param name="sender">The <see cref="AnalysisWindow"/></param>
+        /// <param name="e">Event arguments</param>
+        public void FeedbackWindowClosed(object sender, EventArgs e)
+        {
+            this.feedbackWindow = null;
+        }
+
+        /// <summary>
         /// Setup and show a window.
         /// </summary>
         /// <param name="window">window to set up</param>
@@ -414,7 +467,7 @@
         /// <param name="closedViewMethod">request from the view model to close the view</param>
         /// <param name="closedMethod">method to run when the window closes</param>
         private void SetupWindow(
-          System.Windows.Window window,
+          Window window,
           NynaeveLib.ViewModel.ViewModelBase viewModel,
           EventHandler closeViewMethod,
           EventHandler closedMethod)

@@ -242,6 +242,10 @@
     <Compile Include="Config\PopularStnConfigViewModel.cs" />
     <Compile Include="Config\PopularStnIOController.cs" />
     <Compile Include="Config\XmlOperatorIoController.cs" />
+    <Compile Include="Feedback\ViewModels\FeedbackViewModel.cs" />
+    <Compile Include="Feedback\Windows\FeedbackWindow.xaml.cs">
+      <DependentUpon>FeedbackWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Icons\ComboBoxItems\IOperatorItemViewModel.cs" />
     <Compile Include="Icons\ComboBoxItems\OperatorItem.xaml.cs">
       <DependentUpon>OperatorItem.xaml</DependentUpon>
@@ -577,6 +581,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Config\PopularStnConfigDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Feedback\Windows\FeedbackWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
