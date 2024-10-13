@@ -408,6 +408,7 @@
     <Compile Include="Styles\ColoursDictionary.cs" />
     <Compile Include="Types\ClassDataTypeViewModel.cs" />
     <Compile Include="Types\Enum\ComponentState.cs" />
+    <Compile Include="Types\Enum\FeedbackType.cs" />
     <Compile Include="Types\Enum\LocationCategories.cs" />
     <Compile Include="Types\Enum\LocationCategoriesConverter.cs" />
     <Compile Include="Types\Enum\MainCommands.cs" />
