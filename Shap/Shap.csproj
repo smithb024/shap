@@ -242,6 +242,7 @@
     <Compile Include="Config\PopularStnConfigViewModel.cs" />
     <Compile Include="Config\PopularStnIOController.cs" />
     <Compile Include="Config\XmlOperatorIoController.cs" />
+    <Compile Include="Feedback\ViewModels\FeedbackRowViewModel.cs" />
     <Compile Include="Feedback\ViewModels\FeedbackViewModel.cs" />
     <Compile Include="Feedback\Windows\FeedbackWindow.xaml.cs">
       <DependentUpon>FeedbackWindow.xaml</DependentUpon>
