@@ -29,26 +29,24 @@
 
             if (value.GetType() == typeof(FeedbackType))
             {
-                return new SolidColorBrush(Colors.HotPink);
-            }
+                switch ((FeedbackType)value)
+                {
+                    case FeedbackType.Info:
+                        feedbackColour = Colors.DarkGoldenrod;
+                        break;
 
-            switch ((FeedbackType)value)
-            {
-                case FeedbackType.Info:
-                    feedbackColour = Colors.DarkGoldenrod;
-                    break;
+                    case FeedbackType.Navigation:
+                        feedbackColour = Colors.DarkGreen;
+                        break;
 
-                case FeedbackType.Navigation:
-                    feedbackColour = Colors.DarkGreen;
-                    break;
+                    case FeedbackType.Fault:
+                        feedbackColour = Colors.DarkRed;
+                        break;
 
-                case FeedbackType.Fault:
-                    feedbackColour = Colors.DarkRed;
-                    break;
-
-                case FeedbackType.Command:
-                    feedbackColour = Colors.DarkBlue;
-                    break;
+                    case FeedbackType.Command:
+                        feedbackColour = Colors.DarkBlue;
+                        break;
+                }
             }
 
             SolidColorBrush returnBrush = 

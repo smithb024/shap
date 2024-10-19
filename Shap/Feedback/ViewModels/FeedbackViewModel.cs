@@ -15,8 +15,15 @@
         /// </summary>
         public FeedbackViewModel()
         {
-            this.Rows = new ObservableCollection<FeedbackRowViewModel>();
+            this.Rows = new ObservableCollection<FeedbackRowViewModel>() 
+            { 
+                new FeedbackRowViewModel(Types.Enum.FeedbackType.Fault, "Fault Message"),
+                new FeedbackRowViewModel(Types.Enum.FeedbackType.Info, "Informaion Message"),
+                new FeedbackRowViewModel(Types.Enum.FeedbackType.Command, "Command Message"),
+                new FeedbackRowViewModel(Types.Enum.FeedbackType.Navigation, "Navigation Message")
+            };
             NynaeveMessenger.Default.Register<FeedbackMessage>(this, this.RunPrimaryMessage);
+
         }
 
         /// <summary>
