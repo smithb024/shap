@@ -18,8 +18,11 @@
     using Shap.Interfaces.Locations.Model;
     using Shap.Interfaces.Stats;
     using Shap.Locations.Views;
+    using Shap.Messages;
     using Shap.StationDetails;
+    using Shap.Types.Enum;
     using Shap.Units;
+    using NynaeveMessenger = NynaeveLib.Messenger.Messenger;
 
     /// <summary>
     /// View model for the main window.
@@ -182,6 +185,7 @@
             }
 
             this.editMileageWindow.Focus();
+            this.ShowWindowFeedback(WindowType.AddEditDistance, true);
         }
 
         /// <summary>
@@ -193,6 +197,7 @@
         {
             this.editMileageWindow.Closed -= this.EditJnyDetailsWindowClosed;
             this.editMileageWindow = null;
+            this.ShowWindowFeedback(WindowType.AddEditDistance, false);
         }
 
         /// <summary>
@@ -210,6 +215,7 @@
             }
 
             this.analysisWindow.Focus();
+            this.ShowWindowFeedback(WindowType.Analysis, true);
         }
 
         /// <summary>
@@ -230,6 +236,7 @@
         public void AnalysisWindowClosed(object sender, EventArgs e)
         {
             this.analysisWindow = null;
+            this.ShowWindowFeedback(WindowType.Analysis, false);
         }
 
         /// <summary>
@@ -249,6 +256,7 @@
             }
 
             this.configWindow.Focus();
+            this.ShowWindowFeedback(WindowType.Configuration, true);
         }
 
         /// <summary>
@@ -269,6 +277,7 @@
         public void ConfigurationWindowClosed(object sender, EventArgs e)
         {
             this.configWindow = null;
+            this.ShowWindowFeedback(WindowType.Configuration, false);
         }
 
         /// <summary>
@@ -285,6 +294,11 @@
         public void ShowLogFolder()
         {
             Logger.Instance.OpenLogDirectory();
+            FeedbackMessage message =
+              new FeedbackMessage(
+                  FeedbackType.Command,
+                  "Show log folder");
+            NynaeveMessenger.Default.Send(message);
         }
 
         /// <summary>
@@ -293,6 +307,11 @@
         public void ShowLog()
         {
             Logger.Instance.OpenLogFile();
+            FeedbackMessage message =
+                new FeedbackMessage(
+                    FeedbackType.Command,
+                    "Show log file");
+            NynaeveMessenger.Default.Send(message);
         }
 
         /// <summary>
@@ -316,6 +335,7 @@
             }
 
             this.classIndexWindow.Focus();
+            this.ShowWindowFeedback(WindowType.ClassIndex, true);
         }
 
         /// <summary>
@@ -332,6 +352,7 @@
             }
 
             this.locationsIndexWindow.Focus();
+            this.ShowWindowFeedback(WindowType.LocationIndex, true);
         }
 
         /// <summary>
@@ -343,6 +364,7 @@
         {
             this.locationsIndexWindow.Closed -= this.LocationsIndexWindowClosed;
             this.locationsIndexWindow = null;
+            this.ShowWindowFeedback(WindowType.LocationIndex, false);
         }
 
         /// <summary>
@@ -363,6 +385,7 @@
         public void ClassIndexWindowClosed(object sender, EventArgs e)
         {
             this.classIndexWindow = null;
+            this.ShowWindowFeedback(WindowType.ClassIndex, false);
         }
 
         /// <summary>
@@ -379,6 +402,7 @@
             }
 
             this.jnyDetailsWindow.Focus();
+            this.ShowWindowFeedback(WindowType.DistanceDetails, true);
         }
 
         /// <summary>
@@ -390,6 +414,7 @@
         {
             this.jnyDetailsWindow.Closed -= this.JnyDetailsWindowClosed;
             this.jnyDetailsWindow = null;
+            this.ShowWindowFeedback(WindowType.DistanceDetails, false);
         }
 
         /// <summary>
@@ -406,6 +431,7 @@
             }
 
             this.inputWindow.Focus();
+            this.ShowWindowFeedback(WindowType.DailyInput, true);
         }
 
         /// <summary>
@@ -417,6 +443,7 @@
         {
             this.inputWindow.Closed -= this.JnyDetailsWindowClosed;
             this.inputWindow = null;
+            this.ShowWindowFeedback(WindowType.DailyInput, false);
         }
 
         /// <summary>
@@ -437,6 +464,7 @@
             }
 
             this.feedbackWindow.Focus();
+            this.ShowWindowFeedback(WindowType.Feedback, true);
         }
 
         /// <summary>
@@ -457,6 +485,7 @@
         public void FeedbackWindowClosed(object sender, EventArgs e)
         {
             this.feedbackWindow = null;
+            this.ShowWindowFeedback(WindowType.Feedback, false);
         }
 
         /// <summary>
@@ -493,6 +522,65 @@
             window.Closed += closedMethod;
             window.Show();
             window.Activate();
+        }
+
+        /// <summary>
+        /// Show navigation feedback.
+        /// </summary>
+        /// <param name="windowType"></param>
+        /// <param name="isOpen"></param>
+        private void ShowWindowFeedback(
+            WindowType windowType,
+            bool isOpen)
+        {
+            string messageType = isOpen ? "Open" : "Close";
+
+            string windowName;
+
+            switch (windowType)
+            {
+                case WindowType.AddEditDistance:
+                    windowName = "Add/Edit Distance";
+                    break;
+
+                case WindowType.Analysis:
+                    windowName = "Analysis";
+                    break;
+
+                case WindowType.ClassIndex:
+                    windowName = "Class Index";
+                    break;
+
+                case WindowType.Configuration:
+                    windowName = "Configuration";
+                    break;
+
+                case WindowType.DailyInput:
+                    windowName = "Daily Input";
+                    break;
+
+                case WindowType.DistanceDetails:
+                    windowName = "Distance Details";
+                    break;
+
+                case WindowType.Feedback:
+                    windowName = "Feedback";
+                    break;
+
+                case WindowType.LocationIndex:
+                    windowName = "Location Index";
+                    break;
+
+                default:
+                    windowName = "Unknown Window";
+                    break;
+            }
+
+            FeedbackMessage message =
+                new FeedbackMessage(
+                    FeedbackType.Navigation,
+                    $"{messageType} {windowName} Window.");
+            NynaeveMessenger.Default.Send(message);
         }
     }
 }

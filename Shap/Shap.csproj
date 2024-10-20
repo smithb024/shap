@@ -418,6 +418,7 @@
     <Compile Include="Types\Enum\LocationCategories.cs" />
     <Compile Include="Types\Enum\LocationCategoriesConverter.cs" />
     <Compile Include="Types\Enum\MainCommands.cs" />
+    <Compile Include="Types\Enum\WindowType.cs" />
     <Compile Include="Types\Factories\JourneyFactory.cs" />
     <Compile Include="Types\FirstExampleType.cs" />
     <Compile Include="Types\GroupBoundsType.cs" />

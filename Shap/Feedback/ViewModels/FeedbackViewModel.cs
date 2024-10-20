@@ -15,15 +15,9 @@
         /// </summary>
         public FeedbackViewModel()
         {
-            this.Rows = new ObservableCollection<FeedbackRowViewModel>() 
-            { 
-                new FeedbackRowViewModel(Types.Enum.FeedbackType.Fault, "Fault Message"),
-                new FeedbackRowViewModel(Types.Enum.FeedbackType.Info, "Informaion Message"),
-                new FeedbackRowViewModel(Types.Enum.FeedbackType.Command, "Command Message"),
-                new FeedbackRowViewModel(Types.Enum.FeedbackType.Navigation, "Navigation Message")
-            };
-            NynaeveMessenger.Default.Register<FeedbackMessage>(this, this.RunPrimaryMessage);
+            this.Rows = new ObservableCollection<FeedbackRowViewModel>();
 
+            NynaeveMessenger.Default.Register<FeedbackMessage>(this, this.ReceivePrimaryMessage);
         }
 
         /// <summary>
@@ -40,7 +34,7 @@
         /// that the oldest one is deleted.
         /// </remarks>
         /// <param name="message">The message</param>
-        private void RunPrimaryMessage(FeedbackMessage message)
+        private void ReceivePrimaryMessage(FeedbackMessage message)
         {
             if (this.Rows.Count == 10)
             {
