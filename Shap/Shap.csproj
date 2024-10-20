@@ -240,7 +240,7 @@
     <Compile Include="Config\PopularStnConfigDialog.xaml.cs">
       <DependentUpon>PopularStnConfigDialog.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Config\PopularStnConfigViewModel.cs" />
+    <Compile Include="Config\PopularLocConfigViewModel.cs" />
     <Compile Include="Config\PopularStnIOController.cs" />
     <Compile Include="Config\XmlOperatorIoController.cs" />
     <Compile Include="Feedback\ViewModels\FeedbackRowViewModel.cs" />

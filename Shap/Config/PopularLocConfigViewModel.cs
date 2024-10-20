@@ -9,19 +9,24 @@
     using NynaeveLib.Commands;
     using NynaeveLib.DialogService.Interfaces;
     using NynaeveLib.ViewModel;
-
+    using Shap.Messages;
     using Shap.StationDetails;
+    using Shap.Types.Enum;
+    using NynaeveMessenger = NynaeveLib.Messenger.Messenger;
 
     // TODO add an IResult interface, to ensure that a result is set in this dialog view model
 
-    public class PopularStnConfigViewModel : DialogViewModelBase
+    public class PopularLocConfigViewModel : DialogViewModelBase
     {
         ObservableCollection<string> stnCollection;
         int stnIndex;
         ObservableCollection<string> popularStnCollection;
         int popularStnIndex;
 
-        public PopularStnConfigViewModel()
+        /// <summary>
+        /// Initialises a new instance of the <see cref="PopularLocConfigViewModel"/> class.
+        /// </summary>
+        public PopularLocConfigViewModel()
         {
             this.StnCollection = new ObservableCollection<string>();
             this.PopularStnCollection = new ObservableCollection<string>();
@@ -43,16 +48,14 @@
             }
 
             PopularStnIOController locationController = PopularStnIOController.GetInstance();
-            //ObservableCollection<string>           locationList       = new List<string>();
-            //locationList = locationController.LoadFile();
 
             foreach (string popular in locationController.LoadFile())
             {
                 this.PopularStnCollection.Add(popular);
             }
 
-            this.AddCmd = new CommonCommand(this.AddStn, this.CanAddStn);
-            this.DeleteCmd = new CommonCommand(this.DeleteStn, this.CanDeleteStn);
+            this.AddCmd = new CommonCommand(this.AddLoc, this.CanAddStn);
+            this.DeleteCmd = new CommonCommand(this.DeleteLoc, this.CanDeleteStn);
             this.CompleteCmd = new CommonCommand<ICloseable>(this.SelectComplete, this.CanSelectComplete);
         }
 
@@ -127,8 +130,17 @@
             }
         }
 
-        private void AddStn()
+        /// <summary>
+        /// Add a location to the list.
+        /// </summary>
+        private void AddLoc()
         {
+            FeedbackMessage openMessage =
+                      new FeedbackMessage(
+                          FeedbackType.Command,
+                          $"PopLoc Config - Add location {this.StnCollection[this.StnIndex]}.");
+            NynaeveMessenger.Default.Send(openMessage);
+
             List<string> tempCollection = this.PopularStnCollection.ToList();
             this.PopularStnCollection = new ObservableCollection<string>();
 
@@ -153,10 +165,19 @@
             return !this.PopularStnCollection.Contains(this.StnCollection[this.StnIndex]);
         }
 
-        private void DeleteStn()
+        /// <summary>
+        /// Delete the selected location.
+        /// </summary>
+        private void DeleteLoc()
         {
+            FeedbackMessage openMessage =
+                      new FeedbackMessage(
+                          FeedbackType.Command,
+                          $"PopLoc Config - Delete location {this.PopularStnCollection[this.PopularStnIndex]}.");
+            NynaeveMessenger.Default.Send(openMessage);
+
             this.PopularStnCollection.RemoveAt(this.PopularStnIndex);
-            this.OnPropertyChanged("PopularStnCollection");
+            this.OnPropertyChanged(nameof(this.PopularStnCollection));
         }
 
         private bool CanDeleteStn()
@@ -174,6 +195,12 @@
         /// </summary>
         private void SelectComplete(ICloseable window)
         {
+            FeedbackMessage openMessage =
+                     new FeedbackMessage(
+                         FeedbackType.Command,
+                         $"PopLoc Config - Complete and close.");
+            NynaeveMessenger.Default.Send(openMessage);
+
             this.Result = MessageBoxResult.OK;
 
             PopularStnIOController locationController = PopularStnIOController.GetInstance();

@@ -15,9 +15,9 @@
     using Shap.Common;
     using Shap.Common.Commands;
     using Shap.Interfaces.Io;
-    using NynaeveMessenger = NynaeveLib.Messenger.Messenger;
     using Shap.Messages;
     using Shap.Types.Enum;
+    using NynaeveMessenger = NynaeveLib.Messenger.Messenger;
 
     /// <summary>
     /// View model class for the configuration dialog.
@@ -321,7 +321,7 @@
                              "Config - Show Configure Stn Dialog.");
             NynaeveMessenger.Default.Send(openMessage);
 
-            PopularStnConfigViewModel popularViewModel = new PopularStnConfigViewModel();
+            PopularLocConfigViewModel popularViewModel = new PopularLocConfigViewModel();
 
             DialogService service = new DialogService();
 
