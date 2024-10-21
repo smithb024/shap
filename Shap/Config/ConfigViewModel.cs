@@ -82,7 +82,7 @@
             this.RefreshYearCmd = new CommonCommand(this.RefreshYear);
             this.RefreshAllCmd = new CommonCommand(this.RefreshAll);
             this.ConfigClsCmd = new CommonCommand(this.ConfigCls);
-            this.ConfigStnCmd = new CommonCommand(this.ConfigStn);
+            this.ConfigStnCmd = new CommonCommand(this.ConfigLoc);
             this.UpdatePreviousIdCountCmd = new CommonCommand(this.UpdatePreviousIdCount);
         }
 
@@ -313,7 +313,7 @@
         /// <summary>
         /// Setup and show the dialog for managing the locations.
         /// </summary>
-        private void ConfigStn()
+        private void ConfigLoc()
         {
             FeedbackMessage openMessage =
                          new FeedbackMessage(

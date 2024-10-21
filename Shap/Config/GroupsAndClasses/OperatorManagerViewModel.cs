@@ -9,6 +9,9 @@
     using NynaeveLib.ViewModel;
     using Shap.Common.SerialiseModel.Operator;
     using Shap.Interfaces.Io;
+    using Shap.Messages;
+    using Shap.Types.Enum;
+    using NynaeveMessenger = NynaeveLib.Messenger.Messenger;
 
     /// <summary>
     /// View model which manages the ability to add and update operators
@@ -65,10 +68,7 @@
         /// </summary>
         public string Name
         {
-            get
-            {
-                return this.name;
-            }
+            get => this.name;
 
             set
             {
@@ -87,10 +87,7 @@
         /// </summary>
         public int OperatorIndex
         {
-            get
-            {
-                return this.operatorsIndex;
-            }
+            get => this.operatorsIndex;
 
             set
             {
@@ -137,6 +134,12 @@
                 return;
             }
 
+            FeedbackMessage message =
+                new FeedbackMessage(
+                    FeedbackType.Command,
+                    $"GAC - Add operator {this.Name}.");
+            NynaeveMessenger.Default.Send(message);
+
             SingleOperator newSingleOperator =
                 new SingleOperator()
                 {
@@ -175,6 +178,12 @@
             {
                 return;
             }
+
+            FeedbackMessage message =
+                new FeedbackMessage(
+                    FeedbackType.Command,
+                    $"GAC - Retire operator {this.Operators[this.OperatorIndex]}.");
+            NynaeveMessenger.Default.Send(message);
 
             this.Operators[this.OperatorIndex].ToggleActive();
 

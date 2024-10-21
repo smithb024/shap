@@ -9,7 +9,10 @@
     using NynaeveLib.ViewModel;
     using Shap.Common.SerialiseModel.Family;
     using Shap.Interfaces.Io;
+    using Shap.Messages;
     using Shap.Types;
+    using Shap.Types.Enum;
+    using NynaeveMessenger = NynaeveLib.Messenger.Messenger;
 
     /// <summary>
     /// View model which manages the ability to add families
@@ -121,12 +124,9 @@
         /// <summary>
         /// Gets or sets the index of the currently selected family.
         /// </summary>
-        public int FamilyIndex 
+        public int FamilyIndex
         {
-            get
-            {
-                return this.familyIndex;
-            }
+            get => this.familyIndex;
 
             set
             {
@@ -188,6 +188,12 @@
                 return;
             }
 
+            FeedbackMessage message =
+                     new FeedbackMessage(
+                         FeedbackType.Command,
+                         $"GAC - Add new Family {this.Family}.");
+            NynaeveMessenger.Default.Send(message);
+
             SingleFamily newSingleFamily =
                 new SingleFamily()
                 {
@@ -222,12 +228,19 @@
                 return;
             }
 
+            FeedbackMessage message =
+                new FeedbackMessage(
+                    FeedbackType.Command,
+                    $"GAC - Add group {this.Groups[this.GroupsIndex]} to Family {this.serialisedFamilies.Families[this.FamilyIndex].Name}.");
+            NynaeveMessenger.Default.Send(message);
+
             this.MemberGroups.Add(this.Groups[this.GroupsIndex]);
             this.MemberGroups = new ObservableCollection<string>(this.MemberGroups.OrderBy(i => i));
             this.OnPropertyChanged(nameof(this.MemberGroups));
 
             SingleClass newClass =
-                new SingleClass() {
+                new SingleClass()
+                {
                     Name = this.Groups[this.GroupsIndex]
                 };
             this.serialisedFamilies.Families[this.FamilyIndex].Classes.Add(newClass);
@@ -262,9 +275,12 @@
         {
             this.MemberGroups.Clear();
 
-            foreach(SingleClass familyClass in this.serialisedFamilies.Families[this.FamilyIndex].Classes)
+            if (this.serialisedFamilies.Families[this.FamilyIndex].Classes != null)
             {
-                this.MemberGroups.Add(familyClass.Name);
+                foreach (SingleClass familyClass in this.serialisedFamilies.Families[this.FamilyIndex].Classes)
+                {
+                    this.MemberGroups.Add(familyClass.Name);
+                }
             }
         }
     }

@@ -13,6 +13,7 @@
         /// </summary>
         public SingleFamily()
         {
+            this.Classes = new List<SingleClass>();
         }
  
         /// <summary>
