@@ -12,6 +12,8 @@
     using Shap.Types;
     using NynaeveLib.Logger;
     using NynaeveLib.Types;
+    using NynaeveMessenger = NynaeveLib.Messenger.Messenger;
+    using Shap.Types.Enum;
 
     /// <summary>
     /// Used for editing mileage
@@ -136,7 +138,7 @@
             this.CloseWindowCmd = new CommonCommand(this.CloseWindow);
             this.AddNewCmd = new CommonCommand(this.AddNewRoute);
             this.CompleteEditCmd = new CommonCommand(this.CompleteUpdate);
-            this.RefreshCmd = new CommonCommand(this.InitialiseEditTab);
+            this.RefreshCmd = new CommonCommand(this.RefreshWindow);
             this.SelectForEditCmd = new CommonCommand(this.SelectJourneyToEdit, this.CanJnyBeSelected);
         }
 
@@ -498,6 +500,12 @@
         /// </summary>
         private void AddNewRoute()
         {
+            FeedbackMessage feedbackMessage =
+                new FeedbackMessage(
+                    FeedbackType.Command,
+                    $"EditDist - Add new route, {this.NewFromStn} to {this.NewToStn}.");
+            NynaeveMessenger.Default.Send(feedbackMessage);
+
             int nextPairId = (journeyController.GetMileageDetailsLength() / 2) + 1;
 
             RouteDetailsType newOutRoute =
@@ -530,6 +538,20 @@
 
             NewLocationAddedMessage message = new NewLocationAddedMessage();
             this.Messenger.Send(message);
+        }
+
+        /// <summary>
+        /// Refresh window.
+        /// </summary>
+        private void RefreshWindow()
+        {
+            FeedbackMessage feedbackMessage =
+                new FeedbackMessage(
+                    FeedbackType.Command,
+                    $"EditDist - Refresh.");
+            NynaeveMessenger.Default.Send(feedbackMessage);
+
+            this.InitialiseEditFields();
         }
 
         /// <summary>
@@ -573,6 +595,12 @@
         {
             string keyIndex = string.Empty;
             bool success = false;
+
+            FeedbackMessage feedbackMessage =
+              new FeedbackMessage(
+                  FeedbackType.Command,
+                  $"EditDist - Select to edit, {this.JnyFromList[this.JnyFromIndex]} to {this.JnyToList[this.JnyToIndex]}.");
+            NynaeveMessenger.Default.Send(feedbackMessage);
 
             for (int index = 0; index < journeyController.GetMileageDetailsLength(); ++index)
             {
@@ -641,6 +669,12 @@
         /// </summary>
         private void CompleteUpdate()
         {
+            FeedbackMessage feedbackMessage =
+                new FeedbackMessage(
+                    FeedbackType.Command,
+                    $"EditDist - Complete and save.");
+            NynaeveMessenger.Default.Send(feedbackMessage);
+
             this.journeyController.PutFromStation(this.outIndex, this.NewFromStn);
             this.journeyController.PutToStation(this.outIndex, this.NewToStn);
             this.journeyController.PutViaRoute(this.outIndex, this.NewViaRoute);
