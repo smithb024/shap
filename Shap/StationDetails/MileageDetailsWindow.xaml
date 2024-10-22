@@ -7,35 +7,39 @@
         Height="450"
         Width="600">
     <Grid>
-    <Grid.RowDefinitions>
-      <RowDefinition Height="30"/>
-      <RowDefinition Height="*"/>
-    </Grid.RowDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
 
-    <DockPanel Grid.Row="0" LastChildFill="False">
-      <ComboBox DockPanel.Dock="Left"
+        <DockPanel Grid.Row="0" LastChildFill="False">
+            <ComboBox 
+                DockPanel.Dock="Left"
                 Style="{StaticResource ComboBoxStyle}"
-                ItemsSource="{Binding StnList}"
-                Text="{Binding Stn}"
+                ItemsSource="{Binding Path=StnList}"
+                Text="{Binding Path=Stn}"
                 Width="170"/>
-      <Button DockPanel.Dock="Right"
-              Content="Refresh"
-              Style="{StaticResource StdButtonStyle}"
-              Height="20"
-              Margin="2"
-              Width="80"/>
-    </DockPanel>
+            <Button 
+                DockPanel.Dock="Right"
+                Content="Refresh"
+                Style="{StaticResource StdButtonStyle}"
+                Command="{Binding Path=RefreshCmd}"
+                Height="20"
+                Margin="2"
+                Width="80"/>
+        </DockPanel>
 
-    <ListBox ItemsSource="{Binding Routes}"
-             HorizontalContentAlignment="Stretch"
-             Background="{StaticResource StdBackground}"
-             Grid.Row="1">
-      <ListBox.ItemTemplate>
-        <DataTemplate>
-          <details:MileageDetailsRow/>
-        </DataTemplate>
-      </ListBox.ItemTemplate>
-    </ListBox>
+        <ListBox 
+            ItemsSource="{Binding Path=Routes}"
+            HorizontalContentAlignment="Stretch"
+            Background="{StaticResource StdBackground}"
+            Grid.Row="1">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <details:MileageDetailsRow/>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
 
-  </Grid>
+    </Grid>
 </Window>
