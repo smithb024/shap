@@ -17,7 +17,7 @@
         {
             this.Rows = new ObservableCollection<FeedbackRowViewModel>();
 
-            NynaeveMessenger.Default.Register<FeedbackMessage>(this, this.ReceivePrimaryMessage);
+            NynaeveMessenger.Default.Register<FeedbackMessage>(this, this.ReceiveFeedbackMessage);
         }
 
         /// <summary>
@@ -34,7 +34,7 @@
         /// that the oldest one is deleted.
         /// </remarks>
         /// <param name="message">The message</param>
-        private void ReceivePrimaryMessage(FeedbackMessage message)
+        private void ReceiveFeedbackMessage(FeedbackMessage message)
         {
             if (this.Rows.Count == 10)
             {

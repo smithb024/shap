@@ -243,6 +243,7 @@
     <Compile Include="Config\PopularLocConfigViewModel.cs" />
     <Compile Include="Config\PopularStnIOController.cs" />
     <Compile Include="Config\XmlOperatorIoController.cs" />
+    <Compile Include="Feedback\Helpers\FeedbackLogger.cs" />
     <Compile Include="Feedback\ViewModels\FeedbackRowViewModel.cs" />
     <Compile Include="Feedback\ViewModels\FeedbackViewModel.cs" />
     <Compile Include="Feedback\Windows\FeedbackRow.xaml.cs">
@@ -277,6 +278,7 @@
       <DependentUpon>MonthBar.xaml</DependentUpon>
     </Compile>
     <Compile Include="Interfaces\Common\ViewModels\ITravelCounterViewModel.cs" />
+    <Compile Include="Interfaces\Feedback\Helpers\IFeedbackLogger.cs" />
     <Compile Include="Interfaces\IMainWindowViewModel.cs" />
     <Compile Include="Input\DayViewModel.cs" />
     <Compile Include="Input\Factories\DailyInputFactory.cs" />

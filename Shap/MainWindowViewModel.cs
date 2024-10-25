@@ -14,6 +14,7 @@
     using Shap.Feedback.ViewModels;
     using Shap.Feedback.Windows;
     using Shap.Input;
+    using Shap.Interfaces.Feedback.Helpers;
     using Shap.Interfaces.Io;
     using Shap.Interfaces.Locations.Model;
     using Shap.Interfaces.Stats;
@@ -85,21 +86,25 @@
         private IFirstExampleManager firstExamples;
 
         /// <summary>
+        /// Not used, but is instantiated here to ensure that it starts and logs all UI feedback.
+        /// </summary>
+        private IFeedbackLogger feedbackLogger;
+
+        /// <summary>
         /// Initialises a new instance of the <see cref="MainWindowViewModel"/> class.
         /// </summary>
-        /// <param name="controllers">
-        /// Factory containing IO controllers.
-        /// </param>
-        /// <param name="locationManager">
-        /// The location manager
-        /// </param>
+        /// <param name="controllers">Factory containing IO controllers.</param>
+        /// <param name="locationManager">The location manager</param>
+        /// <param name="feedbackLoger">The UI Feedback Logger</param>
         public MainWindowViewModel(
           IIoControllers controllers,
-          ILocationManager locationManager)
+          ILocationManager locationManager,
+          IFeedbackLogger feedbackLoger)
         {
             this.controllers = controllers;
             this.locationManager = locationManager;
             this.firstExamples = Ioc.Default.GetService<IFirstExampleManager>();
+            this.feedbackLogger = feedbackLoger;
 
             this.AddEditJnyDetailsCommand = new CommonCommand(this.ShowAddEditJnyDetailsWindow);
             this.AnalysisCommand = new CommonCommand(this.ShowAnalysisWindow);

@@ -8,7 +8,9 @@
     using Interfaces.Stats;
     using Locations.ViewModels;
     using Microsoft.Extensions.DependencyInjection;
+    using Shap.Feedback.Helpers;
     using Shap.Interfaces;
+    using Shap.Interfaces.Feedback.Helpers;
     using Shap.Interfaces.Locations.Model;
     using Shap.Interfaces.Locations.ViewModels;
     using Shap.Io;
@@ -28,6 +30,7 @@
         {
             Ioc.Default.ConfigureServices(
                 new ServiceCollection()
+                .AddSingleton<IFeedbackLogger, FeedbackLogger>()
                 .AddSingleton<IIoControllers, IoControllers>()
                 .AddSingleton<IFirstExampleManager, FirstExampleManager>()
                 .AddSingleton<ILocationManager, LocationManager>()
