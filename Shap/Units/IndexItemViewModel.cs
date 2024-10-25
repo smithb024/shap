@@ -11,7 +11,9 @@
     using Shap.Interfaces.Io;
     using Shap.Types;
     using Common;
-    using Stats;
+    using NynaeveMessenger = NynaeveLib.Messenger.Messenger;
+    using Shap.Messages;
+    using Shap.Types.Enum;
 
     /// <summary>
     /// View model which supports a tile on the Class Index Window. A tile provides access to a 
@@ -213,20 +215,32 @@
         {
             if (this.classFrontPageWindow != null)
             {
+                FeedbackMessage message =
+                   new FeedbackMessage(
+                       FeedbackType.Navigation,
+                       $"ClassIndex - Focus on existing window for {this.className}.");
+                NynaeveMessenger.Default.Send(message);
+
                 this.classFrontPageWindow.Focus();
                 return;
             }
 
             if (this.classConfigWindow == null)
             {
+                FeedbackMessage message =
+                    new FeedbackMessage(
+                        FeedbackType.Navigation,
+                        $"ClassIndex - Show config window for {this.className}.");
+                NynaeveMessenger.Default.Send(message);
+
                 ClassConfigViewModel classConfig =
                   new ClassConfigViewModel(
                     this.ioControllers,
                     this.className);
 
                 this.classConfigWindow = new ClassConfigWindow();
-                SetupWindow(
-                    this.classConfigWindow = new ClassConfigWindow(),
+                this.SetupWindow(
+                    this.classConfigWindow,
                     classConfig,
                     this.CloseClassConfigWindow,
                     this.EditClassConfigWindowClosed);
@@ -253,6 +267,12 @@
         /// <param name="e"></param>
         public void EditClassConfigWindowClosed(object sender, EventArgs e)
         {
+            FeedbackMessage message =
+                new FeedbackMessage(
+                    FeedbackType.Navigation,
+                    $"ClassIndex - Close config window for {this.className}.");
+            NynaeveMessenger.Default.Send(message);
+
             this.classConfigWindow = null;
         }
 
@@ -264,12 +284,24 @@
         {
             if (this.classConfigWindow != null)
             {
+                FeedbackMessage message =
+                    new FeedbackMessage(
+                        FeedbackType.Navigation,
+                        $"ClassIndex - Focus on existing window for {this.className}.");
+                NynaeveMessenger.Default.Send(message);
+
                 this.classConfigWindow.Focus();
                 return;
             }
 
             if (this.classFrontPageWindow == null)
             {
+                FeedbackMessage message =
+                    new FeedbackMessage(
+                        FeedbackType.Navigation,
+                        $"ClassIndex - Show front page window for {this.className}.");
+                NynaeveMessenger.Default.Send(message);
+
                 this.classFrontPageWindow = new ClassFrontPage();
                 ClassFunctionalViewModel classFunctionalViewModel =
                   new ClassFunctionalViewModel(
@@ -277,7 +309,7 @@
                     this.firstExamples,
                     this.className);
 
-                SetupWindow(
+                this.SetupWindow(
                   this.classFrontPageWindow,
                   classFunctionalViewModel,
                   this.CloseClassFrontPageWindow,
@@ -304,6 +336,12 @@
         /// <param name="e"></param>
         public void EditClassFrontPageClosed(object sender, EventArgs e)
         {
+            FeedbackMessage message =
+                new FeedbackMessage(
+                    FeedbackType.Navigation,
+                    $"ClassIndex - Close front page window for {this.className}.");
+            NynaeveMessenger.Default.Send(message);
+
             this.classFrontPageWindow = null;
         }
 
