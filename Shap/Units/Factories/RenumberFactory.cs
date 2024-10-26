@@ -1,6 +1,7 @@
 ﻿namespace Shap.Units.Factories
 {
     using System.Collections.Generic;
+    using NynaeveLib.Logger;
     using Shap.Common.SerialiseModel.ClassDetails;
     using Shap.Units.IO;
 
@@ -114,6 +115,8 @@
             foreach (int originalNumber in originalNumbers)
             {
                 int destinationNumber = initialDestinationNumber + loop;
+
+                Logger.Instance.WriteLog($"RenumberFactory - Renumber {originalNumber}({originalSubclass.Type}) to {destinationNumber}({destinationSubclass.Type}) for class {classId}.");
 
                 Number updatedNumber = 
                     originalSubclass.Numbers.Find(

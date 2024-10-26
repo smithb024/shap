@@ -15,7 +15,7 @@
         /// <param name="name">The name of the operator</param>
         /// <param name="isActive">Indicates whether the operator is currently active</param>
         /// <param name="isContemporary">
-        /// Indicates whether the operator is active for the class..
+        /// Indicates whether the operator is active for the class.
         /// </param>
         public OperatorListItemViewModel(
             string name,

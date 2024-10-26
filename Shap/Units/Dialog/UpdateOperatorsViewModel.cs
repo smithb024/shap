@@ -5,6 +5,7 @@
     using System.Windows.Input;
     using NynaeveLib.Commands;
     using NynaeveLib.DialogService.Interfaces;
+    using NynaeveLib.Logger;
     using NynaeveLib.ViewModel;
     using Shap.Common.SerialiseModel.ClassDetails;
     using Shap.Common.SerialiseModel.Operator;
@@ -202,6 +203,8 @@
                     selectedOperator.Name,
                     selectedOperator.IsActive,
                     true);
+
+            Logger.Instance.WriteLog($"UpdateOperatorsViewModel - Add new operator {selectedOperator.Name} to {this.classDetails.Id}.");
 
             this.ClassOperators.Add(viewModel);
         }
