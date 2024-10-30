@@ -529,7 +529,8 @@
         {
             NewNumberViewModel dialogViewModel =
               new NewNumberViewModel(
-                this.SubClassNumbers);
+                  this.classId,
+                  this.SubClassNumbers);
 
             DialogService service = new DialogService();
 
@@ -582,9 +583,10 @@
         private void AddNewNumberSeries()
         {
             NewNumberViewModel dialogViewModel =
-              new NewNumberViewModel(
-                this.SubClassNumbers,
-                true);
+                new NewNumberViewModel(
+                    this.classId,
+                    this.SubClassNumbers,
+                    true);
 
             DialogService service = new DialogService();
 
@@ -641,9 +643,10 @@
         private void Renumber()
         {
             RenumberViewModel dialogViewModel =
-              new RenumberViewModel(
-                this.SubClassNumbers,
-                this.classFileConfiguration);
+                new RenumberViewModel(
+                    this.classId,
+                    this.SubClassNumbers,
+                    this.classFileConfiguration);
 
             DialogService service = new DialogService();
 

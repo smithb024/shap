@@ -29,6 +29,7 @@
         /// <summary>
         /// Initialises a new instance of the <see cref="RenumberViewModel"/> class.
         /// </summary>
+        /// <param name="classId">The id of the parent class.</param>
         /// <param name="subClasses">
         /// The subclasses available to the class.
         /// </param>
@@ -36,9 +37,10 @@
         /// Class configuration file contents
         /// </param>
         public RenumberViewModel(
-          ObservableCollection<string> subClasses,
-          ClassDetails classFileConfiguration)
-          : base(subClasses)
+            string classId,
+            ObservableCollection<string> subClasses,
+            ClassDetails classFileConfiguration)
+            : base(classId, subClasses)
         {
             this.classFileConfiguration = classFileConfiguration;
             this.totalNumberToChange = 0;

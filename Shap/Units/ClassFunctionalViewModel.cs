@@ -12,9 +12,10 @@
     using Shap.Interfaces.Units;
     using Shap.Units.Factories;
     using NynaeveLib.Logger;
-
-    using Stats;
     using Types;
+    using NynaeveMessenger = NynaeveLib.Messenger.Messenger;
+    using Shap.Messages;
+    using Shap.Types.Enum;
 
     /// <summary>
     /// This class is used for the <see cref="ClassFrontPage"/> view. It is used to manage all 
@@ -25,9 +26,17 @@
         /// <summary>
         /// Manager class holding collections of the first examples.
         /// </summary>
-        private IFirstExampleManager firstExamples;
-        private string classId = string.Empty;
-        private ClassDataTypeViewModel classData;
+        private readonly IFirstExampleManager firstExamples;
+
+        /// <summary>
+        /// The class data view model.
+        /// </summary>
+        private readonly ClassDataTypeViewModel classData;
+
+        /// <summary>
+        /// The id of the class which is represented by this object.
+        /// </summary>
+        private readonly string classId;
 
         /// ---------- ---------- ---------- ---------- ---------- ----------
         /// <name>ClassFrontPageForm</name>
@@ -43,7 +52,7 @@
           IIoControllers ioControllers,
           IFirstExampleManager firstExamples,
           string classId)
-          : base(new ObservableCollection<string>())
+          : base(classId, new ObservableCollection<string>())
         {
             this.classId = classId;
             this.firstExamples = firstExamples;
@@ -88,8 +97,14 @@
             this.LoadUnits();
         }
 
+        /// <summary>
+        /// Gets or sets the collection of all sub class view models.
+        /// </summary>
         public ObservableCollection<SubClassViewModel> ClassIndexes { get; set; }
 
+        /// <summary>
+        /// The currently selected sub class.
+        /// </summary>
         public SubClassViewModel CurrentIndex
         {
             get
@@ -154,7 +169,13 @@
                 return;
             }
 
-            foreach(IUnitViewModel unit in this.ClassIndexes[this.SubClassIndex].Units)
+            FeedbackMessage message =
+                 new FeedbackMessage(
+                     FeedbackType.Command,
+                     $"ClassFrontPage - {this.classId} : Refresh all for {this.ClassId}.");
+            NynaeveMessenger.Default.Send(message);
+
+            foreach (IUnitViewModel unit in this.ClassIndexes[this.SubClassIndex].Units)
             {
                 unit.RefreshUnit();
                 //Searcher.RunCompleteSearch(

@@ -32,6 +32,7 @@
         /// <summary>
         /// Initialises a new instance of the <see cref="NewNumberViewModel"/> class.
         /// </summary>
+        /// <param name="classId">The id of the parent class.</param>
         /// <param name="subClasses">
         /// Collection of all sub classes.
         /// </param>
@@ -39,9 +40,10 @@
         /// Indicates whether to add a collection or not
         /// </param>
         public NewNumberViewModel(
-          ObservableCollection<string> subClasses,
-          bool addMultiple = false)
-          : base(subClasses)
+            string classId,
+            ObservableCollection<string> subClasses,
+            bool addMultiple = false)
+            : base(classId, subClasses)
         {
             this.addMultiple = addMultiple;
             this.Result = MessageBoxResult.Cancel;
