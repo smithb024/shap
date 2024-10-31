@@ -213,6 +213,12 @@
             VehicleDataWindow window,
             IUnitViewModel unit)
         {
+            FeedbackMessage message =
+               new FeedbackMessage(
+                   FeedbackType.Navigation,
+                   $"Display {unit.DisplayUnitNumber} on the VDW.");
+            NynaeveMessenger.Default.Send(message);
+
             // Focus on an existing window if one already exists.
             if (this.vcleWindows.Exists(vw => vw.DataContext == unit))
             {

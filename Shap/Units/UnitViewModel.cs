@@ -12,6 +12,9 @@
     using Shap.Types;
     using Shap.Types.Factories;
     using Shap.Units.IO;
+    using NynaeveMessenger = NynaeveLib.Messenger.Messenger;
+    using Shap.Messages;
+    using Shap.Types.Enum;
 
     /// <summary>
     /// View model for a single unit. 
@@ -216,6 +219,12 @@
         /// </summary>
         public void RefreshUnit()
         {
+            FeedbackMessage message =
+                new FeedbackMessage(
+                    FeedbackType.Command,
+                    $"VDW: Refresh {this.DisplayUnitNumber}.");
+            NynaeveMessenger.Default.Send(message);
+
             this.JourneysList = new List<IJourneyViewModel>();
 
             // TODO new each time. Really>?
@@ -292,22 +301,19 @@
             return false;
         }
 
-        //private bool RefreshCmdAvailable()
-        //{
-        //  return true;
-        //}
-
+        /// <summary>
+        /// Save the unit details.
+        /// </summary>
         private void SaveUnit()
         {
-            this.saveAction.Invoke(this, className);
-            //IndividualUnitIOController individualUnitController = IndividualUnitIOController.GetInstance();
-            //this.individualUnitIoController.WriteIndividualUnitFile(this, className);
-        }
+            FeedbackMessage message =
+                new FeedbackMessage(
+                    FeedbackType.Command,
+                    $"VDW: Save {this.DisplayUnitNumber}.");
+            NynaeveMessenger.Default.Send(message);
 
-        //private bool SaveCmdAvailable()
-        //{
-        //  return true;
-        //}
+            this.saveAction.Invoke(this, this.className);
+        }
 
         private new void CompleteUpdate()
         {
