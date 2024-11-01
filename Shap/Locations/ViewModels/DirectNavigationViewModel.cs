@@ -3,16 +3,15 @@
     using CommunityToolkit.Mvvm.ComponentModel;
     using CommunityToolkit.Mvvm.Messaging;
     using Shap.Common.SerialiseModel.Operator;
-    using Shap.Icons.ComboBoxItems;
-    using Shap.Icons.ListViewItems;
     using Shap.Interfaces.Io;
     using Shap.Interfaces.Locations.ViewModels;
     using Shap.Locations.Enums;
     using Shap.Locations.Messages;
+    using Shap.Messages;
+    using Shap.Types.Enum;
     using System;
     using System.Collections.Generic;
-    using System.Collections.ObjectModel;
-    using System.Windows.Forms;
+    using NynaeveMessenger = NynaeveLib.Messenger.Messenger;
 
     /// <summary>
     /// A view model which supports location navigation. This view model supports a combo box from 
@@ -123,6 +122,12 @@
             {
                 return;
             }
+
+            FeedbackMessage feedbackMessage =
+                new FeedbackMessage(
+                    FeedbackType.Navigation,
+                    $"LocationIndex - Display {this.SearchCriteria[this.SearchCriteriaIndex]}.");
+            NynaeveMessenger.Default.Send(feedbackMessage);
 
             switch (this.type)
             {
