@@ -9,7 +9,10 @@
     using Shap.Interfaces.Stats;
     using Shap.Locations.Enums;
     using Shap.Locations.Messages;
+    using Shap.Messages;
+    using Shap.Types.Enum;
     using System.Windows.Input;
+    using NynaeveMessenger = NynaeveLib.Messenger.Messenger;
 
     /// <summary>
     /// View model which supports the locations index window.
@@ -134,6 +137,12 @@
                 this.isConfigurationMode = value;
                 this.OnPropertyChanged(nameof(this.IsConfigurationMode));
 
+                FeedbackMessage feedbackMessage =
+                  new FeedbackMessage(
+                      FeedbackType.Info,
+                      $"LocationIndex - Change Configuration Mode: {this.isConfigurationMode}.");
+                NynaeveMessenger.Default.Send(feedbackMessage);
+
                 ConfigurationModeMessage message =
                     new ConfigurationModeMessage(
                         this.isConfigurationMode);
@@ -201,6 +210,7 @@
         private void SelectAlphabetical()
         {
             this.selectedNatigation = NavigationType.Alphabetical;
+            this.SendNavigationFeedback();
 
             IAlphabeticalNavigationViewModel alphabeticalViewModel =
                 new AlphabeticalNavigationViewModel();
@@ -226,10 +236,11 @@
         private void SelectOperators()
         {
             this.selectedNatigation = NavigationType.Operators;
+            this.SendNavigationFeedback();
 
             IDirectNavigationViewModel operatorsViewModel =
                 new DirectNavigationViewModel(
-                    ioControllers,
+                    this.ioControllers,
                     SelectorType.Operator);
             ISelectorViewModel locationSelectorViewModel =
                 new LocationsSelectorViewModel(
@@ -253,6 +264,7 @@
         private void SelectRegions()
         {
             this.selectedNatigation = NavigationType.Regions;
+            this.SendNavigationFeedback();
 
             IDirectNavigationViewModel regionsViewModel =
                 new DirectNavigationViewModel(
@@ -277,6 +289,7 @@
         private void SelectLines()
         {
             this.selectedNatigation = NavigationType.Lines;
+            this.SendNavigationFeedback();
 
             IDirectNavigationViewModel linesViewModel =
                 new DirectNavigationViewModel(
@@ -358,6 +371,18 @@
             }
 
             this.OnPropertyChanged(nameof(this.LocationDetails));
+        }
+
+        /// <summary>
+        /// Called when the navigation type has changed. Feedback details of the new view.
+        /// </summary>
+        private void SendNavigationFeedback()
+        {
+            FeedbackMessage feedbackMessage =
+                new FeedbackMessage(
+                    FeedbackType.Navigation,
+                    $"LocationIndex - Change Navigation Mode: {this.selectedNatigation}.");
+            NynaeveMessenger.Default.Send(feedbackMessage);
         }
 
         /// <summary>
