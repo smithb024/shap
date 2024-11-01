@@ -1,6 +1,5 @@
 ﻿namespace Shap.Locations.ViewModels.Icons
 {
-    using System.Windows.Forms;
     using System.Windows.Input;
     using Common.Commands;
     using CommunityToolkit.Mvvm.ComponentModel;
@@ -9,6 +8,9 @@
     using Shap.Common.SerialiseModel.Location;
     using Shap.Interfaces.Io;
     using Shap.Locations.Messages;
+    using Shap.Messages;
+    using Shap.Types.Enum;
+    using NynaeveMessenger = NynaeveLib.Messenger.Messenger;
 
     /// <summary>
     /// Supports a row on the selector view.
@@ -93,6 +95,12 @@
         {
             if (this.IsValid)
             {
+                FeedbackMessage feedbackMessage =
+                    new FeedbackMessage(
+                        FeedbackType.Navigation,
+                        $"LocationIndex - Display {this.Name}.");
+                NynaeveMessenger.Default.Send(feedbackMessage);
+
                 DisplayLocationMessage message =
                     new DisplayLocationMessage(
                         this.Name);
