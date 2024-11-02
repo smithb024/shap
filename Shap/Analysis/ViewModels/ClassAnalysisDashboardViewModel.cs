@@ -10,7 +10,10 @@
     using Shap.Common.Commands;
     using Shap.Common.SerialiseModel.Family;
     using Shap.Interfaces.Io;
+    using Shap.Messages;
     using Shap.Types;
+    using Shap.Types.Enum;
+    using NynaeveMessenger = NynaeveLib.Messenger.Messenger;
 
     /// <summary>
     /// View model describing a location analysis dashboard.
@@ -250,6 +253,12 @@
 
             this.ProgressEvent?.Invoke($"Started {description}");
 
+            FeedbackMessage feedbackMessage =
+                new FeedbackMessage(
+                    FeedbackType.Command,
+                    $"Analysis - Calculate all class report.");
+            NynaeveMessenger.Default.Send(feedbackMessage);
+
             ReportCounterManager<ClassCounter> results =
               ClassReportFactory.RunGeneralReportForAllCls(
                 this.controllers,
@@ -266,6 +275,12 @@
         {
             string description = $"Class Report for {this.YearsCollection[this.YearsIndex]}";
             this.ProgressEvent?.Invoke($"Started {description}");
+
+            FeedbackMessage feedbackMessage =
+                new FeedbackMessage(
+                    FeedbackType.Command,
+                    $"Analysis - Calculate class report for {this.YearsCollection[this.YearsIndex]}.");
+            NynaeveMessenger.Default.Send(feedbackMessage);
 
             ReportCounterManager<YearCounter> results =
               ClassReportFactory.RunYearReportForAllCls(
@@ -286,6 +301,12 @@
         {
             string description = $"Class Location Report for {this.ClsCollection[this.clsIndex]}";
             this.ProgressEvent?.Invoke($"Started {description}");
+
+            FeedbackMessage feedbackMessage =
+                new FeedbackMessage(
+                    FeedbackType.Command,
+                    $"Analysis - Calculate class {this.ClsCollection[this.ClsIndex]} report.");
+            NynaeveMessenger.Default.Send(feedbackMessage);
 
             List<string> classes = this.GetClasses();
 
@@ -308,6 +329,12 @@
         {
             string description = $"Class Location Report for {this.ClsCollection[this.clsIndex]} in {this.YearsCollection[this.YearsIndex]}";
             this.ProgressEvent?.Invoke($"Started {description}");
+
+            FeedbackMessage feedbackMessage =
+                new FeedbackMessage(
+                    FeedbackType.Command,
+                    $"Analysis - Calculate class {this.ClsCollection[this.ClsIndex]} report for {this.YearsCollection[this.YearsIndex]}.");
+            NynaeveMessenger.Default.Send(feedbackMessage);
 
             List<string> classes = this.GetClasses();
 
