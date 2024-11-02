@@ -6,7 +6,10 @@
     using NynaeveLib.ViewModel;
     using Shap.Common.Commands;
     using Shap.Interfaces.Io;
+    using Shap.Messages;
+    using Shap.Types.Enum;
     using Windows;
+    using NynaeveMessenger = NynaeveLib.Messenger.Messenger;
 
     /// <summary>
     /// View model for the <see cref="AnalysisWindow"/> window.
@@ -101,6 +104,12 @@
         /// </summary>
         public void ShowClassAnalysisWindow()
         {
+            FeedbackMessage feedbackMessage =
+                new FeedbackMessage(
+                    FeedbackType.Navigation,
+                    $"Analysis - Display Class Analysis Window.");
+            NynaeveMessenger.Default.Send(feedbackMessage);
+
             if (this.classAnalysisWindow == null)
             {
                 ClassAnalysisViewModel classAnalysisViewModel =
@@ -123,6 +132,12 @@
         /// </summary>
         public void ShowLocationAnalysisWindow()
         {
+            FeedbackMessage feedbackMessage =
+               new FeedbackMessage(
+                   FeedbackType.Navigation,
+                   $"Analysis - Display Location Analysis Window.");
+            NynaeveMessenger.Default.Send(feedbackMessage);
+
             if (this.locationAnalysisWindow == null)
             {
                 LocationAnalysisViewModel locationAnalysisViewModel =
