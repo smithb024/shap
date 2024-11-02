@@ -7,9 +7,18 @@
     using Common.Commands;
     using Data;
     using NynaeveLib.ViewModel;
+    using Shap.Messages;
+    using Shap.Types.Enum;
+    using NynaeveMessenger = NynaeveLib.Messenger.Messenger;
 
+    /// <summary>
+    /// View model which supports the table for locations.
+    /// </summary>
     public class LocationCounterResultsViewModel : ViewModelBase
     {
+        /// <summary>
+        /// Initialises a new instance of the <see cref="LocationCounterResultsViewModel"/> class.
+        /// </summary>
         public LocationCounterResultsViewModel()
         {
             this.Locations = new List<LocationViewModel>();
@@ -72,6 +81,12 @@
                 return;
             }
 
+            FeedbackMessage feedbackMessage =
+                new FeedbackMessage(
+                    FeedbackType.Navigation,
+                    $"Analysis - Sort by name.");
+            NynaeveMessenger.Default.Send(feedbackMessage);
+
             this.Locations =
                 this.Locations.OrderBy(loc => loc.Name).ToList();
             this.UpdateIndexes();
@@ -87,6 +102,12 @@
             {
                 return;
             }
+
+            FeedbackMessage feedbackMessage =
+                new FeedbackMessage(
+                    FeedbackType.Navigation,
+                    $"Analysis - Sort by total.");
+            NynaeveMessenger.Default.Send(feedbackMessage);
 
             this.Locations =
                 this.Locations.OrderByDescending(loc => loc.Total).ToList();
@@ -104,6 +125,12 @@
                 return;
             }
 
+            FeedbackMessage feedbackMessage =
+                new FeedbackMessage(
+                    FeedbackType.Navigation,
+                    $"Analysis - Sort by from.");
+            NynaeveMessenger.Default.Send(feedbackMessage);
+
             this.Locations =
                 this.Locations.OrderByDescending(loc => loc.NumberFrom).ToList();
             this.UpdateIndexes();
@@ -119,6 +146,12 @@
             {
                 return;
             }
+
+            FeedbackMessage feedbackMessage =
+                new FeedbackMessage(
+                    FeedbackType.Navigation,
+                    $"Analysis - Sort by to.");
+            NynaeveMessenger.Default.Send(feedbackMessage);
 
             this.Locations =
                 this.Locations.OrderByDescending(loc => loc.NumberTo).ToList();

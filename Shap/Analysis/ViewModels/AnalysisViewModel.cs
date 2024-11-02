@@ -61,8 +61,8 @@
             this.ClassControls.ProgressEvent = this.UpdateReportStatus;
             this.LocationControls.ProgressEvent += this.UpdateReportStatus;
 
-            this.OpenClassReportWindowCommand = new CommonCommand(ShowClassAnalysisWindow);
-            this.OpenLocationReportWindowCommand = new CommonCommand(ShowLocationAnalysisWindow);
+            this.OpenClassReportWindowCommand = new CommonCommand(this.ShowClassAnalysisWindow);
+            this.OpenLocationReportWindowCommand = new CommonCommand(this.ShowLocationAnalysisWindow);
         }
 
         /// <summary>

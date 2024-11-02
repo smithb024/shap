@@ -7,9 +7,18 @@
     using Common.Commands;
     using Data;
     using NynaeveLib.ViewModel;
+    using Shap.Messages;
+    using Shap.Types.Enum;
+    using NynaeveMessenger = NynaeveLib.Messenger.Messenger;
 
+    /// <summary>
+    /// View model which supports the full year counter table.
+    /// </summary>
     public class FullYearCounterResultsViewModel : ViewModelBase
     {
+        /// <summary>
+        /// Initialises a new instance of the <see cref="FullYearCounterResultsViewModel"/> class.
+        /// </summary>
         public FullYearCounterResultsViewModel()
         {
             this.Totals = new List<FullYearViewModel>();
@@ -18,6 +27,9 @@
             this.SortTotalCommand = new CommonCommand(this.SortByTotal);
         }
 
+        /// <summary>
+        /// Gets the totals table.
+        /// </summary>
         public List<FullYearViewModel> Totals { get; private set; }
 
         /// <summary>
@@ -30,6 +42,10 @@
         /// </summary>
         public ICommand SortTotalCommand { get; private set; }
 
+        /// <summary>
+        /// Reset the totals.
+        /// </summary>
+        /// <param name="results">The new results.</param>
         public void ResetTotals(
             ReportCounterManager<YearCounter> results)
         {
@@ -57,6 +73,9 @@
             }
         }
 
+        /// <summary>
+        /// Update the table.
+        /// </summary>
         public void UpdateView()
         {
             this.OnPropertyChanged(nameof(this.Totals));
@@ -72,6 +91,12 @@
                 return;
             }
 
+            FeedbackMessage feedbackMessage =
+                new FeedbackMessage(
+                    FeedbackType.Navigation,
+                    $"Analysis - Sort by name.");
+            NynaeveMessenger.Default.Send(feedbackMessage);
+
             this.Totals =
                 this.Totals.OrderBy(loc => loc.Name).ToList();
             this.OnPropertyChanged(nameof(this.Totals));
@@ -86,6 +111,12 @@
             {
                 return;
             }
+
+            FeedbackMessage feedbackMessage =
+                new FeedbackMessage(
+                    FeedbackType.Navigation,
+                    $"Analysis - Sort by total.");
+            NynaeveMessenger.Default.Send(feedbackMessage);
 
             this.Totals =
                 this.Totals.OrderByDescending(loc => loc.Total).ToList();
