@@ -11,31 +11,31 @@
 
     <StackPanel Background="{StaticResource StdBackground}">
 
-      <Button Content="Configuration"
+        <Button Content="Configuration"
             Command="{Binding ConfigurationCommand}"
             Style="{StaticResource StdButtonStyle}"
             Height="20"
             Margin="2"/>
 
-    <Button Content="Details"
+        <Button Content="Details"
             Command="{Binding ShowJnyDetailsCommand}"
             Style="{StaticResource StdButtonStyle}"
             Height="20"
             Margin="2"/>
 
-    <Button Content="Add/Edit"
+        <Button Content="Add/Edit"
             Command="{Binding AddEditJnyDetailsCommand}"
             Style="{StaticResource StdButtonStyle}"
             Height="20"
             Margin="2"/>
 
-    <Button Content="Daily Input"
+        <Button Content="Daily Input"
             Command="{Binding ShowInputDataCommand}"
             Style="{StaticResource StdButtonStyle}"
             Height="20"
             Margin="2"/>
 
-    <Button Content="Class Index"
+        <Button Content="Class Index"
             Command="{Binding ShowClassIndexCommand}"
             Style="{StaticResource StdButtonStyle}"
             Height="20"
@@ -53,22 +53,28 @@
             Height="20"
             Margin="2"/>
 
-    <Button Content="Open Log Folder"
+        <Button Content="Open Log Folder"
             Command="{Binding OpenLogFolderCommand}"
             Style="{StaticResource StdButtonStyle}"
             Height="20"
             Margin="2"/>
 
-    <Button Content="Analysis"
+        <Button Content="Analysis"
             Command="{Binding AnalysisCommand}"
             Style="{StaticResource StdButtonStyle}"
             Height="20"
             Margin="2"/>
 
-    <Button Content="Exit"
+        <Button Content="Feedback"
+            Command="{Binding OpenFeedbackCommand}"
+            Style="{StaticResource StdButtonStyle}"
+            Height="20"
+            Margin="2"/>
+
+        <Button Content="Exit"
             Command="{Binding ExitCommand}"
             Style="{StaticResource StdButtonStyle}"
             Height="20"
             Margin="2"/>
-  </StackPanel>
+    </StackPanel>
 </Window>

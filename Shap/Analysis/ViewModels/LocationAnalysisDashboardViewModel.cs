@@ -9,7 +9,10 @@
     using Shap.Common;
     using Shap.Common.Commands;
     using Shap.Config;
+    using Shap.Messages;
     using Shap.StationDetails;
+    using Shap.Types.Enum;
+    using NynaeveMessenger = NynaeveLib.Messenger.Messenger;
 
     /// <summary>
     /// View model describing a location analysis dashboard.
@@ -289,6 +292,12 @@
         {
             string description = $"Location General Report";
 
+            FeedbackMessage feedbackMessage =
+                new FeedbackMessage(
+                    FeedbackType.Command,
+                    $"Analysis - Calculate all location report.");
+            NynaeveMessenger.Default.Send(feedbackMessage);
+
             this.ProgressEvent?.Invoke($"Started {description}");
             ReportCounterManager<LocationCounter> result = LocationReportFactory.RunStnGeneralReport();
             this.locationGeneralReportResults.Invoke(result);
@@ -302,6 +311,12 @@
         {
             string description = $"Location Report for {this.YearsCollection[this.YearsIndex]}";
             this.ProgressEvent?.Invoke($"Started {description}");
+
+            FeedbackMessage feedbackMessage =
+                new FeedbackMessage(
+                    FeedbackType.Command,
+                    $"Analysis - Calculate location report for {this.YearsCollection[this.YearsIndex]}.");
+            NynaeveMessenger.Default.Send(feedbackMessage);
 
             ReportCounterManager<LocationCounter> results =
               LocationReportFactory.RunStnAnnualReport(
@@ -322,6 +337,12 @@
             string description = $"Location Report for {this.StnCollection[this.StnIndex]}";
             this.ProgressEvent?.Invoke($"Started {description}");
 
+            FeedbackMessage feedbackMessage =
+                new FeedbackMessage(
+                    FeedbackType.Command,
+                    $"Analysis - Calculate {this.StnCollection[this.StnIndex]} report.");
+            NynaeveMessenger.Default.Send(feedbackMessage);
+
             ReportCounterManager<LocationCounter> results =
                   LocationReportFactory.RunSingleStnGeneralReport(
                  this.StnCollection[this.StnIndex],
@@ -340,6 +361,12 @@
         {
             string description = $"Location Report for {this.StnCollection[this.StnIndex]} in {this.YearsCollection[this.YearsIndex]}";
             this.ProgressEvent?.Invoke($"Started {description}");
+
+            FeedbackMessage feedbackMessage =
+                new FeedbackMessage(
+                    FeedbackType.Command,
+                    $"Analysis - Calculate {this.StnCollection[this.StnIndex]} report for {this.YearsCollection[this.YearsIndex]}.");
+            NynaeveMessenger.Default.Send(feedbackMessage);
 
             ReportCounterManager<LocationCounter> results =
               LocationReportFactory.RunSingleStnAnnualReport(

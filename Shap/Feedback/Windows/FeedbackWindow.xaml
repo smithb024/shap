@@ -1,0 +1,24 @@
+﻿<Window x:Class="Shap.Feedback.Windows.FeedbackWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Shap.Feedback.Windows"
+        mc:Ignorable="d"
+        Title="FeedbackWindow" 
+        ResizeMode="NoResize"
+        Background="{StaticResource StdBackground}"
+        SizeToContent="WidthAndHeight">
+    <Grid>
+        <ListBox 
+            Margin="1"
+            Background="{StaticResource StdBackground}"
+            ItemsSource="{Binding Path=Rows}">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <local:FeedbackRow />
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+    </Grid>
+</Window>

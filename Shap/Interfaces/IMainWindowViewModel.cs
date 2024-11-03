@@ -3,12 +3,16 @@
     using System;
     using System.Windows.Input;
 
+    /// <summary>
+    /// Interface which supports the main window view model.
+    /// </summary>
     public interface IMainWindowViewModel
     {
         ICommand AddEditJnyDetailsCommand { get; }
         ICommand AnalysisCommand { get; }
         ICommand ConfigurationCommand { get; }
         ICommand ExitCommand { get; }
+        ICommand OpenFeedbackCommand { get; }
         ICommand OpenLogCommand { get; }
         ICommand OpenLogFolderCommand { get; }
         ICommand ShowClassIndexCommand { get; }

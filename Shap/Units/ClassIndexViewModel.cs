@@ -9,8 +9,9 @@
     using Shap.Common.SerialiseModel.Operator;
     using Shap.Icons.ComboBoxItems;
     using Shap.Interfaces.Io;
-    using Shap.Units.Dialog;
-    using Stats;
+    using Shap.Messages;
+    using Shap.Types.Enum;
+    using NynaeveMessenger = NynaeveLib.Messenger.Messenger;
 
     /// <summary>
     /// View model for the class index view. The index items are split into groups and this view
@@ -170,15 +171,18 @@
         /// </summary>
         public bool InConfigurationMode
         {
-            get
-            {
-                return this.inConfigurationMode;
-            }
+            get => this.inConfigurationMode;
 
             set
             {
                 this.inConfigurationMode = value;
                 this.OnPropertyChanged(nameof(this.InConfigurationMode));
+
+                FeedbackMessage message =
+                    new FeedbackMessage(
+                        FeedbackType.Info,
+                        $"ClassIndex - Change Configuration Mode: {this.inConfigurationMode}.");
+                NynaeveMessenger.Default.Send(message);
 
                 if (this.ItemsGroup != null)
                 {
@@ -197,6 +201,12 @@
         {
             if (this.FamilyIndex >= 0 && this.FamilyIndex < this.Families.Count)
             {
+                FeedbackMessage message =
+                    new FeedbackMessage(
+                        FeedbackType.Info,
+                        $"ClassIndex - Family Filter Selected: {this.Families[this.FamilyIndex]}.");
+                NynaeveMessenger.Default.Send(message);
+
                 foreach (ClassIndexGroupViewModel indexViewModel in this.ItemsGroup)
                 {
                     indexViewModel.SetFamilyFilter(
@@ -212,6 +222,12 @@
         {
             if (this.OperatorIndex >= 0 && this.OperatorIndex < this.Operators.Count)
             {
+                FeedbackMessage message =
+                new FeedbackMessage(
+                    FeedbackType.Info,
+                    $"ClassIndex - Operator Filter Selected: {this.Operators[this.OperatorIndex].Name}.");
+                NynaeveMessenger.Default.Send(message);
+
                 foreach (ClassIndexGroupViewModel indexViewModel in this.ItemsGroup)
                 {
                     indexViewModel.SetOperatorFilter(

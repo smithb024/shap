@@ -8,6 +8,9 @@
     using NynaeveLib.Logger;
     using NynaeveLib.ViewModel;
     using Shap.Interfaces.Units;
+    using Shap.Messages;
+    using Shap.Types.Enum;
+    using NynaeveMessenger = NynaeveLib.Messenger.Messenger;
 
     /// <summary>
     /// Delegate used to pass commands for a vehicle.
@@ -70,6 +73,12 @@
             if (this.vcleWindows.Exists(vw => vw.DataContext == unit))
             {
                 window = this.vcleWindows.Find(vw => vw.DataContext == unit);
+
+                FeedbackMessage message =
+                   new FeedbackMessage(
+                       FeedbackType.Navigation,
+                       $"Focus on window for {unit.DisplayUnitNumber}");
+                NynaeveMessenger.Default.Send(message);
             }
             else
             {
@@ -90,6 +99,12 @@
                 window.Closed += this.VcleDataWindowClosed;
 
                 this.vcleWindows.Add(window);
+
+                FeedbackMessage message =
+                   new FeedbackMessage(
+                       FeedbackType.Navigation,
+                       $"Open new window for {unit.DisplayUnitNumber}");
+                NynaeveMessenger.Default.Send(message);
             }
 
             window.Show();
@@ -117,6 +132,13 @@
         {
             if (sender.GetType().Equals(typeof(VehicleDataWindow)))
             {
+                string unitId = ((UnitViewModel)((VehicleDataWindow)sender).DataContext).DisplayUnitNumber;
+                FeedbackMessage message =
+                   new FeedbackMessage(
+                       FeedbackType.Navigation,
+                       $"Close window for {unitId}");
+                NynaeveMessenger.Default.Send(message);
+
                 this.vcleWindows.Remove((VehicleDataWindow)sender);
             }
         }
@@ -191,6 +213,12 @@
             VehicleDataWindow window,
             IUnitViewModel unit)
         {
+            FeedbackMessage message =
+               new FeedbackMessage(
+                   FeedbackType.Navigation,
+                   $"Display {unit.DisplayUnitNumber} on the VDW.");
+            NynaeveMessenger.Default.Send(message);
+
             // Focus on an existing window if one already exists.
             if (this.vcleWindows.Exists(vw => vw.DataContext == unit))
             {

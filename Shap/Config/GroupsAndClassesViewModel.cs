@@ -8,6 +8,9 @@
 
     using Shap.Config.GroupsAndClasses;
     using Shap.Interfaces.Io;
+    using Shap.Messages;
+    using Shap.Types.Enum;
+    using NynaeveMessenger = NynaeveLib.Messenger.Messenger;
 
     /// <summary>
     /// View model class used to manage the groups and classes dialog.
@@ -69,11 +72,24 @@
         {
             this.Result = MessageBoxResult.OK;
 
+            FeedbackMessage message =
+                new FeedbackMessage(
+                    FeedbackType.Command,
+                    $"GAC - Complete and Save.");
+            NynaeveMessenger.Default.Send(message);
+
             this.GroupManager.Save();
             this.FamilyManager.Save();
             this.OperatorManager.Save();
 
             window?.CloseObject();
+
+            FeedbackMessage closeMessage =
+                new FeedbackMessage(
+                    FeedbackType.Navigation,
+                    $"GAC - Close Dialog.");
+            NynaeveMessenger.Default.Send(closeMessage);
+
         }
 
         /// <summary>

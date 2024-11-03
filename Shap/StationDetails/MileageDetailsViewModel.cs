@@ -9,6 +9,8 @@
     using Messages;
     using Shap.Common.Commands;
     using Shap.Types;
+    using Shap.Types.Enum;
+    using NynaeveMessenger = NynaeveLib.Messenger.Messenger;
 
     /// <summary>
     /// View model which supports the mileage details window.
@@ -42,7 +44,7 @@
         {
             this.journeyController = JourneyIOController.Instance;
             this.routes = new ObservableCollection<RouteDetailsType>();
-            this.RefreshCmd = new CommonCommand(this.CalculateRoutes);
+            this.RefreshCmd = new CommonCommand(this.Refresh);
 
             this.stnList = new ObservableCollection<string>();
             this.InitialiseComboBoxPrimary();
@@ -82,6 +84,12 @@
                 {
                     return;
                 }
+
+                FeedbackMessage message =
+                    new FeedbackMessage(
+                        FeedbackType.Info,
+                        $"DistanceDetails - Show routes for {value}.");
+                NynaeveMessenger.Default.Send(message);
 
                 this.stn = value;
                 this.OnPropertyChanged(nameof(this.Stn));
@@ -155,6 +163,20 @@
 
                 previousvalue = location;
             }
+        }
+
+        /// <summary>
+        /// Refresh the routes list.
+        /// </summary>
+        private void Refresh()
+        {
+            FeedbackMessage message =
+                new FeedbackMessage(
+                    FeedbackType.Command,
+                    $"DistanceDetails - Refresh.");
+            NynaeveMessenger.Default.Send(message);
+
+            this.CalculateRoutes();
         }
 
         /// <summary>

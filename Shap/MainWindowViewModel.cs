@@ -11,31 +11,69 @@
     using Shap.Analysis.Windows;
     using Shap.Common.Commands;
     using Shap.Config;
+    using Shap.Feedback.ViewModels;
+    using Shap.Feedback.Windows;
     using Shap.Input;
+    using Shap.Interfaces.Feedback.Helpers;
     using Shap.Interfaces.Io;
     using Shap.Interfaces.Locations.Model;
     using Shap.Interfaces.Stats;
     using Shap.Locations.Views;
+    using Shap.Messages;
     using Shap.StationDetails;
+    using Shap.Types.Enum;
     using Shap.Units;
+    using NynaeveMessenger = NynaeveLib.Messenger.Messenger;
 
     /// <summary>
     /// View model for the main window.
     /// </summary>
     public class MainWindowViewModel : IMainWindowViewModel
     {
+        /// <summary>
+        /// The location manager
+        /// </summary>
+        private readonly ILocationManager locationManager;
+
+        /// <summary>
+        /// The instance of the <see cref="InputForm"/>.
+        /// </summary>
         private InputForm inputWindow;
+
+        /// <summary>
+        /// The instance of the <see cref="MileageDetailsWindow"/>.
+        /// </summary>
         private MileageDetailsWindow jnyDetailsWindow;
+
+        /// <summary>
+        /// The instance of the <see cref="EditMileageWindow"/>.
+        /// </summary>
         private EditMileageWindow editMileageWindow;
 
         /// <summary>
-        /// The locations index window.
+        /// The instance of the <see cref="LocationsIndexWindow"/>.
         /// </summary>
         private LocationsIndexWindow locationsIndexWindow;
 
+        /// <summary>
+        /// The instance of the <see cref="ClassIndexWindow"/>.
+        /// </summary>
         private ClassIndexWindow classIndexWindow;
+
+        /// <summary>
+        /// The instance of the <see cref="AnalysisWindow"/>.
+        /// </summary>
         private AnalysisWindow analysisWindow;
+
+        /// <summary>
+        /// The instanceo of the <see cref="ConfigWindow"/>.
+        /// </summary>
         private ConfigWindow configWindow;
+
+        /// <summary>
+        /// The instance of the <see cref="FeedbackWindow"/>.
+        /// </summary>
+        private FeedbackWindow feedbackWindow;
 
         /// <summary>
         /// Collection of IO controllers
@@ -48,31 +86,31 @@
         private IFirstExampleManager firstExamples;
 
         /// <summary>
-        /// The location manager
+        /// Not used, but is instantiated here to ensure that it starts and logs all UI feedback.
         /// </summary>
-        private ILocationManager locationManager;
+        private IFeedbackLogger feedbackLogger;
 
         /// <summary>
         /// Initialises a new instance of the <see cref="MainWindowViewModel"/> class.
         /// </summary>
-        /// <param name="controllers">
-        /// Factory containing IO controllers.
-        /// </param>
-        /// <param name="locationManager">
-        /// The location manager
-        /// </param>
+        /// <param name="controllers">Factory containing IO controllers.</param>
+        /// <param name="locationManager">The location manager</param>
+        /// <param name="feedbackLoger">The UI Feedback Logger</param>
         public MainWindowViewModel(
           IIoControllers controllers,
-          ILocationManager locationManager)
+          ILocationManager locationManager,
+          IFeedbackLogger feedbackLoger)
         {
             this.controllers = controllers;
             this.locationManager = locationManager;
             this.firstExamples = Ioc.Default.GetService<IFirstExampleManager>();
+            this.feedbackLogger = feedbackLoger;
 
             this.AddEditJnyDetailsCommand = new CommonCommand(this.ShowAddEditJnyDetailsWindow);
             this.AnalysisCommand = new CommonCommand(this.ShowAnalysisWindow);
             this.ConfigurationCommand = new CommonCommand(this.ShowConfigurationWindow);
             this.ExitCommand = new CommonCommand(this.ExitProgram);
+            this.OpenFeedbackCommand = new CommonCommand(this.ShowFeedbackCommand);
             this.OpenLogCommand = new CommonCommand(this.ShowLog);
             this.OpenLogFolderCommand = new CommonCommand(this.ShowLogFolder);
             this.ShowClassIndexCommand = new CommonCommand(this.ShowClassIndexWindow);
@@ -83,16 +121,39 @@
             this.inputWindow = null;
         }
 
+        /// <summary>
+        /// Gets the command which opens the edit jny window.
+        /// </summary>
         public ICommand AddEditJnyDetailsCommand { get; private set; }
 
+        /// <summary>
+        /// Gets the command which opens the analysis window.
+        /// </summary>
         public ICommand AnalysisCommand { get; private set; }
 
+        /// <summary>
+        /// Gets the command which opens the configuration window.
+        /// </summary>
         public ICommand ConfigurationCommand { get; private set; }
 
+        /// <summary>
+        /// Gets the command which exits the app.
+        /// </summary>
         public ICommand ExitCommand { get; private set; }
 
+        /// <summary>
+        /// Gets the command which opens the feedback window.
+        /// </summary>
+        public ICommand OpenFeedbackCommand { get; private set; }
+
+        /// <summary>
+        /// Gets the command which opens the log.
+        /// </summary>
         public ICommand OpenLogCommand { get; private set; }
 
+        /// <summary>
+        /// Gets the command which opens the log folder in file explorer.
+        /// </summary>
         public ICommand OpenLogFolderCommand { get; private set; }
 
         /// <summary>
@@ -105,6 +166,9 @@
         /// </summary>
         public ICommand ShowLocationIndexCommand { get; private set; }
 
+        /// <summary>
+        /// Gets the command which opens the jny details window.
+        /// </summary>
         public ICommand ShowJnyDetailsCommand { get; private set; }
 
         /// <summary>
@@ -126,10 +190,11 @@
             }
 
             this.editMileageWindow.Focus();
+            this.ShowWindowFeedback(WindowType.AddEditDistance, true);
         }
 
         /// <summary>
-        /// Form closed, set to null.
+        /// Associated view closed, set to null.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -137,6 +202,7 @@
         {
             this.editMileageWindow.Closed -= this.EditJnyDetailsWindowClosed;
             this.editMileageWindow = null;
+            this.ShowWindowFeedback(WindowType.AddEditDistance, false);
         }
 
         /// <summary>
@@ -146,14 +212,15 @@
         {
             if (this.analysisWindow == null)
             {
-                SetupWindow(
+                this.SetupWindow(
                   this.analysisWindow = new AnalysisWindow(),
                   new AnalysisViewModel(this.controllers),
-                  CloseAnalysisWindow,
-                  AnalysisWindowClosed);
+                  this.CloseAnalysisWindow,
+                  this.AnalysisWindowClosed);
             }
 
             this.analysisWindow.Focus();
+            this.ShowWindowFeedback(WindowType.Analysis, true);
         }
 
         /// <summary>
@@ -174,6 +241,7 @@
         public void AnalysisWindowClosed(object sender, EventArgs e)
         {
             this.analysisWindow = null;
+            this.ShowWindowFeedback(WindowType.Analysis, false);
         }
 
         /// <summary>
@@ -183,16 +251,17 @@
         {
             if (this.configWindow == null)
             {
-                SetupWindow(
+                this.SetupWindow(
                   this.configWindow = new ConfigWindow(),
                   new ConfigViewModel(
                       this.controllers,
                       this.firstExamples),
-                  CloseConfigurationWindow,
-                  ConfigurationWindowClosed);
+                  this.CloseConfigurationWindow,
+                  this.ConfigurationWindowClosed);
             }
 
             this.configWindow.Focus();
+            this.ShowWindowFeedback(WindowType.Configuration, true);
         }
 
         /// <summary>
@@ -213,26 +282,46 @@
         public void ConfigurationWindowClosed(object sender, EventArgs e)
         {
             this.configWindow = null;
+            this.ShowWindowFeedback(WindowType.Configuration, false);
         }
 
+        /// <summary>
+        /// Exit the application
+        /// </summary>
         public void ExitProgram()
         {
             Application.Current.Shutdown();
-            //NynaeveLib.DialogService.DialogService service = new NynaeveLib.DialogService.DialogService();
-
-            //MessageBoxResult result = service.ShowDialog("TestMessage");
         }
 
+        /// <summary>
+        /// Show the log folder in file explorer.
+        /// </summary>
         public void ShowLogFolder()
         {
             Logger.Instance.OpenLogDirectory();
+            FeedbackMessage message =
+              new FeedbackMessage(
+                  FeedbackType.Command,
+                  "Show log folder");
+            NynaeveMessenger.Default.Send(message);
         }
 
+        /// <summary>
+        /// Open the log file.
+        /// </summary>
         public void ShowLog()
         {
             Logger.Instance.OpenLogFile();
+            FeedbackMessage message =
+                new FeedbackMessage(
+                    FeedbackType.Command,
+                    "Show log file");
+            NynaeveMessenger.Default.Send(message);
         }
 
+        /// <summary>
+        /// Show the class index window.
+        /// </summary>
         public void ShowClassIndexWindow()
         {
             if (this.classIndexWindow == null)
@@ -246,15 +335,16 @@
                 this.SetupWindow(
                   this.classIndexWindow,
                   classIndexViewModel,
-                  CloseClassIndexWindow,
-                  ClassIndexWindowClosed);
+                  this.CloseClassIndexWindow,
+                  this.ClassIndexWindowClosed);
             }
 
             this.classIndexWindow.Focus();
+            this.ShowWindowFeedback(WindowType.ClassIndex, true);
         }
 
         /// <summary>
-        /// 
+        /// Show the location index window.
         /// </summary>
         public void ShowLocationIndexWindow()
         {
@@ -267,6 +357,7 @@
             }
 
             this.locationsIndexWindow.Focus();
+            this.ShowWindowFeedback(WindowType.LocationIndex, true);
         }
 
         /// <summary>
@@ -278,6 +369,7 @@
         {
             this.locationsIndexWindow.Closed -= this.LocationsIndexWindowClosed;
             this.locationsIndexWindow = null;
+            this.ShowWindowFeedback(WindowType.LocationIndex, false);
         }
 
         /// <summary>
@@ -298,6 +390,7 @@
         public void ClassIndexWindowClosed(object sender, EventArgs e)
         {
             this.classIndexWindow = null;
+            this.ShowWindowFeedback(WindowType.ClassIndex, false);
         }
 
         /// <summary>
@@ -314,6 +407,7 @@
             }
 
             this.jnyDetailsWindow.Focus();
+            this.ShowWindowFeedback(WindowType.DistanceDetails, true);
         }
 
         /// <summary>
@@ -325,6 +419,7 @@
         {
             this.jnyDetailsWindow.Closed -= this.JnyDetailsWindowClosed;
             this.jnyDetailsWindow = null;
+            this.ShowWindowFeedback(WindowType.DistanceDetails, false);
         }
 
         /// <summary>
@@ -341,6 +436,7 @@
             }
 
             this.inputWindow.Focus();
+            this.ShowWindowFeedback(WindowType.DailyInput, true);
         }
 
         /// <summary>
@@ -352,6 +448,49 @@
         {
             this.inputWindow.Closed -= this.JnyDetailsWindowClosed;
             this.inputWindow = null;
+            this.ShowWindowFeedback(WindowType.DailyInput, false);
+        }
+
+        /// <summary>
+        /// Show the feedback window. Create a new one if it doesn't exist.
+        /// </summary>
+        public void ShowFeedbackCommand()
+        {
+            if (this.feedbackWindow == null)
+            {
+                FeedbackViewModel viewModel = new FeedbackViewModel();
+                this.feedbackWindow = new FeedbackWindow();
+
+                this.SetupWindow(
+                  this.feedbackWindow,
+                  viewModel,
+                  this.CloseFeedbackWindow,
+                  this.FeedbackWindowClosed);
+            }
+
+            this.feedbackWindow.Focus();
+            this.ShowWindowFeedback(WindowType.Feedback, true);
+        }
+
+        /// <summary>
+        /// close the feedback window.
+        /// </summary>
+        /// <param name="sender">The sender</param>
+        /// <param name="e">Event arguments</param>
+        public void CloseFeedbackWindow(object sender, EventArgs e)
+        {
+            this.feedbackWindow.Close();
+        }
+
+        /// <summary>
+        /// Feedback window closed, set to null.
+        /// </summary>
+        /// <param name="sender">The <see cref="AnalysisWindow"/></param>
+        /// <param name="e">Event arguments</param>
+        public void FeedbackWindowClosed(object sender, EventArgs e)
+        {
+            this.feedbackWindow = null;
+            this.ShowWindowFeedback(WindowType.Feedback, false);
         }
 
         /// <summary>
@@ -362,7 +501,7 @@
         /// <param name="closedViewMethod">request from the view model to close the view</param>
         /// <param name="closedMethod">method to run when the window closes</param>
         private void SetupWindow(
-          System.Windows.Window window,
+          Window window,
           NynaeveLib.ViewModel.ViewModelBase viewModel,
           EventHandler closeViewMethod,
           EventHandler closedMethod)
@@ -388,6 +527,65 @@
             window.Closed += closedMethod;
             window.Show();
             window.Activate();
+        }
+
+        /// <summary>
+        /// Show navigation feedback.
+        /// </summary>
+        /// <param name="windowType"></param>
+        /// <param name="isOpen"></param>
+        private void ShowWindowFeedback(
+            WindowType windowType,
+            bool isOpen)
+        {
+            string messageType = isOpen ? "Open" : "Close";
+
+            string windowName;
+
+            switch (windowType)
+            {
+                case WindowType.AddEditDistance:
+                    windowName = "Add/Edit Distance";
+                    break;
+
+                case WindowType.Analysis:
+                    windowName = "Analysis";
+                    break;
+
+                case WindowType.ClassIndex:
+                    windowName = "Class Index";
+                    break;
+
+                case WindowType.Configuration:
+                    windowName = "Configuration";
+                    break;
+
+                case WindowType.DailyInput:
+                    windowName = "Daily Input";
+                    break;
+
+                case WindowType.DistanceDetails:
+                    windowName = "Distance Details";
+                    break;
+
+                case WindowType.Feedback:
+                    windowName = "Feedback";
+                    break;
+
+                case WindowType.LocationIndex:
+                    windowName = "Location Index";
+                    break;
+
+                default:
+                    windowName = "Unknown Window";
+                    break;
+            }
+
+            FeedbackMessage message =
+                new FeedbackMessage(
+                    FeedbackType.Navigation,
+                    $"{messageType} {windowName} Window.");
+            NynaeveMessenger.Default.Send(message);
         }
     }
 }

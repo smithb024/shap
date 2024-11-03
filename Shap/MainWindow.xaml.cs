@@ -3,14 +3,8 @@
     using System;
     using System.Windows;
 
-    using Shap.Io;
-    using Shap.Interfaces.Io;
-    using Shap.Units.IO;
-    using Shap.Stats;
-
     using NynaeveLib.Logger;
     using CommunityToolkit.Mvvm.DependencyInjection;
-    using Shap.Interfaces.StationDetails;
     using Shap.Interfaces;
 
     /// <summary>
@@ -23,7 +17,7 @@
         /// </summary>
         public MainWindow()
         {
-            InitializeComponent();
+            this.InitializeComponent();
 
             Console.Write("create Log");
             Logger.SetInitialInstance("ShapLog");
@@ -31,7 +25,14 @@
             this.DataContext = Ioc.Default.GetService<IMainWindowViewModel>();
         }
 
-        private void Window_Closed(object sender, EventArgs e)
+        /// <summary>
+        /// The Window has closed. Close the application.
+        /// </summary>
+        /// <param name="sender">The main window view</param>
+        /// <param name="e">The event arguments</param>
+        private void Window_Closed(
+            object sender, 
+            EventArgs e)
         {
             Application.Current.Shutdown();
         }

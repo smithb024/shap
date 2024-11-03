@@ -15,7 +15,9 @@
     using Shap.Common;
     using Shap.Common.Commands;
     using Shap.Interfaces.Io;
-    using Shap.Stats;
+    using Shap.Messages;
+    using Shap.Types.Enum;
+    using NynaeveMessenger = NynaeveLib.Messenger.Messenger;
 
     /// <summary>
     /// View model class for the configuration dialog.
@@ -80,7 +82,7 @@
             this.RefreshYearCmd = new CommonCommand(this.RefreshYear);
             this.RefreshAllCmd = new CommonCommand(this.RefreshAll);
             this.ConfigClsCmd = new CommonCommand(this.ConfigCls);
-            this.ConfigStnCmd = new CommonCommand(this.ConfigStn);
+            this.ConfigStnCmd = new CommonCommand(this.ConfigLoc);
             this.UpdatePreviousIdCountCmd = new CommonCommand(this.UpdatePreviousIdCount);
         }
 
@@ -250,9 +252,15 @@
         {
             this.Status = "Refresh Year Working";
 
+            FeedbackMessage message =
+               new FeedbackMessage(
+                   FeedbackType.Command,
+                   $"Config - Request refresh year for {this.YearsCollection[this.YearsIndex]}.");
+            NynaeveMessenger.Default.Send(message);
+
             BackgroundWorker worker = new BackgroundWorker();
-            worker.DoWork += WorkerDoWork;
-            worker.RunWorkerCompleted += WorkerCompleted;
+            worker.DoWork += this.WorkerDoWork;
+            worker.RunWorkerCompleted += this.WorkerCompleted;
 
             worker.RunWorkerAsync(ConfigJobType.RefreshYear);
         }
@@ -264,9 +272,15 @@
         {
             this.Status = "Search All Working";
 
+            FeedbackMessage message =
+               new FeedbackMessage(
+                   FeedbackType.Command,
+                   "Config - Request refresh all years.");
+            NynaeveMessenger.Default.Send(message);
+
             BackgroundWorker worker = new BackgroundWorker();
-            worker.DoWork += WorkerDoWork;
-            worker.RunWorkerCompleted += WorkerCompleted;
+            worker.DoWork += this.WorkerDoWork;
+            worker.RunWorkerCompleted += this.WorkerCompleted;
 
             worker.RunWorkerAsync(ConfigJobType.RefreshAll);
         }
@@ -277,6 +291,12 @@
         /// </summary>
         private void ConfigCls()
         {
+            FeedbackMessage openMessage =
+                         new FeedbackMessage(
+                             FeedbackType.Navigation,
+                             "Config - Show Configure Cls Dialog.");
+            NynaeveMessenger.Default.Send(openMessage);
+            
             GroupsAndClassesViewModel groupsViewModel =
               new GroupsAndClassesViewModel(
                 this.ioControllers);
@@ -293,9 +313,15 @@
         /// <summary>
         /// Setup and show the dialog for managing the locations.
         /// </summary>
-        private void ConfigStn()
+        private void ConfigLoc()
         {
-            PopularStnConfigViewModel popularViewModel = new PopularStnConfigViewModel();
+            FeedbackMessage openMessage =
+                         new FeedbackMessage(
+                             FeedbackType.Navigation,
+                             "Config - Show Configure Stn Dialog.");
+            NynaeveMessenger.Default.Send(openMessage);
+
+            PopularLocConfigViewModel popularViewModel = new PopularLocConfigViewModel();
 
             DialogService service = new DialogService();
 
@@ -311,6 +337,12 @@
         /// </summary>
         private void UpdatePreviousIdCount()
         {
+            FeedbackMessage startMessage =
+               new FeedbackMessage(
+                   FeedbackType.Command,
+                   $"Config - Request change to previous Ids.");
+            NynaeveMessenger.Default.Send(startMessage);
+
             if (this.OldNumbersCount > this.OldNumbersCountUpdate)
             {
                 DialogService dialogService = new DialogService();
@@ -338,9 +370,12 @@
                     this.OldNumbersCount = this.OldNumbersCountUpdate;
                 }
             }
-            //    }
-            //  }
-            //}
+
+            FeedbackMessage finishMessage =
+              new FeedbackMessage(
+                  FeedbackType.Info,
+                  $"Config - Previous Ids count changed to this.OldNumbersCount.");
+            NynaeveMessenger.Default.Send(finishMessage);
         }
 
         /// <summary>
@@ -389,12 +424,12 @@
 
             if (jobType == ConfigJobType.RefreshAll)
             {
-                firstExamples.RunSearchAll();
+                this.firstExamples.RunSearchAll();
                 returnString = "Refresh All";
             }
             else if (jobType == ConfigJobType.RefreshYear)
             {
-                firstExamples.RunSearchYear(this.YearsCollection[this.YearsIndex]);
+                this.firstExamples.RunSearchYear(this.YearsCollection[this.YearsIndex]);
                 returnString = "Refresh Year";
             }
 
@@ -410,6 +445,12 @@
         {
             string result = (string)e.Result;
             this.Status = $"{result} Complete";
+
+            FeedbackMessage message =
+               new FeedbackMessage(
+                   FeedbackType.Info,
+                   $"Config - {result} Complete.");
+            NynaeveMessenger.Default.Send(message);
         }
     }
 }

@@ -24,10 +24,7 @@
         /// </summary>
         public ObservableCollection<IndexItemViewModel> Items
         {
-            get
-            {
-                return this.items;
-            }
+            get => this.items;
 
             private set
             {

@@ -6,7 +6,10 @@
     using NynaeveLib.ViewModel;
     using Shap.Common.Commands;
     using Shap.Interfaces.Io;
+    using Shap.Messages;
+    using Shap.Types.Enum;
     using Windows;
+    using NynaeveMessenger = NynaeveLib.Messenger.Messenger;
 
     /// <summary>
     /// View model for the <see cref="AnalysisWindow"/> window.
@@ -58,8 +61,8 @@
             this.ClassControls.ProgressEvent = this.UpdateReportStatus;
             this.LocationControls.ProgressEvent += this.UpdateReportStatus;
 
-            this.OpenClassReportWindowCommand = new CommonCommand(ShowClassAnalysisWindow);
-            this.OpenLocationReportWindowCommand = new CommonCommand(ShowLocationAnalysisWindow);
+            this.OpenClassReportWindowCommand = new CommonCommand(this.ShowClassAnalysisWindow);
+            this.OpenLocationReportWindowCommand = new CommonCommand(this.ShowLocationAnalysisWindow);
         }
 
         /// <summary>
@@ -94,6 +97,9 @@
             }
         }
 
+        /// <summary>
+        /// Gets the current date.
+        /// </summary>
         private string CurrentDate => DateTime.Now.ToString(ReportFactoryCommon.DatePattern);
 
         /// <summary>
@@ -101,6 +107,12 @@
         /// </summary>
         public void ShowClassAnalysisWindow()
         {
+            FeedbackMessage feedbackMessage =
+                new FeedbackMessage(
+                    FeedbackType.Navigation,
+                    $"Analysis - Display Class Analysis Window.");
+            NynaeveMessenger.Default.Send(feedbackMessage);
+
             if (this.classAnalysisWindow == null)
             {
                 ClassAnalysisViewModel classAnalysisViewModel =
@@ -123,6 +135,12 @@
         /// </summary>
         public void ShowLocationAnalysisWindow()
         {
+            FeedbackMessage feedbackMessage =
+               new FeedbackMessage(
+                   FeedbackType.Navigation,
+                   $"Analysis - Display Location Analysis Window.");
+            NynaeveMessenger.Default.Send(feedbackMessage);
+
             if (this.locationAnalysisWindow == null)
             {
                 LocationAnalysisViewModel locationAnalysisViewModel =
@@ -259,6 +277,12 @@
               faultMessage);
         }
 
+        /// <summary>
+        /// Write a report for a single year and location.
+        /// </summary>
+        /// <param name="results">The results to report</param>
+        /// <param name="year">The year of the report</param>
+        /// <param name="location">The location of the report</param>
         private void SingleLocationYearReport(
           ReportCounterManager<LocationCounter> results,
           string year,
@@ -272,6 +296,10 @@
               faultMessage);
         }
 
+        /// <summary>
+        /// Write a report for all classes.
+        /// </summary>
+        /// <param name="results">The results to report</param>
         private void ClassGeneralReportResults(
           ReportCounterManager<ClassCounter> results)
         {
@@ -283,6 +311,11 @@
               faultMessage);
         }
 
+        /// <summary>
+        /// Write a report for a single year.
+        /// </summary>
+        /// <param name="results">The results to report</param>
+        /// <param name="year">The year of the report</param>
         private void ClassSingleYearReportResults(
           ReportCounterManager<YearCounter> results,
           string year)
@@ -295,6 +328,11 @@
               faultMessage);
         }
 
+        /// <summary>
+        /// Write a report for a single class.
+        /// </summary>
+        /// <param name="results">The results to report</param>
+        /// <param name="cls">The class of the report</param>
         private void SingleClassGeneralLocationReportResults(
           ReportCounterManager<LocationCounter> results,
           string cls)
@@ -307,6 +345,12 @@
               faultMessage);
         }
 
+        /// <summary>
+        /// Write a report for a single year and class.
+        /// </summary>
+        /// <param name="results">The results to report</param>
+        /// <param name="year">The year of the report</param>
+        /// <param name="cls">The class of the report</param>
         private void SingleClassSingleYearLocationReportResults(
           ReportCounterManager<LocationCounter> results,
           string year,

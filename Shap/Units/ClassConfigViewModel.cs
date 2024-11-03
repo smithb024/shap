@@ -21,6 +21,9 @@
     using Shap.Units.IO;
     using Shap.Units.Dialog;
     using Shap.Units.Factories;
+    using NynaeveMessenger = NynaeveLib.Messenger.Messenger;
+    using Shap.Messages;
+    using Shap.Types.Enum;
 
     /// <summary>
     /// View model which supports the class configuration dialog.
@@ -372,10 +375,7 @@
         /// </summary>
         public int SubClassListIndex
         {
-            get
-            {
-                return this.subClassListIndex;
-            }
+            get => this.subClassListIndex;
 
             set
             {
@@ -445,6 +445,12 @@
         /// </summary>
         private void SaveModel()
         {
+            FeedbackMessage message =
+                new FeedbackMessage(
+                    FeedbackType.Command,
+                    $"ClassConfig - Save Model for {this.classId}.");
+            NynaeveMessenger.Default.Send(message);
+
             ++this.classFileConfiguration.Version;
             this.ioControllers.UnitsXml.Write(
                 this.classFileConfiguration,
@@ -489,6 +495,13 @@
 
             if (dialogViewModel.Result == MessageBoxResult.OK)
             {
+                FeedbackMessage message =
+                    new FeedbackMessage(
+                        FeedbackType.Command,
+                        $"ClassConfig - {this.classId} : New sub class, see log.");
+                NynaeveMessenger.Default.Send(message);
+                Logger.Instance.WriteLog($"ClassConfig - Add new sub class {dialogViewModel.SubClass} to {this.classId}.");
+
                 Subclass newSubclass =
                     new Subclass()
                     {
@@ -516,7 +529,8 @@
         {
             NewNumberViewModel dialogViewModel =
               new NewNumberViewModel(
-                this.SubClassNumbers);
+                  this.classId,
+                  this.SubClassNumbers);
 
             DialogService service = new DialogService();
 
@@ -532,6 +546,13 @@
                 {
                     return;
                 }
+
+                FeedbackMessage message =
+                    new FeedbackMessage(
+                        FeedbackType.Command,
+                        $"ClassConfig - {this.classId} : New number, see log.");
+                NynaeveMessenger.Default.Send(message);
+                Logger.Instance.WriteLog($"ClassConfig - Add new number {dialogViewModel.Number} to class {this.classId}.");
 
                 Number newNumber =
                     new Number()
@@ -562,9 +583,10 @@
         private void AddNewNumberSeries()
         {
             NewNumberViewModel dialogViewModel =
-              new NewNumberViewModel(
-                this.SubClassNumbers,
-                true);
+                new NewNumberViewModel(
+                    this.classId,
+                    this.SubClassNumbers,
+                    true);
 
             DialogService service = new DialogService();
 
@@ -576,10 +598,18 @@
 
             if (dialogViewModel.Result == MessageBoxResult.OK)
             {
+                FeedbackMessage message =
+                    new FeedbackMessage(
+                        FeedbackType.Command,
+                        $"ClassConfig - {this.classId} : New numbers, see log.");
+                NynaeveMessenger.Default.Send(message);
+                Logger.Instance.WriteLog($"ClassConfig - Add new numbers in series from {dialogViewModel.Number} - {dialogViewModel.UpperNumber} to class {this.classId}.");
+
                 for (int number = dialogViewModel.Number; number <= dialogViewModel.UpperNumber; ++number)
                 {
                     if (this.classFileConfiguration.Subclasses[dialogViewModel.SubClassIndex].Numbers.Find(n => n.CurrentNumber == number) != null)
                     {
+                        Logger.Instance.WriteLog($"ClassConfig - Error Stopped adding numbers -> {number} is a duplicate.");
                         return;
                     }
 
@@ -613,9 +643,10 @@
         private void Renumber()
         {
             RenumberViewModel dialogViewModel =
-              new RenumberViewModel(
-                this.SubClassNumbers,
-                this.classFileConfiguration);
+                new RenumberViewModel(
+                    this.classId,
+                    this.SubClassNumbers,
+                    this.classFileConfiguration);
 
             DialogService service = new DialogService();
 
@@ -627,6 +658,12 @@
 
             if (dialogViewModel.Result == MessageBoxResult.OK)
             {
+                FeedbackMessage message =
+                    new FeedbackMessage(
+                        FeedbackType.Command,
+                        $"ClassConfig - {this.classId} : Renumber, see log.");
+                NynaeveMessenger.Default.Send(message);
+
                 RenumberFactory.Renumber(
                     this.classFileConfiguration,
                     this.classId,
@@ -653,32 +690,19 @@
 
             DialogService service = new DialogService();
 
+            FeedbackMessage message =
+                new FeedbackMessage(
+                    FeedbackType.Command,
+                    $"ClassConfig - {this.classId} : Change operators, see log.");
+            NynaeveMessenger.Default.Send(message);
+
             service.ShowDialog(
               new UpdateOperatorsDialog()
               {
                   DataContext = dialogViewModel
               });
 
-            //if (dialogViewModel.Result == MessageBoxResult.OK)
-            //{
-            //    Subclass newSubclass =
-            //        new Subclass()
-            //        {
-            //            Type = dialogViewModel.SubClass,
-            //            Images = new List<Image>(),
-            //            Numbers = new List<Number>()
-            //        };
-
-            //    // This will be null the first time a class is created.
-            //    if (this.classFileConfiguration.Subclasses == null)
-            //    {
-            //        this.classFileConfiguration.Subclasses = new List<Subclass>();
-            //    }
-
-                //this.classFileConfiguration.Subclasses.Add(newSubclass);
-                //this.SubClassNumbers.Add(newSubclass.Type);
-                this.SaveModel();
-            //}
+            this.SaveModel();
         }
 
         /// <summary>
@@ -717,6 +741,12 @@
             {
                 return;
             }
+
+            FeedbackMessage message =
+                new FeedbackMessage(
+                    FeedbackType.Info,
+                    $"ClassConfig - Show new sub class {this.SubClassNumbers[this.SubClassListIndex]}.");
+            NynaeveMessenger.Default.Send(message);
 
             // Clear down
             this.NumbersList.Clear();

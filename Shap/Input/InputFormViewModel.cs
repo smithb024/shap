@@ -21,6 +21,8 @@
     using NynaeveLib.Logger;
     using NynaeveLib.Types;
     using Shap.Common.ViewModel;
+    using Shap.Types.Enum;
+    using NynaeveMessenger = NynaeveLib.Messenger.Messenger;
 
     /// <summary>
     /// Main form for inputting data.
@@ -472,6 +474,12 @@
         /// </summary>
         private void AddNewJny()
         {
+            FeedbackMessage feedbackMessage =
+              new FeedbackMessage(
+                  FeedbackType.Command,
+                  $"DailyInput - Add new route, {this.JnyFromList[this.JnyFromIndex]} to {this.JnyToList[this.JnyToIndex]} - {this.FirstVehicle},{this.SecondVehicle},{this.ThirdVehicle},{this.FourthVehicle}.");
+            NynaeveMessenger.Default.Send(feedbackMessage);
+
             this.Status = "Adding";
             this.WriteToLine();
 
@@ -495,7 +503,11 @@
         {
             ColourResourcesClass colourResources = ColourResourcesClass.GetInstance();
 
-            //bool success = true;
+            FeedbackMessage feedbackMessage =
+              new FeedbackMessage(
+                  FeedbackType.Command,
+                  $"DailyInput - Save day, {this.Date}.");
+            NynaeveMessenger.Default.Send(feedbackMessage);
 
             Status = "Saving";
 

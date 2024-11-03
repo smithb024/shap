@@ -7,7 +7,13 @@
     using Shap.Interfaces.Locations.ViewModels;
     using System.Collections.ObjectModel;
     using Shap.Locations.Messages;
+    using Shap.Messages;
+    using Shap.Types.Enum;
+    using NynaeveMessenger = NynaeveLib.Messenger.Messenger;
 
+    /// <summary>
+    /// View model which supports the selection of locations by first letter.
+    /// </summary>
     public class AlphabeticalNavigationViewModel : ObservableRecipient, IAlphabeticalNavigationViewModel
     {
         /// <summary>
@@ -56,7 +62,7 @@
         public void Dispose()
         {
             // Do not change this code. Put cleanup code in 'Dispose(bool disposing)' method
-            Dispose(true);
+            this.Dispose(true);
             GC.SuppressFinalize(this);
         }
 
@@ -101,6 +107,12 @@
                 icon.IsSelected =
                     string.Compare(icon.Character, character) == 0;
             }
+
+            FeedbackMessage feedbackMessage =
+                new FeedbackMessage(
+                    FeedbackType.Navigation,
+                    $"LocationIndex - Display locations starting with {character}.");
+            NynaeveMessenger.Default.Send(feedbackMessage);
 
             AlphaSelectorMessage message =
                 new AlphaSelectorMessage(

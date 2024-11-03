@@ -6,10 +6,12 @@
     using Shap.Interfaces.Io;
     using Shap.Messages;
     using Shap.Types;
+    using Shap.Types.Enum;
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
     using System.Linq;
     using System.Windows.Input;
+    using NynaeveMessenger = NynaeveLib.Messenger.Messenger;
 
     /// <summary>
     /// View model which manages the ability to add groups.
@@ -248,6 +250,12 @@
         /// </summary>
         private void AddGroup()
         {
+            FeedbackMessage openMessage =
+                       new FeedbackMessage(
+                           FeedbackType.Command,
+                           $"GAC - Add new Group {this.NewGroup}.");
+            NynaeveMessenger.Default.Send(openMessage);
+
             this.groupsCollection.Add(
               new GroupsType(
                 this.NewGroup));
@@ -272,7 +280,7 @@
             }
 
             GroupsListMessage message = new GroupsListMessage(names);
-            Messenger.Send(message);
+            this.Messenger.Send(message);
         }
 
         /// <summary>
@@ -292,6 +300,12 @@
         {
             if (this.IsValidGroupSelected())
             {
+                FeedbackMessage openMessage =
+                          new FeedbackMessage(
+                              FeedbackType.Command,
+                              $"GAC - Remove Group {this.groupsCollection[this.GroupIndex].Name}.");
+                NynaeveMessenger.Default.Send(openMessage);
+
                 this.groupsCollection.RemoveAt(this.GroupIndex);
                 this.ResetGroups();
             }
@@ -314,12 +328,24 @@
         {
             if (this.RangeIsAlphaId)
             {
-                this.groupsCollection[GroupIndex].AddAlphaID(this.AlphaId);
+                FeedbackMessage message =
+                         new FeedbackMessage(
+                             FeedbackType.Command,
+                             $"GAC - Add new Alpha Id {this.AlphaId} to group {this.groupsCollection[this.GroupIndex].Name}.");
+                NynaeveMessenger.Default.Send(message);
+
+                this.groupsCollection[this.GroupIndex].AddAlphaID(this.AlphaId);
             }
             else
             {
                 if (this.IsProposedRangeValid())
                 {
+                    FeedbackMessage message =
+                             new FeedbackMessage(
+                                 FeedbackType.Command,
+                                 $"GAC - Add new Range {this.newRangeFrom}-{this.newRangeTo} to group {this.groupsCollection[this.GroupIndex].Name}.");
+                    NynaeveMessenger.Default.Send(message);
+
                     int from;
                     int to;
 
@@ -364,6 +390,12 @@
         /// </remarks>
         private void DeleteRange()
         {
+            FeedbackMessage message =
+                    new FeedbackMessage(
+                        FeedbackType.Command,
+                        $"GAC - Remove Range {this.RangeCollection[this.RangeIndex]} from group {this.groupsCollection[this.GroupIndex].Name}.");
+            NynaeveMessenger.Default.Send(message);
+
             this.groupsCollection[this.GroupIndex].Delete(this.RangeCollection[this.RangeIndex]);
 
             this.ResetRange();
