@@ -44,7 +44,7 @@
         /// </summary>
         public PopularLocConfigViewModel()
         {
-            this.Result = MessageBoxResult.None;
+            this.Result = MessageBoxResult.Cancel;
             this.StnCollection = new ObservableCollection<string>();
             this.PopularStnCollection = new ObservableCollection<string>();
 

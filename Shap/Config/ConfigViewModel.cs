@@ -330,6 +330,25 @@
               {
                   DataContext = popularViewModel
               });
+
+            FeedbackMessage feedbackMessage;
+
+            if (popularViewModel.Result == MessageBoxResult.OK)
+            {
+                feedbackMessage =
+                    new FeedbackMessage(
+                        FeedbackType.Command,
+                        $"Config - Update Common Locations.");
+            }
+            else
+            {
+                feedbackMessage =
+                    new FeedbackMessage(
+                        FeedbackType.Info,
+                        $"Config - Cancel Common Locations update.");
+            }
+
+            NynaeveMessenger.Default.Send(feedbackMessage);
         }
 
         /// <summary>
