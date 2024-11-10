@@ -14,13 +14,29 @@
     using Shap.Types.Enum;
     using NynaeveMessenger = NynaeveLib.Messenger.Messenger;
 
-    // TODO add an IResult interface, to ensure that a result is set in this dialog view model
-
+    /// <summary>
+    /// View model which supports the popular config stn dialog.
+    /// </summary>
     public class PopularLocConfigViewModel : DialogViewModelBase
     {
+        /// <summary>
+        /// The location collection to show on the dialog.
+        /// </summary>
         ObservableCollection<string> stnCollection;
+
+        /// <summary>
+        /// The index of the currently selected location.
+        /// </summary>
         int stnIndex;
+
+        /// <summary>
+        /// The collection of popular locations to show on the dialog.
+        /// </summary>
         ObservableCollection<string> popularStnCollection;
+
+        /// <summary>
+        /// The index of the currently selected popular location.
+        /// </summary>
         int popularStnIndex;
 
         /// <summary>
@@ -28,6 +44,7 @@
         /// </summary>
         public PopularLocConfigViewModel()
         {
+            this.Result = MessageBoxResult.Cancel;
             this.StnCollection = new ObservableCollection<string>();
             this.PopularStnCollection = new ObservableCollection<string>();
 
@@ -60,20 +77,23 @@
         }
 
         /// <summary>
-        /// Add an item.
+        /// Gets the add an item command.
         /// </summary>
         public ICommand AddCmd { get; private set; }
 
         /// <summary>
-        /// Delete the selected item.
+        /// Gets the delete the selected item.
         /// </summary>
         public ICommand DeleteCmd { get; private set; }
 
         /// <summary>
-        /// Ok command.
+        /// Gets the Ok command.
         /// </summary>
         public ICommand CompleteCmd { get; private set; }
 
+        /// <summary>
+        /// Gets or sets the location collection.
+        /// </summary>
         public ObservableCollection<string> StnCollection
         {
             get
@@ -88,6 +108,9 @@
             }
         }
 
+        /// <summary>
+        /// Gets or sets the index of the currently selected location.
+        /// </summary>
         public int StnIndex
         {
             get
@@ -102,6 +125,9 @@
             }
         }
 
+        /// <summary>
+        /// Gets or sets the popular location collection.
+        /// </summary>
         public ObservableCollection<string> PopularStnCollection
         {
             get
@@ -116,6 +142,9 @@
             }
         }
 
+        /// <summary>
+        /// Gets or sets the index of the currently selected popular location.
+        /// </summary>
         public int PopularStnIndex
         {
             get
@@ -155,6 +184,10 @@
             }
         }
 
+        /// <summary>
+        /// Indicates whether it is possible to run the add location command.
+        /// </summary>
+        /// <returns>Can run flag</returns>
         private bool CanAddStn()
         {
             if (this.StnIndex < 0 || this.StnIndex >= this.StnCollection?.Count)
@@ -180,6 +213,10 @@
             this.OnPropertyChanged(nameof(this.PopularStnCollection));
         }
 
+        /// <summary>
+        /// Indicates whether it is possible to run the delete location command.
+        /// </summary>
+        /// <returns>Can run flag</returns>
         private bool CanDeleteStn()
         {
             if (this.PopularStnCollection == null)
