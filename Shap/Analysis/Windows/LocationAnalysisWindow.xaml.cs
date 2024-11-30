@@ -1,27 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
-
-namespace Shap.Analysis.Windows
+﻿namespace Shap.Analysis.Windows
 {
-  /// <summary>
-  /// Interaction logic for LocationAnalysisWindow.xaml
-  /// </summary>
-  public partial class LocationAnalysisWindow : Window
-  {
-    public LocationAnalysisWindow()
+    using System.Windows;
+
+    /// <summary>
+    /// Interaction logic for LocationAnalysisWindow.xaml
+    /// </summary>
+    public partial class LocationAnalysisWindow : Window
     {
-      InitializeComponent();
+        /// <summary>
+        /// Initialises a new instance of the <see cref="LocationAnalysisWindow"/> class.
+        /// </summary>
+        public LocationAnalysisWindow()
+        {
+            this.InitializeComponent();
+        }
     }
-  }
 }
