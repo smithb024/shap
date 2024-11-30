@@ -23,11 +23,11 @@
 
         <TextBlock Grid.Column="0"
                    Style="{StaticResource StdTextBlockStyle}"
-                   Text="{Binding Index}"/>
+                   Text="{Binding Path=Index}"/>
         
         <TextBlock Grid.Column="1"
                    Style="{StaticResource StdTextBlockStyle}"
-                   Text="{Binding Name}"/>
+                   Text="{Binding Path=Name}"/>
 
         <Grid Grid.Column="2" >
             <Grid.Background>
@@ -38,7 +38,7 @@
             </Grid.Background>
             <TextBlock HorizontalAlignment="Center"
                    Style="{StaticResource StdTextBlockStyle}"
-                   Text="{Binding Total}"/>
+                   Text="{Binding Path=Total}"/>
         </Grid>
 
         <Grid Grid.Column="3">
@@ -50,7 +50,7 @@
             </Grid.Background>
             <TextBlock HorizontalAlignment="Center"
                    Style="{StaticResource StdTextBlockStyle}"
-                   Text="{Binding NumberFrom}"/>
+                   Text="{Binding Path=NumberFrom}"/>
         </Grid>
 
         <Grid Grid.Column="4">
@@ -62,7 +62,7 @@
             </Grid.Background>
             <TextBlock HorizontalAlignment="Center"
                    Style="{StaticResource StdTextBlockStyle}"
-                   Text="{Binding NumberTo}"/>
+                   Text="{Binding Path=NumberTo}"/>
         </Grid>
     </Grid>
 </UserControl>
