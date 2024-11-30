@@ -15,6 +15,7 @@
 
     <Grid>
         <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="200"/>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>
@@ -33,84 +34,88 @@
 
         <TextBlock Grid.Column="0"
                    Style="{StaticResource StdTextBlockStyle}"
-                   Text="{Binding Name}"/>
+                   Text="{Binding Path=Index}"/>
 
-        <Grid Grid.Column="1" Margin="0, 0, 5, 0" Background="{Binding Path=Total, Converter={StaticResource TotalsConverter}}">
+        <TextBlock Grid.Column="1"
+                   Style="{StaticResource StdTextBlockStyle}"
+                   Text="{Binding Path=Name}"/>
+
+        <Grid Grid.Column="2" Margin="0, 0, 5, 0" Background="{Binding Path=Total, Converter={StaticResource TotalsConverter}}">
             <TextBlock HorizontalAlignment="Center"
                    Style="{StaticResource StdTextBlockStyle}"
-                   Text="{Binding Total}"/>
+                   Text="{Binding Path=Total}"/>
         </Grid>
 
-        <Grid Grid.Column="2" Background="{Binding Path=Jan, Converter={StaticResource MonthTotalsConverter}}">
+        <Grid Grid.Column="3" Background="{Binding Path=Jan, Converter={StaticResource MonthTotalsConverter}}">
             <TextBlock HorizontalAlignment="Center"
                    Style="{StaticResource StdTextBlockStyle}"
-                   Text="{Binding Jan}"/>
+                   Text="{Binding Path=Jan}"/>
         </Grid>
 
-        <Grid Grid.Column="3" Background="{Binding Path=Feb, Converter={StaticResource MonthTotalsConverter}}">
+        <Grid Grid.Column="4" Background="{Binding Path=Feb, Converter={StaticResource MonthTotalsConverter}}">
             <TextBlock HorizontalAlignment="Center"
                    Style="{StaticResource StdTextBlockStyle}"
-                   Text="{Binding Feb}"/>
+                   Text="{Binding Path=Feb}"/>
         </Grid>
 
-        <Grid Grid.Column="4" Background="{Binding Path=Mar, Converter={StaticResource MonthTotalsConverter}}">
+        <Grid Grid.Column="5" Background="{Binding Path=Mar, Converter={StaticResource MonthTotalsConverter}}">
             <TextBlock HorizontalAlignment="Center"
                    Style="{StaticResource StdTextBlockStyle}"
-                   Text="{Binding Mar}"/>
+                   Text="{Binding Path=Mar}"/>
         </Grid>
 
-        <Grid Grid.Column="5" Background="{Binding Path=Apr, Converter={StaticResource MonthTotalsConverter}}">
+        <Grid Grid.Column="6" Background="{Binding Path=Apr, Converter={StaticResource MonthTotalsConverter}}">
             <TextBlock HorizontalAlignment="Center"
                    Style="{StaticResource StdTextBlockStyle}"
-                   Text="{Binding Apr}"/>
+                   Text="{Binding Path=Apr}"/>
         </Grid>
 
-        <Grid Grid.Column="6" Background="{Binding Path=May, Converter={StaticResource MonthTotalsConverter}}">
+        <Grid Grid.Column="7" Background="{Binding Path=May, Converter={StaticResource MonthTotalsConverter}}">
             <TextBlock HorizontalAlignment="Center"
                    Style="{StaticResource StdTextBlockStyle}"
-                   Text="{Binding May}"/>
+                   Text="{Binding Path=May}"/>
         </Grid>
 
-        <Grid Grid.Column="7" Background="{Binding Path=Jun, Converter={StaticResource MonthTotalsConverter}}">
+        <Grid Grid.Column="8" Background="{Binding Path=Jun, Converter={StaticResource MonthTotalsConverter}}">
             <TextBlock HorizontalAlignment="Center"
                    Style="{StaticResource StdTextBlockStyle}"
-                   Text="{Binding Jun}"/>
+                   Text="{Binding Path=Jun}"/>
         </Grid>
 
-        <Grid Grid.Column="8" Background="{Binding Path=Jul, Converter={StaticResource MonthTotalsConverter}}">
+        <Grid Grid.Column="9" Background="{Binding Path=Jul, Converter={StaticResource MonthTotalsConverter}}">
             <TextBlock HorizontalAlignment="Center"
                    Style="{StaticResource StdTextBlockStyle}"
-                   Text="{Binding Jul}"/>
+                   Text="{Binding Path=Jul}"/>
         </Grid>
 
-        <Grid Grid.Column="9" Background="{Binding Path=Aug, Converter={StaticResource MonthTotalsConverter}}">
+        <Grid Grid.Column="10" Background="{Binding Path=Aug, Converter={StaticResource MonthTotalsConverter}}">
             <TextBlock HorizontalAlignment="Center"
                    Style="{StaticResource StdTextBlockStyle}"
-                   Text="{Binding Aug}"/>
+                   Text="{Binding Path=Aug}"/>
         </Grid>
 
-        <Grid Grid.Column="10" Background="{Binding Path=Sept, Converter={StaticResource MonthTotalsConverter}}">
+        <Grid Grid.Column="11" Background="{Binding Path=Sept, Converter={StaticResource MonthTotalsConverter}}">
             <TextBlock HorizontalAlignment="Center"
                    Style="{StaticResource StdTextBlockStyle}"
-                   Text="{Binding Sept}"/>
+                   Text="{Binding Path=Sept}"/>
         </Grid>
 
-        <Grid Grid.Column="11" Background="{Binding Path=Oct, Converter={StaticResource MonthTotalsConverter}}">
+        <Grid Grid.Column="12" Background="{Binding Path=Oct, Converter={StaticResource MonthTotalsConverter}}">
             <TextBlock HorizontalAlignment="Center"
                    Style="{StaticResource StdTextBlockStyle}"
-                   Text="{Binding Oct}"/>
+                   Text="{Binding Path=Oct}"/>
         </Grid>
 
-        <Grid Grid.Column="12" Background="{Binding Path=Nov, Converter={StaticResource MonthTotalsConverter}}">
+        <Grid Grid.Column="13" Background="{Binding Path=Nov, Converter={StaticResource MonthTotalsConverter}}">
             <TextBlock HorizontalAlignment="Center"
                    Style="{StaticResource StdTextBlockStyle}"
-                   Text="{Binding Nov}"/>
+                   Text="{Binding Path=Nov}"/>
         </Grid>
 
-        <Grid Grid.Column="13" Background="{Binding Path=Dec, Converter={StaticResource MonthTotalsConverter}}">
+        <Grid Grid.Column="14" Background="{Binding Path=Dec, Converter={StaticResource MonthTotalsConverter}}">
             <TextBlock HorizontalAlignment="Center"
                    Style="{StaticResource StdTextBlockStyle}"
-                   Text="{Binding Dec}"/>
+                   Text="{Binding Path=Dec}"/>
         </Grid>
 
     </Grid>
