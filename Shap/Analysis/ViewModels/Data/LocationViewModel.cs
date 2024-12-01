@@ -38,16 +38,10 @@
         /// <summary>
         /// Gets or sets the current index.
         /// </summary>
-        public int Index { get
-            {
-                return this.index;
-            }
-
-            set
-            {
-                this.index = value;
-                this.OnPropertyChanged(nameof(this.Index));
-            }
+        public int Index
+        {
+            get => this.index;
+            set => this.SetProperty(ref this.index, value);
         }
 
         /// <summary>

@@ -71,6 +71,8 @@
                         counter.Nov,
                         counter.Dec));
             }
+
+            this.UpdateIndexes();
         }
 
         /// <summary>
@@ -99,6 +101,7 @@
 
             this.Totals =
                 this.Totals.OrderBy(loc => loc.Name).ToList();
+            this.UpdateIndexes();
             this.OnPropertyChanged(nameof(this.Totals));
         }
 
@@ -120,7 +123,36 @@
 
             this.Totals =
                 this.Totals.OrderByDescending(loc => loc.Total).ToList();
+            this.UpdateIndexes();
             this.OnPropertyChanged(nameof(this.Totals));
+        }
+
+        /// <summary>
+        /// Set up the index for each location. It is used on the table to count the rows.
+        /// </summary>
+        private void UpdateIndexes()
+        {
+            if (!this.AreTotalsValid())
+            {
+                return;
+            }
+
+            int counter = 1;
+
+            foreach (FullYearViewModel total in this.Totals)
+            {
+                total.Index = counter;
+                ++counter;
+            }
+        }
+
+        /// <summary>
+        /// Return a value indicating whether thw totals collection is valid
+        /// </summary>
+        /// <returns></returns>
+        private bool AreTotalsValid()
+        {
+            return !(this.Totals == null || this.Totals.Count == 0);
         }
     }
 }
