@@ -13,6 +13,9 @@
         /// </summary>
         private LocationCounterResultsViewModel resultsTable;
 
+        /// <summary>
+        /// Initialises a new instance of the <see cref="LocationAnalysisViewModel"/> class.
+        /// </summary>
         public LocationAnalysisViewModel()
         {
             this.LocationControls =

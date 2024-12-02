@@ -1,28 +1,18 @@
 <Application x:Class="Shap.App" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" StartupUri="MainWindow.xaml" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" d1p1:Ignorable="d" xmlns:d1p1="http://schemas.openxmlformats.org/markup-compatibility/2006">
-  <Application.Resources>
-    <ResourceDictionary>
-      <ResourceDictionary.MergedDictionaries>
-        <ResourceDictionary Source="/Shap;component/Styles/BrushDictionary.xaml">
+    <Application.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Shap;component/Styles/BrushDictionary.xaml"/>
+                <ResourceDictionary Source="/Shap;component/Styles/GlobalStyles.xaml"/>
+                <ResourceDictionary Source="/Shap;component/Styles/ButtonStyles.xaml"/>
+                <ResourceDictionary Source="/Shap;component/Styles/CheckboxStyles.xaml"/>
+                <ResourceDictionary Source="/Shap;component/Styles/ComboBoxStyles.xaml"/>
+                <ResourceDictionary Source="/Shap;component/Styles/DataEntryStyles.xaml"/>
+                <ResourceDictionary Source="/Shap;component/Styles/LabelStyles.xaml"/>
+                <ResourceDictionary Source="/Shap;component/Styles/ListBoxStyles.xaml"/>
+                <ResourceDictionary Source="/Shap;component/Styles/ListViewStyles.xaml"/>
+                <ResourceDictionary Source="/Shap;component/Styles/TextBlockStyles.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
-        <ResourceDictionary Source="/Shap;component/Styles/GlobalStyles.xaml">
-        </ResourceDictionary>
-        <ResourceDictionary Source="/Shap;component/Styles/ButtonStyles.xaml">
-        </ResourceDictionary>
-        <ResourceDictionary Source="/Shap;component/Styles/CheckboxStyles.xaml">
-        </ResourceDictionary>
-        <ResourceDictionary Source="/Shap;component/Styles/ComboBoxStyles.xaml">
-        </ResourceDictionary>
-        <ResourceDictionary Source="/Shap;component/Styles/DataEntryStyles.xaml">
-        </ResourceDictionary>
-        <ResourceDictionary Source="/Shap;component/Styles/LabelStyles.xaml">
-        </ResourceDictionary>
-        <ResourceDictionary Source="/Shap;component/Styles/ListBoxStyles.xaml">
-        </ResourceDictionary>
-        <ResourceDictionary Source="/Shap;component/Styles/ListViewStyles.xaml">
-        </ResourceDictionary>
-        <ResourceDictionary Source="/Shap;component/Styles/TextBlockStyles.xaml">
-        </ResourceDictionary>
-      </ResourceDictionary.MergedDictionaries>
-    </ResourceDictionary>
-  </Application.Resources>
+    </Application.Resources>
 </Application>

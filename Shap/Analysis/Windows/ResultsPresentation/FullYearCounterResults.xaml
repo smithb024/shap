@@ -25,17 +25,17 @@
               Width="80"
               Content="Location"
               Style="{StaticResource StdButtonStyle}"
-              Command="{Binding SortNameCommand}"/>
+              Command="{Binding Path=SortNameCommand}"/>
 
             <Button Grid.Column="1"
               Height="20"
               Width="80"
               Content="Total"
               Style="{StaticResource StdButtonStyle}"
-              Command="{Binding SortTotalCommand}"/>
+              Command="{Binding Path=SortTotalCommand}"/>
         </Grid>
 
-        <ListBox ItemsSource="{Binding Totals}"
+        <ListBox ItemsSource="{Binding Path=Totals}"
              HorizontalContentAlignment="Stretch"
              Margin="0"
              IsTabStop="False"
