@@ -22,6 +22,13 @@
         public LocationCounterResultsViewModel()
         {
             this.Locations = new List<LocationViewModel>();
+            this.Totals =
+                new LocationViewModel(
+                    string.Empty,
+                    0,
+                    0,
+                    0,
+                    false);
 
             this.SortNameCommand = new CommonCommand(this.SortByName);
             this.SortTotalCommand = new CommonCommand(this.SortByTotal);
@@ -29,6 +36,14 @@
             this.SortToCommand = new CommonCommand(this.SortByTo);
         }
 
+        /// <summary>
+        /// Gets the analysis totals.
+        /// </summary>
+        public LocationViewModel Totals { get; private set; }
+
+        /// <summary>
+        /// Gets the collection of all locations present in the analysis.
+        /// </summary>
         public List<LocationViewModel> Locations { get; private set; }
 
         /// <summary>
@@ -51,11 +66,19 @@
         /// </summary>
         public ICommand SortToCommand { get; private set; }
 
+        /// <summary>
+        /// Update the location results.
+        /// </summary>
+        /// <param name="results">The results to display</param>
+        /// <param name="isYear">Indicates whether this relates to a year.</param>
         public void ResetLocations(
             ReportCounterManager<LocationCounter> results,
             bool isYear)
         {
             this.Locations.Clear();
+
+            int totalFrom = 0;
+            int totalTo = 0;
 
             foreach (LocationCounter counter in results.CounterCollection)
             {
@@ -66,7 +89,19 @@
                         counter.From,
                         counter.To,
                         isYear));
+
+                totalFrom += counter.From;
+                totalTo += counter.To;
             }
+
+            this.Totals =
+                new LocationViewModel(
+                    string.Empty,
+                    totalFrom + totalTo,
+                    totalFrom,
+                    totalTo,
+                    isYear);
+            this.OnPropertyChanged(nameof(this.Totals));
 
             this.SortByTotal();
         }
