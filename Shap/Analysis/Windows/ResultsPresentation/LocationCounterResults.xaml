@@ -53,22 +53,27 @@
               Command="{Binding SortToCommand}"/>
         </Grid>
 
-        <data:LocationItem 
-            Grid.Row="1"
-            DataContext="{Binding Path=Totals}"/>
-
-        <ListBox ItemsSource="{Binding Locations}"
-             HorizontalContentAlignment="Stretch"
-             Margin="0"
-             IsTabStop="False"
-             Grid.Row="2"
-             VerticalAlignment="Top"
-             BorderThickness="0"
-             Background="{StaticResource StdBackground}">
-            <ListBox.ItemTemplate>
+        <Border Grid.Row="1"
+                BorderBrush="{StaticResource StdForeground}"
+                BorderThickness="0,0,0,1"
+                Margin="6,0,23,5">
+            <data:LocationItem 
+                DataContext="{Binding Path=Totals}"/>
+        </Border>
+        
+        <ListView ItemsSource="{Binding Locations}"
+                  HorizontalContentAlignment="Stretch"
+                  Margin="0"
+                  IsTabStop="False"
+                  Grid.Row="2"
+                  VerticalAlignment="Top"
+                  BorderThickness="0"
+                  Background="{StaticResource StdBackground}"
+                  ScrollViewer.VerticalScrollBarVisibility="Visible">
+            <ListView.ItemTemplate>
                 <DataTemplate>
-                    <data:LocationItem/>
+                    <data:LocationItem />
                 </DataTemplate>
-            </ListBox.ItemTemplate>
-        </ListBox>
+            </ListView.ItemTemplate>
+        </ListView>
     </Grid></UserControl>
