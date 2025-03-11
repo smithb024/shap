@@ -22,13 +22,14 @@
         public LocationCounterResultsViewModel()
         {
             this.Locations = new List<LocationViewModel>();
-            this.Totals =
-                new LocationViewModel(
-                    string.Empty,
-                    0,
-                    0,
-                    0,
-                    false);
+            this.Totals = null;
+                //new LocationViewModel(
+                //    "Totals",
+                //    0,
+                //    0,
+                //    0,
+                //    false,
+                //    false);
 
             this.SortNameCommand = new CommonCommand(this.SortByName);
             this.SortTotalCommand = new CommonCommand(this.SortByTotal);
@@ -96,11 +97,12 @@
 
             this.Totals =
                 new LocationViewModel(
-                    string.Empty,
+                    "Totals",
                     totalFrom + totalTo,
                     totalFrom,
                     totalTo,
-                    isYear);
+                    isYear,
+                    false);
             this.OnPropertyChanged(nameof(this.Totals));
 
             this.SortByTotal();

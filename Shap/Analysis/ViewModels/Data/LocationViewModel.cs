@@ -25,7 +25,8 @@
             int total,
             int numberFrom,
             int numberTo,
-            bool isYear)
+            bool isYear,
+            bool isIndexVisible = true)
         {
             this.index = 0;
             this.Name = name;
@@ -33,6 +34,7 @@
             this.NumberFrom = numberFrom;
             this.NumberTo = numberTo;
             this.IsYear = isYear;
+            this.IsIndexVisible = isIndexVisible;
         }
 
         /// <summary>
@@ -68,5 +70,10 @@
         /// Gets a value indicating whether this is year analysis or not.
         /// </summary>
         public bool IsYear { get; }
+
+        /// <summary>
+        /// Gets a value indicating whether the index property should be visible on the view.
+        /// </summary>
+        public bool IsIndexVisible { get; }
     }
 }
