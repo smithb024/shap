@@ -9,73 +9,76 @@
 
     <Border BorderBrush="{StaticResource StdForeground}"
             BorderThickness="1">
-        <StackPanel Orientation="Vertical">
+        <Grid >
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
 
             <TextBlock 
+                Grid.Row="0"
+                Grid.Column="0"
                 Margin="5,2"
                 Text="Operator Configuration"
                 Style="{StaticResource StdTextBlockStyle}"
                 FontSize="16"
                 FontWeight="Bold"/>
 
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/>
-                    <ColumnDefinition Width="*"/>
-                </Grid.ColumnDefinitions>
+            <Grid Grid.Row="1"
+                  Grid.Column="0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
 
-                <Grid Grid.Column="0">
-
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="*"/>
-                    </Grid.RowDefinitions>
-
-                    <TextBox 
+                <TextBox 
                         Grid.Row="0"
                         Text="{Binding Path=Name, UpdateSourceTrigger=PropertyChanged}"
                         Style="{StaticResource StdTextBoxStyle}"/>
 
-                    <Grid Grid.Row="1">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="*"/>
-                        </Grid.ColumnDefinitions>
-                        <Button 
+                <Grid Grid.Row="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+                    <Button 
                             Grid.Column="0"
                             Content="Add"
                             Style="{StaticResource StdButtonStyle}"
                             Height="20"
                             Margin="2"
                             Command="{Binding Path=AddOperator}"/>
-                        <Button 
+                    <Button 
                             Grid.Column="1"
                             Content="Retire"
                             Style="{StaticResource StdButtonStyle}"
                             Height="20"
                             Margin="2"
                             Command="{Binding Path=RetireOperator}"/>
-                    </Grid>
                 </Grid>
-
-                <ListView 
-                    Grid.Column="1"
-                    ItemsSource="{Binding Path=Operators}"
-                    Height="100"
-                    SelectedIndex="{Binding Path=OperatorIndex}"
-                    Style="{StaticResource StdListViewStyle}">
-                    <ListBox.ItemContainerStyle>
-                        <Style TargetType="ListBoxItem">
-                            <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
-                        </Style>
-                    </ListBox.ItemContainerStyle>
-                    <ItemsControl.ItemTemplate>
-                        <DataTemplate>
-                            <local:OperatorListViewItem />
-                        </DataTemplate>
-                    </ItemsControl.ItemTemplate>
-                </ListView>
             </Grid>
-        </StackPanel>
+
+            <ListView 
+                Grid.Row="1"
+                Grid.Column="1"
+                ItemsSource="{Binding Path=Operators}"
+                SelectedIndex="{Binding Path=OperatorIndex}"
+                Style="{StaticResource StdListViewStyle}">
+                <ListBox.ItemContainerStyle>
+                    <Style TargetType="ListBoxItem">
+                        <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                    </Style>
+                </ListBox.ItemContainerStyle>
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate>
+                        <local:OperatorListViewItem />
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ListView>
+        </Grid>
     </Border>
 </UserControl>
