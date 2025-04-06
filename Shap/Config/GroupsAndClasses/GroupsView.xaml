@@ -18,7 +18,7 @@
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
@@ -34,11 +34,16 @@
                 FontSize="16"
                 FontWeight="Bold"/>
 
-            <StackPanel 
-                Orientation="Vertical"
+            <Grid 
                 Grid.Row="1"
                 Grid.Column="0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
                 <Grid 
+                    Grid.Row="0"
                     Margin="2,5">
 
                     <Grid.ColumnDefinitions>
@@ -66,27 +71,32 @@
                 </Grid>
 
                 <ListView 
+                    Grid.Row="1"
                     Margin="2,5"
-                    Height="100"
                     Style="{StaticResource StdListViewStyle}"
                     ItemsSource="{Binding Path=GroupNames}"
                     SelectedIndex="{Binding GroupIndex}"/>
 
                 <Button 
+                    Grid.Row="2"
                     Margin="2,5"
                     Content="Delete"
                     Style="{StaticResource StdButtonStyle}"
                     Height="20"
                     Command="{Binding DeleteGroupCmd}"/>
-            </StackPanel>
+            </Grid>
 
-            <StackPanel 
-                Orientation="Vertical"
+            <Grid 
                 Grid.Row="1"
                 Grid.Column="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
                 <Grid 
+                    Grid.Row="0"
                     Margin="2,5">
-
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="2*"/>
                         <ColumnDefinition Width="3*"/>
@@ -147,19 +157,20 @@
                 </Grid>
 
                 <ListView 
+                    Grid.Row="1"
                     Margin="2,5"
-                    Height="84"
                     Style="{StaticResource StdListViewStyle}"
                     ItemsSource="{Binding Path=RangeCollection}"
                     SelectedIndex="{Binding RangeIndex}"/>
 
                 <Button 
+                    Grid.Row="2"
                     Margin="2,5"
                     Content="Delete"
                     Style="{StaticResource StdButtonStyle}"
                     Height="20"
                     Command="{Binding DeleteRangeCmd}"/>
-            </StackPanel>
+            </Grid>
         </Grid>
     </Border>
 </UserControl>

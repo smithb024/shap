@@ -11,7 +11,7 @@
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto"/>
-                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
@@ -27,11 +27,16 @@
                 FontSize="16"
                 FontWeight="Bold"/>
 
-            <StackPanel 
-                Orientation="Vertical"
+            <Grid 
                 Grid.Row="1"
                 Grid.Column="0">
-                <Grid Margin="2,5">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Grid 
+                    Grid.Row="0"
+                    Margin="2,5">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="2*"/>
                         <ColumnDefinition Width="3*"/>
@@ -57,19 +62,23 @@
                 </Grid>
 
                 <ListView 
-                    Grid.Column="1"
+                    Grid.Row="1"
                     Margin="2,5"
-                    Height="100"
                     Style="{StaticResource StdListViewStyle}"
                     ItemsSource="{Binding Path=Families}"
                     SelectedIndex="{Binding Path=FamilyIndex}"/>
-            </StackPanel>
+            </Grid>
             
-            <StackPanel 
-                Orientation="Vertical"
+            <Grid 
                 Grid.Row="1"
                 Grid.Column="1">
-                <Grid Margin="2,5">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <Grid 
+                    Grid.Row="0"
+                    Margin="2,5">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
                         <ColumnDefinition Width="50"/>
@@ -91,12 +100,11 @@
                 </Grid>
 
                 <ListView 
-                    Grid.Column="1"
+                    Grid.Row="1"
                     Margin="2,5"
-                    Height="100"
                     Style="{StaticResource StdListViewStyle}"
                     ItemsSource="{Binding Path=MemberGroups}"/>
-            </StackPanel>
+            </Grid>
         </Grid>
     </Border>
 </UserControl>
