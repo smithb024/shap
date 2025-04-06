@@ -19,27 +19,37 @@
     <Grid Background="{StaticResource StdBackground}">
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
+            <RowDefinition Height="5"/>
             <RowDefinition Height="*"/>
+            <RowDefinition Height="5"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
         <gac:GroupsView 
             Grid.Row="0"
-            Margin="5,5,5,0"
+            Margin="5"
             DataContext="{Binding Path=GroupManager}"/>
+        <GridSplitter 
+            Grid.Row="1" 
+            Height="5" 
+            HorizontalAlignment="Stretch"/>
         <gac:FamilyManagerView
-            Grid.Row="1"
-            Margin="5,5,5,0"
-            DataContext="{Binding Path=FamilyManager}"/>
-        <gac:OperatorManagerView
             Grid.Row="2"
+            Margin="5"
+            DataContext="{Binding Path=FamilyManager}"/>
+        <GridSplitter 
+            Grid.Row="3" 
+            Height="5" 
+            HorizontalAlignment="Stretch" />
+        <gac:OperatorManagerView
+            Grid.Row="4"
             Margin="5,5,5,0"
             DataContext="{Binding Path=OperatorManager}"/>
 
         <Grid 
             Grid.Column="0"
-            Grid.Row="3"
+            Grid.Row="5"
             Margin="3">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*"/>
