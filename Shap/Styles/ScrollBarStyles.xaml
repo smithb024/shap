@@ -8,25 +8,26 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="{x:Type RepeatButton}">
-                    <Border 
-          Name="Border"
-          Margin="1" 
-          CornerRadius="2" 
-          Background="{StaticResource NormalBrush}"
-          BorderBrush="{StaticResource NormalBorderBrush}"
-          BorderThickness="1">
-                        <Path 
-            HorizontalAlignment="Center"
-            VerticalAlignment="Center"
-            Fill="{StaticResource GlyphBrush}"
-            Data="{Binding Path=Content,RelativeSource={RelativeSource TemplatedParent}}" />
+                    <Border Name="Border"
+                            Margin="1" 
+                            CornerRadius="2" 
+                            Background="{StaticResource ButtonBackground}"
+                            BorderBrush="{StaticResource StdControlBorder}"
+                            BorderThickness="1">
+                        <Path HorizontalAlignment="Center"
+                              VerticalAlignment="Center"
+                              Fill="{StaticResource StdControlBorder}"
+                              Data="{Binding Path=Content,RelativeSource={RelativeSource TemplatedParent}}" />
                     </Border>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsPressed" Value="true">
-                            <Setter TargetName="Border" Property="Background" Value="{StaticResource PressedBrush}" />
+                            <Setter TargetName="Border" 
+                                    Property="Background" 
+                                    Value="{StaticResource ButtonBackgroundHighlighted}" />
                         </Trigger>
                         <Trigger Property="IsEnabled" Value="false">
-                            <Setter Property="Foreground" Value="{StaticResource DisabledForegroundBrush}"/>
+                            <Setter Property="Foreground" 
+                                    Value="{StaticResource DisabledButtonBackgroundBrush}"/>
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
