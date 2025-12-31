@@ -123,6 +123,15 @@
                     case LocationCategories.F:
                         this.LocationLayer = "/Icons/Map/locF.png";
                         break;
+                    case LocationCategories.L:
+                        this.LocationLayer = "/Icons/Map/locL.png";
+                        break;
+                    case LocationCategories.U:
+                        this.LocationLayer = "/Icons/Map/locU.png";
+                        break;
+                    case LocationCategories.O:
+                        this.LocationLayer = "/Icons/Map/locO.png";
+                        break;
                     default:
                         this.LocationLayer = string.Empty;
                         break;
