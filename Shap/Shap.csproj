@@ -924,6 +924,11 @@
   <ItemGroup>
     <Resource Include="Icons\Map\triangleRight.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\Map\locL.png" />
+    <Resource Include="Icons\Map\locO.png" />
+    <Resource Include="Icons\Map\locU.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\CommunityToolkit.Mvvm.8.3.2\build\CommunityToolkit.Mvvm.targets" Condition="Exists('..\packages\CommunityToolkit.Mvvm.8.3.2\build\CommunityToolkit.Mvvm.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

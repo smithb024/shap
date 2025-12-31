@@ -37,6 +37,15 @@
                 case LocationCategories.F:
                     return "Unstaffed";
 
+                case LocationCategories.U:
+                    return "Tube";
+
+                case LocationCategories.L:
+                    return "Light";
+
+                case LocationCategories.O:
+                    return "Other";
+
                 case LocationCategories.ND:
                     return "Not Defined";
 
