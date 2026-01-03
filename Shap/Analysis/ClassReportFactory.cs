@@ -536,19 +536,19 @@
         }
 
         /// <summary>
-        /// 
+        /// Get all classes with alpha Id
         /// </summary>
-        /// <param name="unitNumber"></param>
-        /// <param name="groups"></param>
-        /// <returns></returns>
+        /// <param name="unitNumber">The unit number</param>
+        /// <param name="groups">The list of all groups</param>
+        /// <returns>collection of classes with an alpha Id</returns>
         private static List<string> GetClassesWithAlpha(
           string unitNumber,
           List<GroupsType> groups)
         {
             List<string> returnClasses = new List<string>();
 
-            // TODO what about those with multiple alpha characters?
-            string alpha = unitNumber.Substring(0, 1);
+            int index = unitNumber.IndexOfAny("0123456789".ToCharArray());
+            string alpha = unitNumber.Substring(0, index);
 
             foreach (GroupsType group in groups)
             {
