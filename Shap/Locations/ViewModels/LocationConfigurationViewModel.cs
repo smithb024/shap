@@ -12,13 +12,18 @@
     using Shap.Interfaces.Locations.ViewModels.Helpers;
     using Shap.Locations.Messages;
     using Shap.Locations.ViewModels.Helpers;
+    using Shap.Messages;
     using Shap.Types.Enum;
     using System;
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
     using System.Linq;
     using System.Windows.Input;
+    using NynaeveMessenger = NynaeveLib.Messenger.Messenger;
 
+    /// <summary>
+    /// View model which supports location configuration.
+    /// </summary>
     public class LocationConfigurationViewModel : ObservableRecipient, ILocationConfigurationViewModel
     {
         /// <summary>
@@ -417,6 +422,13 @@
             this.ioControllers.Location.Write(
                 this.currentLocation,
                 this.Name);
+
+            FeedbackMessage feedbackMessage =
+                new FeedbackMessage(
+                    FeedbackType.Navigation,
+                    $"Location Config - Save {this.Name}.");
+            NynaeveMessenger.Default.Send(feedbackMessage);
+
         }
 
         /// <summary>
