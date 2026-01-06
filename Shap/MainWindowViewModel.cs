@@ -36,6 +36,21 @@
         private readonly ILocationManager locationManager;
 
         /// <summary>
+        /// Collection of IO controllers
+        /// </summary>
+        private readonly IIoControllers controllers;
+
+        /// <summary>
+        /// Manager class holding collections of the first examples.
+        /// </summary>
+        private readonly IFirstExampleManager firstExamples;
+
+        /// <summary>
+        /// Not used, but is instantiated here to ensure that it starts and logs all UI feedback.
+        /// </summary>
+        private readonly IFeedbackLogger feedbackLogger;
+
+        /// <summary>
         /// The instance of the <see cref="InputForm"/>.
         /// </summary>
         private InputForm inputWindow;
@@ -74,21 +89,6 @@
         /// The instance of the <see cref="FeedbackWindow"/>.
         /// </summary>
         private FeedbackWindow feedbackWindow;
-
-        /// <summary>
-        /// Collection of IO controllers
-        /// </summary>
-        private IIoControllers controllers;
-
-        /// <summary>
-        /// Manager class holding collections of the first examples.
-        /// </summary>
-        private IFirstExampleManager firstExamples;
-
-        /// <summary>
-        /// Not used, but is instantiated here to ensure that it starts and logs all UI feedback.
-        /// </summary>
-        private IFeedbackLogger feedbackLogger;
 
         /// <summary>
         /// Initialises a new instance of the <see cref="MainWindowViewModel"/> class.
