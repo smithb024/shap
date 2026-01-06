@@ -171,59 +171,23 @@
         /// </summary>
         public string DisplayUnitNumber => $"{this.AlphaIdentifier}{this.UnitNumber}";
 
-        ///// <summary>
-        ///// Gets the alpha identifier.
-        ///// </summary>
-        //public string AlphaIdentifier { get; }
-
-        ///// <summary>
-        ///// Gets the current status of the unit.
-        ///// </summary>
-        //public override VehicleServiceType Status
-        //{
-        //  get
-        //  {
-        //    return this.ServiceTypeList[this.ServiceIndex];
-        //  }
-        //}
-
-        ///// <summary>
-        ///// Gets a collection containing all the enumerations in <see cref="VehicleServiceType"/>.
-        ///// </summary>
-        //public List<VehicleServiceType> ServiceTypeList =>
-        //  Enum.GetValues(typeof(VehicleServiceType)).
-        //  Cast<VehicleServiceType>().
-        //  ToList();
-
-        ///// <summary>
-        ///// Gets or sets the index of the currently selected in service state from the
-        ///// <see cref="ServiceTypeList"/> list of in service states.
-        ///// </summary>
-        //public int ServiceIndex
-        //{
-        //  get
-        //  {
-        //    return this.serviceIndex;
-        //  }
-
-        //  set
-        //  {
-        //    this.serviceIndex = value;
-        //    this.RaisePropertyChangedEvent(nameof(ServiceIndex));
-        //    this.RaisePropertyChangedEvent(nameof(Status));
-        //  }
-        //}
-
         /// <summary>
         /// Refresh the units data.
         /// </summary>
+        /// <param name="showFeeback">
+        /// Indicates whether to show the process feedback.
+        /// </param>
         public void RefreshUnit()
         {
-            FeedbackMessage message =
-                new FeedbackMessage(
-                    FeedbackType.Command,
-                    $"VDW: Refresh {this.DisplayUnitNumber}.");
-            NynaeveMessenger.Default.Send(message);
+            App.Current.Dispatcher.Invoke(
+                new Action(() =>
+                {
+                    FeedbackMessage message =
+                            new FeedbackMessage(
+                                FeedbackType.Command,
+                                $"VDW: Refresh {this.DisplayUnitNumber}.");
+                    NynaeveMessenger.Default.Send(message);
+                }));
 
             this.JourneysList = new List<IJourneyViewModel>();
 
@@ -306,15 +270,22 @@
         /// </summary>
         private void SaveUnit()
         {
-            FeedbackMessage message =
-                new FeedbackMessage(
-                    FeedbackType.Command,
-                    $"VDW: Save {this.DisplayUnitNumber}.");
-            NynaeveMessenger.Default.Send(message);
+            App.Current.Dispatcher.Invoke(
+                new Action(() =>
+                {
+                    FeedbackMessage message =
+                        new FeedbackMessage(
+                            FeedbackType.Command,
+                            $"VDW: Save {this.DisplayUnitNumber}.");
+                    NynaeveMessenger.Default.Send(message);
+                }));
 
             this.saveAction.Invoke(this, this.className);
         }
 
+        /// <summary>
+        /// Tidy up after the unit update.
+        /// </summary>
         private new void CompleteUpdate()
         {
             this.OnPropertyChanged(nameof(this.DisplayUnitNumber));

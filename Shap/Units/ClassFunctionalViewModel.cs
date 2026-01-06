@@ -16,6 +16,7 @@
     using NynaeveMessenger = NynaeveLib.Messenger.Messenger;
     using Shap.Messages;
     using Shap.Types.Enum;
+    using System.Threading;
 
     /// <summary>
     /// This class is used for the <see cref="ClassFrontPage"/> view. It is used to manage all 
@@ -38,6 +39,21 @@
         /// </summary>
         private readonly string classId;
 
+        /// <summary>
+        /// The background worker.
+        /// </summary>
+        private readonly BackgroundWorker backgroundWorker;
+
+        /// <summary>
+        /// index which is used when working through the units. 
+        /// </summary>
+        private int unitIndex;
+
+        /// <summary>
+        /// Flag which controls access to the <see cref="RefreshAll"/> control.
+        /// </summary>
+        private bool canRefreshAll;
+
         /// ---------- ---------- ---------- ---------- ---------- ----------
         /// <name>ClassFrontPageForm</name>
         /// <date>29/12/12</date>
@@ -56,6 +72,8 @@
         {
             this.classId = classId;
             this.firstExamples = firstExamples;
+            this.unitIndex = 0;
+            this.canRefreshAll = true;
 
             this.ClassIndexes = new ObservableCollection<SubClassViewModel>();
 
@@ -66,10 +84,14 @@
                 return;
             }
 
+            this.backgroundWorker = new BackgroundWorker();
+            this.backgroundWorker.DoWork += this.DoWork;
+            this.backgroundWorker.RunWorkerCompleted += this.RunWorkerCompleted;
+
             this.RefreshAll =
                 new CommonCommand(
                     this.RefreshAllUnits,
-                    () => true);
+                    this.CanRefreshAll);
 
             ClassDetails classFile =
                 ioControllers.UnitsXml.Read(
@@ -169,19 +191,31 @@
                 return;
             }
 
+            this.canRefreshAll = false;
+            this.OnPropertyChanged(nameof(this.RefreshAll));
+            this.unitIndex = 0;
+
             FeedbackMessage message =
                  new FeedbackMessage(
                      FeedbackType.Command,
                      $"ClassFrontPage - {this.classId} : Refresh all for {this.ClassId}.");
             NynaeveMessenger.Default.Send(message);
 
-            foreach (IUnitViewModel unit in this.ClassIndexes[this.SubClassIndex].Units)
-            {
-                unit.RefreshUnit();
-                //Searcher.RunCompleteSearch(
-                //    unit.DisplayUnitNumber,
-                //    unit.FormerNumbers.FormerNumbers);
-            }
+            this.backgroundWorker.RunWorkerAsync();
+
+            //foreach (IUnitViewModel unit in this.ClassIndexes[this.SubClassIndex].Units)
+            //{
+            //    unit.RefreshUnit();
+            //}
+        }
+
+        /// <summary>
+        /// Controls access to the <see cref="RefreshAll"/> command.
+        /// </summary>
+        /// <returns>Indicates if it is possible to refresh all.</returns>
+        private bool CanRefreshAll()
+        {
+            return this.canRefreshAll;
         }
 
         /// <summary>
@@ -195,6 +229,46 @@
             return
                 this.SubClassIndex >= 0 &&
                 this.SubClassIndex < this.ClassIndexes.Count;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void DoWork(
+            object sender,
+            DoWorkEventArgs e)
+        {
+            this.ClassIndexes[this.SubClassIndex].Units[this.unitIndex].RefreshUnit();
+            Thread.Sleep(1000);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void RunWorkerCompleted(
+            object sender,
+            RunWorkerCompletedEventArgs e)
+        {
+            ++this.unitIndex;
+            if (this.unitIndex < this.ClassIndexes[this.SubClassIndex].Units.Count)
+            {
+                this.backgroundWorker.RunWorkerAsync();
+            }
+            else
+            {
+                this.canRefreshAll = true;
+                this.OnPropertyChanged(nameof(this.RefreshAll));
+
+                FeedbackMessage message =
+                     new FeedbackMessage(
+                         FeedbackType.Info,
+                         $"ClassFrontPage - {this.classId} : Completed refresh all for {this.ClassId}.");
+                NynaeveMessenger.Default.Send(message);
+            }
         }
     }
 }
